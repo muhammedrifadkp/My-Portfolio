@@ -1,0 +1,697 @@
+import { useEffect, useRef, useState } from "react";
+import { useGLTF, useAnimations } from "@react-three/drei";
+import planeScene from "../assets/3d/plane.glb";
+import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
+
+function PlaneOnly({
+  isRotating = false,
+  color = "#20b5ff98",
+  isSwinging = false,
+  isTakingOff = false,
+  onlyRotateFan = false,
+  ...props
+}) {
+  const ref = useRef();
+  const propellerRef = useRef();
+  const { scene, animations } = useGLTF(planeScene);
+  const { actions } = useAnimations(animations, ref);
+
+  // Animation parameters - enhanced for perfect flight dynamics
+  const swingSpeed = 3;
+  const swingAmount = 0.5;
+  const propellerMaxSpeed = 0.8;
+  const takeOffDuration = 3; // Takeoff duration in seconds
+  const takeOffDistance = 50; // Takeoff distance for forward movement
+  const turnDuration = 6; // Duration for the U-turn (increased for more graceful turn)
+  const returnDuration = 4; // Return/landing duration in seconds (increased for smoother landing)
+
+  // Animation states
+  const [takeoffStartTime, setTakeoffStartTime] = useState(null);
+  const [isReturning, setIsReturning] = useState(false);
+  const [originalPosition] = useState(new THREE.Vector3(0, -1, 0));
+  const [originalRotation] = useState(new THREE.Euler(0.3, -0.8, -0.1));
+
+  // Find propeller mesh in the scene
+  useEffect(() => {
+    if (scene) {
+      scene.traverse((child) => {
+        if (child.isMesh && child.name.toLowerCase().includes("propeller")) {
+          propellerRef.current = child;
+        }
+      });
+    }
+  }, [scene]);
+
+  // Set color for the plane
+  useEffect(() => {
+    if (scene) {
+      scene.traverse((child) => {
+        if (child.isMesh) {
+          if (child.material) {
+            // Create a new material to avoid modifying the shared material
+            child.material = child.material.clone();
+            child.material.color = new THREE.Color(color);
+
+            // Keep the metalness and reflectivity for a modern look
+            child.material.metalness = 0.7;
+            child.material.roughness = 0.3;
+            child.material.envMapIntensity = 1.5;
+          }
+        }
+      });
+    }
+  }, [scene, color]);
+
+  // Handle propeller rotation with ultra-realistic behavior
+  useFrame(({ clock }) => {
+    if (!propellerRef.current) return;
+
+    // Determine target speed based on state and flight phase
+    let targetSpeed = 0;
+
+    // Base rotation when typing
+    if (isRotating) {
+      targetSpeed = propellerMaxSpeed;
+    }
+
+    // Enhanced propeller behavior during flight phases
+    if (takeoffStartTime) {
+      const elapsed = (performance.now() - takeoffStartTime) / 1000;
+
+      if (!onlyRotateFan) {
+        // Full flight mode with phase-appropriate propeller speeds
+        if (elapsed < takeOffDuration && !isReturning) {
+          // Takeoff phase - variable speed based on takeoff progress
+          const progress = elapsed / takeOffDuration;
+
+          if (progress < 0.15) {
+            // Engine spool-up phase - gradually increasing speed
+            targetSpeed = propellerMaxSpeed * 2.0 * (progress / 0.15);
+          } else if (progress < 0.35) {
+            // Ground roll - high power
+            targetSpeed = propellerMaxSpeed * 2.5;
+          } else if (progress < 0.65) {
+            // Rotation and climb - maximum power
+            targetSpeed = propellerMaxSpeed * 3.0;
+          } else {
+            // Cruise - slightly reduced power
+            targetSpeed = propellerMaxSpeed * 2.8;
+          }
+        } else if (isReturning) {
+          // Landing phase - variable speed based on landing progress
+          const returnElapsed = elapsed - takeOffDuration - turnDuration;
+          const returnProgress = Math.min(returnElapsed / returnDuration, 1);
+
+          if (returnProgress < 0.6) {
+            // Approach - moderate power
+            targetSpeed = propellerMaxSpeed * 2.2;
+          } else if (returnProgress < 0.75) {
+            // Final approach and flare - reduced power
+            targetSpeed = propellerMaxSpeed * 1.8;
+          } else if (returnProgress < 0.9) {
+            // Touchdown and rollout - idle power
+            targetSpeed = propellerMaxSpeed * 1.5 * (1 - ((returnProgress - 0.75) / 0.15) * 0.7);
+          } else {
+            // Taxi - low power
+            targetSpeed = propellerMaxSpeed * 0.8 * (1 - ((returnProgress - 0.9) / 0.1));
+          }
+        } else {
+          // Check if we're in the U-turn phase with enhanced power management
+          const turnElapsed = elapsed - takeOffDuration;
+          const turnProgress = Math.min(turnElapsed / turnDuration, 1);
+
+          if (turnElapsed >= 0 && turnElapsed < turnDuration) {
+            // U-turn phase with realistic power changes during different phases
+            if (turnProgress < 0.2) {
+              // Entry phase - gradually increase power as bank angle increases
+              const entryPowerFactor = 0.2 + (turnProgress / 0.2) * 0.3;
+              targetSpeed = propellerMaxSpeed * (2.5 + entryPowerFactor);
+            } else if (turnProgress < 0.8) {
+              // Main turn phase - maintain high power with slight variations
+              const pulseFactor = 0.1 * Math.sin(turnProgress * 20);
+              targetSpeed = propellerMaxSpeed * (2.8 + pulseFactor);
+            } else {
+              // Exit phase - gradually adjust power as bank angle decreases
+              const exitPowerFactor = 0.3 * (1 - (turnProgress - 0.8) / 0.2);
+              targetSpeed = propellerMaxSpeed * (2.5 + exitPowerFactor);
+            }
+          } else {
+            // Regular cruise phase - steady high power
+            targetSpeed = propellerMaxSpeed * 2.5;
+          }
+        }
+      } else {
+        // Fan-only mode - high speed fan rotation
+        targetSpeed = propellerMaxSpeed * 2.5;
+      }
+    }
+
+    // Apply rotation to propeller with smooth acceleration/deceleration
+    if (propellerRef.current) {
+      // Add slight wobble to propeller at low speeds for realism
+      const wobbleAmount = targetSpeed < propellerMaxSpeed ? 0.05 * (1 - targetSpeed / propellerMaxSpeed) : 0;
+      const wobble = Math.sin(clock.elapsedTime * 10) * wobbleAmount;
+
+      propellerRef.current.rotation.z += targetSpeed + wobble;
+    }
+  });
+
+  // Handle fan animation based on 'isRotating' prop or during takeoff
+  useEffect(() => {
+    if (actions && actions["Take 001"]) {
+      // Play animation when typing or during takeoff
+      if (isRotating || takeoffStartTime) {
+        actions["Take 001"].reset().fadeIn(0.5).play();
+      } else {
+        actions["Take 001"].fadeOut(0.5).stop();
+      }
+    }
+  }, [actions, isRotating, takeoffStartTime]);
+
+  // Start takeoff on takeoff trigger
+  useEffect(() => {
+    if (isTakingOff) {
+      console.log("Takeoff triggered, onlyRotateFan:", onlyRotateFan);
+
+      if (onlyRotateFan) {
+        // Just rotate the fan without moving the plane
+        setTakeoffStartTime(performance.now());
+        setIsReturning(false);
+      } else {
+        // Full takeoff animation
+        setTakeoffStartTime(performance.now());
+        setIsReturning(false);
+        console.log("Starting full takeoff animation");
+      }
+    } else {
+      // Reset animation state when isTakingOff becomes false
+      if (takeoffStartTime !== null) {
+        console.log("Animation complete, resetting state");
+        setTakeoffStartTime(null);
+        setIsReturning(false);
+      }
+    }
+  }, [isTakingOff, onlyRotateFan, takeoffStartTime]);
+
+  // Flight animation sequence
+  useFrame(({ clock }) => {
+    if (!ref.current) return;
+
+    // Swinging effect when not in takeoff
+    if (isSwinging && !takeoffStartTime) {
+      const swing = Math.sin(clock.elapsedTime * swingSpeed) * swingAmount;
+      ref.current.rotation.y = originalRotation.y + swing;
+    }
+
+    // Handle takeoff animation
+    if (takeoffStartTime) {
+      const elapsed = (performance.now() - takeoffStartTime) / 1000; // Convert to seconds
+
+      // Special case for fan-only mode - don't move the plane, just rotate the fan
+      if (onlyRotateFan) {
+        // Keep the plane in its original position and rotation
+        ref.current.position.copy(originalPosition);
+        ref.current.rotation.set(originalRotation.x, originalRotation.y, originalRotation.z);
+        return;
+      }
+
+      // Takeoff phase - enhanced for ultra-realistic motion
+      if (elapsed < takeOffDuration && !isReturning) {
+        const progress = elapsed / takeOffDuration;
+
+        // Split takeoff into four phases for an even more realistic animation
+        if (progress < 0.15) {
+          // Phase 1: Initial engine spool-up and vibration
+          const spoolProgress = progress / 0.15;
+
+          // Add subtle vibration that increases as engines spool up
+          const vibrationAmplitude = 0.02 * spoolProgress;
+          const vibrationX = Math.sin(elapsed * 30) * vibrationAmplitude;
+          const vibrationY = Math.sin(elapsed * 25) * vibrationAmplitude * 0.7;
+
+          // Apply vibration to position
+          ref.current.position.x = originalPosition.x + vibrationX;
+          ref.current.position.y = originalPosition.y + vibrationY;
+          ref.current.position.z = originalPosition.z;
+
+          // Keep original rotation with slight vibration
+          ref.current.rotation.x = originalRotation.x + Math.sin(elapsed * 20) * 0.005 * spoolProgress;
+          ref.current.rotation.y = originalRotation.y;
+          ref.current.rotation.z = originalRotation.z;
+
+        } else if (progress < 0.35) {
+          // Phase 2: Initial roll - accelerating along the runway
+          const rollProgress = (progress - 0.15) / 0.2;
+          const rollDistance = takeOffDistance * 0.2 * rollProgress;
+
+          // Calculate forward direction based on plane's orientation
+          const forwardDirection = new THREE.Vector3(0, 0, 1);
+          forwardDirection.applyEuler(new THREE.Euler(0, originalRotation.y, 0));
+          forwardDirection.normalize();
+
+          // Move forward while staying at the same height
+          const rollPosition = new THREE.Vector3()
+            .copy(originalPosition)
+            .add(forwardDirection.multiplyScalar(rollDistance));
+
+          // Add decreasing ground vibration as speed increases
+          const groundVibration = 0.01 * (1 - rollProgress);
+          rollPosition.y += Math.sin(elapsed * 40) * groundVibration;
+
+          // Smoothly move to the roll position
+          ref.current.position.lerp(rollPosition, 0.15);
+
+          // Slight nose lift as speed increases
+          const rollRotation = new THREE.Euler(
+            originalRotation.x - 0.05 * rollProgress, // Slight nose up as speed builds
+            originalRotation.y,
+            originalRotation.z
+          );
+          ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, rollRotation.x, 0.1);
+
+        } else if (progress < 0.65) {
+          // Phase 3: Rotation and lift-off
+          const rotateProgress = (progress - 0.35) / 0.3;
+
+          // Calculate forward and upward movement
+          const liftDistance = takeOffDistance * 0.4 * rotateProgress;
+
+          // Height follows a curve - slow at first, then accelerating upward
+          const liftCurve = Math.pow(rotateProgress, 1.5); // Non-linear curve for more realistic lift
+          const liftHeight = 4 * liftCurve; // Up to 4 units high
+
+          // Calculate forward direction
+          const forwardDirection = new THREE.Vector3(0, 0, 1);
+          forwardDirection.applyEuler(new THREE.Euler(0, originalRotation.y, 0));
+          forwardDirection.normalize();
+
+          // Move forward and upward
+          const liftPosition = new THREE.Vector3()
+            .copy(originalPosition)
+            .add(forwardDirection.multiplyScalar(takeOffDistance * 0.2 + liftDistance))
+            .add(new THREE.Vector3(0, liftHeight, 0));
+
+          // Smoothly move to the lift position
+          ref.current.position.lerp(liftPosition, 0.12);
+
+          // Nose rotation during takeoff - more pronounced at first, then easing
+          const noseUpCurve = rotateProgress < 0.5 ?
+          rotateProgress * 2 : 1 - (rotateProgress - 0.5) * 2;
+const rotateRotation = new THREE.Euler(
+originalRotation.x - 0.3 * noseUpCurve, // Dynamic nose up angle
+originalRotation.y,
+originalRotation.z
+);
+ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, rotateRotation.x, 0.12);
+    } else {
+      // Phase 4: Level off and continue forward
+      const cruiseProgress = (progress - 0.65) / 0.35;
+
+      // Calculate forward movement for cruise phase
+      const cruiseDistance = takeOffDistance * 0.4 * cruiseProgress;
+
+      // Calculate forward direction
+      const forwardDirection = new THREE.Vector3(0, 0, 1);
+      forwardDirection.applyEuler(new THREE.Euler(0, originalRotation.y, 0));
+      forwardDirection.normalize();
+
+      // Move forward at cruise altitude with slight climb
+      const finalHeight = 4 + cruiseProgress * 1; // Continue slight climb from 4 to 5 units
+      const cruisePosition = new THREE.Vector3()
+        .copy(originalPosition)
+        .add(forwardDirection.multiplyScalar(takeOffDistance * 0.6 + cruiseDistance))
+        .add(new THREE.Vector3(0, finalHeight, 0));
+
+      // Smoothly move to the cruise position
+      ref.current.position.lerp(cruisePosition, 0.1);
+
+      // Level off during cruise - slight nose up for level flight
+      const cruiseRotation = new THREE.Euler(
+        originalRotation.x - 0.08, // Slight nose up for level flight
+        originalRotation.y,
+        originalRotation.z
+      );
+      ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, cruiseRotation.x, 0.1);
+    }
+  } else if (elapsed >= takeOffDuration && !isReturning) {
+    // Execute a perfect U-turn in the air with realistic flight dynamics
+    const turnElapsed = elapsed - takeOffDuration;
+    const turnProgress = Math.min(turnElapsed / turnDuration, 1);
+
+    // Split the U-turn into 3 phases for perfect execution
+    // 1. Entry phase (0-20%): Gradual bank initiation
+    // 2. Main turn phase (20-80%): Constant rate turn with proper bank
+    // 3. Roll-out phase (80-100%): Gradual return to level flight
+
+    if (turnProgress < 1) {
+      // Get the current forward direction vector
+      const currentForward = new THREE.Vector3(0, 0, 1);
+      currentForward.applyEuler(ref.current.rotation);
+      currentForward.normalize();
+
+      // Get the current right direction vector
+      const currentRight = new THREE.Vector3(1, 0, 0);
+      currentRight.applyEuler(ref.current.rotation);
+      currentRight.normalize();
+
+      // Get the current up direction vector
+      const currentUp = new THREE.Vector3(0, 1, 0);
+      currentUp.applyEuler(ref.current.rotation);
+      currentUp.normalize();
+
+      // Calculate the turn radius - slightly larger for a more graceful turn
+      const turnRadius = takeOffDistance * 0.6;
+
+      // Calculate the turn center based on the current position and orientation
+      let turnCenter;
+      if (turnProgress < 0.05) {
+        // At the very start, calculate the turn center from the end of takeoff
+        const initialForward = new THREE.Vector3(0, 0, 1);
+        initialForward.applyEuler(new THREE.Euler(0, originalRotation.y, 0));
+        initialForward.normalize();
+
+        const initialRight = new THREE.Vector3(1, 0, 0);
+        initialRight.applyEuler(new THREE.Euler(0, originalRotation.y, 0));
+        initialRight.normalize();
+
+        turnCenter = new THREE.Vector3()
+          .copy(ref.current.position)
+          .add(initialRight.multiplyScalar(turnRadius));
+      } else {
+        // During the turn, calculate center from current position and orientation
+        turnCenter = new THREE.Vector3()
+          .copy(ref.current.position)
+          .add(currentRight.multiplyScalar(turnRadius));
+      }
+
+      // Calculate the angle of the turn (180 degrees = π radians)
+      // Use a non-linear easing for more natural acceleration/deceleration
+      let turnAngle;
+      if (turnProgress < 0.2) {
+        // Entry phase: Ease in (slow start)
+        const entryProgress = turnProgress / 0.2;
+        turnAngle = Math.PI * 0.2 * (entryProgress * entryProgress); // Quadratic ease-in
+      } else if (turnProgress < 0.8) {
+        // Main turn phase: Linear progression
+        const mainProgress = (turnProgress - 0.2) / 0.6;
+        turnAngle = Math.PI * (0.2 + 0.6 * mainProgress);
+      } else {
+        // Roll-out phase: Ease out (gradual finish)
+        const exitProgress = (turnProgress - 0.8) / 0.2;
+        turnAngle = Math.PI * (0.8 + 0.2 * (1 - Math.pow(1 - exitProgress, 2))); // Quadratic ease-out
+      }
+
+      // Calculate bank angle with proper entry and exit
+      let bankAngle;
+      if (turnProgress < 0.2) {
+        // Gradually increase bank angle during entry
+        bankAngle = -0.35 * (turnProgress / 0.2);
+      } else if (turnProgress < 0.8) {
+        // Maintain constant bank during main turn
+        bankAngle = -0.35;
+      } else {
+        // Gradually decrease bank angle during exit
+        bankAngle = -0.35 * (1 - (turnProgress - 0.8) / 0.2);
+      }
+
+      // Calculate position along the turn path
+      // Use the current turn center and angle to find the new position
+      const newPosition = new THREE.Vector3();
+      newPosition.x = turnCenter.x + Math.cos(turnAngle) * turnRadius;
+      newPosition.z = turnCenter.z + Math.sin(turnAngle) * turnRadius;
+
+      // Add slight altitude variation during turn (realistic flight behavior)
+      // Slight climb at beginning, slight descent at end
+      let altitudeOffset = 0;
+      if (turnProgress < 0.5) {
+        altitudeOffset = 0.5 * Math.sin(turnProgress * Math.PI);
+      } else {
+        altitudeOffset = 0.5 * Math.sin((1 - turnProgress) * Math.PI);
+      }
+
+      // Set the altitude (y-coordinate)
+      newPosition.y = originalPosition.y + 5 + altitudeOffset;
+
+      // Apply the position with appropriate smoothing
+      // Use faster lerp during main turn phase for precision
+      const positionLerpFactor = (turnProgress > 0.2 && turnProgress < 0.8) ? 0.15 : 0.1;
+      ref.current.position.lerp(newPosition, positionLerpFactor);
+
+      // Calculate the heading based on the turn angle
+      // This makes the plane face the direction of travel
+      const newHeading = originalRotation.y + turnAngle;
+
+      // Create the new rotation with proper pitch, heading, and bank
+      const turnRotation = new THREE.Euler(
+        originalRotation.x - 0.08 + (altitudeOffset * 0.05), // Slight pitch adjustments with altitude
+        newHeading, // Heading changes throughout the turn
+        bankAngle // Banking angle changes with turn phase
+      );
+
+      // Apply rotation with appropriate smoothing
+      // Use faster lerp for heading to keep nose pointed in direction of travel
+      ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, turnRotation.x, 0.1);
+      ref.current.rotation.y = THREE.MathUtils.lerp(ref.current.rotation.y, turnRotation.y, 0.15);
+      ref.current.rotation.z = THREE.MathUtils.lerp(ref.current.rotation.z, turnRotation.z, 0.12);
+
+      // Start the return phase after completing the turn
+      if (turnProgress >= 0.99) {
+        console.log("U-turn complete, starting return phase");
+        setIsReturning(true);
+      }
+    }
+  } else if (isReturning) {
+    // Return phase after the U-turn - implement an ultra-realistic landing animation
+    // Calculate elapsed time since takeoff started
+    const totalElapsed = (performance.now() - takeoffStartTime) / 1000;
+
+    // Calculate time for return phase (after takeoff and turn are complete)
+    // Use max to ensure we don't get negative values
+    const returnElapsed = Math.max(0, totalElapsed - takeOffDuration - turnDuration);
+    const returnProgress = Math.min(returnElapsed / returnDuration, 1);
+
+    // Debug logging
+    if (returnProgress < 0.01) {
+      console.log("Starting landing phase", { totalElapsed, returnElapsed, returnProgress });
+    }
+
+    // For a perfect landing animation, we'll use 5 phases:
+    // 1. Initial approach from distance (0-30% of return time)
+    // 2. Final approach with slight descent (30-60% of return time)
+    // 3. Flare maneuver - nose up just before touchdown (60-75% of return time)
+    // 4. Touchdown and roll-out (75-90% of return time)
+    // 5. Final taxi and settling (90-100% of return time)
+
+    // Calculate forward direction based on plane's current orientation (after U-turn)
+    // This is important because after the U-turn, the plane is facing the opposite direction
+    const forwardDirection = new THREE.Vector3(0, 0, 1);
+    forwardDirection.applyEuler(ref.current.rotation);
+    forwardDirection.normalize();
+
+    if (returnProgress < 0.3) {
+      // Phase 1: Initial approach from distance - enhanced for perfect alignment with U-turn
+      const initialProgress = returnProgress / 0.3;
+
+      // Get the current position at the start of the landing phase
+      // This ensures a smooth transition from the U-turn
+      if (returnProgress < 0.01) {
+        // Store the current heading at the start of landing for reference
+        // This is important to maintain the correct approach direction
+        const currentHeading = ref.current.rotation.y;
+
+        // Adjust the forward direction to match the current heading
+        forwardDirection.set(0, 0, 1);
+        forwardDirection.applyEuler(new THREE.Euler(0, currentHeading, 0));
+        forwardDirection.normalize();
+      }
+
+      // Calculate the approach distance - start from current position
+      const approachDistance = takeOffDistance * 0.5 * (1 - initialProgress);
+
+      // Calculate the approach point with proper alignment to current heading
+      const approachPoint = new THREE.Vector3()
+        .copy(ref.current.position)
+        .add(forwardDirection.multiplyScalar(approachDistance));
+
+      // Maintain cruise altitude with slight adjustments for realism
+      // Add subtle altitude variations (air currents/thermals)
+      const altitudeVariation = 0.1 * Math.sin(returnProgress * 10);
+      approachPoint.y = originalPosition.y + 5 + altitudeVariation;
+
+      // Smoothly move toward this approach point with adaptive lerp factor
+      // Faster at beginning, slower as we progress for precision
+      const approachLerpFactor = 0.1 + (0.05 * (1 - initialProgress));
+      ref.current.position.lerp(approachPoint, approachLerpFactor);
+
+      // Maintain proper cruise attitude with slight adjustments
+      // Keep the current heading but adjust pitch and bank slightly
+      const cruiseRotation = new THREE.Euler(
+        originalRotation.x - 0.08 + (altitudeVariation * 0.1), // Slight nose-up with subtle variations
+        ref.current.rotation.y, // Maintain current heading from U-turn
+        Math.sin(returnProgress * 15) * 0.02 // Subtle rolling due to air currents
+      );
+
+      // Apply rotation adjustments with appropriate smoothing
+      ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, cruiseRotation.x, 0.1);
+      ref.current.rotation.z = THREE.MathUtils.lerp(ref.current.rotation.z, cruiseRotation.z, 0.08);
+
+    } else if (returnProgress < 0.6) {
+      // Phase 2: Final approach with descent - enhanced for perfect alignment
+      const finalApproachProgress = (returnProgress - 0.3) / 0.3;
+
+      // Calculate the approach vector based on current heading
+      // This ensures we're approaching the landing spot from the correct direction
+      const approachVector = forwardDirection.clone();
+
+      // Calculate the target landing spot (original position)
+      const landingSpot = originalPosition.clone();
+
+      // Calculate the ideal approach path
+      // Start from current position and gradually approach the landing spot
+      const idealDistance = 20 * (1 - finalApproachProgress); // Distance from landing spot
+      const approachPoint = new THREE.Vector3()
+        .copy(landingSpot)
+        .sub(approachVector.multiplyScalar(idealDistance));
+
+      // Calculate descent profile - gradual at first, then steeper
+      // This creates a realistic glide slope
+      let descentProfile;
+      if (finalApproachProgress < 0.5) {
+        // Initial descent - gradual
+        descentProfile = 5 - (finalApproachProgress / 0.5) * 2;
+      } else {
+        // Final descent - steeper
+        descentProfile = 3 - ((finalApproachProgress - 0.5) / 0.5) * 2;
+      }
+
+      // Set the altitude with slight variations for realism
+      approachPoint.y = landingSpot.y + descentProfile + (Math.sin(finalApproachProgress * 20) * 0.05);
+
+      // Smoothly move along the approach path with adaptive lerp factor
+      // More responsive as we get closer to landing for precision
+      const approachLerpFactor = 0.12 + (finalApproachProgress * 0.05);
+      ref.current.position.lerp(approachPoint, approachLerpFactor);
+
+      // Calculate pitch angle for descent - follows a realistic profile
+      // Slight nose down during initial descent, then gradually level off
+      let pitchAngle;
+      if (finalApproachProgress < 0.7) {
+        // Initial descent - slight nose down
+        pitchAngle = -0.05 * Math.sin(Math.PI * (finalApproachProgress / 0.7));
+      } else {
+        // Final approach - begin to level off
+        pitchAngle = -0.05 * Math.sin(Math.PI * 0.7) * (1 - ((finalApproachProgress - 0.7) / 0.3));
+      }
+
+      // Apply the descent attitude
+      const descentRotation = new THREE.Euler(
+        originalRotation.x + pitchAngle, // Pitch adjustment for descent
+        ref.current.rotation.y, // Maintain current heading
+        Math.sin(finalApproachProgress * 10) * 0.01 // Subtle roll variations
+      );
+
+      // Apply rotation with appropriate smoothing
+      ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, descentRotation.x, 0.12);
+      ref.current.rotation.z = THREE.MathUtils.lerp(ref.current.rotation.z, descentRotation.z, 0.1);
+
+    } else if (returnProgress < 0.75) {
+      // Phase 3: Flare maneuver - nose up just before touchdown
+      const flareProgress = (returnProgress - 0.6) / 0.15;
+
+      // Continue approach while flaring
+      const flareDistance = takeOffDistance * (0.3 - flareProgress * 0.2);
+
+      // Height decreases more slowly during flare
+      const flareHeight = 1 - (flareProgress * 0.9); // From 1 unit to 0.1 units
+
+      const flarePoint = new THREE.Vector3()
+        .copy(originalPosition)
+        .add(forwardDirection.multiplyScalar(flareDistance))
+        .add(new THREE.Vector3(0, flareHeight, 0));
+
+      // Smoothly move during flare
+      ref.current.position.lerp(flarePoint, 0.15);
+
+      // Nose up during flare - classic landing technique
+      const flareRotationCurve = Math.sin(flareProgress * Math.PI * 0.5); // Smooth curve for flare
+      const flareRotation = new THREE.Euler(
+        originalRotation.x - 0.15 * flareRotationCurve, // Nose up for flare
+        originalRotation.y,
+        originalRotation.z
+      );
+      ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, flareRotation.x, 0.15);
+
+    } else if (returnProgress < 0.9) {
+      // Phase 4: Touchdown and roll-out
+      const touchdownProgress = (returnProgress - 0.75) / 0.15;
+
+      // Continue deceleration after touchdown
+      const rolloutDistance = takeOffDistance * (0.1 - touchdownProgress * 0.1);
+
+      // Height is now at ground level
+      const touchdownPoint = new THREE.Vector3()
+        .copy(originalPosition)
+        .add(forwardDirection.multiplyScalar(rolloutDistance))
+        .add(new THREE.Vector3(0, 0, 0)); // At ground level
+
+      // Smoothly move during rollout
+      ref.current.position.lerp(touchdownPoint, 0.2);
+
+      // Nose gradually lowers after touchdown
+      const touchdownRotation = new THREE.Euler(
+        originalRotation.x - 0.05 * (1 - touchdownProgress), // Nose gradually returns to normal
+        originalRotation.y,
+        originalRotation.z
+      );
+      ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, touchdownRotation.x, 0.15);
+
+      // Add slight bounce and settling effect
+      if (touchdownProgress < 0.3) {
+        // Initial touchdown bounce
+        const bounceHeight = 0.05 * Math.sin(touchdownProgress * Math.PI * 3);
+        ref.current.position.y += bounceHeight;
+      }
+
+      // Add slight ground vibration during rollout
+      const rolloutVibration = 0.01 * (1 - touchdownProgress);
+      ref.current.position.y += Math.sin(returnElapsed * 40) * rolloutVibration;
+
+    } else {
+      // Phase 5: Final taxi and settling
+      const taxiProgress = (returnProgress - 0.9) / 0.1;
+
+      // Final taxi to exact original position
+      ref.current.position.lerp(originalPosition, 0.25);
+
+      // Restore original rotation with smooth interpolation
+      ref.current.rotation.x = THREE.MathUtils.lerp(ref.current.rotation.x, originalRotation.x, 0.2);
+      ref.current.rotation.y = THREE.MathUtils.lerp(ref.current.rotation.y, originalRotation.y, 0.2);
+      ref.current.rotation.z = THREE.MathUtils.lerp(ref.current.rotation.z, originalRotation.z, 0.2);
+
+      // Add very subtle final settling vibration
+      const settleVibration = 0.005 * (1 - taxiProgress);
+      ref.current.position.y += Math.sin(returnElapsed * 30) * settleVibration;
+    }
+
+    // Stop return animation once completed
+    if (returnProgress >= 1) {
+      console.log("Landing complete, resetting to original position");
+
+      // Reset position and rotation exactly to original values
+      ref.current.position.copy(originalPosition);
+      ref.current.rotation.set(originalRotation.x, originalRotation.y, originalRotation.z);
+
+      // Don't reset animation states here - let the parent component handle it
+      // This prevents issues with the animation being cut off prematurely
+    }
+  }
+}
+});
+return (
+<mesh {...props} ref={ref}>
+<primitive object={scene} />
+</mesh>
+);
+}
+export default PlaneOnly;

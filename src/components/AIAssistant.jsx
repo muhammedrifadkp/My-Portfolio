@@ -486,29 +486,47 @@ const AIAssistant = () => {
 
   // Universal AI Response Generator with Gemini API
   const generateAIResponse = async (userInput) => {
+    console.log('🤖 Attempting Gemini API call for:', userInput);
+
     // First try Gemini API if available
     try {
       const geminiResponse = await callGeminiAPI(userInput);
       if (geminiResponse) {
+        console.log('✅ Gemini API response received');
         return geminiResponse;
       }
     } catch (error) {
-      console.log('Gemini API unavailable, trying fallback...');
+      console.error('❌ Gemini API failed:', error.message);
+      console.log('🔄 Falling back to built-in knowledge...');
     }
 
     // Fallback to comprehensive built-in knowledge
+    console.log('📚 Using built-in knowledge base');
     return generateComprehensiveResponse(userInput);
   };
 
   // Advanced Gemini 2.0 Flash API Integration
   const callGeminiAPI = async (userInput) => {
-    const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
+    // For development, use the API key directly (will be moved to env in production)
+    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY ||
+                           import.meta.env.REACT_APP_GEMINI_API_KEY ||
+                           'AIzaSyCLE3mB91h6OTHt47EEwKzVBLPz-0D59Ow';
+
+    console.log('Environment check:', {
+      vite: import.meta.env.VITE_GEMINI_API_KEY ? 'Found' : 'Missing',
+      react: import.meta.env.REACT_APP_GEMINI_API_KEY ? 'Found' : 'Missing',
+      final: GEMINI_API_KEY ? 'Using API Key' : 'No API Key',
+      keyPreview: GEMINI_API_KEY ? GEMINI_API_KEY.substring(0, 10) + '...' : 'None'
+    });
 
     if (!GEMINI_API_KEY) {
+      console.error('Gemini API key not found');
       throw new Error('Gemini API key not configured');
     }
 
     try {
+      console.log('🚀 Making API call to Gemini 2.0 Flash...');
+
       // Use the latest Gemini 2.0 Flash model for faster, more accurate responses
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
@@ -573,10 +591,15 @@ Respond as Rifad's intelligent AI assistant with deep technical knowledge and pr
       });
 
       if (response.ok) {
+        console.log('✅ API response received, parsing...');
         const data = await response.json();
+        console.log('📄 Response data:', data);
+
         const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
         if (aiResponse) {
+          console.log('✅ AI response extracted successfully');
+
           // Clean and format the response
           const formattedResponse = aiResponse
             .replace(/\*\*(.*?)\*\*/g, '**$1**')
@@ -584,6 +607,8 @@ Respond as Rifad's intelligent AI assistant with deep technical knowledge and pr
             .trim();
 
           return `## 🧠 **Advanced AI Response**\n\n${formattedResponse}\n\n---\n\n*Powered by Gemini 2.0 Flash • Optimized for Rifad's Portfolio*`;
+        } else {
+          console.error('❌ No AI response text found in data');
         }
       } else {
         const errorData = await response.json();

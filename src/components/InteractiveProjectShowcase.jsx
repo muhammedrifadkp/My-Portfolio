@@ -85,28 +85,28 @@ const PhoneModel = ({ project, onClick }) => {
 const projectsData = [
   {
     id: 1,
-    name: 'EcomNova',
-    type: 'Full Stack E-commerce',
-    description: 'Complete e-commerce platform with user authentication, product catalog, shopping cart, and payment processing.',
-    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Stripe'],
+    name: 'CDC Attendance',
+    type: 'Full Stack Management System',
+    description: 'Comprehensive digital attendance management system for educational institutes with enterprise security, lab management, and advanced analytics.',
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Tailwind CSS'],
     primaryColor: '#4A90E2',
     secondaryColor: '#7ED321',
-    icon: '🛒',
-    liveUrl: 'https://ecomnova-demo.vercel.app',
-    githubUrl: 'https://github.com/muhammedrifadkp/ecomnova',
+    icon: '🎓',
+    liveUrl: 'https://cdc-attendance-com.vercel.app',
+    githubUrl: 'https://github.com/muhammedrifadkp/CDC_Attendance',
     features: [
-      'User Authentication & Authorization',
-      'Product Catalog with Search & Filter',
-      'Shopping Cart & Wishlist',
-      'Secure Payment Processing',
-      'Order Management System',
-      'Admin Dashboard'
+      'Multi-Role Management (Admin/Teacher/Student)',
+      'Smart Attendance Tracking System',
+      'Advanced Lab Management & PC Booking',
+      'Real-time Analytics & Reports',
+      'Enterprise Security & Authentication',
+      'Department & Course Management'
     ],
     metrics: {
-      users: '1.2K+',
-      orders: '450+',
-      revenue: '$12.5K',
-      rating: 4.8
+      users: '500+',
+      attendance: '10K+',
+      accuracy: '99.8%',
+      rating: 4.9
     },
     screenshots: [
       '/api/placeholder/400/300',
@@ -116,28 +116,28 @@ const projectsData = [
   },
   {
     id: 2,
-    name: 'TravelX',
-    type: 'Travel Website',
-    description: 'Responsive travel website with interactive galleries, booking system, and destination guides.',
-    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'jQuery'],
+    name: 'Zuditt AI',
+    type: 'AI Business Solutions Platform',
+    description: 'AI-driven business solutions platform offering web development, digital marketing, BPO services, and innovative technology solutions.',
+    technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'AI Integration'],
     primaryColor: '#E74C3C',
     secondaryColor: '#F39C12',
-    icon: '✈️',
-    liveUrl: 'https://travelx-showcase.netlify.app',
-    githubUrl: 'https://github.com/muhammedrifadkp/travelx',
+    icon: '🤖',
+    liveUrl: 'https://www.zuditt.com/',
+    githubUrl: 'https://github.com/muhammedrifadkp/zuditt-next',
     features: [
-      'Interactive Destination Maps',
-      'Photo Galleries with Lightbox',
-      'Booking Form Integration',
-      'Responsive Design',
-      'Smooth Scrolling Navigation',
-      'Contact Form with Validation'
+      'AI-Powered Business Solutions',
+      'WhatsApp CRM Integration',
+      'BPO Services Platform',
+      'Digital Marketing Tools',
+      'Multi-Industry Support',
+      'Modern Responsive Design'
     ],
     metrics: {
-      visitors: '5.8K+',
-      bookings: '120+',
-      destinations: '25',
-      rating: 4.6
+      clients: '350+',
+      projects: '120+',
+      rating: '4.9/5',
+      industries: '12+'
     },
     screenshots: [
       '/api/placeholder/400/300',
@@ -155,7 +155,7 @@ const projectsData = [
     secondaryColor: '#1ABC9C',
     icon: '🌐',
     liveUrl: 'https://muhammedrifad.vercel.app/',
-    githubUrl: 'https://github.com/muhammedrifadkp/My-Portfolio',
+    githubUrl: 'https://github.com/muhammedrifadkp/3D-Rifad-Portfolio',
     features: [
       '3D Interactive Elements',
       'Smooth Page Transitions',

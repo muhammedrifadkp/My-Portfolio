@@ -1,11 +1,4 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 # 🚀 3D Interactive Portfolio - Muhammed Rifad KP
 
 <div align="center">
@@ -45,12 +38,44 @@ Currently, two official plugins are available:
 - **🔍 SEO Optimized** - Meta tags and structured data for better visibility
 
 ### 🛠️ Technical Features
-- **Interactive 3D Models** - Custom 3D scenes using Three.js and React Three Fiber
+- **Interactive 3D Logo** - Custom 3D logo with drag-to-rotate functionality and auto-reset
+- **Modern Navbar Design** - Clean, responsive navigation with glass-morphism effects
 - **Dynamic Content Loading** - Efficient asset management and lazy loading
 - **Smooth Animations** - Framer Motion for fluid page transitions
 - **Contact Form Integration** - EmailJS for seamless communication
 - **Project Filtering** - Advanced filtering system for portfolio projects
-- **Dark/Light Theme** - Adaptive theming for better user experience
+- **AI Assistant Integration** - Smart chatbot for enhanced user interaction
+- **Interactive Project Showcase** - 3D project displays with filtering capabilities
+
+### 🆕 Recent Updates (2024)
+- **✅ Complete Navbar Redesign** - Modern, clean navigation with improved UX
+- **✅ Enhanced 3D Logo** - Interactive logo with user controls and visual feedback
+- **✅ Mobile-First Design** - Optimized hamburger menu for all devices
+- **✅ Performance Optimizations** - Improved loading times and smooth interactions
+- **✅ AI Assistant** - Integrated intelligent chatbot for user assistance
+- **✅ Project Updates** - Added CDC Attendance and Zuditt projects
+
+---
+
+## 🎨 Latest Design Updates
+
+### 🆕 Modern Navbar Redesign (December 2024)
+
+The navigation system has been completely redesigned with a focus on modern aesthetics and user experience:
+
+#### ✨ Key Features:
+- **🎯 Clean Modern Design** - Inspired by leading tech websites like vite.dev
+- **🌟 Interactive 3D Logo** - Drag-to-rotate functionality with smooth auto-reset
+- **📱 Mobile-First Approach** - Responsive hamburger menu for all devices
+- **🔍 Glass-morphism Effects** - Subtle backdrop blur and transparency
+- **⚡ Smooth Animations** - Hardware-accelerated transitions and hover effects
+- **🎮 User Feedback** - Visual indicators for logo interaction states
+
+#### 🛠️ Technical Improvements:
+- **Performance Optimized** - Reduced bundle size and improved loading times
+- **Accessibility Enhanced** - WCAG compliant with proper focus states
+- **Cross-browser Compatible** - Tested across all major browsers
+- **Touch-friendly** - Optimized for mobile and tablet interactions
 
 ---
 
@@ -96,6 +121,8 @@ Currently, two official plugins are available:
 - **Framer Motion** - Animation library
 - **EmailJS** - Email service integration
 - **React Router DOM** - Client-side routing
+- **GSAP** - Advanced animations and transitions
+- **Lucide React** - Modern icon library
 
 ### Build Tools
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
@@ -107,17 +134,21 @@ Currently, two official plugins are available:
 ## 📁 Project Structure
 
 ```
-📦 My-Portfolio/
+📦 3D-Rifad-Portfolio/
 ├── 📂 public/
-│   ├── 📂 desktop_pc/          # 3D model assets
-│   ├── 📂 textures/            # Texture files
+│   ├── 📂 desktop_pc/          # 3D computer model assets
+│   ├── 📂 textures/            # Texture files and generators
 │   └── 📄 Muhammed-Rifad-KP-Resume.pdf
 ├── 📂 src/
 │   ├── 📂 assets/
 │   │   └── 📂 3d/              # 3D models (GLB files)
+│   │       └── 📄 RIFAD_logo_texture_3D.glb  # Interactive 3D logo
 │   ├── 📂 components/
-│   │   ├── 📄 ComputerCanvas.jsx    # 3D computer model
-│   │   ├── 📄 Navbar.jsx           # Navigation component
+│   │   ├── 📄 AIAssistant.jsx      # Intelligent chatbot component
+│   │   ├── 📄 ComputerCanvas.jsx   # 3D computer model
+│   │   ├── 📄 InteractiveProjectShowcase.jsx  # 3D project display
+│   │   ├── 📄 Navbar.jsx           # Modern navigation component
+│   │   ├── 📄 Navbar.css           # Navbar styling
 │   │   ├── 📄 Loader.jsx           # Loading component
 │   │   └── 📄 ScreenContent.jsx    # Dynamic screen content
 │   ├── 📂 models/
@@ -125,7 +156,8 @@ Currently, two official plugins are available:
 │   ├── 📂 pages/
 │   │   ├── 📄 Home.jsx             # Landing page
 │   │   ├── 📄 About.jsx            # About section
-│   │   ├── 📄 Projects.jsx         # Portfolio projects
+│   │   ├── 📄 Projects.jsx         # Portfolio projects with filtering
+│   │   ├── 📄 Features.jsx         # Features showcase
 │   │   └── 📄 Contact.jsx          # Contact form
 │   ├── 📄 App.jsx                  # Main app component
 │   ├── 📄 main.jsx                 # Entry point
@@ -149,8 +181,8 @@ Currently, two official plugins are available:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/muhammedrifadkp/My-Portfolio.git
-   cd My-Portfolio
+   git clone https://github.com/muhammedrifadkp/3D-Rifad-Portfolio.git
+   cd 3D-Rifad-Portfolio
    ```
 
 2. **Install dependencies**
@@ -202,23 +234,23 @@ yarn preview
 
 ## 🎨 Featured Projects
 
-### 🛒 EcomNova - E-commerce Platform
-**Full Stack Application**
-- **Tech Stack:** React, Node.js, Express, MongoDB, JWT, Stripe API
-- **Features:** User authentication, product catalog, shopping cart, payment processing
-- **[Live Demo](https://ecomnova-demo.vercel.app)** | **[Source Code](https://github.com/muhammedrifadkp/ecomnova)**
+### 🎓 CDC Attendance Management System
+**Full Stack Educational Platform**
+- **Tech Stack:** React, Node.js, Express, MongoDB, JWT, Tailwind CSS
+- **Features:** Multi-role management, smart attendance tracking, lab management, analytics
+- **[Live Demo](https://cdc-attendance-com.vercel.app)** | **[Source Code](https://github.com/muhammedrifadkp/CDC_Attendance)**
 
-### ✈️ TravelX - Travel Website
-**Frontend Showcase**
-- **Tech Stack:** HTML5, CSS3, JavaScript, Bootstrap, jQuery
-- **Features:** Responsive design, smooth scrolling, interactive galleries
-- **[Live Demo](https://travelx-showcase.netlify.app)** | **[Source Code](https://github.com/muhammedrifadkp/travelx)**
+### 🤖 Zuditt AI Innovation LLP
+**AI Business Solutions Platform**
+- **Tech Stack:** Next.js, React, TypeScript, Tailwind CSS, AI Integration
+- **Features:** AI-powered solutions, WhatsApp CRM, BPO services, digital marketing
+- **[Live Demo](https://www.zuditt.com/)** | **[Source Code](https://github.com/muhammedrifadkp/zuditt-next)**
 
-### 🌐 3D Portfolio Website
-**Interactive Experience**
-- **Tech Stack:** React, Three.js, Framer Motion, Tailwind CSS
-- **Features:** 3D animations, smooth transitions, modern UI/UX
-- **[Live Demo](https://muhammedrifad.vercel.app/)** | **[Source Code](https://github.com/muhammedrifadkp/My-Portfolio)**
+### 🌐 3D Interactive Portfolio
+**Modern Web Experience**
+- **Tech Stack:** React, Three.js, React Three Fiber, Vite, Tailwind CSS
+- **Features:** Interactive 3D logo, modern navbar, AI assistant, project showcase
+- **[Live Demo](https://muhammedrifad.vercel.app/)** | **[Source Code](https://github.com/muhammedrifadkp/3D-Rifad-Portfolio)**
 
 ---
 
@@ -316,6 +348,14 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 🐛 Known Issues & Roadmap
 
+### ✅ Recently Completed
+- [x] **Complete Navbar Redesign** - Modern, responsive navigation system
+- [x] **Interactive 3D Logo** - Drag-to-rotate functionality with auto-reset
+- [x] **AI Assistant Integration** - Smart chatbot for user interaction
+- [x] **Project Showcase Enhancement** - Interactive 3D project displays
+- [x] **Mobile Optimization** - Improved responsive design
+- [x] **Performance Improvements** - Optimized 3D rendering and loading
+
 ### Current Issues
 - [ ] Loading optimization for large 3D models
 - [ ] Safari WebGL performance improvements
@@ -326,6 +366,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 - [ ] Multi-language support
 - [ ] Advanced 3D interactions
 - [ ] Performance analytics dashboard
+- [ ] Voice interaction capabilities
 
 ---
 
@@ -380,10 +421,10 @@ copies or substantial portions of the Software.
 
 <div align="center">
 
-![GitHub Stars](https://img.shields.io/github/stars/muhammedrifadkp/My-Portfolio?style=social)
-![GitHub Forks](https://img.shields.io/github/forks/muhammedrifadkp/My-Portfolio?style=social)
-![GitHub Issues](https://img.shields.io/github/issues/muhammedrifadkp/My-Portfolio)
-![GitHub Pull Requests](https://img.shields.io/github/issues-pr/muhammedrifadkp/My-Portfolio)
+![GitHub Stars](https://img.shields.io/github/stars/muhammedrifadkp/3D-Rifad-Portfolio?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/muhammedrifadkp/3D-Rifad-Portfolio?style=social)
+![GitHub Issues](https://img.shields.io/github/issues/muhammedrifadkp/3D-Rifad-Portfolio)
+![GitHub Pull Requests](https://img.shields.io/github/issues-pr/muhammedrifadkp/3D-Rifad-Portfolio)
 
 **⭐ Star this repository if you found it helpful!**
 

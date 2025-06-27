@@ -56,7 +56,7 @@ function generateScreenTexture() {
   ctx.fillText('Projects', canvas.width / 2, 500);
 
   // Project items
-  const projects = ['EcomNova', 'EtheReal', 'TravelX'];
+  const projects = ['CDC Attendance', 'Zuditt AI', '3D Portfolio'];
   ctx.font = '24px Arial';
   ctx.fillStyle = '#cccccc';
   

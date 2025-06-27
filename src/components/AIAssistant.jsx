@@ -61,62 +61,64 @@ const AIAssistant = () => {
     },
 
     projects: {
-      'EcomNova': {
-        description: 'A comprehensive full-stack e-commerce platform featuring modern UI/UX, secure authentication, and seamless payment integration',
-        detailed_description: 'EcomNova represents a complete e-commerce solution built with scalability and user experience in mind. The platform features a responsive React frontend with intuitive navigation, product filtering, and a smooth checkout process. The backend utilizes Node.js and Express for robust API handling, MongoDB for flexible data storage, and Stripe for secure payment processing.',
-        tech_stack: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Stripe API', 'Tailwind CSS'],
+      'CDC Attendance': {
+        description: 'A comprehensive digital attendance management system for educational institutes with enterprise security, lab management, and advanced analytics',
+        detailed_description: 'CDC Attendance Management System is a modern, secure, and feature-rich solution designed specifically for educational institutes. Built with cutting-edge technologies to streamline academic operations, it includes multi-role management, smart attendance tracking, advanced lab management with PC booking, real-time analytics, and enterprise-grade security features.',
+        tech_stack: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Tailwind CSS', 'Vite', 'Winston'],
         type: 'Full Stack',
         complexity: 'High',
-        duration: '3 months',
+        duration: '4 months',
         team_size: 'Solo project',
         key_features: [
-          'User authentication and authorization system',
-          'Product catalog with advanced search and filtering',
-          'Shopping cart with persistent state',
-          'Secure payment processing with Stripe',
-          'Order management and tracking',
-          'Admin dashboard for inventory management',
-          'Responsive design for all devices',
-          'Performance optimization and SEO'
+          'Multi-role management (Admin, Teacher, Student)',
+          'Smart attendance tracking with bulk operations',
+          'Advanced lab management and PC booking system',
+          'Real-time analytics and comprehensive reports',
+          'Enterprise-grade security with JWT authentication',
+          'Department and course management',
+          'Email notifications and alerts',
+          'Export capabilities (Excel/PDF)'
         ],
         technical_challenges: [
-          'Implementing secure JWT-based authentication',
-          'Designing scalable database schema',
-          'Integrating Stripe payment gateway',
-          'Optimizing performance for large product catalogs',
-          'Ensuring responsive design across devices'
+          'Implementing role-based access control',
+          'Designing scalable attendance tracking system',
+          'Creating real-time lab booking interface',
+          'Building comprehensive analytics dashboard',
+          'Ensuring enterprise-level security'
         ],
-        live_url: 'https://ecomnova-demo.vercel.app',
-        github_url: 'https://github.com/muhammedrifadkp/ecomnova',
-        achievements: ['Successfully deployed with 99.9% uptime', 'Achieved 95+ Lighthouse performance score', 'Implemented secure payment processing']
+        live_url: 'https://cdc-attendance-com.vercel.app',
+        github_url: 'https://github.com/muhammedrifadkp/CDC_Attendance',
+        achievements: ['Successfully deployed with 99.9% uptime', 'Enterprise-grade security implementation', 'Comprehensive educational management solution']
       },
 
-      'TravelX': {
-        description: 'An immersive travel website showcasing destinations with interactive galleries and smooth user experience',
-        detailed_description: 'TravelX is a visually stunning travel website that combines beautiful design with functional interactivity. Built with vanilla JavaScript and modern CSS techniques, it demonstrates mastery of fundamental web technologies while delivering a premium user experience.',
-        tech_stack: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'jQuery', 'AOS (Animate On Scroll)'],
-        type: 'Frontend',
-        complexity: 'Medium',
-        duration: '1 month',
+      'Zuditt AI': {
+        description: 'AI-driven business solutions platform offering web development, digital marketing, BPO services, and innovative technology solutions',
+        detailed_description: 'Zuditt AI Innovation LLP is a comprehensive business solutions platform that specializes in transforming businesses through cutting-edge artificial intelligence and innovative technology solutions. The platform offers end-to-end services including web development, digital marketing, BPO services, and AI-powered tools.',
+        tech_stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'AI Integration', 'WhatsApp API'],
+        type: 'Full Stack',
+        complexity: 'High',
+        duration: '6 months',
         team_size: 'Solo project',
         key_features: [
-          'Interactive destination galleries',
-          'Smooth scrolling navigation',
-          'Responsive design with mobile-first approach',
-          'CSS animations and transitions',
-          'Contact form with validation',
-          'SEO optimization',
-          'Cross-browser compatibility'
+          'AI-powered business solutions',
+          'WhatsApp CRM integration',
+          'BPO services platform',
+          'Digital marketing tools',
+          'Multi-industry support',
+          'Modern responsive design',
+          'Customer testimonials system',
+          'Newsletter subscription'
         ],
         technical_challenges: [
-          'Creating smooth scroll animations',
-          'Implementing responsive image galleries',
-          'Optimizing performance for image-heavy content',
-          'Ensuring cross-browser compatibility'
+          'Integrating AI-powered features',
+          'Building scalable CRM system',
+          'Creating multi-service platform',
+          'Implementing modern UI/UX design',
+          'Ensuring cross-platform compatibility'
         ],
-        live_url: 'https://travelx-showcase.netlify.app',
-        github_url: 'https://github.com/muhammedrifadkp/travelx',
-        achievements: ['100% responsive design', 'Optimized loading times', 'Smooth animations across all devices']
+        live_url: 'https://www.zuditt.com/',
+        github_url: 'https://github.com/muhammedrifadkp/zuditt-next',
+        achievements: ['350+ happy customers', '120+ projects completed', '4.9/5 review rating', 'Multi-industry presence']
       },
 
       'Portfolio_3D': {
@@ -283,11 +285,12 @@ const AIAssistant = () => {
         skills: ['skill', 'technology', 'tech', 'programming', 'language', 'framework', 'tool', 'expertise', 'proficiency', 'know', 'learn'],
         projects: ['project', 'work', 'portfolio', 'build', 'create', 'develop', 'application', 'website', 'app', 'built', 'made'],
         experience: ['experience', 'background', 'career', 'job', 'work', 'professional', 'history', 'worked'],
-        technical: ['how', 'why', 'explain', 'implement', 'architecture', 'design', 'pattern', 'best practice', 'code'],
+        technical: ['how', 'why', 'explain', 'implement', 'architecture', 'design', 'pattern', 'best practice'],
         personal: ['about', 'who', 'person', 'individual', 'background', 'story', 'tell me'],
         contact: ['contact', 'reach', 'email', 'hire', 'collaborate', 'work together', 'get in touch'],
         comparison: ['vs', 'versus', 'compare', 'difference', 'better', 'prefer', 'which'],
-        advice: ['advice', 'recommend', 'suggest', 'should', 'opinion', 'think', 'help']
+        advice: ['advice', 'recommend', 'suggest', 'should', 'opinion', 'think', 'help'],
+        code_request: ['code', 'html', 'css', 'javascript', 'example', 'snippet', 'write', 'create', 'make', 'build', 'show me', 'generate']
       };
 
       let detectedIntent = 'personal';
@@ -311,64 +314,16 @@ const AIAssistant = () => {
       };
     }
 
-    // For any other question, treat as general technical/knowledge question
-    return { intent: 'general_ai', confidence: 0.95, entities: {}, originalInput: input };
+    // Check for code requests
+    const codeKeywords = ['code', 'html', 'css', 'javascript', 'example', 'snippet', 'write', 'create', 'make', 'build', 'show me', 'generate'];
+    const isCodeRequest = codeKeywords.some(keyword => lowerInput.includes(keyword));
 
-    // Intent classification
-    const intents = {
-      skills: ['skill', 'technology', 'tech', 'programming', 'language', 'framework', 'tool', 'expertise', 'proficiency', 'know', 'learn'],
-      projects: ['project', 'work', 'portfolio', 'build', 'create', 'develop', 'application', 'website', 'app', 'built', 'made'],
-      experience: ['experience', 'background', 'career', 'job', 'work', 'professional', 'history', 'worked'],
-      technical: ['how', 'why', 'explain', 'implement', 'architecture', 'design', 'pattern', 'best practice', 'code'],
-      personal: ['about', 'who', 'person', 'individual', 'background', 'story', 'tell me'],
-      contact: ['contact', 'reach', 'email', 'hire', 'collaborate', 'work together', 'get in touch'],
-      comparison: ['vs', 'versus', 'compare', 'difference', 'better', 'prefer', 'which'],
-      advice: ['advice', 'recommend', 'suggest', 'should', 'opinion', 'think', 'help']
-    };
-
-    let detectedIntent = 'general';
-    let confidence = 0;
-
-    for (const [intent, keywords] of Object.entries(intents)) {
-      const matches = keywords.filter(keyword => lowerInput.includes(keyword)).length;
-      const currentConfidence = matches / keywords.length;
-
-      if (currentConfidence > confidence) {
-        confidence = currentConfidence;
-        detectedIntent = intent;
-      }
+    if (isCodeRequest) {
+      return { intent: 'general_ai', confidence: 0.98, entities: { isCodeRequest: true }, originalInput: input };
     }
 
-    // Extract entities (specific technologies, projects, etc.)
-    const entities = {
-      technologies: [],
-      projects: [],
-      skills: []
-    };
-
-    // Technology extraction
-    const allTechs = [
-      ...knowledgeBase.skills.frontend.expert,
-      ...knowledgeBase.skills.frontend.advanced,
-      ...knowledgeBase.skills.backend.expert,
-      ...knowledgeBase.skills.backend.advanced
-    ];
-
-    entities.technologies = allTechs.filter(tech =>
-      lowerInput.includes(tech.toLowerCase())
-    );
-
-    // Project extraction
-    entities.projects = Object.keys(knowledgeBase.projects).filter(project =>
-      lowerInput.includes(project.toLowerCase())
-    );
-
-    return {
-      intent: detectedIntent,
-      confidence: confidence,
-      entities: entities,
-      originalInput: input
-    };
+    // For any other question, treat as general technical/knowledge question
+    return { intent: 'general_ai', confidence: 0.95, entities: {}, originalInput: input };
   };
 
   const scrollToBottom = () => {
@@ -434,6 +389,9 @@ const AIAssistant = () => {
 
       case 'advice':
         return generateAdviceResponse(userInput);
+
+      case 'code_request':
+        return await generateAIResponse(userInput);
 
       default:
         return generateContextualDefault(userInput, analysis);
@@ -553,11 +511,21 @@ USER QUESTION: "${userInput}"
 INSTRUCTIONS:
 1. If about Rifad: Provide detailed, specific information about his skills, projects, or experience
 2. If general technical: Give comprehensive explanation, then connect to Rifad's relevant expertise
-3. Be professional, informative, and engaging
-4. Use proper markdown formatting with headers, lists, and emphasis
-5. Include practical examples and real-world applications
-6. End with a relevant follow-up question to encourage further conversation
-7. Keep responses detailed but concise (aim for 200-400 words)
+3. If code request: Provide complete, working code examples with explanations
+4. Be professional, informative, and engaging
+5. Use proper markdown formatting with headers, lists, and emphasis
+6. For code: Use proper code blocks with language syntax highlighting
+7. Include practical examples and real-world applications
+8. End with a relevant follow-up question to encourage further conversation
+9. Keep responses detailed but concise (aim for 200-500 words)
+
+SPECIAL FOR CODE REQUESTS:
+- Provide complete, working code examples
+- Include HTML, CSS, and JavaScript as requested
+- Add comments explaining key parts
+- Show responsive design principles
+- Include modern best practices
+- Make code production-ready
 
 Respond as Rifad's intelligent AI assistant with deep technical knowledge and professional insight.`
             }]

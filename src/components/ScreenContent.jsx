@@ -121,7 +121,7 @@ const createScreenTexture = () => {
     });
 
     // Projects section
-    const projects = ['EcomNova', 'EtheReal', 'TravelX'];
+    const projects = ['CDC Attendance', 'Zuditt AI', '3D Portfolio'];
     ctx.font = '24px "Orbitron", sans-serif';
     projects.forEach((project, i) => {
       const y = 300 + i * 80;

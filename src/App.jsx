@@ -10,9 +10,7 @@ import ScrollToTop from './components/ScrollToTop.jsx'
 
 // Advanced Components
 import AIAssistant from './components/AIAssistant'
-import { ThemeProvider, ThemeControlPanel } from './components/ThemeSystem'
-import VisitorInteractionTracker from './components/VisitorInteractionTracker'
-import GameificationSystem from './components/GameificationSystem'
+import { ThemeProvider } from './components/ThemeSystem'
 
 const App = () => {
   return (
@@ -32,9 +30,6 @@ const App = () => {
 
           {/* Advanced Features */}
           <AIAssistant />
-          <ThemeControlPanel />
-          <VisitorInteractionTracker />
-          <GameificationSystem />
         </BrowserRouter>
       </main>
     </ThemeProvider>

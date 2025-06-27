@@ -10,23 +10,23 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'EcomNova – E-commerce Platform',
+      title: 'CDC Attendance Management System',
       category: 'fullstack',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center',
-      description: 'A scalable e-commerce website with comprehensive user management, product catalog, shopping cart functionality, and order management system.',
-      technologies: ['React', 'Vite', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Stripe API'],
-      demoLink: 'https://ecomnova-demo.vercel.app',
-      codeLink: 'https://github.com/muhammedrifadkp/ecomnova'
+      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop&crop=center',
+      description: 'Comprehensive digital attendance management system for educational institutes with enterprise security, lab management, and advanced analytics.',
+      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Tailwind CSS', 'Vite'],
+      demoLink: 'https://cdc-attendance-com.vercel.app',
+      codeLink: 'https://github.com/muhammedrifadkp/CDC_Attendance'
     },
     {
       id: 2,
-      title: 'TravelX – Travel Website',
-      category: 'frontend',
-      image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=400&fit=crop&crop=center',
-      description: 'A visually appealing one-page travel website showcasing destinations with smooth scrolling, modal interactions, and responsive design.',
-      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'jQuery', 'AOS'],
-      demoLink: 'https://travelx-showcase.netlify.app',
-      codeLink: 'https://github.com/muhammedrifadkp/travelx'
+      title: 'Zuditt AI Innovation LLP',
+      category: 'fullstack',
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop&crop=center',
+      description: 'AI-driven business solutions platform offering web development, digital marketing, BPO services, and innovative technology solutions.',
+      technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'AI Integration'],
+      demoLink: 'https://www.zuditt.com/',
+      codeLink: 'https://github.com/muhammedrifadkp/zuditt-next'
     },
     {
       id: 3,
@@ -35,8 +35,8 @@ const Projects = () => {
       image: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=600&h=400&fit=crop&crop=center',
       description: 'An interactive 3D portfolio website showcasing projects and skills with Three.js animations, smooth transitions, and modern design.',
       technologies: ['React', 'Three.js', 'React Three Fiber', 'Framer Motion', 'Tailwind CSS', 'Vite'],
-      demoLink: 'https://rifad-portfolio.netlify.app',
-      codeLink: 'https://github.com/muhammedrifadkp/3d-portfolio'
+      demoLink: 'https://muhammedrifad.vercel.app/',
+      codeLink: 'https://github.com/muhammedrifadkp/3D-Rifad-Portfolio'
     }
   ];
 

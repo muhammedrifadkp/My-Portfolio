@@ -248,7 +248,7 @@ const AIAssistant = () => {
     setCurrentTopic(topic);
   }, []);
 
-  // Advanced Natural Language Processing
+  // Advanced AI-Powered Question Analysis
   const analyzeIntent = (input) => {
     const lowerInput = input.toLowerCase().trim();
 
@@ -260,39 +260,59 @@ const AIAssistant = () => {
       return { intent: 'greeting', confidence: 1.0, entities: {}, originalInput: input };
     }
 
-    // Handle location/geography questions
-    const locationKeywords = ['india', 'location', 'where', 'country', 'place', 'based', 'from'];
-    const isLocationQuery = locationKeywords.some(keyword => lowerInput.includes(keyword));
+    // Check if question is about Rifad specifically
+    const rifadKeywords = ['rifad', 'his', 'he', 'him', 'your', 'you'];
+    const isAboutRifad = rifadKeywords.some(keyword => lowerInput.includes(keyword));
 
-    if (isLocationQuery) {
-      return { intent: 'location', confidence: 0.9, entities: {}, originalInput: input };
+    if (isAboutRifad) {
+      // Handle location/geography questions about Rifad
+      const locationKeywords = ['india', 'location', 'where', 'country', 'place', 'based', 'from'];
+      const isLocationQuery = locationKeywords.some(keyword => lowerInput.includes(keyword));
+
+      if (isLocationQuery) {
+        return { intent: 'location', confidence: 0.9, entities: {}, originalInput: input };
+      }
+
+      // Handle simple questions about Rifad
+      if (lowerInput.length < 15 && (lowerInput.includes('?') || ['what', 'who', 'how', 'why', 'when'].some(w => lowerInput.startsWith(w)))) {
+        return { intent: 'simple_question', confidence: 0.8, entities: {}, originalInput: input };
+      }
+
+      // Rifad-specific intent classification
+      const rifadIntents = {
+        skills: ['skill', 'technology', 'tech', 'programming', 'language', 'framework', 'tool', 'expertise', 'proficiency', 'know', 'learn'],
+        projects: ['project', 'work', 'portfolio', 'build', 'create', 'develop', 'application', 'website', 'app', 'built', 'made'],
+        experience: ['experience', 'background', 'career', 'job', 'work', 'professional', 'history', 'worked'],
+        technical: ['how', 'why', 'explain', 'implement', 'architecture', 'design', 'pattern', 'best practice', 'code'],
+        personal: ['about', 'who', 'person', 'individual', 'background', 'story', 'tell me'],
+        contact: ['contact', 'reach', 'email', 'hire', 'collaborate', 'work together', 'get in touch'],
+        comparison: ['vs', 'versus', 'compare', 'difference', 'better', 'prefer', 'which'],
+        advice: ['advice', 'recommend', 'suggest', 'should', 'opinion', 'think', 'help']
+      };
+
+      let detectedIntent = 'personal';
+      let confidence = 0;
+
+      for (const [intent, keywords] of Object.entries(rifadIntents)) {
+        const matches = keywords.filter(keyword => lowerInput.includes(keyword)).length;
+        const currentConfidence = matches / keywords.length;
+
+        if (currentConfidence > confidence) {
+          confidence = currentConfidence;
+          detectedIntent = intent;
+        }
+      }
+
+      return {
+        intent: detectedIntent,
+        confidence: Math.max(0.6, confidence),
+        entities: { isAboutRifad: true },
+        originalInput: input
+      };
     }
 
-    // Handle simple questions
-    if (lowerInput.length < 10 && (lowerInput.includes('?') || ['what', 'who', 'how', 'why', 'when'].some(w => lowerInput.startsWith(w)))) {
-      return { intent: 'simple_question', confidence: 0.8, entities: {}, originalInput: input };
-    }
-
-    // Check for general technical questions first
-    const generalTechTerms = [
-      'vercel', 'netlify', 'aws', 'docker', 'kubernetes', 'git', 'github', 'npm', 'yarn',
-      'webpack', 'vite', 'babel', 'typescript', 'javascript', 'react', 'vue', 'angular',
-      'node.js', 'express', 'mongodb', 'sql', 'database', 'api', 'rest', 'graphql',
-      'css', 'html', 'sass', 'tailwind', 'bootstrap', 'figma', 'design', 'ui', 'ux',
-      'deployment', 'hosting', 'domain', 'server', 'cloud', 'frontend', 'backend',
-      'fullstack', 'framework', 'library', 'package', 'module', 'component'
-    ];
-
-    const isGeneralTechQuestion = generalTechTerms.some(term =>
-      lowerInput.includes(term) &&
-      !lowerInput.includes('rifad') &&
-      !lowerInput.includes('his') &&
-      !lowerInput.includes('he')
-    );
-
-    if (isGeneralTechQuestion) {
-      return { intent: 'general_tech', confidence: 0.9, entities: { term: generalTechTerms.find(term => lowerInput.includes(term)) }, originalInput: input };
-    }
+    // For any other question, treat as general technical/knowledge question
+    return { intent: 'general_ai', confidence: 0.95, entities: {}, originalInput: input };
 
     // Intent classification
     const intents = {
@@ -360,7 +380,7 @@ const AIAssistant = () => {
   }, [messages]);
 
   // Advanced Response Generation with Context Awareness
-  const generateAdvancedResponse = (userInput) => {
+  const generateAdvancedResponse = async (userInput) => {
     const analysis = analyzeIntent(userInput);
     const { intent, entities, confidence } = analysis;
 
@@ -384,6 +404,9 @@ const AIAssistant = () => {
 
       case 'simple_question':
         return generateSimpleQuestionResponse(userInput);
+
+      case 'general_ai':
+        return await generateAIResponse(userInput);
 
       case 'general_tech':
         return generateGeneralTechResponse(userInput, entities);
@@ -459,6 +482,104 @@ const AIAssistant = () => {
 
     // Default for other simple questions
     return `## 🤔 **Great Question!**\n\nI'd love to help you with that! Here are some areas I can provide detailed information about:\n\n### **🎯 Quick Topics**\n• **"What are his skills?"** - Technical expertise breakdown\n• **"Show me his projects"** - Portfolio deep-dive\n• **"How experienced is he?"** - Career journey and achievements\n• **"Can I contact him?"** - Professional contact information\n\n### **💡 Or try asking:**\n• "Tell me about React expertise"\n• "What's his best project?"\n• "How does he solve problems?"\n• "What makes him unique?"\n\n*Feel free to be more specific - I'm here to help!*`;
+  };
+
+  // Universal AI Response Generator - Handles ANY question like ChatGPT
+  const generateAIResponse = async (userInput) => {
+    try {
+      // Use Hugging Face's free inference API for general questions
+      const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-large', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          inputs: {
+            past_user_inputs: [],
+            generated_responses: [],
+            text: userInput
+          },
+          parameters: {
+            max_length: 500,
+            temperature: 0.7,
+            do_sample: true
+          }
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const aiResponse = data.generated_text || data.response;
+
+        if (aiResponse) {
+          return `## 🤖 **AI Response**\n\n${aiResponse}\n\n---\n\n### 🔗 **Related to Rifad's Expertise**\n${getRelevantRifadConnection(userInput)}\n\n*Want to know how Rifad applies this knowledge in his projects?*`;
+        }
+      }
+    } catch (error) {
+      console.log('AI API unavailable, using fallback response');
+    }
+
+    // Fallback to comprehensive built-in knowledge
+    return generateComprehensiveResponse(userInput);
+  };
+
+  // Comprehensive built-in knowledge for when AI API is unavailable
+  const generateComprehensiveResponse = (userInput) => {
+    const lowerInput = userInput.toLowerCase();
+
+    // GitHub
+    if (lowerInput.includes('github')) {
+      return `## 🐙 **GitHub** - Code Hosting Platform\n\nGitHub is a web-based platform that uses Git for version control and provides hosting for software development projects.\n\n### **🎯 Key Features**\n• **Repository hosting** - Store and manage code projects\n• **Version control** - Track changes and collaborate\n• **Issue tracking** - Bug reports and feature requests\n• **Pull requests** - Code review and collaboration\n• **Actions** - CI/CD automation workflows\n• **Pages** - Static website hosting\n• **Packages** - Package registry and distribution\n• **Codespaces** - Cloud development environments\n\n### **💼 Use Cases**\n• **Open source projects** - Share code with the community\n• **Team collaboration** - Work together on projects\n• **Portfolio showcase** - Display your coding skills\n• **Project management** - Track issues and milestones\n• **Continuous deployment** - Automate testing and deployment\n\n### **🔗 Rifad's GitHub**\nRifad actively uses GitHub for all his projects. You can explore his repositories at [github.com/muhammedrifadkp](https://github.com/muhammedrifadkp) to see his coding style, project structure, and contribution history.\n\n*Want to see specific projects or learn about his development workflow?*`;
+    }
+
+    // Git
+    if (lowerInput.includes('git') && !lowerInput.includes('github')) {
+      return `## 📚 **Git** - Distributed Version Control System\n\nGit is a free and open-source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.\n\n### **🎯 Core Concepts**\n• **Repository (Repo)** - Project folder with complete history\n• **Commit** - Snapshot of changes with descriptive message\n• **Branch** - Independent line of development\n• **Merge** - Combining changes from different branches\n• **Remote** - Version of repository hosted on server\n• **Clone** - Copy repository to local machine\n• **Push/Pull** - Upload/download changes to/from remote\n\n### **💻 Essential Commands**\n• \`git init\` - Initialize new repository\n• \`git add\` - Stage changes for commit\n• \`git commit\` - Save changes with message\n• \`git push\` - Upload changes to remote\n• \`git pull\` - Download latest changes\n• \`git branch\` - Create or list branches\n• \`git merge\` - Combine branches\n\n### **✅ Benefits**\n• **Distributed** - Every clone is a full backup\n• **Fast** - Optimized for performance\n• **Flexible** - Supports various workflows\n• **Reliable** - Data integrity through checksums\n• **Industry standard** - Used by millions of developers\n\n### **🔗 Rifad's Git Expertise**\nRifad uses Git extensively with 85% proficiency. He follows best practices for commit messages, branching strategies (feature branches, GitFlow), and maintains clean project histories across all his repositories.\n\n*Want to see examples of his Git workflow or learn about advanced Git techniques?*`;
+    }
+
+    // Docker
+    if (lowerInput.includes('docker')) {
+      return `## 🐳 **Docker** - Containerization Platform\n\nDocker is a platform that uses containerization to package applications and their dependencies into lightweight, portable containers.\n\n### **🎯 Key Concepts**\n• **Container** - Lightweight, standalone executable package\n• **Image** - Template for creating containers\n• **Dockerfile** - Instructions to build images\n• **Registry** - Repository for storing images (Docker Hub)\n• **Volume** - Persistent data storage\n• **Network** - Communication between containers\n\n### **💼 Benefits**\n• **Consistency** - Same environment everywhere\n• **Portability** - Run anywhere Docker is installed\n• **Efficiency** - Lightweight compared to VMs\n• **Scalability** - Easy to scale applications\n• **Isolation** - Applications don't interfere\n\n### **🚀 Common Use Cases**\n• **Development environments** - Consistent dev setups\n• **Microservices** - Deploy independent services\n• **CI/CD pipelines** - Automated testing and deployment\n• **Cloud deployment** - Platform-agnostic deployment\n• **Legacy app modernization** - Containerize old applications\n\n### **🔗 Modern Development**\nDocker has revolutionized how developers build, ship, and run applications. It's essential for modern DevOps practices and cloud-native development.\n\n*Interested in learning about containerization strategies or deployment workflows?*`;
+    }
+
+    // Kubernetes
+    if (lowerInput.includes('kubernetes') || lowerInput.includes('k8s')) {
+      return `## ⚓ **Kubernetes (K8s)** - Container Orchestration\n\nKubernetes is an open-source container orchestration platform that automates deployment, scaling, and management of containerized applications.\n\n### **🎯 Core Components**\n• **Cluster** - Set of machines running Kubernetes\n• **Node** - Worker machine in cluster\n• **Pod** - Smallest deployable unit\n• **Service** - Network access to pods\n• **Deployment** - Manages pod replicas\n• **ConfigMap/Secret** - Configuration management\n\n### **💪 Key Features**\n• **Auto-scaling** - Scale based on demand\n• **Self-healing** - Replace failed containers\n• **Load balancing** - Distribute traffic\n• **Rolling updates** - Zero-downtime deployments\n• **Service discovery** - Automatic networking\n• **Storage orchestration** - Manage persistent volumes\n\n### **🌟 Benefits**\n• **High availability** - Fault-tolerant applications\n• **Scalability** - Handle varying loads\n• **Portability** - Run on any cloud or on-premises\n• **Efficiency** - Optimal resource utilization\n• **Automation** - Reduce manual operations\n\n### **🚀 Enterprise Adoption**\nKubernetes has become the de facto standard for container orchestration, used by companies like Google, Netflix, Spotify, and thousands of others for production workloads.\n\n*Want to learn about container orchestration patterns or cloud-native architecture?*`;
+    }
+
+    // AWS
+    if (lowerInput.includes('aws') || lowerInput.includes('amazon web services')) {
+      return `## ☁️ **AWS (Amazon Web Services)** - Cloud Computing Platform\n\nAWS is Amazon's comprehensive cloud computing platform offering over 200 services including computing, storage, databases, networking, and more.\n\n### **🎯 Core Services**\n• **EC2** - Virtual servers in the cloud\n• **S3** - Object storage service\n• **RDS** - Managed relational databases\n• **Lambda** - Serverless computing\n• **CloudFront** - Content delivery network\n• **VPC** - Virtual private cloud networking\n• **IAM** - Identity and access management\n\n### **💼 Service Categories**\n• **Compute** - EC2, Lambda, ECS, EKS\n• **Storage** - S3, EBS, EFS, Glacier\n• **Database** - RDS, DynamoDB, ElastiCache\n• **Networking** - VPC, CloudFront, Route 53\n• **Security** - IAM, WAF, Shield, KMS\n• **Analytics** - Redshift, EMR, Kinesis\n\n### **✅ Advantages**\n• **Global reach** - Data centers worldwide\n• **Scalability** - Scale from startup to enterprise\n• **Reliability** - 99.99% uptime SLA\n• **Security** - Enterprise-grade security\n• **Cost-effective** - Pay only for what you use\n• **Innovation** - Constantly adding new services\n\n### **🚀 Market Leadership**\nAWS is the world's leading cloud platform, powering companies like Netflix, Airbnb, NASA, and millions of startups and enterprises globally.\n\n*Interested in cloud architecture patterns or specific AWS services?*`;
+    }
+
+    // Default comprehensive response for any other technical question
+    return generateTechnicalFallback(userInput);
+  };
+
+  const generateTechnicalFallback = (userInput) => {
+    return `## 🤖 **Technical Knowledge Assistant**\n\nI understand you're asking about **"${userInput}"** - let me provide you with comprehensive information!\n\n### **🔍 What I can help with:**\n• **Programming Languages** - JavaScript, Python, Java, C++, etc.\n• **Web Technologies** - HTML, CSS, React, Vue, Angular, Node.js\n• **Databases** - SQL, MongoDB, PostgreSQL, Redis\n• **Cloud Platforms** - AWS, Azure, Google Cloud, Vercel, Netlify\n• **DevOps Tools** - Docker, Kubernetes, Git, CI/CD\n• **Mobile Development** - React Native, Flutter, iOS, Android\n• **AI/ML** - Machine Learning, Deep Learning, NLP\n• **Cybersecurity** - Security best practices, encryption, authentication\n\n### **💡 How to get better answers:**\n• **Be specific** - "What is React hooks?" vs "What is React?"\n• **Ask about use cases** - "When should I use Docker?"\n• **Request examples** - "Show me a JavaScript example"\n• **Compare technologies** - "React vs Vue differences"\n\n### **🔗 Rifad's Expertise Connection**\n${getRelevantRifadConnection(userInput)}\n\n*Try asking a more specific question, or let me know what aspect interests you most!*`;
+  };
+
+  const getRelevantRifadConnection = (userInput) => {
+    const lowerInput = userInput.toLowerCase();
+
+    if (lowerInput.includes('react') || lowerInput.includes('javascript') || lowerInput.includes('frontend')) {
+      return "Rifad is an expert in React (95% proficiency) and JavaScript (90% proficiency) with 2+ years of experience building modern web applications.";
+    }
+
+    if (lowerInput.includes('node') || lowerInput.includes('backend') || lowerInput.includes('api')) {
+      return "Rifad has strong backend experience with Node.js (80% proficiency) and has built multiple RESTful APIs and server-side applications.";
+    }
+
+    if (lowerInput.includes('three') || lowerInput.includes('3d') || lowerInput.includes('graphics')) {
+      return "Rifad specializes in 3D web development with Three.js (85% proficiency) and has created immersive 3D experiences including his interactive portfolio.";
+    }
+
+    if (lowerInput.includes('git') || lowerInput.includes('github') || lowerInput.includes('version')) {
+      return "Rifad uses Git extensively for version control and maintains all his projects on GitHub with clean commit histories and professional documentation.";
+    }
+
+    return "Rifad stays current with modern web development technologies and follows industry best practices in his development workflow.";
   };
 
   // General Technical Knowledge Base
@@ -708,28 +829,47 @@ const AIAssistant = () => {
     // Simulate advanced AI processing time (more realistic)
     const processingTime = 1500 + Math.random() * 2000; // 1.5-3.5 seconds
 
-    setTimeout(() => {
-      const analysis = analyzeIntent(currentInput);
-      const response = generateAdvancedResponse(currentInput);
+    setTimeout(async () => {
+      try {
+        const analysis = analyzeIntent(currentInput);
+        const response = await generateAdvancedResponse(currentInput);
 
-      // Generate contextual suggestions based on the response
-      const suggestions = generateContextualSuggestions(analysis.intent, analysis.entities);
+        // Generate contextual suggestions based on the response
+        const suggestions = generateContextualSuggestions(analysis.intent, analysis.entities);
 
-      const botResponse = {
-        type: 'bot',
-        content: response,
-        timestamp: new Date(),
-        suggestions: suggestions,
-        metadata: {
-          intent: analysis.intent,
-          confidence: analysis.confidence,
-          processingTime: processingTime
-        }
-      };
+        const botResponse = {
+          type: 'bot',
+          content: response,
+          timestamp: new Date(),
+          suggestions: suggestions,
+          metadata: {
+            intent: analysis.intent,
+            confidence: analysis.confidence,
+            processingTime: processingTime
+          }
+        };
 
-      setMessages(prev => [...prev, botResponse]);
-      updateConversationContext(currentInput, response, analysis.intent);
-      setIsTyping(false);
+        setMessages(prev => [...prev, botResponse]);
+        updateConversationContext(currentInput, response, analysis.intent);
+        setIsTyping(false);
+      } catch (error) {
+        console.error('Error generating response:', error);
+
+        const errorResponse = {
+          type: 'bot',
+          content: "I apologize, but I'm experiencing some technical difficulties. However, I can still help you with questions about Rifad's expertise, projects, and web development topics. Please try asking your question again!",
+          timestamp: new Date(),
+          suggestions: [
+            "What are Rifad's technical skills?",
+            "Tell me about his projects",
+            "How can I contact him?",
+            "What technologies does he use?"
+          ]
+        };
+
+        setMessages(prev => [...prev, errorResponse]);
+        setIsTyping(false);
+      }
     }, processingTime);
   };
 
@@ -753,6 +893,12 @@ const AIAssistant = () => {
         "Show me his portfolio projects",
         "Tell me about his experience",
         "What's his development approach?"
+      ],
+      general_ai: [
+        "How does this relate to web development?",
+        "What are the best practices?",
+        "Can you give me an example?",
+        "How does Rifad use this?"
       ],
       general_tech: [
         "How does Rifad use this technology?",

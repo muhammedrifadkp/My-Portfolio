@@ -484,43 +484,92 @@ const AIAssistant = () => {
     return `## 🤔 **Great Question!**\n\nI'd love to help you with that! Here are some areas I can provide detailed information about:\n\n### **🎯 Quick Topics**\n• **"What are his skills?"** - Technical expertise breakdown\n• **"Show me his projects"** - Portfolio deep-dive\n• **"How experienced is he?"** - Career journey and achievements\n• **"Can I contact him?"** - Professional contact information\n\n### **💡 Or try asking:**\n• "Tell me about React expertise"\n• "What's his best project?"\n• "How does he solve problems?"\n• "What makes him unique?"\n\n*Feel free to be more specific - I'm here to help!*`;
   };
 
-  // Universal AI Response Generator - Handles ANY question like ChatGPT
+  // Universal AI Response Generator with Gemini API
   const generateAIResponse = async (userInput) => {
+    // First try Gemini API if available
     try {
-      // Use Hugging Face's free inference API for general questions
-      const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-large', {
+      const geminiResponse = await callGeminiAPI(userInput);
+      if (geminiResponse) {
+        return geminiResponse;
+      }
+    } catch (error) {
+      console.log('Gemini API unavailable, trying fallback...');
+    }
+
+    // Fallback to comprehensive built-in knowledge
+    return generateComprehensiveResponse(userInput);
+  };
+
+  // Gemini API Integration
+  const callGeminiAPI = async (userInput) => {
+    // You can set your Gemini API key here
+    const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY_HERE';
+
+    if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
+      throw new Error('Gemini API key not configured');
+    }
+
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          inputs: {
-            past_user_inputs: [],
-            generated_responses: [],
-            text: userInput
-          },
-          parameters: {
-            max_length: 500,
+          contents: [{
+            parts: [{
+              text: `You are Rifad AI, an advanced AI assistant for Muhammed Rifad KP's portfolio. Answer this question comprehensively and professionally: "${userInput}".
+
+If the question is about Rifad specifically, provide detailed information about his skills, projects, or experience. If it's a general technical question, provide a comprehensive explanation and then connect it to Rifad's relevant expertise.
+
+Keep the response informative, professional, and engaging. Use markdown formatting for better readability.`
+            }]
+          }],
+          generationConfig: {
             temperature: 0.7,
-            do_sample: true
-          }
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 1024,
+          },
+          safetySettings: [
+            {
+              category: "HARM_CATEGORY_HARASSMENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              category: "HARM_CATEGORY_HATE_SPEECH",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            }
+          ]
         })
       });
 
       if (response.ok) {
         const data = await response.json();
-        const aiResponse = data.generated_text || data.response;
+        const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
         if (aiResponse) {
-          return `## 🤖 **AI Response**\n\n${aiResponse}\n\n---\n\n### 🔗 **Related to Rifad's Expertise**\n${getRelevantRifadConnection(userInput)}\n\n*Want to know how Rifad applies this knowledge in his projects?*`;
+          return `## 🤖 **Gemini AI Response**\n\n${aiResponse}\n\n---\n\n### 🔗 **Rifad's Connection**\n${getRelevantRifadConnection(userInput)}\n\n*Want to explore more about Rifad's expertise in this area?*`;
         }
+      } else {
+        const errorData = await response.json();
+        console.error('Gemini API Error:', errorData);
+        throw new Error('Gemini API request failed');
       }
     } catch (error) {
-      console.log('AI API unavailable, using fallback response');
+      console.error('Error calling Gemini API:', error);
+      throw error;
     }
 
-    // Fallback to comprehensive built-in knowledge
-    return generateComprehensiveResponse(userInput);
+    return null;
   };
 
   // Comprehensive built-in knowledge for when AI API is unavailable

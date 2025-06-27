@@ -6,7 +6,7 @@ const AIAssistant = () => {
   const [messages, setMessages] = useState([
     {
       type: 'bot',
-      content: "Hello! I'm **Rifad AI** - an advanced AI assistant trained on Muhammed Rifad KP's professional profile. I can help you with:\n\n🎯 **Technical Questions** - Skills, technologies, frameworks\n💼 **Career Insights** - Experience, projects, achievements\n🚀 **Project Details** - Architecture, features, tech stack\n📊 **Code Analysis** - Best practices, patterns, solutions\n🎨 **Design Decisions** - UI/UX choices, user experience\n🌐 **General Tech Knowledge** - Explanations of web technologies\n\nAsk me anything about Rifad's expertise or general web development topics!",
+      content: "Hello! I'm **Rifad AI** - powered by **Gemini 2.0 Flash** and trained on Muhammed Rifad KP's professional profile. I can help you with:\n\n🎯 **Technical Questions** - Any programming language, framework, or technology\n💼 **Career Insights** - Rifad's experience, projects, and achievements\n🚀 **Project Deep-Dives** - Architecture, challenges, and solutions\n📊 **Code Analysis** - Best practices, patterns, and optimization\n🎨 **Design Decisions** - UI/UX choices and user experience\n🌐 **Universal Knowledge** - AI, blockchain, cloud computing, and more\n🧠 **Advanced Topics** - Machine learning, DevOps, cybersecurity\n\nI can answer **ANY technical question** with ChatGPT-level intelligence while providing insights into Rifad's expertise. What would you like to explore?",
       timestamp: new Date()
     }
   ]);
@@ -500,17 +500,17 @@ const AIAssistant = () => {
     return generateComprehensiveResponse(userInput);
   };
 
-  // Gemini API Integration
+  // Advanced Gemini 2.0 Flash API Integration
   const callGeminiAPI = async (userInput) => {
-    // You can set your Gemini API key here
-    const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY_HERE';
+    const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 
-    if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
+    if (!GEMINI_API_KEY) {
       throw new Error('Gemini API key not configured');
     }
 
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
+      // Use the latest Gemini 2.0 Flash model for faster, more accurate responses
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -518,18 +518,38 @@ const AIAssistant = () => {
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `You are Rifad AI, an advanced AI assistant for Muhammed Rifad KP's portfolio. Answer this question comprehensively and professionally: "${userInput}".
+              text: `You are Rifad AI, an advanced AI assistant representing Muhammed Rifad KP, a Full Stack Developer & 3D Web Specialist from India. You have access to comprehensive knowledge about both Rifad's expertise and general technical topics.
 
-If the question is about Rifad specifically, provide detailed information about his skills, projects, or experience. If it's a general technical question, provide a comprehensive explanation and then connect it to Rifad's relevant expertise.
+CONTEXT ABOUT RIFAD:
+- Full Stack Developer with 2+ years experience
+- Expert in React (95%), JavaScript (90%), Three.js (85%), Node.js (80%)
+- Built projects: EcomNova (e-commerce), TravelX (travel website), 3D Portfolio
+- Specializes in 3D web experiences, modern UI/UX, and performance optimization
+- Uses technologies: React, Three.js, Node.js, Express, MongoDB, Tailwind CSS, Vercel
+- GitHub: github.com/muhammedrifadkp
+- Portfolio: muhammedrifad.vercel.app
+- Email: muhammedrifadkp@gmail.com
 
-Keep the response informative, professional, and engaging. Use markdown formatting for better readability.`
+USER QUESTION: "${userInput}"
+
+INSTRUCTIONS:
+1. If about Rifad: Provide detailed, specific information about his skills, projects, or experience
+2. If general technical: Give comprehensive explanation, then connect to Rifad's relevant expertise
+3. Be professional, informative, and engaging
+4. Use proper markdown formatting with headers, lists, and emphasis
+5. Include practical examples and real-world applications
+6. End with a relevant follow-up question to encourage further conversation
+7. Keep responses detailed but concise (aim for 200-400 words)
+
+Respond as Rifad's intelligent AI assistant with deep technical knowledge and professional insight.`
             }]
           }],
           generationConfig: {
-            temperature: 0.7,
+            temperature: 0.8,
             topK: 40,
             topP: 0.95,
-            maxOutputTokens: 1024,
+            maxOutputTokens: 2048,
+            candidateCount: 1,
           },
           safetySettings: [
             {
@@ -557,12 +577,26 @@ Keep the response informative, professional, and engaging. Use markdown formatti
         const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
         if (aiResponse) {
-          return `## 🤖 **Gemini AI Response**\n\n${aiResponse}\n\n---\n\n### 🔗 **Rifad's Connection**\n${getRelevantRifadConnection(userInput)}\n\n*Want to explore more about Rifad's expertise in this area?*`;
+          // Clean and format the response
+          const formattedResponse = aiResponse
+            .replace(/\*\*(.*?)\*\*/g, '**$1**')
+            .replace(/\*(.*?)\*/g, '*$1*')
+            .trim();
+
+          return `## 🧠 **Advanced AI Response**\n\n${formattedResponse}\n\n---\n\n*Powered by Gemini 2.0 Flash • Optimized for Rifad's Portfolio*`;
         }
       } else {
         const errorData = await response.json();
         console.error('Gemini API Error:', errorData);
-        throw new Error('Gemini API request failed');
+
+        // Handle specific API errors
+        if (response.status === 429) {
+          throw new Error('API rate limit exceeded. Please try again in a moment.');
+        } else if (response.status === 403) {
+          throw new Error('API key invalid or quota exceeded.');
+        } else {
+          throw new Error(`Gemini API error: ${response.status}`);
+        }
       }
     } catch (error) {
       console.error('Error calling Gemini API:', error);

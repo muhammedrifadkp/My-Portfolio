@@ -279,6 +279,27 @@ const AIAssistant = () => {
       return { intent: 'simple_question', confidence: 0.8, entities: {}, originalInput: input };
     }
 
+    // Check for general technical questions first
+    const generalTechTerms = [
+      'vercel', 'netlify', 'aws', 'docker', 'kubernetes', 'git', 'github', 'npm', 'yarn',
+      'webpack', 'vite', 'babel', 'typescript', 'javascript', 'react', 'vue', 'angular',
+      'node.js', 'express', 'mongodb', 'sql', 'database', 'api', 'rest', 'graphql',
+      'css', 'html', 'sass', 'tailwind', 'bootstrap', 'figma', 'design', 'ui', 'ux',
+      'deployment', 'hosting', 'domain', 'server', 'cloud', 'frontend', 'backend',
+      'fullstack', 'framework', 'library', 'package', 'module', 'component'
+    ];
+
+    const isGeneralTechQuestion = generalTechTerms.some(term =>
+      lowerInput.includes(term) &&
+      !lowerInput.includes('rifad') &&
+      !lowerInput.includes('his') &&
+      !lowerInput.includes('he')
+    );
+
+    if (isGeneralTechQuestion) {
+      return { intent: 'general_tech', confidence: 0.9, entities: { term: generalTechTerms.find(term => lowerInput.includes(term)) }, originalInput: input };
+    }
+
     // Intent classification
     const intents = {
       skills: ['skill', 'technology', 'tech', 'programming', 'language', 'framework', 'tool', 'expertise', 'proficiency', 'know', 'learn'],
@@ -370,6 +391,9 @@ const AIAssistant = () => {
       case 'simple_question':
         return generateSimpleQuestionResponse(userInput);
 
+      case 'general_tech':
+        return generateGeneralTechResponse(userInput, entities);
+
       case 'skills':
         return generateSkillsResponse(entities, isFollowUp);
 
@@ -441,6 +465,106 @@ const AIAssistant = () => {
 
     // Default for other simple questions
     return `## 🤔 **Great Question!**\n\nI'd love to help you with that! Here are some areas I can provide detailed information about:\n\n### **🎯 Quick Topics**\n• **"What are his skills?"** - Technical expertise breakdown\n• **"Show me his projects"** - Portfolio deep-dive\n• **"How experienced is he?"** - Career journey and achievements\n• **"Can I contact him?"** - Professional contact information\n\n### **💡 Or try asking:**\n• "Tell me about React expertise"\n• "What's his best project?"\n• "How does he solve problems?"\n• "What makes him unique?"\n\n*Feel free to be more specific - I'm here to help!*`;
+  };
+
+  // General Technical Knowledge Base
+  const generalTechKnowledge = {
+    'vercel': {
+      name: 'Vercel',
+      type: 'Deployment Platform',
+      description: 'A cloud platform for static sites and serverless functions that enables developers to host websites and web services that deploy instantly.',
+      keyFeatures: [
+        'Zero-configuration deployments',
+        'Automatic HTTPS and CDN',
+        'Git integration with automatic deployments',
+        'Serverless functions support',
+        'Edge network for global performance',
+        'Preview deployments for every push'
+      ],
+      useCases: [
+        'React, Vue, Angular applications',
+        'Static sites and JAMstack',
+        'Serverless API endpoints',
+        'E-commerce platforms',
+        'Portfolio websites'
+      ],
+      advantages: [
+        'Extremely fast deployment',
+        'Excellent developer experience',
+        'Automatic scaling',
+        'Built-in performance optimization',
+        'Free tier available'
+      ],
+      rifadConnection: 'Rifad uses Vercel to deploy his React applications, including his portfolio. It\'s his preferred platform for frontend deployments due to its seamless Git integration and excellent performance.'
+    },
+    'react': {
+      name: 'React',
+      type: 'JavaScript Library',
+      description: 'A JavaScript library for building user interfaces, particularly web applications, developed by Facebook.',
+      keyFeatures: [
+        'Component-based architecture',
+        'Virtual DOM for performance',
+        'Unidirectional data flow',
+        'JSX syntax',
+        'Hooks for state management',
+        'Large ecosystem'
+      ],
+      useCases: [
+        'Single Page Applications (SPAs)',
+        'Progressive Web Apps',
+        'Mobile apps (React Native)',
+        'Desktop apps (Electron)',
+        'Complex user interfaces'
+      ],
+      advantages: [
+        'Reusable components',
+        'Strong community support',
+        'Excellent developer tools',
+        'High performance',
+        'Backed by Meta (Facebook)'
+      ],
+      rifadConnection: 'React is Rifad\'s primary frontend framework with 95% proficiency. He has built 8+ projects with React and specializes in advanced patterns, hooks, and performance optimization.'
+    },
+    'javascript': {
+      name: 'JavaScript',
+      type: 'Programming Language',
+      description: 'A high-level, interpreted programming language that\'s essential for web development.',
+      keyFeatures: [
+        'Dynamic typing',
+        'First-class functions',
+        'Prototype-based OOP',
+        'Event-driven programming',
+        'Asynchronous programming',
+        'Cross-platform compatibility'
+      ],
+      useCases: [
+        'Frontend web development',
+        'Backend development (Node.js)',
+        'Mobile app development',
+        'Desktop applications',
+        'Game development'
+      ],
+      advantages: [
+        'Easy to learn and use',
+        'Huge ecosystem and community',
+        'Versatile and flexible',
+        'Constantly evolving',
+        'No compilation needed'
+      ],
+      rifadConnection: 'JavaScript is Rifad\'s core language with 90% proficiency and 2+ years of experience. He has built 12+ projects using modern JavaScript (ES6+) patterns.'
+    }
+  };
+
+  const generateGeneralTechResponse = (userInput, entities) => {
+    const term = entities.term;
+    const techInfo = generalTechKnowledge[term];
+
+    if (techInfo) {
+      return `## 🚀 **${techInfo.name}** - ${techInfo.type}\n\n${techInfo.description}\n\n### **🎯 Key Features**\n${techInfo.keyFeatures.map(feature => `• ${feature}`).join('\n')}\n\n### **💼 Common Use Cases**\n${techInfo.useCases.map(useCase => `• ${useCase}`).join('\n')}\n\n### **✅ Advantages**\n${techInfo.advantages.map(advantage => `• ${advantage}`).join('\n')}\n\n### **🔗 Rifad's Experience**\n${techInfo.rifadConnection}\n\n*Want to know more about how Rifad uses ${techInfo.name} in his projects?*`;
+    }
+
+    // Generic tech response for unknown terms
+    return `## 🤔 **Great Technical Question!**\n\nI can see you're asking about **${term}** - that's definitely relevant to modern web development!\n\n### **💡 What I can tell you:**\n• This is a technology/tool used in web development\n• It's part of the modern development ecosystem\n• Rifad likely has experience with similar technologies\n\n### **🎯 For detailed information about ${term}:**\n• **"How does Rifad use ${term}?"** - His specific experience\n• **"Show me projects with ${term}"** - Real implementations\n• **"What's Rifad's opinion on ${term}?"** - Professional insights\n\n### **🚀 Related Technologies Rifad Uses:**\n• **React** - Frontend framework (95% proficiency)\n• **JavaScript** - Core language (90% proficiency)\n• **Node.js** - Backend runtime (80% proficiency)\n• **Three.js** - 3D graphics (85% proficiency)\n\n*Want to know more about any of these technologies?*`;
   };
 
   // Specialized response generators
@@ -635,6 +759,12 @@ const AIAssistant = () => {
         "Show me his portfolio projects",
         "Tell me about his experience",
         "What's his development approach?"
+      ],
+      general_tech: [
+        "How does Rifad use this technology?",
+        "Show me projects using this",
+        "What's his experience with this?",
+        "Tell me about related technologies"
       ],
       skills: [
         "Show me React project examples",

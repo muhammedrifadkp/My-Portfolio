@@ -256,18 +256,39 @@ const AIAssistant = () => {
 
   // Advanced Natural Language Processing
   const analyzeIntent = (input) => {
-    const lowerInput = input.toLowerCase();
+    const lowerInput = input.toLowerCase().trim();
+
+    // Handle greetings and simple interactions first
+    const greetings = ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings'];
+    const isGreeting = greetings.some(greeting => lowerInput.includes(greeting) || lowerInput === greeting);
+
+    if (isGreeting) {
+      return { intent: 'greeting', confidence: 1.0, entities: {}, originalInput: input };
+    }
+
+    // Handle location/geography questions
+    const locationKeywords = ['india', 'location', 'where', 'country', 'place', 'based', 'from'];
+    const isLocationQuery = locationKeywords.some(keyword => lowerInput.includes(keyword));
+
+    if (isLocationQuery) {
+      return { intent: 'location', confidence: 0.9, entities: {}, originalInput: input };
+    }
+
+    // Handle simple questions
+    if (lowerInput.length < 10 && (lowerInput.includes('?') || ['what', 'who', 'how', 'why', 'when'].some(w => lowerInput.startsWith(w)))) {
+      return { intent: 'simple_question', confidence: 0.8, entities: {}, originalInput: input };
+    }
 
     // Intent classification
     const intents = {
-      skills: ['skill', 'technology', 'tech', 'programming', 'language', 'framework', 'tool', 'expertise', 'proficiency'],
-      projects: ['project', 'work', 'portfolio', 'build', 'create', 'develop', 'application', 'website', 'app'],
-      experience: ['experience', 'background', 'career', 'job', 'work', 'professional', 'history'],
-      technical: ['how', 'why', 'explain', 'implement', 'architecture', 'design', 'pattern', 'best practice'],
-      personal: ['about', 'who', 'person', 'individual', 'background', 'story'],
-      contact: ['contact', 'reach', 'email', 'hire', 'collaborate', 'work together'],
-      comparison: ['vs', 'versus', 'compare', 'difference', 'better', 'prefer'],
-      advice: ['advice', 'recommend', 'suggest', 'should', 'opinion', 'think']
+      skills: ['skill', 'technology', 'tech', 'programming', 'language', 'framework', 'tool', 'expertise', 'proficiency', 'know', 'learn'],
+      projects: ['project', 'work', 'portfolio', 'build', 'create', 'develop', 'application', 'website', 'app', 'built', 'made'],
+      experience: ['experience', 'background', 'career', 'job', 'work', 'professional', 'history', 'worked'],
+      technical: ['how', 'why', 'explain', 'implement', 'architecture', 'design', 'pattern', 'best practice', 'code'],
+      personal: ['about', 'who', 'person', 'individual', 'background', 'story', 'tell me'],
+      contact: ['contact', 'reach', 'email', 'hire', 'collaborate', 'work together', 'get in touch'],
+      comparison: ['vs', 'versus', 'compare', 'difference', 'better', 'prefer', 'which'],
+      advice: ['advice', 'recommend', 'suggest', 'should', 'opinion', 'think', 'help']
     };
 
     let detectedIntent = 'general';
@@ -340,6 +361,15 @@ const AIAssistant = () => {
 
     // Generate response based on intent and context
     switch (intent) {
+      case 'greeting':
+        return generateGreetingResponse();
+
+      case 'location':
+        return generateLocationResponse(userInput);
+
+      case 'simple_question':
+        return generateSimpleQuestionResponse(userInput);
+
       case 'skills':
         return generateSkillsResponse(entities, isFollowUp);
 
@@ -367,6 +397,50 @@ const AIAssistant = () => {
       default:
         return generateContextualDefault(userInput, analysis);
     }
+  };
+
+  // New response generators for conversational interactions
+  const generateGreetingResponse = () => {
+    const greetings = [
+      "Hello! 👋 Great to meet you! I'm Rifad AI, your personal guide to Muhammed Rifad KP's professional world.",
+      "Hi there! 🌟 Welcome! I'm here to help you discover everything about Rifad's skills, projects, and expertise.",
+      "Hey! 😊 Nice to see you! I'm Rifad's AI assistant, ready to answer any questions about his development journey.",
+      "Greetings! 🚀 I'm excited to help you explore Rifad's portfolio and technical expertise."
+    ];
+
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+
+    return `${randomGreeting}\n\n## 🎯 **What I can help you with:**\n\n### **💻 Technical Expertise**\n• **Skills & Technologies** - React, JavaScript, Three.js, Node.js, and more\n• **Project Deep-Dives** - Architecture, challenges, and solutions\n• **Code Quality** - Best practices and development approaches\n\n### **🚀 Professional Insights**\n• **Career Journey** - Experience and achievements\n• **Development Philosophy** - Problem-solving approach\n• **Industry Perspective** - Modern web development trends\n\n### **📞 Getting Connected**\n• **Contact Information** - How to reach Rifad\n• **Collaboration Opportunities** - Project discussions\n• **Professional Networking** - LinkedIn and GitHub profiles\n\n*What would you like to explore first? Feel free to ask me anything!*`;
+  };
+
+  const generateLocationResponse = (userInput) => {
+    const lowerInput = userInput.toLowerCase();
+
+    if (lowerInput.includes('india')) {
+      return `## 🇮🇳 **Yes, Rifad is from India!**\n\n**${knowledgeBase.personal.name}** is based in **${knowledgeBase.personal.location}**, bringing the innovative spirit and technical excellence that India's tech industry is known for.\n\n### **🌟 Indian Tech Excellence**\n• **Global Perspective** - Working with international standards and practices\n• **Innovation Hub** - Part of India's thriving tech ecosystem\n• **Cultural Diversity** - Bringing unique perspectives to problem-solving\n• **Time Zone Advantage** - Flexible working hours for global collaboration\n\n### **🚀 Professional Presence**\n• **Remote Work Ready** - Experienced in distributed team collaboration\n• **English Proficiency** - Excellent communication skills\n• **Global Standards** - Following international best practices\n• **Cultural Adaptability** - Working effectively with diverse teams\n\n### **💼 Availability**\n${knowledgeBase.contact.availability}\n\n*Interested in learning more about his technical skills or discussing potential collaboration?*`;
+    }
+
+    return `## 📍 **Location & Availability**\n\n**${knowledgeBase.personal.name}** is based in **${knowledgeBase.personal.location}**, working as a ${knowledgeBase.personal.title}.\n\n### **🌍 Global Collaboration**\n• **Remote Work Experience** - Comfortable with distributed teams\n• **Flexible Hours** - Adaptable to different time zones\n• **International Standards** - Following global best practices\n• **Cultural Awareness** - Experience working with diverse teams\n\n### **📞 Professional Contact**\n📧 **Email:** [${knowledgeBase.contact.email}](mailto:${knowledgeBase.contact.email})\n🌐 **Portfolio:** [${knowledgeBase.contact.portfolio}](${knowledgeBase.contact.portfolio})\n\n*Want to know more about his technical expertise or discuss a project?*`;
+  };
+
+  const generateSimpleQuestionResponse = (userInput) => {
+    const lowerInput = userInput.toLowerCase();
+
+    // Handle common simple questions
+    if (lowerInput.includes('what') && lowerInput.includes('do')) {
+      return `## 💻 **What Rifad Does**\n\n**${knowledgeBase.personal.name}** is a **${knowledgeBase.personal.title}** who specializes in:\n\n### **🎯 Core Expertise**\n• **Full-Stack Development** - End-to-end web application development\n• **3D Web Experiences** - Interactive Three.js applications\n• **Modern React Development** - Advanced patterns and performance optimization\n• **UI/UX Innovation** - Creating engaging user experiences\n\n### **🚀 What Makes Him Special**\n"${knowledgeBase.personal.philosophy}"\n\n### **💼 Current Focus**\n${knowledgeBase.personal.specialization}\n\n*Want to dive deeper into any specific area of his expertise?*`;
+    }
+
+    if (lowerInput.includes('who')) {
+      return generatePersonalResponse();
+    }
+
+    if (lowerInput.includes('how')) {
+      return `## 🛠️ **How Rifad Works**\n\n### **🎯 Development Approach**\n${knowledgeBase.approach.problem_solving.map((step, index) => `${index + 1}. **${step}**`).join('\n')}\n\n### **💡 Philosophy**\n"${knowledgeBase.approach.development_philosophy}"\n\n### **🔧 Code Quality Standards**\n${knowledgeBase.approach.code_quality.map(practice => `• ${practice}`).join('\n')}\n\n*Interested in seeing this approach applied to real projects?*`;
+    }
+
+    // Default for other simple questions
+    return `## 🤔 **Great Question!**\n\nI'd love to help you with that! Here are some areas I can provide detailed information about:\n\n### **🎯 Quick Topics**\n• **"What are his skills?"** - Technical expertise breakdown\n• **"Show me his projects"** - Portfolio deep-dive\n• **"How experienced is he?"** - Career journey and achievements\n• **"Can I contact him?"** - Professional contact information\n\n### **💡 Or try asking:**\n• "Tell me about React expertise"\n• "What's his best project?"\n• "How does he solve problems?"\n• "What makes him unique?"\n\n*Feel free to be more specific - I'm here to help!*`;
   };
 
   // Specialized response generators
@@ -477,15 +551,26 @@ const AIAssistant = () => {
   };
 
   const generateContextualDefault = (userInput, analysis) => {
+    // Try to provide a more helpful response based on partial matches
+    const lowerInput = userInput.toLowerCase();
+
+    // Check for partial technology mentions
+    const techMentions = ['react', 'javascript', 'node', 'three', 'css', 'html', 'mongodb'];
+    const mentionedTech = techMentions.find(tech => lowerInput.includes(tech));
+
+    if (mentionedTech) {
+      return `## 💡 **I see you're interested in ${mentionedTech.toUpperCase()}!**\n\nRifad has excellent expertise in ${mentionedTech}. Let me help you with that:\n\n### **🎯 Try asking:**\n• "What's Rifad's ${mentionedTech} experience?"\n• "Show me ${mentionedTech} projects"\n• "How skilled is he with ${mentionedTech}?"\n• "Tell me about ${mentionedTech} best practices"\n\n### **💻 Quick Info**\n${getTechDetails(mentionedTech)}\n\n*Want to dive deeper? Just ask me specifically about ${mentionedTech}!*`;
+    }
+
     const suggestions = [
-      "Tell me about Rifad's React expertise",
-      "What makes his 3D portfolio unique?",
-      "How does he approach complex projects?",
-      "Show me his best project",
-      "What's his development philosophy?"
+      "What are Rifad's strongest skills?",
+      "Show me his most impressive project",
+      "How does he approach problem-solving?",
+      "Tell me about his experience",
+      "How can I contact him?"
     ];
 
-    return `## 🤔 **I'd love to help you learn more!**\n\nI didn't quite catch the specific aspect you're interested in, but I can provide detailed information about:\n\n### **Technical Expertise**\n• **Skills & Technologies** - Deep dive into specific tools\n• **Project Analysis** - Detailed breakdowns of implementations\n• **Best Practices** - Development approaches and methodologies\n\n### **Professional Insights**\n• **Career Journey** - Experience and growth\n• **Problem-Solving** - How Rifad tackles challenges\n• **Industry Perspective** - Views on web development trends\n\n### **Quick Suggestions**\n${suggestions.map(suggestion => `• "${suggestion}"`).join('\n')}\n\n*Feel free to ask about anything specific - I'm here to provide detailed, helpful information!*`;
+    return `## 🤔 **I'm here to help!**\n\nI want to make sure I give you the most relevant information. Here's what I can tell you about:\n\n### **🎯 Popular Questions**\n${suggestions.map(suggestion => `• **"${suggestion}"**`).join('\n')}\n\n### **💻 Technical Deep-Dives**\n• **Skills & Technologies** - React, JavaScript, Three.js, Node.js\n• **Project Breakdowns** - Architecture, challenges, solutions\n• **Best Practices** - Code quality and development approaches\n\n### **🚀 Professional Insights**\n• **Career Journey** - Experience and achievements\n• **Development Philosophy** - Problem-solving approach\n• **Contact Information** - How to get in touch\n\n*Try rephrasing your question or pick one of the suggestions above!*`;
   };
 
   const handleSendMessage = async () => {
@@ -533,6 +618,24 @@ const AIAssistant = () => {
   // Generate contextual follow-up suggestions
   const generateContextualSuggestions = (intent, entities) => {
     const suggestionMap = {
+      greeting: [
+        "What are his strongest technical skills?",
+        "Show me his best project",
+        "Tell me about his experience",
+        "How can I contact him?"
+      ],
+      location: [
+        "What's his technical expertise?",
+        "Tell me about his projects",
+        "How does he work with global teams?",
+        "What's his availability for projects?"
+      ],
+      simple_question: [
+        "What technologies does he use?",
+        "Show me his portfolio projects",
+        "Tell me about his experience",
+        "What's his development approach?"
+      ],
       skills: [
         "Show me React project examples",
         "How does he optimize performance?",

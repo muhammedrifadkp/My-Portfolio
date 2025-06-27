@@ -6,14 +6,8 @@ const AIAssistant = () => {
   const [messages, setMessages] = useState([
     {
       type: 'bot',
-      content: "Hello! I'm **Rifad AI** - an advanced AI assistant trained on Muhammed Rifad KP's professional profile. I can help you with:\n\n🎯 **Technical Questions** - Skills, technologies, frameworks\n💼 **Career Insights** - Experience, projects, achievements\n🚀 **Project Details** - Architecture, features, tech stack\n📊 **Code Analysis** - Best practices, patterns, solutions\n🎨 **Design Decisions** - UI/UX choices, user experience\n\nWhat would you like to explore about Rifad's expertise?",
-      timestamp: new Date(),
-      suggestions: [
-        "What are Rifad's strongest technical skills?",
-        "Tell me about his most impressive project",
-        "How does he approach problem-solving?",
-        "What makes him unique as a developer?"
-      ]
+      content: "Hello! I'm **Rifad AI** - an advanced AI assistant trained on Muhammed Rifad KP's professional profile. I can help you with:\n\n🎯 **Technical Questions** - Skills, technologies, frameworks\n💼 **Career Insights** - Experience, projects, achievements\n🚀 **Project Details** - Architecture, features, tech stack\n📊 **Code Analysis** - Best practices, patterns, solutions\n🎨 **Design Decisions** - UI/UX choices, user experience\n🌐 **General Tech Knowledge** - Explanations of web technologies\n\nAsk me anything about Rifad's expertise or general web development topics!",
+      timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -806,12 +800,7 @@ const AIAssistant = () => {
     ];
   };
 
-  // Quick starter questions
-  const quickQuestions = [
-    "What are Rifad's strongest technical skills?",
-    "Tell me about his most impressive project",
-    "How does he approach complex problems?"
-  ];
+
 
   const handleQuickQuestion = (question) => {
     setInputValue(question);
@@ -1040,20 +1029,7 @@ const AIAssistant = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick Questions */}
-            <div className="p-2 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex flex-wrap gap-1 mb-2">
-                {quickQuestions.slice(0, 3).map((question, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleQuickQuestion(question)}
-                    className="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 px-2 py-1 rounded-full transition-colors"
-                  >
-                    {question}
-                  </button>
-                ))}
-              </div>
-            </div>
+
 
             {/* Enhanced Input */}
             <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
@@ -1064,7 +1040,7 @@ const AIAssistant = () => {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
-                    placeholder="Ask me anything about Rifad's skills, projects, or experience..."
+                    placeholder="Ask me anything about Rifad or web development technologies..."
                     className="w-full p-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-all"
                     disabled={isTyping}
                   />
@@ -1100,7 +1076,7 @@ const AIAssistant = () => {
 
               {/* Input hints */}
               <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                💡 Try asking about specific technologies, project details, or career insights
+                💡 Ask about Rifad's expertise, projects, or any web development technology
               </div>
             </div>
           </motion.div>

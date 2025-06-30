@@ -4,6 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import Loader from "../components/Loader";
 import emailjs from "emailjs-com";
 import PlaneOnly from "../models/PlaneOnly";
+import { getEmailJSConfig, getBackupEmailJSConfig } from "../utils/envValidator";
 import './Contact.css';
 
 const Contact = () => {
@@ -64,32 +65,26 @@ const Contact = () => {
     // Check if all required fields are filled
     const isFormComplete = Object.values(formData).every((value) => value.trim() !== "");
 
+    console.log('Form submission attempt:', {
+      formData: formData,
+      isFormComplete: isFormComplete,
+      name: formData.name ? `"${formData.name}"` : 'Empty',
+      email: formData.email ? `"${formData.email}"` : 'Empty',
+      phone: formData.phone ? `"${formData.phone}"` : 'Empty',
+      message: formData.message ? `"${formData.message}"` : 'Empty'
+    });
+
     if (isFormComplete) {
-      // Get EmailJS credentials from environment variables
-      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID ||
-                       import.meta.env.VITE_APP_EMAILJS_SERVICE_ID ||
-                       "service_gfrbuaj"; // fallback
-      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ||
-                        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID ||
-                        "template_ieuwrka"; // fallback
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ||
-                       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY ||
-                       "Drfo3y3Sfl30PhGXF"; // fallback
+      // Try primary EmailJS credentials first
+      const tryEmailSend = async (serviceId, templateId, publicKey, attempt = 1) => {
+        try {
+          console.log(`EmailJS Attempt ${attempt}:`, {
+            serviceId: serviceId,
+            templateId: templateId,
+            publicKey: publicKey ? publicKey.substring(0, 5) + '...' : 'Missing'
+          });
 
-      console.log('EmailJS Configuration:', {
-        serviceId: serviceId ? 'Configured' : 'Missing',
-        templateId: templateId ? 'Configured' : 'Missing',
-        publicKey: publicKey ? 'Configured' : 'Missing'
-      });
-
-      emailjs
-        .send(
-          serviceId,
-          templateId,
-          formData,
-          publicKey
-        )
-        .then((response) => {
+          const response = await emailjs.send(serviceId, templateId, formData, publicKey);
           console.log("Email sent successfully:", response);
           setFormData({
             name: "",
@@ -103,15 +98,52 @@ const Contact = () => {
           setTimeout(() => {
             setSubmitStatus(null);
           }, 5000);
-        })
+          setIsSubmitting(false);
+          return true;
+        } catch (error) {
+          console.error(`EmailJS Attempt ${attempt} failed:`, error);
+          if (attempt === 1 && error.status === 412) {
+            // Try backup credentials if primary fails with 412 error
+            console.log('Trying backup EmailJS credentials...');
+            const { serviceId: backupServiceId, templateId: backupTemplateId, publicKey: backupPublicKey } = getBackupEmailJSConfig();
+
+            if (backupServiceId && backupTemplateId && backupPublicKey) {
+              return tryEmailSend(backupServiceId, backupTemplateId, backupPublicKey, 2);
+            } else {
+              console.error('Backup EmailJS credentials not configured in environment variables');
+              throw new Error('Backup EmailJS credentials not available');
+            }
+          }
+          throw error;
+        }
+      };
+
+      // Get primary EmailJS credentials from environment variables only
+      const { serviceId, templateId, publicKey } = getEmailJSConfig();
+
+      // Validate that all required credentials are available
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('EmailJS credentials missing from environment variables:', {
+          serviceId: serviceId ? 'Present' : 'Missing',
+          templateId: templateId ? 'Present' : 'Missing',
+          publicKey: publicKey ? 'Present' : 'Missing'
+        });
+        setSubmitStatus('error');
+        setIsSubmitting(false);
+        setTimeout(() => {
+          setSubmitStatus(null);
+        }, 5000);
+        return;
+      }
+
+      // Try sending email with fallback
+      tryEmailSend(serviceId, templateId, publicKey)
         .catch((error) => {
-          console.log("Error sending email:", error);
+          console.log("All EmailJS attempts failed:", error);
           setSubmitStatus('error');
           setTimeout(() => {
             setSubmitStatus(null);
           }, 5000);
-        })
-        .finally(() => {
           setIsSubmitting(false);
         });
     } else {
@@ -245,7 +277,6 @@ const Contact = () => {
                 onBlur={() => handleInputBlur(inputRefs.name)}
                 onChange={handleInputChange}
                 placeholder="Your Name"
-                required
               />
               <label htmlFor="name"><i className="fas fa-user"></i> Name</label>
             </div>
@@ -261,7 +292,6 @@ const Contact = () => {
                 onBlur={() => handleInputBlur(inputRefs.email)}
                 onChange={handleInputChange}
                 placeholder="Your Email"
-                required
               />
               <label htmlFor="email"><i className="fas fa-envelope"></i> Email</label>
             </div>
@@ -277,7 +307,6 @@ const Contact = () => {
                 onBlur={() => handleInputBlur(inputRefs.phone)}
                 onChange={handleInputChange}
                 placeholder="Your Phone Number"
-                required
               />
               <label htmlFor="phone"><i className="fas fa-phone"></i> Phone</label>
             </div>
@@ -292,7 +321,6 @@ const Contact = () => {
                 onBlur={() => handleInputBlur(inputRefs.message)}
                 onChange={handleInputChange}
                 placeholder="Your Message"
-                required
               />
               <label htmlFor="message"><i className="fas fa-comment-alt"></i> Message</label>
             </div>

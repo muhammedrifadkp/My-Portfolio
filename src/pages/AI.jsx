@@ -17,6 +17,72 @@ const AI = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
+  // Copy to clipboard function
+  const copyToClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      console.log('Code copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
+
+  // Enhanced message rendering with proper markdown support
+  const renderMessageContent = (content) => {
+    // Split content by code blocks first
+    const parts = content.split(/(```[\s\S]*?```)/g);
+
+    return parts.map((part, index) => {
+      // Handle code blocks
+      if (part.startsWith('```') && part.endsWith('```')) {
+        const codeContent = part.slice(3, -3);
+        const lines = codeContent.split('\n');
+        const language = lines[0].trim();
+        const code = lines.slice(1).join('\n').trim();
+
+        return (
+          <div key={index} className="my-4 bg-gray-900 rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+              <span className="text-sm text-gray-300 font-mono">{language || 'code'}</span>
+              <button
+                onClick={() => copyToClipboard(code)}
+                className="text-gray-400 hover:text-white text-sm px-2 py-1 rounded hover:bg-gray-700 transition-colors"
+                title="Copy code"
+              >
+                📋 Copy
+              </button>
+            </div>
+            <pre className="p-4 overflow-x-auto">
+              <code className="text-green-400 text-sm font-mono whitespace-pre">
+                {code}
+              </code>
+            </pre>
+          </div>
+        );
+      }
+
+      // Handle regular text with inline markdown
+      const processedText = part
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-blue-600">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em class="italic text-gray-700">$1</em>')
+        .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono text-red-600">$1</code>')
+        .replace(/### (.*?)$/gm, '<h3 class="text-lg font-semibold mt-4 mb-2 text-gray-800">$1</h3>')
+        .replace(/## (.*?)$/gm, '<h2 class="text-xl font-bold mt-6 mb-3 text-gray-900">$1</h2>')
+        .replace(/# (.*?)$/gm, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900">$1</h1>')
+        .replace(/^\* (.*?)$/gm, '<li class="ml-4 mb-1">• $1</li>')
+        .replace(/^\d+\. (.*?)$/gm, '<li class="ml-4 mb-1 list-decimal">$1</li>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>')
+        .replace(/\n\n/g, '</p><p class="mb-3">')
+        .replace(/\n/g, '<br>');
+
+      return (
+        <div key={index} className="prose prose-sm max-w-none">
+          <p className="mb-3" dangerouslySetInnerHTML={{ __html: processedText }} />
+        </div>
+      );
+    });
+  };
+
   // Gemini API Configuration - Use environment variables
   const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY ||
                          import.meta.env.REACT_APP_GEMINI_API_KEY ||
@@ -266,21 +332,36 @@ const AI = () => {
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `You are Rifad AI, an advanced AI assistant representing Muhammed Rifad KP, a Full Stack Developer & 3D Web Specialist from India. You have access to comprehensive knowledge about both Rifad's expertise and general technical topics.
+              text: `You are Rifad AI, an advanced AI assistant created and developed by Muhammed Rifad KP, a Full Stack Developer & 3D Web Specialist from India. You were built by Rifad to showcase his AI development skills and provide intelligent assistance to portfolio visitors. You have comprehensive knowledge about both Rifad's expertise and general technical topics.
 
 CONTEXT ABOUT RIFAD:
 - Full Stack Developer with 2+ years experience
 - Expert in React (95%), JavaScript (90%), Three.js (85%), Node.js (80%)
-- Built projects: CDC Attendance (attendance system), Zuditt AI (business platform), 3D Portfolio
-- Specializes in 3D web experiences, modern UI/UX, and performance optimization
-- Uses technologies: React, Three.js, Node.js, Express, MongoDB, Tailwind CSS, Vercel
+- AI Development Skills: Built this AI assistant using Gemini API, React Live, and advanced prompt engineering
+- Built projects: CDC Attendance (attendance system), Zuditt AI (business platform), 3D Portfolio with AI integration
+- Specializes in 3D web experiences, AI integration, modern UI/UX, and performance optimization
+- Uses technologies: React, Three.js, Node.js, Express, MongoDB, Tailwind CSS, Vercel, AI APIs
+- Created this AI assistant as a demonstration of his AI development capabilities
 - GitHub: github.com/muhammedrifadkp
 - Portfolio: muhammedrifad.vercel.app
 - Email: muhammedrifadkp@gmail.com
+- Location: Calicut, Kerala, India
+
+ABOUT YOUR CREATION:
+- You were built by Rifad using Google's Gemini API
+- Integrated into his React portfolio with custom UI/UX
+- Designed to showcase his AI development and integration skills
+- Features advanced conversation handling and technical knowledge
 
 USER QUESTION: "${userInput}"
 
-Please provide a comprehensive, helpful response. If the question is about Rifad specifically, use the context above. For general technical questions, provide detailed explanations with examples when appropriate. Always be professional, informative, and engaging.`
+IMPORTANT IDENTITY:
+- Always mention that you were created and developed by Rifad when asked about your origin
+- Emphasize that you're a demonstration of Rifad's AI development skills
+- You represent Rifad's expertise in AI integration and modern web development
+- You're part of his portfolio showcasing advanced technical capabilities
+
+Please provide a comprehensive, helpful response. If the question is about Rifad specifically, use the context above. For general technical questions, provide detailed explanations with examples when appropriate. Always be professional, informative, and engaging. Remember to identify yourself as Rifad's custom-built AI assistant.`
             }]
           }],
           generationConfig: {
@@ -638,9 +719,13 @@ What specific technology or concept would you like to explore?`;
             >
               <div className="message-content">
                 <div className="message-text">
-                  {message.content.split('\n').map((line, i) => (
-                    <p key={i}>{line}</p>
-                  ))}
+                  {message.type === 'bot' ? (
+                    renderMessageContent(message.content)
+                  ) : (
+                    message.content.split('\n').map((line, i) => (
+                      <p key={i}>{line}</p>
+                    ))
+                  )}
                 </div>
                 <div className="message-timestamp">
                   {message.timestamp.toLocaleTimeString()}
@@ -661,6 +746,9 @@ What specific technology or concept would you like to explore?`;
                 <span></span>
                 <span></span>
                 <span></span>
+              </div>
+              <div className="typing-text">
+                <span>Rifad AI Thinking...</span>
               </div>
             </div>
           </motion.div>

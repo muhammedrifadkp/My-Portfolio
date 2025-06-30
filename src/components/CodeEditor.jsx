@@ -2,6 +2,35 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
+// Simple theme for React Live
+const theme = {
+  plain: {
+    color: '#4ade80',
+    backgroundColor: '#1a1a1a',
+  },
+  styles: [
+    {
+      types: ['comment'],
+      style: {
+        color: '#6b7280',
+        fontStyle: 'italic',
+      },
+    },
+    {
+      types: ['keyword'],
+      style: {
+        color: '#8b5cf6',
+      },
+    },
+    {
+      types: ['string'],
+      style: {
+        color: '#10b981',
+      },
+    },
+  ],
+};
+
 const CodeEditor = () => {
   const [activeTab, setActiveTab] = useState('live-demo');
   const [showPreview, setShowPreview] = useState(true);
@@ -56,21 +85,41 @@ function getAdultNames(users) {
 
   // React Live scope - available variables and functions in the code editor
   const scope = {
+    React,
     useState: React.useState,
     useEffect: React.useEffect,
     useRef: React.useRef,
+    useCallback: React.useCallback,
+    useMemo: React.useMemo,
     motion,
-    AnimatePresence
+    AnimatePresence,
+    // Add console for debugging
+    console: console
   };
 
   // Example code snippets
   const codeExamples = [
     {
-      name: 'Interactive Counter',
-      code: `// Welcome to Rifad's Interactive Code Playground! 🚀
-// Try editing this React component and see live results
+      name: 'Simple Test',
+      code: `function SimpleTest() {
+  return (
+    <div style={{
+      padding: '20px',
+      background: '#f0f0f0',
+      borderRadius: '8px',
+      textAlign: 'center'
+    }}>
+      <h2 style={{ color: '#333' }}>✅ React Live is Working!</h2>
+      <p>This is a simple test component.</p>
+    </div>
+  );
+}
 
-function InteractiveDemo() {
+<SimpleTest />`
+    },
+    {
+      name: 'Interactive Counter',
+      code: `function InteractiveDemo() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState('Visitor');
 
@@ -121,7 +170,7 @@ function InteractiveDemo() {
   );
 }
 
-render(<InteractiveDemo />);`
+<InteractiveDemo />`
     },
     {
       name: 'Todo List',
@@ -198,7 +247,7 @@ render(<InteractiveDemo />);`
   );
 }
 
-render(<TodoApp />);`
+<TodoApp />`
     },
     {
       name: 'Animated Card',
@@ -256,7 +305,7 @@ render(<TodoApp />);`
   );
 }
 
-render(<AnimatedCard />);`
+<AnimatedCard />`
     }
   ];
 
@@ -817,9 +866,10 @@ render(<AnimatedCard />);`
           >
             {codeMode === 'react' ? (
               <>
-                <option value="0">Interactive Counter</option>
-                <option value="1">Todo List</option>
-                <option value="2">Animated Card</option>
+                <option value="0">Simple Test</option>
+                <option value="1">Interactive Counter</option>
+                <option value="2">Todo List</option>
+                <option value="3">Animated Card</option>
               </>
             ) : (
               <>
@@ -869,7 +919,12 @@ render(<AnimatedCard />);`
             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
           >
             {codeMode === 'react' ? (
-              <LiveProvider code={code} scope={scope}>
+              <LiveProvider
+                code={code}
+                scope={scope}
+                theme={theme}
+                noInline={false}
+              >
                 {/* React Code Editor */}
                 <div className="bg-gray-800 rounded-lg overflow-hidden">
                   <div className="flex items-center justify-between p-4 bg-gray-700">
@@ -925,10 +980,9 @@ render(<AnimatedCard />);`
                       <div className="h-full">
                         <LiveError
                           className="text-red-600 text-sm mb-4 p-3 bg-red-50 rounded-lg border border-red-200 font-mono whitespace-pre-wrap"
-                          style={{ display: 'block' }}
                         />
-                        <div className="h-full">
-                          <LivePreview className="w-full h-full" />
+                        <div className="h-full overflow-auto">
+                          <LivePreview />
                         </div>
                       </div>
                     ) : (

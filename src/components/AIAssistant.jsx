@@ -351,6 +351,14 @@ const AIAssistant = () => {
       return { intent: 'greeting', confidence: 1.0, entities: {}, originalInput: input };
     }
 
+    // Check for AI creation/origin questions first
+    const aiOriginKeywords = ['who made you', 'who created you', 'who built you', 'who developed you', 'made by', 'created by', 'your creator', 'your maker', 'rifad made you'];
+    const isAIOriginQuery = aiOriginKeywords.some(keyword => lowerInput.includes(keyword));
+
+    if (isAIOriginQuery) {
+      return { intent: 'ai_origin', confidence: 1.0, entities: {}, originalInput: input };
+    }
+
     // Check if question is about Rifad specifically
     const rifadKeywords = ['rifad', 'his', 'he', 'him', 'your', 'you'];
     const isAboutRifad = rifadKeywords.some(keyword => lowerInput.includes(keyword));
@@ -443,6 +451,9 @@ const AIAssistant = () => {
       case 'greeting':
         return generateGreetingResponse();
 
+      case 'ai_origin':
+        return generateAIOriginResponse();
+
       case 'location':
         return generateLocationResponse(userInput);
 
@@ -490,15 +501,50 @@ const AIAssistant = () => {
   // New response generators for conversational interactions
   const generateGreetingResponse = () => {
     const greetings = [
-      "Hello! 👋 Great to meet you! I'm Rifad AI, your personal guide to Muhammed Rifad KP's professional world.",
-      "Hi there! 🌟 Welcome! I'm here to help you discover everything about Rifad's skills, projects, and expertise.",
-      "Hey! 😊 Nice to see you! I'm Rifad's AI assistant, ready to answer any questions about his development journey.",
-      "Greetings! 🚀 I'm excited to help you explore Rifad's portfolio and technical expertise."
+      "Hello! 👋 Great to meet you! I'm Rifad AI, an advanced AI assistant created by Muhammed Rifad KP to showcase his expertise and help visitors.",
+      "Hi there! 🌟 Welcome! I'm Rifad's custom-built AI assistant, designed to demonstrate his AI development skills and answer your questions.",
+      "Hey! 😊 Nice to see you! I'm an AI system developed by Rifad himself, showcasing his expertise in AI integration and modern web development.",
+      "Greetings! 🚀 I'm Rifad AI - a sophisticated AI assistant built by Muhammed Rifad KP as part of his portfolio to demonstrate his AI development capabilities."
     ];
 
     const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 
     return `${randomGreeting}\n\n## 🎯 **What I can help you with:**\n\n### **💻 Technical Expertise**\n• **Skills & Technologies** - React, JavaScript, Three.js, Node.js, and more\n• **Project Deep-Dives** - Architecture, challenges, and solutions\n• **Code Quality** - Best practices and development approaches\n\n### **🚀 Professional Insights**\n• **Career Journey** - Experience and achievements\n• **Development Philosophy** - Problem-solving approach\n• **Industry Perspective** - Modern web development trends\n\n### **📞 Getting Connected**\n• **Contact Information** - How to reach Rifad\n• **Collaboration Opportunities** - Project discussions\n• **Professional Networking** - LinkedIn and GitHub profiles\n\n*What would you like to explore first? Feel free to ask me anything!*`;
+  };
+
+  const generateAIOriginResponse = () => {
+    return `## 🤖 **Yes, I was created by Rifad!**
+
+**I'm Rifad AI** - a sophisticated AI assistant **built and developed by Muhammed Rifad KP** himself! 🚀
+
+### **🔧 How I was created:**
+• **Built using Google's Gemini API** - Rifad integrated advanced AI capabilities
+• **Custom React interface** - Designed with modern UI/UX principles
+• **Advanced prompt engineering** - Optimized for technical conversations
+• **Real-time conversation handling** - Seamless user experience
+• **Intelligent context awareness** - Understanding complex queries
+
+### **🎯 Why Rifad created me:**
+• **Showcase AI development skills** - Demonstrating expertise in AI integration
+• **Portfolio enhancement** - Adding cutting-edge technology to his portfolio
+• **Visitor assistance** - Providing intelligent help to portfolio visitors
+• **Technical demonstration** - Proving capabilities in modern web development
+
+### **💡 What this demonstrates about Rifad:**
+• **AI Integration Expertise** - Successfully implementing AI in web applications
+• **Modern Development Skills** - Using latest technologies and APIs
+• **Problem-Solving Ability** - Creating practical solutions for user engagement
+• **Innovation Mindset** - Always exploring new technologies
+
+### **🚀 Technical Implementation:**
+• **Frontend**: React with custom components and animations
+• **AI Backend**: Google Gemini API integration
+• **Styling**: Tailwind CSS with responsive design
+• **State Management**: Advanced React hooks and context
+
+**I'm living proof of Rifad's AI development capabilities!** 🎉
+
+*Want to know more about how Rifad built me or his other technical projects?*`;
   };
 
   const generateLocationResponse = (userInput) => {
@@ -583,17 +629,26 @@ const AIAssistant = () => {
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `You are Rifad AI, an advanced AI assistant representing Muhammed Rifad KP, a Full Stack Developer & 3D Web Specialist from India. You have access to comprehensive knowledge about both Rifad's expertise and general technical topics.
+              text: `You are Rifad AI, an advanced AI assistant created and developed by Muhammed Rifad KP, a Full Stack Developer & 3D Web Specialist from India. You were built by Rifad to showcase his AI development skills and provide intelligent assistance to portfolio visitors. You have comprehensive knowledge about both Rifad's expertise and general technical topics.
 
 CONTEXT ABOUT RIFAD:
 - Full Stack Developer with 2+ years experience
 - Expert in React (95%), JavaScript (90%), Three.js (85%), Node.js (80%)
-- Built projects: EcomNova (e-commerce), TravelX (travel website), 3D Portfolio
-- Specializes in 3D web experiences, modern UI/UX, and performance optimization
-- Uses technologies: React, Three.js, Node.js, Express, MongoDB, Tailwind CSS, Vercel
+- AI Development Skills: Built this AI assistant using Gemini API, React Live, and advanced prompt engineering
+- Built projects: CDC Attendance System, Zuditt Platform, 3D Portfolio with AI integration
+- Specializes in 3D web experiences, AI integration, modern UI/UX, and performance optimization
+- Uses technologies: React, Three.js, Node.js, Express, MongoDB, Tailwind CSS, Vercel, AI APIs
+- Created this AI assistant as a demonstration of his AI development capabilities
 - GitHub: github.com/muhammedrifadkp
 - Portfolio: muhammedrifad.vercel.app
 - Email: muhammedrifadkp@gmail.com
+- Location: Calicut, Kerala, India
+
+ABOUT YOUR CREATION:
+- You were built by Rifad using Google's Gemini API
+- Integrated into his React portfolio with custom UI/UX
+- Designed to showcase his AI development and integration skills
+- Features advanced conversation handling and technical knowledge
 
 USER QUESTION: "${userInput}"
 
@@ -616,7 +671,13 @@ SPECIAL FOR CODE REQUESTS:
 - Include modern best practices
 - Make code production-ready
 
-Respond as Rifad's intelligent AI assistant with deep technical knowledge and professional insight.`
+IMPORTANT IDENTITY:
+- Always mention that you were created and developed by Rifad when asked about your origin
+- Emphasize that you're a demonstration of Rifad's AI development skills
+- You represent Rifad's expertise in AI integration and modern web development
+- You're part of his portfolio showcasing advanced technical capabilities
+
+Respond as Rifad's custom-built AI assistant with deep technical knowledge and professional insight.`
             }]
           }],
           generationConfig: {
@@ -1118,18 +1179,71 @@ Respond as Rifad's intelligent AI assistant with deep technical knowledge and pr
     setTimeout(() => handleSendMessage(), 100);
   };
 
-  // Advanced message rendering with markdown support
+  // Copy to clipboard function
+  const copyToClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // You could add a toast notification here
+      console.log('Code copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
+
+  // Enhanced message rendering with proper markdown support
   const renderMessageContent = (content) => {
-    // Simple markdown-like rendering
-    return content
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/`(.*?)`/g, '<code>$1</code>')
-      .replace(/### (.*?)$/gm, '<h3>$1</h3>')
-      .replace(/## (.*?)$/gm, '<h2>$1</h2>')
-      .replace(/• (.*?)$/gm, '<li>$1</li>')
-      .replace(/(\d+)\. (.*?)$/gm, '<ol><li>$2</li></ol>')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    // Split content by code blocks first
+    const parts = content.split(/(```[\s\S]*?```)/g);
+
+    return parts.map((part, index) => {
+      // Handle code blocks
+      if (part.startsWith('```') && part.endsWith('```')) {
+        const codeContent = part.slice(3, -3);
+        const lines = codeContent.split('\n');
+        const language = lines[0].trim();
+        const code = lines.slice(1).join('\n').trim();
+
+        return (
+          <div key={index} className="my-4 bg-gray-900 rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-2 bg-gray-800 border-b border-gray-700">
+              <span className="text-sm text-gray-300 font-mono">{language || 'code'}</span>
+              <button
+                onClick={() => copyToClipboard(code)}
+                className="text-gray-400 hover:text-white text-sm px-2 py-1 rounded hover:bg-gray-700 transition-colors"
+                title="Copy code"
+              >
+                📋 Copy
+              </button>
+            </div>
+            <pre className="p-4 overflow-x-auto">
+              <code className="text-green-400 text-sm font-mono whitespace-pre">
+                {code}
+              </code>
+            </pre>
+          </div>
+        );
+      }
+
+      // Handle regular text with inline markdown
+      const processedText = part
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-blue-600">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em class="italic text-gray-700">$1</em>')
+        .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono text-red-600">$1</code>')
+        .replace(/### (.*?)$/gm, '<h3 class="text-lg font-semibold mt-4 mb-2 text-gray-800">$1</h3>')
+        .replace(/## (.*?)$/gm, '<h2 class="text-xl font-bold mt-6 mb-3 text-gray-900">$1</h2>')
+        .replace(/# (.*?)$/gm, '<h1 class="text-2xl font-bold mt-6 mb-4 text-gray-900">$1</h1>')
+        .replace(/^\* (.*?)$/gm, '<li class="ml-4 mb-1">• $1</li>')
+        .replace(/^\d+\. (.*?)$/gm, '<li class="ml-4 mb-1 list-decimal">$1</li>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">$1</a>')
+        .replace(/\n\n/g, '</p><p class="mb-3">')
+        .replace(/\n/g, '<br>');
+
+      return (
+        <div key={index} className="prose prose-sm max-w-none">
+          <p className="mb-3" dangerouslySetInnerHTML={{ __html: processedText }} />
+        </div>
+      );
+    });
   };
 
   // Typing indicator with realistic animation
@@ -1242,6 +1356,7 @@ Respond as Rifad's intelligent AI assistant with deep technical knowledge and pr
                 </motion.div>
                 <div className="flex-1">
                   <h3 className="font-bold text-lg">Rifad AI Assistant</h3>
+                  <p className="text-xs text-gray-500">Created by Muhammed Rifad KP</p>
                   <div className="flex items-center space-x-2">
                     <motion.div
                       className="w-2 h-2 bg-green-400 rounded-full"
@@ -1278,10 +1393,9 @@ Respond as Rifad's intelligent AI assistant with deep technical knowledge and pr
                       }`}
                     >
                       {message.type === 'bot' ? (
-                        <div
-                          className="text-sm leading-relaxed prose prose-sm max-w-none dark:prose-invert"
-                          dangerouslySetInnerHTML={{ __html: renderMessageContent(message.content) }}
-                        />
+                        <div className="text-sm leading-relaxed">
+                          {renderMessageContent(message.content)}
+                        </div>
                       ) : (
                         <p className="text-sm leading-relaxed">{message.content}</p>
                       )}
@@ -1374,7 +1488,7 @@ Respond as Rifad's intelligent AI assistant with deep technical knowledge and pr
                   {isTyping ? (
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
-                      <span>AI</span>
+                      <span>Rifad AI</span>
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">

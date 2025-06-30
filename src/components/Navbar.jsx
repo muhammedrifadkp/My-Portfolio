@@ -275,6 +275,15 @@ const Navbar = () => {
           </li>
           <li className="nav-item">
             <Link
+              to="/ai"
+              className={`nav-link ${location.pathname === '/ai' ? 'active' : ''}`}
+              onClick={handleNavClick}
+            >
+              Rifad AI
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
               to="/contact"
               className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}
               onClick={handleNavClick}
@@ -327,6 +336,15 @@ const Navbar = () => {
                 onClick={handleNavClick}
               >
                 Features
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/ai"
+                className={location.pathname === '/ai' ? 'active' : ''}
+                onClick={handleNavClick}
+              >
+                Rifad AI
               </Link>
             </li>
             <li>

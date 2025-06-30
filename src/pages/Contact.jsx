@@ -65,12 +65,29 @@ const Contact = () => {
     const isFormComplete = Object.values(formData).every((value) => value.trim() !== "");
 
     if (isFormComplete) {
+      // Get EmailJS credentials from environment variables
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID ||
+                       import.meta.env.VITE_APP_EMAILJS_SERVICE_ID ||
+                       "service_gfrbuaj"; // fallback
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ||
+                        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID ||
+                        "template_ieuwrka"; // fallback
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ||
+                       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY ||
+                       "Drfo3y3Sfl30PhGXF"; // fallback
+
+      console.log('EmailJS Configuration:', {
+        serviceId: serviceId ? 'Configured' : 'Missing',
+        templateId: templateId ? 'Configured' : 'Missing',
+        publicKey: publicKey ? 'Configured' : 'Missing'
+      });
+
       emailjs
         .send(
-          "service_2fgaczd",
-          "template_f7upbkh",
+          serviceId,
+          templateId,
           formData,
-          "O98uqFxHG4mGAE7mo"
+          publicKey
         )
         .then((response) => {
           console.log("Email sent successfully:", response);
@@ -162,7 +179,7 @@ const Contact = () => {
           </div>
           <div className="info-details">
             <h3>Location</h3>
-            <p>Calicut, Kerala, India</p>
+            <p>{import.meta.env.VITE_CONTACT_LOCATION || "Calicut, Kerala, India"}</p>
           </div>
         </div>
 
@@ -172,7 +189,7 @@ const Contact = () => {
           </div>
           <div className="info-details">
             <h3>Email</h3>
-            <p>muhammedrifadkp3@gmail.com</p>
+            <p>{import.meta.env.VITE_CONTACT_EMAIL || "muhammedrifadkp3@gmail.com"}</p>
           </div>
         </div>
 
@@ -182,7 +199,7 @@ const Contact = () => {
           </div>
           <div className="info-details">
             <h3>Phone</h3>
-            <p>+91 7356852496</p>
+            <p>{import.meta.env.VITE_CONTACT_PHONE || "+91 7356852496"}</p>
           </div>
         </div>
 

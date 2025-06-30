@@ -81,7 +81,7 @@ const PhoneModel = ({ project, onClick }) => {
   );
 };
 
-// Project data with enhanced information
+// Project data with enhanced information - Updated from GitHub
 const projectsData = [
   {
     id: 1,
@@ -147,6 +147,68 @@ const projectsData = [
   },
   {
     id: 3,
+    name: 'FreshMarket E-commerce',
+    type: 'Full Stack E-commerce Platform',
+    description: 'Modern e-commerce platform with product categories, shopping cart, user accounts, admin panel, and WhatsApp checkout integration.',
+    technologies: ['Next.js', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'WhatsApp API'],
+    primaryColor: '#32CD32',
+    secondaryColor: '#FF8C00',
+    icon: '🛒',
+    liveUrl: 'https://my-ecommerce-black.vercel.app/',
+    githubUrl: 'https://github.com/muhammedrifadkp/my-ecommerce',
+    features: [
+      'Product Categories (Vegetables, Fruits, Meat)',
+      'Shopping Cart with Quantity Selection',
+      'User Account Management',
+      'Admin Panel for Product Management',
+      'WhatsApp Checkout Integration',
+      'Order History & Tracking'
+    ],
+    metrics: {
+      products: '200+',
+      orders: '1K+',
+      categories: '3',
+      rating: 4.7
+    },
+    screenshots: [
+      '/api/placeholder/400/300',
+      '/api/placeholder/400/300',
+      '/api/placeholder/400/300'
+    ]
+  },
+  {
+    id: 4,
+    name: 'TSEEP Academy',
+    type: 'Educational Platform',
+    description: 'MERN stack educational platform with user authentication, course management, dashboard, and responsive UI for Texol World Machine Test.',
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Tailwind CSS'],
+    primaryColor: '#1E90FF',
+    secondaryColor: '#FFD700',
+    icon: '📚',
+    liveUrl: 'https://tseepacademy.vercel.app',
+    githubUrl: 'https://github.com/muhammedrifadkp/MERN-project',
+    features: [
+      'User Registration & Authentication',
+      'Course Catalog with Search',
+      'Personalized Dashboard',
+      'Course Management System',
+      'Progress Tracking',
+      'Responsive Design'
+    ],
+    metrics: {
+      courses: '25+',
+      students: '200+',
+      completion: '85%',
+      rating: 4.6
+    },
+    screenshots: [
+      '/api/placeholder/400/300',
+      '/api/placeholder/400/300',
+      '/api/placeholder/400/300'
+    ]
+  },
+  {
+    id: 5,
     name: '3D Portfolio',
     type: 'Interactive Portfolio',
     description: '3D interactive portfolio with modern animations, responsive design, and immersive user experience.',
@@ -155,7 +217,7 @@ const projectsData = [
     secondaryColor: '#1ABC9C',
     icon: '🌐',
     liveUrl: 'https://muhammedrifad.vercel.app/',
-    githubUrl: 'https://github.com/muhammedrifadkp/3D-Rifad-Portfolio',
+    githubUrl: 'https://github.com/muhammedrifadkp/My-Portfolio',
     features: [
       '3D Interactive Elements',
       'Smooth Page Transitions',

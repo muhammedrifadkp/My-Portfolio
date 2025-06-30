@@ -6,7 +6,7 @@ const Projects = () => {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Project data for Muhammed Rifad KP
+  // Project data for Muhammed Rifad KP - Updated from GitHub
   const projects = [
     {
       id: 1,
@@ -30,21 +30,111 @@ const Projects = () => {
     },
     {
       id: 3,
-      title: '3D Portfolio Website',
+      title: 'FreshMarket E-commerce Platform',
+      category: 'fullstack',
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center',
+      description: 'Modern e-commerce platform with product categories, shopping cart, user accounts, admin panel, and WhatsApp checkout integration.',
+      technologies: ['Next.js', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'WhatsApp API'],
+      demoLink: 'https://my-ecommerce-black.vercel.app/',
+      codeLink: 'https://github.com/muhammedrifadkp/my-ecommerce'
+    },
+    {
+      id: 4,
+      title: 'TSEEP Academy - Educational Platform',
+      category: 'fullstack',
+      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&crop=center',
+      description: 'MERN stack educational platform with user authentication, course management, dashboard, and responsive UI for Texol World Machine Test.',
+      technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Tailwind CSS', 'bcrypt'],
+      demoLink: 'https://tseepacademy.vercel.app',
+      codeLink: 'https://github.com/muhammedrifadkp/MERN-project'
+    },
+    {
+      id: 5,
+      title: '3D Interactive Portfolio',
       category: 'frontend',
       image: 'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=600&h=400&fit=crop&crop=center',
       description: 'An interactive 3D portfolio website showcasing projects and skills with Three.js animations, smooth transitions, and modern design.',
       technologies: ['React', 'Three.js', 'React Three Fiber', 'Framer Motion', 'Tailwind CSS', 'Vite'],
       demoLink: 'https://muhammedrifad.vercel.app/',
-      codeLink: 'https://github.com/muhammedrifadkp/3D-Rifad-Portfolio'
+      codeLink: 'https://github.com/muhammedrifadkp/My-Portfolio'
+    },
+    {
+      id: 6,
+      title: 'Rainforest Platformer Game',
+      category: 'frontend',
+      image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=400&fit=crop&crop=center',
+      description: 'Interactive platformer game built with HTML5 and JavaScript, featuring rainforest theme with engaging gameplay mechanics.',
+      technologies: ['HTML5', 'JavaScript', 'CSS3', 'Game Development', 'Scratch'],
+      demoLink: 'https://rain-forest.vercel.app',
+      codeLink: 'https://github.com/muhammedrifadkp/rain-forest-game'
+    },
+    {
+      id: 7,
+      title: 'CADD Attendance System',
+      category: 'fullstack',
+      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop&crop=center',
+      description: 'Attendance tracking and management system designed for educational institutions with comprehensive reporting features.',
+      technologies: ['JavaScript', 'Node.js', 'Express', 'MongoDB', 'HTML5', 'CSS3'],
+      demoLink: '#',
+      codeLink: 'https://github.com/muhammedrifadkp/CADD-Attendance'
+    },
+    {
+      id: 8,
+      title: 'Sooraj Full-Stack Application',
+      category: 'fullstack',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center',
+      description: 'Full-stack web application with modern backend architecture and responsive frontend design.',
+      technologies: ['TypeScript', 'React', 'Node.js', 'Express', 'Database Integration'],
+      demoLink: '#',
+      codeLink: 'https://github.com/muhammedrifadkp/sooraj-app'
+    },
+    {
+      id: 9,
+      title: 'Zuditt E-commerce Platform',
+      category: 'fullstack',
+      image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop&crop=center',
+      description: 'Advanced e-commerce platform with modern TypeScript architecture and comprehensive business features.',
+      technologies: ['TypeScript', 'React', 'Next.js', 'E-commerce', 'Payment Integration'],
+      demoLink: '#',
+      codeLink: 'https://github.com/muhammedrifadkp/zuditt-ecomerce'
+    },
+    {
+      id: 10,
+      title: 'Thejas Portfolio Website',
+      category: 'frontend',
+      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop&crop=center',
+      description: 'Professional portfolio website with clean design and responsive layout showcasing creative work.',
+      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Portfolio'],
+      demoLink: '#',
+      codeLink: 'https://github.com/muhammedrifadkp/Thejas'
+    },
+    {
+      id: 11,
+      title: 'Personal Website',
+      category: 'frontend',
+      image: 'https://images.unsplash.com/photo-1486312338219-ce68e2c6b7d3?w=600&h=400&fit=crop&crop=center',
+      description: 'Personal website showcasing skills, projects, and professional experience with modern web design.',
+      technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design', 'Web Development'],
+      demoLink: '#',
+      codeLink: 'https://github.com/muhammedrifadkp/personal-website'
+    },
+    {
+      id: 12,
+      title: 'Munawar Portfolio',
+      category: 'frontend',
+      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop&crop=center',
+      description: 'Custom portfolio website built with JavaScript featuring modern design and interactive elements.',
+      technologies: ['JavaScript', 'HTML5', 'CSS3', 'Portfolio Design', 'Interactive UI'],
+      demoLink: '#',
+      codeLink: 'https://github.com/muhammedrifadkp/munawar-portfolio'
     }
   ];
 
   // Filter categories
   const categories = [
     { id: 'all', name: 'All Projects' },
-    { id: 'frontend', name: 'Frontend' },
-    { id: 'fullstack', name: 'Full Stack' }
+    { id: 'fullstack', name: 'Full Stack' },
+    { id: 'frontend', name: 'Frontend' }
   ];
 
   // Initialize filtered projects

@@ -148,6 +148,95 @@ const AIAssistant = () => {
         live_url: 'https://muhammedrifad.vercel.app/',
         github_url: 'https://github.com/muhammedrifadkp/My-Portfolio',
         achievements: ['15+ advanced features implemented', 'Cutting-edge 3D web experience', 'Industry-leading portfolio design']
+      },
+
+      'FreshMarket E-commerce': {
+        description: 'Modern e-commerce platform with product categories, shopping cart, user accounts, admin panel, and WhatsApp checkout integration',
+        detailed_description: 'FreshMarket is a comprehensive e-commerce platform built with Next.js and Node.js, featuring product categories for vegetables, fruits, and meat, shopping cart functionality, user account management, admin panel for product management, and innovative WhatsApp checkout integration.',
+        tech_stack: ['Next.js', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'WhatsApp API', 'JWT'],
+        type: 'Full Stack',
+        complexity: 'High',
+        duration: '3 months',
+        team_size: 'Solo project',
+        key_features: [
+          'Product categories (Vegetables, Fruits, Meat)',
+          'Shopping cart with quantity selection',
+          'User account management',
+          'Admin panel for product management',
+          'WhatsApp checkout integration',
+          'Order history and tracking',
+          'Responsive design',
+          'Payment integration'
+        ],
+        technical_challenges: [
+          'Implementing WhatsApp API integration',
+          'Building scalable e-commerce architecture',
+          'Creating admin panel with full CRUD operations',
+          'Designing responsive product catalog',
+          'Implementing secure payment processing'
+        ],
+        live_url: 'https://my-ecommerce-black.vercel.app/',
+        github_url: 'https://github.com/muhammedrifadkp/my-ecommerce',
+        achievements: ['Full-featured e-commerce platform', 'WhatsApp integration innovation', 'Comprehensive admin management system']
+      },
+
+      'TSEEP Academy': {
+        description: 'MERN stack educational platform with user authentication, course management, dashboard, and responsive UI for Texol World Machine Test',
+        detailed_description: 'TSEEP Academy is a comprehensive educational platform developed as part of the Texol World Machine Test. Built with the MERN stack, it features user authentication, course management, personalized dashboard, and fully responsive design.',
+        tech_stack: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Tailwind CSS', 'bcrypt'],
+        type: 'Full Stack',
+        complexity: 'Medium',
+        duration: '2 months',
+        team_size: 'Solo project',
+        key_features: [
+          'User registration and authentication',
+          'Course catalog with search functionality',
+          'Personalized dashboard',
+          'Course management system',
+          'Progress tracking',
+          'Responsive design for all devices',
+          'Rating and review system',
+          'Student completion statistics'
+        ],
+        technical_challenges: [
+          'Implementing secure authentication system',
+          'Building course management interface',
+          'Creating responsive dashboard',
+          'Designing course catalog with search',
+          'Implementing progress tracking system'
+        ],
+        live_url: 'https://tseepacademy.vercel.app',
+        github_url: 'https://github.com/muhammedrifadkp/MERN-project',
+        achievements: ['Successfully completed Texol World Machine Test', 'Full MERN stack implementation', 'Comprehensive educational platform']
+      },
+
+      'Rainforest Platformer Game': {
+        description: 'Interactive platformer game built with HTML5 and JavaScript, featuring rainforest theme with engaging gameplay mechanics',
+        detailed_description: 'Rainforest Platformer is an engaging browser-based game that combines HTML5 canvas technology with JavaScript to create an immersive gaming experience. The game features a rainforest theme with challenging platformer mechanics.',
+        tech_stack: ['HTML5', 'JavaScript', 'CSS3', 'Canvas API', 'Game Development'],
+        type: 'Frontend Game',
+        complexity: 'Medium',
+        duration: '1 month',
+        team_size: 'Solo project',
+        key_features: [
+          'HTML5 Canvas-based gameplay',
+          'Rainforest-themed graphics',
+          'Platformer game mechanics',
+          'Responsive game controls',
+          'Score tracking system',
+          'Multiple game levels',
+          'Sound effects integration'
+        ],
+        technical_challenges: [
+          'Implementing smooth game physics',
+          'Creating responsive game controls',
+          'Optimizing canvas performance',
+          'Designing engaging level progression',
+          'Implementing collision detection'
+        ],
+        live_url: 'https://rain-forest.vercel.app',
+        github_url: 'https://github.com/muhammedrifadkp/rain-forest-game',
+        achievements: ['Engaging browser-based game', 'Smooth gameplay mechanics', 'Creative rainforest theme']
       }
     },
 
@@ -465,10 +554,10 @@ const AIAssistant = () => {
 
   // Advanced Gemini 2.0 Flash API Integration
   const callGeminiAPI = async (userInput) => {
-    // For development, use the API key directly (will be moved to env in production)
+    // Use environment variables for API key (secure)
     const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY ||
                            import.meta.env.REACT_APP_GEMINI_API_KEY ||
-                           'AIzaSyCLE3mB91h6OTHt47EEwKzVBLPz-0D59Ow';
+                           null;
 
     console.log('Environment check:', {
       vite: import.meta.env.VITE_GEMINI_API_KEY ? 'Found' : 'Missing',

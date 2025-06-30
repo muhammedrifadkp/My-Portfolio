@@ -550,52 +550,75 @@ const Home = () => {
           </div>
         </div>
 
+        <div className="portfolio-stats">
+          <h3 className="section-title">Portfolio Highlights</h3>
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-number">12+</div>
+              <div className="stat-label">Projects Completed</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">5+</div>
+              <div className="stat-label">Technologies Mastered</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">3+</div>
+              <div className="stat-label">Live Applications</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">100%</div>
+              <div className="stat-label">Client Satisfaction</div>
+            </div>
+          </div>
+        </div>
+
         <div className="featured-projects">
           <h3 className="section-title">Featured Projects</h3>
           <div className="project-cards">
-            <div className="project-card">
+            <div className="project-card" onClick={() => window.open('https://cdc-attendance-com.vercel.app', '_blank')}>
               <div className="project-image">
-                <img src="https://placehold.co/300x200?text=EcomNova" alt="EcomNova" />
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=200&fit=crop&crop=center" alt="CDC Attendance" />
               </div>
               <div className="project-info">
-                <h4>EcomNova – E-commerce Platform</h4>
-                <p>A scalable e-commerce website with user registration, login, product listing, cart functionality, and order management.</p>
+                <h4>CDC Attendance Management System</h4>
+                <p>Comprehensive digital attendance management system for educational institutes with enterprise security, lab management, and advanced analytics.</p>
                 <div className="project-tags">
                   <span>React</span>
-                  <span>Vite</span>
                   <span>Node.js</span>
                   <span>MongoDB</span>
+                  <span>JWT</span>
                 </div>
               </div>
             </div>
 
-            <div className="project-card">
+            <div className="project-card" onClick={() => window.open('https://www.zuditt.com/', '_blank')}>
               <div className="project-image">
-                <img src="https://placehold.co/300x200?text=EtheReal" alt="EtheReal" />
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=300&h=200&fit=crop&crop=center" alt="Zuditt AI" />
               </div>
               <div className="project-info">
-                <h4>EtheReal – Fuel Delivery Website</h4>
-                <p>A static landing page for a mobile fuel delivery company with clean UI focused on user trust and professionalism.</p>
+                <h4>Zuditt AI Innovation LLP</h4>
+                <p>AI-driven business solutions platform offering web development, digital marketing, BPO services, and innovative technology solutions.</p>
                 <div className="project-tags">
-                  <span>HTML</span>
-                  <span>CSS</span>
-                  <span>JavaScript</span>
+                  <span>Next.js</span>
+                  <span>TypeScript</span>
+                  <span>AI Integration</span>
+                  <span>WhatsApp API</span>
                 </div>
               </div>
             </div>
 
-            <div className="project-card">
+            <div className="project-card" onClick={() => window.open('https://my-ecommerce-black.vercel.app/', '_blank')}>
               <div className="project-image">
-                <img src="https://placehold.co/300x200?text=TravelX" alt="TravelX" />
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop&crop=center" alt="FreshMarket E-commerce" />
               </div>
               <div className="project-info">
-                <h4>TravelX – Travel Landing Page</h4>
-                <p>A visually appealing one-page travel website with smooth scrolling, modal interactions, and responsive elements.</p>
+                <h4>FreshMarket E-commerce Platform</h4>
+                <p>Modern e-commerce platform with product categories, shopping cart, user accounts, admin panel, and WhatsApp checkout integration.</p>
                 <div className="project-tags">
-                  <span>HTML</span>
-                  <span>CSS</span>
-                  <span>Bootstrap</span>
-                  <span>jQuery</span>
+                  <span>Next.js</span>
+                  <span>Express</span>
+                  <span>MongoDB</span>
+                  <span>WhatsApp API</span>
                 </div>
               </div>
             </div>

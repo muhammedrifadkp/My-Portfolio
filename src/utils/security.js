@@ -139,27 +139,33 @@ export const sanitizeInput = (input) => {
     .substring(0, 1000);
 };
 
-// Security: Email validation
+// Security: Email validation (more flexible)
 export const validateEmail = (email) => {
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!email || email.length === 0) return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email) && email.length <= 254;
 };
 
-// Security: Phone validation
+// Security: Phone validation (more flexible)
 export const validatePhone = (phone) => {
-  const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,15}$/;
+  if (!phone || phone.length === 0) return false;
+  // Allow various phone formats
+  const phoneRegex = /^[\+]?[0-9\s\-\(\)\.]{7,20}$/;
   return phoneRegex.test(phone);
 };
 
-// Security: Name validation
+// Security: Name validation (more flexible)
 export const validateName = (name) => {
-  const nameRegex = /^[a-zA-Z\s\-\.]{2,50}$/;
-  return nameRegex.test(name);
+  if (!name || name.length === 0) return false;
+  // Allow letters, spaces, hyphens, apostrophes, and dots
+  const nameRegex = /^[a-zA-Z\s\-\.']{1,100}$/;
+  return nameRegex.test(name) && name.trim().length >= 2;
 };
 
-// Security: Message validation
+// Security: Message validation (more flexible)
 export const validateMessage = (message) => {
-  return message.length >= 10 && message.length <= 1000;
+  if (!message || message.length === 0) return false;
+  return message.trim().length >= 5 && message.length <= 2000;
 };
 
 // Security: Rate limiting for form submissions
@@ -185,14 +191,14 @@ export const checkRateLimit = () => {
   return true;
 };
 
-// Security: Prevent form automation/bots
+// Security: Prevent form automation/bots (more lenient)
 export const validateHuman = () => {
   // Simple bot detection - check if form was filled too quickly
   const formStartTime = window.formStartTime || Date.now();
   const timeTaken = Date.now() - formStartTime;
-  
-  // If form was filled in less than 3 seconds, likely a bot
-  return timeTaken > 3000;
+
+  // If form was filled in less than 1 second, likely a bot (more lenient)
+  return timeTaken > 1000;
 };
 
 // Security: Initialize form start time

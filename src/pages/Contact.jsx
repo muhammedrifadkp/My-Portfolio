@@ -72,21 +72,14 @@ const Contact = () => {
     // Security: Sanitize all inputs using security utilities
     const sanitizedValue = sanitizeInput(value);
 
-    // Security: Additional validation for specific fields
-    if (name === 'name' && sanitizedValue && !validateName(sanitizedValue)) {
-      return; // Don't update if name format is invalid
-    }
-
-    if (name === 'email' && sanitizedValue && !validateEmail(sanitizedValue)) {
-      return; // Don't update if email format is invalid
-    }
-
-    if (name === 'phone' && sanitizedValue && !validatePhone(sanitizedValue)) {
-      return; // Don't update if phone format is invalid
-    }
-
-    if (name === 'message' && sanitizedValue && sanitizedValue.length > 1000) {
+    // Allow typing without strict validation - only validate on submission
+    // Just apply basic length limits during typing
+    if (name === 'message' && sanitizedValue.length > 2000) {
       return; // Don't update if message is too long
+    }
+
+    if (sanitizedValue.length > 500 && name !== 'message') {
+      return; // Don't update if other fields are too long
     }
 
     setFormData({
@@ -120,12 +113,14 @@ const Contact = () => {
       return;
     }
 
-    // Security: Comprehensive form validation
-    const isFormComplete = Object.values(formData).every((value) => value.trim() !== "") &&
-                          validateName(formData.name) &&
-                          validateEmail(formData.email) &&
-                          validatePhone(formData.phone) &&
-                          validateMessage(formData.message);
+    // Security: Comprehensive form validation with better error handling
+    const hasAllFields = Object.values(formData).every((value) => value.trim() !== "");
+    const isValidName = validateName(formData.name);
+    const isValidEmail = validateEmail(formData.email);
+    const isValidPhone = validatePhone(formData.phone);
+    const isValidMessage = validateMessage(formData.message);
+
+    const isFormComplete = hasAllFields && isValidName && isValidEmail && isValidPhone && isValidMessage;
 
     if (isFormComplete) {
       // Try primary EmailJS credentials first
@@ -311,7 +306,7 @@ const Contact = () => {
           {submitStatus === 'error' && (
             <div className="submit-message error">
               <i className="fas fa-exclamation-circle"></i>
-              <p>❌ Please fill out all required fields.</p>
+              <p>❌ Please check all fields and try again.</p>
             </div>
           )}
 

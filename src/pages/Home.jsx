@@ -108,211 +108,86 @@ const Computer = ({ scale = 0.75, position = [0, -1.5, -1.5], initialRotation = 
     }
   });
 
-  // Add RGB effects to the PC case and apply screen texture
+  // Add RGB effects, custom screen texture, and seamless RIFAD branding to PC case
   useEffect(() => {
-    if (computer && computer.scene) {
-      computer.scene.traverse((child) => {
-        if (child.isMesh) {
-          // Make the model receive shadows
-          child.receiveShadow = true;
-          child.castShadow = true;
+    if (!computer || !computer.scene) return;
 
-          // Check if this is a screen part
-          if (child.name.toLowerCase().includes('screen')) {
-            // Store reference to the screen mesh
-            screenRef.current = child;
+    // Create a high-res glowing RIFAD brand texture for PC case
+    const brandCanvas = document.createElement('canvas');
+    brandCanvas.width = 1024;
+    brandCanvas.height = 256;
+    const brandCtx = brandCanvas.getContext('2d');
 
-            // Clone the material to avoid modifying the shared material
-            child.material = child.material.clone();
+    brandCtx.clearRect(0, 0, brandCanvas.width, brandCanvas.height);
+    
+    // Draw subtle neon glow line behind text
+    const grad = brandCtx.createLinearGradient(0, 0, brandCanvas.width, 0);
+    grad.addColorStop(0, '#00f0ff');
+    grad.addColorStop(0.5, '#7000ff');
+    grad.addColorStop(1, '#ff007a');
 
-            // Apply the screen texture if available
-            if (screenTextureRef.current && screenTextureRef.current.texture) {
-              child.material.map = screenTextureRef.current.texture;
-              child.material.emissiveMap = screenTextureRef.current.texture;
-            }
+    brandCtx.shadowColor = '#00f0ff';
+    brandCtx.shadowBlur = 20;
+    brandCtx.fillStyle = '#ffffff';
+    brandCtx.font = '900 110px "Arial Black", sans-serif';
+    brandCtx.textAlign = 'center';
+    brandCtx.textBaseline = 'middle';
+    brandCtx.fillText('RIFAD', brandCanvas.width / 2, brandCanvas.height / 2);
 
-            // Set up material properties for the screen
-            child.material.emissive = new THREE.Color(0xffffff);
-            child.material.emissiveIntensity = 1;
+    const brandTexture = new THREE.CanvasTexture(brandCanvas);
+    brandTexture.wrapS = THREE.ClampToEdgeWrapping;
+    brandTexture.wrapT = THREE.ClampToEdgeWrapping;
 
-            // Make sure the texture is visible
-            child.material.transparent = true;
-            child.material.opacity = 1;
-            child.material.needsUpdate = true;
-          }
-          // Enhance materials for RGB effects on other specific parts
-          else if (child.material &&
-            (child.name.includes('fan') ||
-              child.name.includes('light') ||
-              child.name.includes('LED'))) {
+    computer.scene.traverse((child) => {
+      if (child.isMesh) {
+        child.receiveShadow = true;
+        child.castShadow = true;
 
-            // Clone the material to avoid modifying the shared material
-            child.material = child.material.clone();
+        const nameLower = child.name.toLowerCase();
 
-            // Increase emissive properties for RGB parts
-            child.material.emissive = new THREE.Color(0x00ffff);
-            child.material.emissiveIntensity = 2;
-          }
-        }
-      });
-    }
-  }, [computer]);
-
-  // Add RGB effects to the PC case and apply screen texture
-  useEffect(() => {
-    if (computer.scene) {
-      // Process the computer model
-      computer.scene.traverse((child) => {
-        if (child.isMesh) {
-          // Find the screen mesh to apply our texture
-          if (child.name.includes('screen') || child.name.includes('Screen') || child.name.includes('monitor')) {
-            screenRef.current = child;
-            
-            // Apply screen material with our texture
-            if (screenTextureRef.current) {
-              child.material = new THREE.MeshBasicMaterial({
-                map: screenTextureRef.current.texture,
-                emissive: new THREE.Color(0xffffff),
-                emissiveMap: screenTextureRef.current.texture,
-                emissiveIntensity: 0.8
-              });
-            }
-          }
-          
-          // Change keyboard color
-          else if (child.name.includes('keyboard') || child.name.includes('Keyboard')) {
-            child.material = child.material.clone();
-            child.material.color = new THREE.Color(0x20b5ff); // Cyberpunk blue color
-            child.material.emissive = new THREE.Color(0x20b5ff);
-            child.material.emissiveIntensity = 0.5;
-          }
-          
-          // Change mouse color
-          else if (child.name.includes('mouse') || child.name.includes('Mouse')) {
-            child.material = child.material.clone();
-            child.material.color = new THREE.Color(0x20b5ff); // Matching blue color
-            child.material.emissive = new THREE.Color(0x20b5ff);
-            child.material.emissiveIntensity = 0.5;
-          }
-          
-          // Add Rifad branding to the case
-          else if (child.name.includes('case') || child.name.includes('Case') || 
-                  child.name.includes('tower') || child.name.includes('Tower')) {
-            // Create a canvas for the brand texture with increased size
-            const brandCanvas = document.createElement('canvas');
-            brandCanvas.width = 1024; // Doubled size for higher resolution
-            brandCanvas.height = 256;
-            const brandCtx = brandCanvas.getContext('2d');
-            
-            // Clear canvas with transparent background
-            brandCtx.clearRect(0, 0, brandCanvas.width, brandCanvas.height);
-            
-            // Add a glowing background to make the text stand out
-            const gradient = brandCtx.createRadialGradient(
-              brandCanvas.width/2, brandCanvas.height/2, 10,
-              brandCanvas.width/2, brandCanvas.height/2, 150
-            );
-            gradient.addColorStop(0, 'rgba(255, 153, 0, 0.8)');
-            gradient.addColorStop(1, 'rgba(255, 153, 0, 0)');
-            brandCtx.fillStyle = gradient;
-            brandCtx.fillRect(0, 0, brandCanvas.width, brandCanvas.height);
-            
-            // Draw Rifad logo/text with glow effect
-            brandCtx.shadowColor = '#ff9900';
-            brandCtx.shadowBlur = 30;
-            brandCtx.fillStyle = '#ffffff';
-            brandCtx.font = 'bold 120px Arial, sans-serif'; // Larger font
-            brandCtx.textAlign = 'center';
-            brandCtx.textBaseline = 'middle';
-            brandCtx.fillText('RIFAD', brandCanvas.width/2, brandCanvas.height/2);
-            
-            // Create texture from canvas
-            const brandTexture = new THREE.CanvasTexture(brandCanvas);
-            
-            // Make the texture repeat to increase chances of visibility
-            brandTexture.wrapS = THREE.RepeatWrapping;
-            brandTexture.wrapT = THREE.RepeatWrapping;
-            brandTexture.repeat.set(1, 1);
-            
-            // Clone the material to avoid affecting other meshes
-            const originalMaterial = child.material.clone();
-            
-            // Create a new material with stronger emission
-            child.material = new THREE.MeshStandardMaterial({
-              map: originalMaterial.map,
-              color: originalMaterial.color,
-              metalness: originalMaterial.metalness,
-              roughness: originalMaterial.roughness,
-              normalMap: originalMaterial.normalMap,
-              emissive: new THREE.Color(0xff9900),
-              emissiveMap: brandTexture,
-              emissiveIntensity: 2.0, // Increased intensity
-              transparent: true,
-              opacity: 1.0
+        // 1. Screen Monitor
+        if (nameLower.includes('screen') || nameLower.includes('monitor')) {
+          screenRef.current = child;
+          if (screenTextureRef.current && screenTextureRef.current.texture) {
+            child.material = new THREE.MeshBasicMaterial({
+              map: screenTextureRef.current.texture,
+              toneMapped: false
             });
-            
-            // Add a second mesh as a decal on top of the case for better visibility
-            try {
-              // Create a simple plane geometry for the decal
-              const decalGeometry = new THREE.PlaneGeometry(2, 0.5);
-              const decalMaterial = new THREE.MeshBasicMaterial({
-                map: brandTexture,
-                transparent: true,
-                opacity: 1,
-                side: THREE.DoubleSide,
-                depthTest: true
-              });
-              
-              // Create the decal mesh
-              const decal = new THREE.Mesh(decalGeometry, decalMaterial);
-              
-              // Position the decal on the front of the case
-              // These values may need adjustment based on your model
-              decal.position.set(0, 0, 1); // Position it slightly in front
-              decal.rotation.set(0, 0, 0);
-              
-              // Add the decal as a child of the case
-              child.add(decal);
-            } catch (error) {
-              console.error("Error adding decal:", error);
-            }
-          }
-
-          // Look for any other branding elements on the model
-          else if (child.name.includes('logo') || child.name.includes('Logo') || 
-                  child.name.includes('brand') || child.name.includes('Brand') ||
-                  child.name.includes('text') || child.name.includes('Text')) {
-            
-            // Create a canvas for the brand texture
-            const logoCanvas = document.createElement('canvas');
-            logoCanvas.width = 300;
-            logoCanvas.height = 256;
-            const logoCtx = logoCanvas.getContext('2d');
-            
-            // Clear canvas with transparent background
-            logoCtx.clearRect(0, 0, logoCanvas.width, logoCanvas.height);
-            
-            // Draw Rifad logo/text
-            logoCtx.fillStyle = '#ffffff';
-            logoCtx.font = 'bold 100px Arial, sans-serif';
-            logoCtx.textAlign = 'center';
-            logoCtx.textBaseline = 'middle';
-            logoCtx.fillText('RIFAD', logoCanvas.width/2, logoCanvas.height/1.5);
-            
-            // Create texture from canvas
-            const logoTexture = new THREE.CanvasTexture(logoCanvas);
-            
-            // Apply to the material
-            child.material = child.material.clone();
-            child.material.map = logoTexture;
-            child.material.emissive = new THREE.Color(0xff9900);
-            child.material.emissiveMap = logoTexture;
-            child.material.emissiveIntensity = 0.8;
-            child.material.needsUpdate = true;
           }
         }
-      });
-    }
+
+        // 2. Keyboard
+        else if (nameLower.includes('keyboard')) {
+          child.material = child.material.clone();
+          child.material.color = new THREE.Color(0x00f0ff);
+          child.material.emissive = new THREE.Color(0x00f0ff);
+          child.material.emissiveIntensity = 0.4;
+        }
+
+        // 3. Mouse
+        else if (nameLower.includes('mouse')) {
+          child.material = child.material.clone();
+          child.material.color = new THREE.Color(0xff007a);
+          child.material.emissive = new THREE.Color(0xff007a);
+          child.material.emissiveIntensity = 0.4;
+        }
+
+        // 4. Fans, Cooler & LEDs
+        else if (nameLower.includes('fan') || nameLower.includes('light') || nameLower.includes('led') || nameLower.includes('cooler')) {
+          child.material = child.material.clone();
+          child.material.emissive = new THREE.Color(0x00f0ff);
+          child.material.emissiveIntensity = 1.8;
+        }
+
+        // 5. PC Case & Tower - Apply glowing RIFAD brand directly on material (no mid-air floating meshes)
+        else if (nameLower.includes('case') || nameLower.includes('tower') || nameLower.includes('logo') || nameLower.includes('brand')) {
+          child.material = child.material.clone();
+          child.material.emissive = new THREE.Color(0x00f0ff);
+          child.material.emissiveMap = brandTexture;
+          child.material.emissiveIntensity = 0.8;
+        }
+      }
+    });
   }, [computer]);
 
   return (
@@ -348,12 +223,11 @@ const Home = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const textArray = [
-    "Full Stack Developer",
-    "React Developer",
-    "Node.js Developer",
-    "Python Developer",
-    "Next.js Developer",
-    "Vite Developer"
+    "Full Stack MERN Developer",
+    "Next.js & React Architect",
+    "Node.js & Express Specialist",
+    "UI/UX Web Engineer",
+    "Full-Stack Instructor"
   ];
 
   useEffect(() => {
@@ -392,20 +266,45 @@ const Home = () => {
 
   return (
     <section className="home-container">
+      {/* Background ambient decorative glowing orbs */}
+      <div className="bg-glow-orb orb-1"></div>
+      <div className="bg-glow-orb orb-2"></div>
+      <div className="bg-grid-pattern"></div>
+
       <div className={`home-content ${isLoaded ? 'loaded' : ''}`}>
         <div className="hero-section">
           <div className="text-content">
-            <h1 className="greeting">Hello, I'm <span className="name">Muhammed Rifad KP</span></h1>
+            <h1 className="greeting">
+              Hello, I'm <br />
+              <span className="name">Muhammed Rifad KP</span>
+            </h1>
+
             <h2 className="role">
-              <span className="static-text">I'm a </span>
+              <span className="static-text">I build </span>
               <span className="dynamic-text">{displayText}</span>
               <span className="cursor">|</span>
             </h2>
+
             <p className="bio">
-              Passionate about creating elegant solutions to complex problems.
-              I specialize in building full-stack applications with modern technologies
-              that deliver exceptional user experiences.
+              Full Stack Developer specializing in <strong>MERN stack & Next.js</strong>. 
+              Delivered <strong>10+ live production web applications</strong> across e-commerce, 
+              real estate, and healthcare with 2+ years of full-stack engineering mentorship experience.
             </p>
+
+            <div className="hero-stats-chips">
+              <div className="stat-chip">
+                <span className="stat-val">10+</span>
+                <span className="stat-lbl">Deployed Projects</span>
+              </div>
+              <div className="stat-chip">
+                <span className="stat-val">2+ Yrs</span>
+                <span className="stat-lbl">Training & Mentorship</span>
+              </div>
+              <div className="stat-chip">
+                <span className="stat-val">100%</span>
+                <span className="stat-lbl">Production Delivery</span>
+              </div>
+            </div>
 
             <div className="cta-buttons">
               <Link
@@ -413,7 +312,7 @@ const Home = () => {
                 className="primary-btn"
                 onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
               >
-                View My Work
+                <span>View My Work</span> <i className="fas fa-arrow-right"></i>
               </Link>
               <Link
                 to="/contact"
@@ -422,203 +321,358 @@ const Home = () => {
               >
                 Get In Touch
               </Link>
-              <a href="/Muhammed-Rifad-KP-Resume-.pdf" target="_blank" rel="noopener noreferrer" className="outline-btn">
-                <i className="fas fa-download"></i> Resume
+              <a 
+                href="/Muhammed_Rifad_KP_Resume.docx" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="outline-btn"
+                download
+              >
+                <i className="fas fa-file-download"></i> Download CV
               </a>
             </div>
 
             <div className="social-links">
-              <a href="https://github.com/muhammedrifadkp" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <a href="https://github.com/muhammedrifadkp" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
                 <i className="fab fa-github"></i>
               </a>
-              <a href="https://linkedin.com/in/muhammed-rifad-64a7172b9" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <a href="https://linkedin.com/in/muhammed-rifad-64a7172b9" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
                 <i className="fab fa-linkedin"></i>
               </a>
-              <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <i className="fab fa-twitter"></i>
+              <a href="https://www.instagram.com/mohd_rifad_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+                <i className="fab fa-instagram"></i>
               </a>
-              <a href="mailto:muhammedrifadkp3@gmail.com" aria-label="Email">
+              <a href="https://wa.me/917356852496" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">
+                <i className="fab fa-whatsapp"></i>
+              </a>
+              <a href="mailto:muhammedrifadkp3@gmail.com" aria-label="Email" title="Email">
                 <i className="fas fa-envelope"></i>
               </a>
             </div>
           </div>
 
+          <div className="modern-3d-wrapper">
+            <div className="glow-backdrop"></div>
 
-
-          <div className="model-container">
-            <Canvas
-              frameloop="always"
-              shadows
-              dpr={[1, 2]}
-              camera={{ position: [15, 2, 5], fov: 30 }}
-              gl={{ preserveDrawingBuffer: true, antialias: true, alpha: true }}
-              style={{ background: '#0a0a14' }}
-              onCreated={({ gl }) => {
-                gl.setClearColor('#0a0a14', 1);
-              }}
-            >
-              <color attach="background" args={['#0a0a14']} />
-              <ambientLight intensity={0.5} />
-              <directionalLight position={[1, 1, 1]} intensity={1.5} />
-              <spotLight
-                position={[5, 10, 7]}
-                angle={0.3}
-                penumbra={1}
-                intensity={2}
-                castShadow
-                color="#ff3e88"
-              />
-              <spotLight
-                position={[-5, 10, 7]}
-                angle={0.3}
-                penumbra={1}
-                intensity={2}
-                castShadow
-                color="#0099ff"
-              />
-
-              <Suspense fallback={<Loader />}>
-                <Computer
-                  scale={0.45}
-                  position={[0, -1.0, -1.0]}
-                  initialRotation={[0.0, 0.0, 0.0]}
+            <div className="model-container">
+              <Canvas
+                frameloop="always"
+                shadows
+                dpr={[1, 2]}
+                camera={{ position: [14, 1.8, 4.8], fov: 34 }}
+                gl={{ preserveDrawingBuffer: true, antialias: true, alpha: true }}
+                style={{ background: 'transparent' }}
+                onCreated={({ gl }) => {
+                  gl.setClearColor(0x000000, 0);
+                }}
+              >
+                <ambientLight intensity={0.75} />
+                <directionalLight position={[2, 4, 3]} intensity={1.8} color="#ffffff" />
+                <spotLight
+                  position={[8, 12, 8]}
+                  angle={0.35}
+                  penumbra={1}
+                  intensity={2.5}
+                  castShadow
+                  color="#00f0ff"
                 />
-                <OrbitControls
-                  enableZoom={true}
-                  enablePan={true}
-                  enableRotate={true}
-                  zoomSpeed={0.6}
-                  panSpeed={0.5}
-                  rotateSpeed={0.4}
-                  minDistance={2}
-                  maxDistance={10}
-                  dampingFactor={0.1}
-                  enableDamping={true}
-                  target={[0, -0.5, 0]}
+                <spotLight
+                  position={[-8, 12, 8]}
+                  angle={0.35}
+                  penumbra={1}
+                  intensity={2.5}
+                  castShadow
+                  color="#ff007a"
                 />
-              </Suspense>
 
-              <Preload all />
-            </Canvas>
+                <Suspense fallback={<Loader />}>
+                  <Computer
+                    scale={0.39}
+                    position={[0, -0.9, -0.5]}
+                    initialRotation={[0.0, 0.0, 0.0]}
+                  />
+                  <OrbitControls
+                    enableZoom={true}
+                    enablePan={true}
+                    enableRotate={true}
+                    zoomSpeed={0.6}
+                    panSpeed={0.5}
+                    rotateSpeed={0.4}
+                    minDistance={2}
+                    maxDistance={10}
+                    dampingFactor={0.1}
+                    enableDamping={true}
+                    target={[0, -0.4, 0]}
+                  />
+                </Suspense>
+
+                <Preload all />
+              </Canvas>
+            </div>
+          </div>
+        </div>
+
+        <div className="tech-stack">
+          <div className="tech-stack-header">
+            <span className="section-badge">⚡ Core Competencies</span>
+            <h3 className="section-title">My Technical Stack</h3>
+            <p className="section-subtitle">
+              Technologies & frameworks I leverage to architect high-performance, production-ready web applications.
+            </p>
           </div>
 
+          <div className="tech-grid">
+            <div className="tech-card" style={{ '--brand-color': '#61DAFB' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Frontend</span>
+              <div className="tech-icon-wrapper">
+                <i className="fab fa-react"></i>
+              </div>
+              <h4 className="tech-name">React.js</h4>
+              <span className="tech-tag">React 18 & Hooks</span>
+            </div>
 
-        </div>
-        <div className="tech-stack">
-          <h3 className="section-title">My Tech Stack</h3>
-          <div className="tech-icons">
-            <div className="tech-icon" title="React">
-              <i className="fab fa-react"></i>
-              <span>React</span>
+            <div className="tech-card" style={{ '--brand-color': '#00f0ff' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Full Stack</span>
+              <div className="tech-icon-wrapper">
+                <i className="fas fa-cubes"></i>
+              </div>
+              <h4 className="tech-name">Next.js</h4>
+              <span className="tech-tag">App Router & SSR</span>
             </div>
-            <div className="tech-icon" title="Next.js">
-              <i className="fab fa-react"></i>
-              <span>Next.js</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#68A063' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Backend</span>
+              <div className="tech-icon-wrapper">
+                <i className="fab fa-node-js"></i>
+              </div>
+              <h4 className="tech-name">Node.js</h4>
+              <span className="tech-tag">Runtime & Async</span>
             </div>
-            <div className="tech-icon" title="Node.js">
-              <i className="fab fa-node-js"></i>
-              <span>Node.js</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#00E676' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Backend</span>
+              <div className="tech-icon-wrapper">
+                <i className="fas fa-server"></i>
+              </div>
+              <h4 className="tech-name">Express.js</h4>
+              <span className="tech-tag">RESTful APIs</span>
             </div>
-            <div className="tech-icon" title="Python">
-              <i className="fab fa-python"></i>
-              <span>Python</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#47A248' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Database</span>
+              <div className="tech-icon-wrapper">
+                <i className="fas fa-database"></i>
+              </div>
+              <h4 className="tech-name">MongoDB</h4>
+              <span className="tech-tag">NoSQL & Mongoose</span>
             </div>
-            <div className="tech-icon" title="JavaScript">
-              <i className="fab fa-js"></i>
-              <span>JavaScript</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#F7DF1E' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Language</span>
+              <div className="tech-icon-wrapper">
+                <i className="fab fa-js"></i>
+              </div>
+              <h4 className="tech-name">JavaScript</h4>
+              <span className="tech-tag">ES6+ & Async JS</span>
             </div>
-            <div className="tech-icon" title="HTML/CSS">
-              <i className="fab fa-html5"></i>
-              <span>HTML/CSS</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#38BDF8' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Styling</span>
+              <div className="tech-icon-wrapper">
+                <i className="fab fa-css3-alt"></i>
+              </div>
+              <h4 className="tech-name">Tailwind CSS</h4>
+              <span className="tech-tag">Utility-First UI</span>
             </div>
-            <div className="tech-icon" title="Bootstrap">
-              <i className="fab fa-bootstrap"></i>
-              <span>Bootstrap</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#E2E8F0' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Deployment</span>
+              <div className="tech-icon-wrapper">
+                <i className="fas fa-cloud-upload-alt"></i>
+              </div>
+              <h4 className="tech-name">Vercel</h4>
+              <span className="tech-tag">CI/CD & Hosting</span>
             </div>
-            <div className="tech-icon" title="Tailwind CSS">
-              <i className="fab fa-css3-alt"></i>
-              <span>Tailwind CSS</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#A855F7' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Architecture</span>
+              <div className="tech-icon-wrapper">
+                <i className="fas fa-network-wired"></i>
+              </div>
+              <h4 className="tech-name">REST APIs</h4>
+              <span className="tech-tag">Secure Endpoints</span>
             </div>
-            <div className="tech-icon" title="MongoDB">
-              <i className="fas fa-database"></i>
-              <span>MongoDB</span>
-            </div>
-            <div className="tech-icon" title="Vite">
-              <i className="fas fa-bolt"></i>
-              <span>Vite</span>
+
+            <div className="tech-card" style={{ '--brand-color': '#F05032' }}>
+              <div className="tech-card-glow"></div>
+              <span className="tech-category">Tools</span>
+              <div className="tech-icon-wrapper">
+                <i className="fab fa-github"></i>
+              </div>
+              <h4 className="tech-name">Git & GitHub</h4>
+              <span className="tech-tag">Version Control</span>
             </div>
           </div>
         </div>
 
         <div className="portfolio-stats">
-          <h3 className="section-title">Portfolio Highlights</h3>
+          <div className="stats-header">
+            <span className="section-badge">📈 Proven Track Record</span>
+            <h3 className="section-title">Professional Impact</h3>
+            <p className="section-subtitle">
+              Quantifiable engineering achievements across production web applications and technical instruction.
+            </p>
+          </div>
+
           <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-number">12+</div>
-              <div className="stat-label">Projects Completed</div>
+            <div className="stat-card" style={{ '--accent-color': '#00F0FF' }}>
+              <div className="stat-card-glow"></div>
+              <div className="stat-icon"><i className="fas fa-rocket"></i></div>
+              <div className="stat-number">10+</div>
+              <div className="stat-label">Production Apps Deployed</div>
+              <p className="stat-desc">Full-featured MERN & Next.js platforms shipped to live production domains.</p>
             </div>
-            <div className="stat-card">
-              <div className="stat-number">5+</div>
-              <div className="stat-label">Technologies Mastered</div>
+
+            <div className="stat-card" style={{ '--accent-color': '#7000FF' }}>
+              <div className="stat-card-glow"></div>
+              <div className="stat-icon"><i className="fas fa-chalkboard-teacher"></i></div>
+              <div className="stat-number">2+ Yrs</div>
+              <div className="stat-label">Full Stack Instructor</div>
+              <p className="stat-desc">2+ years mentoring developers in HTML, CSS, JS, React & Node at CADD Centre.</p>
             </div>
-            <div className="stat-card">
-              <div className="stat-number">3+</div>
-              <div className="stat-label">Live Applications</div>
+
+            <div className="stat-card" style={{ '--accent-color': '#FF007A' }}>
+              <div className="stat-card-glow"></div>
+              <div className="stat-icon"><i className="fas fa-globe-americas"></i></div>
+              <div className="stat-number">2</div>
+              <div className="stat-label">Global Markets</div>
+              <p className="stat-desc">Delivered platforms for clients across the UAE (Dubai/Abu Dhabi) & India.</p>
             </div>
-            <div className="stat-card">
+
+            <div className="stat-card" style={{ '--accent-color': '#00E676' }}>
+              <div className="stat-card-glow"></div>
+              <div className="stat-icon"><i className="fas fa-award"></i></div>
               <div className="stat-number">100%</div>
               <div className="stat-label">Client Satisfaction</div>
+              <p className="stat-desc">High performance, responsive UI, dynamic search filtering, and on-time delivery.</p>
             </div>
           </div>
         </div>
 
         <div className="featured-projects">
-          <h3 className="section-title">Featured Projects</h3>
+          <div className="projects-header">
+            <span className="section-badge">💻 Production Portfolio</span>
+            <h3 className="section-title">Featured Production Work</h3>
+            <p className="section-subtitle">
+              Live web applications & enterprise platforms engineered and deployed for clients across UAE & India.
+            </p>
+          </div>
+
           <div className="project-cards">
+            <div className="project-card" onClick={() => window.open('https://ztoiq.com/', '_blank')}>
+              <div className="project-image">
+                <img src="/screenshots/ztoiq.png" alt="Ztoiq E-Commerce" />
+                <div className="project-overlay">
+                  <span>Visit Live App <i className="fas fa-external-link-alt"></i></span>
+                </div>
+              </div>
+              <div className="project-info">
+                <span className="project-category">Full Stack & E-Commerce</span>
+                <h4>Ztoiq — Modern E-Commerce Platform</h4>
+                <p>Full-featured e-commerce web application featuring dynamic product catalog browsing, shopping cart workflows, and secure online checkout.</p>
+                <div className="project-tags">
+                  <span>Next.js</span>
+                  <span>React</span>
+                  <span>E-Commerce</span>
+                  <span>Tailwind CSS</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="project-card" onClick={() => window.open('https://agstarautomobiles.vercel.app', '_blank')}>
+              <div className="project-image">
+                <img src="/screenshots/agstarautomobiles.png" alt="AG Star Automobiles" />
+                <div className="project-overlay">
+                  <span>Visit Live App <i className="fas fa-external-link-alt"></i></span>
+                </div>
+              </div>
+              <div className="project-info">
+                <span className="project-category">E-Commerce Platform</span>
+                <h4>AG Star Automobiles</h4>
+                <p>Full-featured motorcycle accessories platform with dynamic "Bike Finder" compatibility search, custom filtering, and shopping cart integration.</p>
+                <div className="project-tags">
+                  <span>Next.js</span>
+                  <span>React</span>
+                  <span>Vercel</span>
+                  <span>E-Commerce</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="project-card" onClick={() => window.open('https://zhmrealestatellc.ae', '_blank')}>
+              <div className="project-image">
+                <img src="/screenshots/zhmrealestatellc.png" alt="ZHM Real Estate LLC" />
+                <div className="project-overlay">
+                  <span>Visit Live App <i className="fas fa-external-link-alt"></i></span>
+                </div>
+              </div>
+              <div className="project-info">
+                <span className="project-category">Real Estate Portal</span>
+                <h4>ZHM Real Estate LLC — Dubai & Abu Dhabi</h4>
+                <p>Multi-region luxury real estate showcase for Dubai & Abu Dhabi markets with dynamic property search, lead capture, and SEO optimization.</p>
+                <div className="project-tags">
+                  <span>Next.js</span>
+                  <span>React</span>
+                  <span>Lead Gen</span>
+                  <span>SEO</span>
+                </div>
+              </div>
+            </div>
+
             <div className="project-card" onClick={() => window.open('https://cdc-attendance-com.vercel.app', '_blank')}>
               <div className="project-image">
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=300&h=200&fit=crop&crop=center" alt="CDC Attendance" />
+                <img src="/screenshots/cdc-attendance.png" alt="CDC Attendance System" />
+                <div className="project-overlay">
+                  <span>Visit Live App <i className="fas fa-external-link-alt"></i></span>
+                </div>
               </div>
               <div className="project-info">
-                <h4>CDC Attendance Management System</h4>
-                <p>Comprehensive digital attendance management system for educational institutes with enterprise security, lab management, and advanced analytics.</p>
+                <span className="project-category">Enterprise Web App</span>
+                <h4>CDC Attendance System</h4>
+                <p>Enterprise digital attendance system for educational institutes featuring secure role-based auth, REST APIs, and structured MongoDB database.</p>
                 <div className="project-tags">
-                  <span>React</span>
-                  <span>Node.js</span>
+                  <span>MERN Stack</span>
                   <span>MongoDB</span>
-                  <span>JWT</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="project-card" onClick={() => window.open('https://www.zuditt.com/', '_blank')}>
-              <div className="project-image">
-                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=300&h=200&fit=crop&crop=center" alt="Zuditt AI" />
-              </div>
-              <div className="project-info">
-                <h4>Zuditt AI Innovation LLP</h4>
-                <p>AI-driven business solutions platform offering web development, digital marketing, BPO services, and innovative technology solutions.</p>
-                <div className="project-tags">
-                  <span>Next.js</span>
-                  <span>TypeScript</span>
-                  <span>AI Integration</span>
-                  <span>WhatsApp API</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="project-card" onClick={() => window.open('https://my-ecommerce-black.vercel.app/', '_blank')}>
-              <div className="project-image">
-                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=300&h=200&fit=crop&crop=center" alt="FreshMarket E-commerce" />
-              </div>
-              <div className="project-info">
-                <h4>FreshMarket E-commerce Platform</h4>
-                <p>Modern e-commerce platform with product categories, shopping cart, user accounts, admin panel, and WhatsApp checkout integration.</p>
-                <div className="project-tags">
-                  <span>Next.js</span>
                   <span>Express</span>
-                  <span>MongoDB</span>
+                  <span>JWT Auth</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="project-card" onClick={() => window.open('https://businesssetup.ad-firms.com', '_blank')}>
+              <div className="project-image">
+                <img src="/screenshots/adfirms.png" alt="Ad Firms UAE" />
+                <div className="project-overlay">
+                  <span>Visit Live App <i className="fas fa-external-link-alt"></i></span>
+                </div>
+              </div>
+              <div className="project-info">
+                <span className="project-category">Consultancy Lead-Gen</span>
+                <h4>Ad Firms — UAE Business Setup</h4>
+                <p>High-converting Dubai consultancy platform with dynamic pricing packages (Mainland, Freezone), WhatsApp business chat, and lead capture funnels.</p>
+                <div className="project-tags">
+                  <span>Next.js</span>
                   <span>WhatsApp API</span>
+                  <span>Lead Gen</span>
                 </div>
               </div>
             </div>
@@ -629,7 +683,7 @@ const Home = () => {
               className="view-all-btn"
               onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
             >
-              View All Projects
+              <span>Explore All Projects</span> <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
         </div>

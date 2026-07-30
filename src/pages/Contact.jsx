@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Loader from "../components/Loader";
 import emailjs from "emailjs-com";
+import { sendContactEmail } from "../utils/sendEmail";
 import PlaneOnly from "../models/PlaneOnly";
 import { getEmailJSConfig, getBackupEmailJSConfig } from "../utils/envValidator";
 import {
@@ -93,111 +94,55 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    // Security: Rate limiting check
-    if (!checkRateLimit()) {
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-      return;
-    }
-
-    // Security: Bot detection
-    if (!validateHuman()) {
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-      return;
-    }
-
-    // Security: Comprehensive form validation with better error handling
-    const hasAllFields = Object.values(formData).every((value) => value.trim() !== "");
     const isValidName = validateName(formData.name);
     const isValidEmail = validateEmail(formData.email);
     const isValidPhone = validatePhone(formData.phone);
     const isValidMessage = validateMessage(formData.message);
 
-    const isFormComplete = hasAllFields && isValidName && isValidEmail && isValidPhone && isValidMessage;
+    const isFormValid = isValidName && isValidEmail && isValidPhone && isValidMessage;
 
-    if (isFormComplete) {
-      // Try primary EmailJS credentials first
-      const tryEmailSend = async (serviceId, templateId, publicKey, attempt = 1) => {
-        try {
-          // Security: No console logs in production
-          const response = await emailjs.send(serviceId, templateId, formData, publicKey);
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            message: "",
-          });
-          handleTakeOff(); // Trigger takeoff after successful email send
-          setIsTyping(false);
-          setSubmitStatus('success');
-          setTimeout(() => {
-            setSubmitStatus(null);
-          }, 5000);
-          setIsSubmitting(false);
-          return true;
-        } catch (error) {
-          // Security: No error details in production
-          if (attempt === 1 && error.status === 412) {
-            // Try backup credentials if primary fails with 412 error
-            const { serviceId: backupServiceId, templateId: backupTemplateId, publicKey: backupPublicKey } = getBackupEmailJSConfig();
-
-            if (backupServiceId && backupTemplateId && backupPublicKey) {
-              return tryEmailSend(backupServiceId, backupTemplateId, backupPublicKey, 2);
-            } else {
-              throw new Error('Service temporarily unavailable');
-            }
-          }
-          throw error;
-        }
-      };
-
-      // Get primary EmailJS credentials from environment variables only
-      const { serviceId, templateId, publicKey } = getEmailJSConfig();
-
-      // Validate that all required credentials are available
-      if (!serviceId || !templateId || !publicKey) {
-        // Security: No detailed error information
-        setSubmitStatus('error');
-        setIsSubmitting(false);
-        setTimeout(() => {
-          setSubmitStatus(null);
-        }, 5000);
-        return;
-      }
-
-      // Try sending email with fallback
-      tryEmailSend(serviceId, templateId, publicKey)
-        .catch((error) => {
-          // Security: No error details exposed
-          // Clear form and show success for better UX
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            message: "",
-          });
-          handleTakeOff(); // Trigger takeoff animation
-          setIsTyping(false);
-          setSubmitStatus('success');
-          setTimeout(() => {
-            setSubmitStatus(null);
-          }, 5000);
-          setIsSubmitting(false);
-        });
-    } else {
+    if (!isFormValid) {
       setSubmitStatus('error');
       setIsSubmitting(false);
       setTimeout(() => {
         setSubmitStatus(null);
       }, 5000);
+      return;
     }
+
+    // Process form submission
+    const handleSuccess = () => {
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+      handleTakeOff(); // Trigger 3D plane takeoff animation
+      setIsTyping(false);
+      setSubmitStatus('success');
+      setIsSubmitting(false);
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 6000);
+    };
+
+    // Process form submission with Resend / Web3Forms / EmailJS
+    sendContactEmail(formData).then(() => {
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+      handleTakeOff(); // Trigger 3D plane takeoff animation
+      setIsTyping(false);
+      setSubmitStatus('success');
+      setIsSubmitting(false);
+      setTimeout(() => {
+        setSubmitStatus(null);
+      }, 6000);
+    });
   };
 
   const handleTakeOff = () => {
@@ -321,9 +266,9 @@ const Contact = () => {
                 onFocus={() => handleInputFocus(inputRefs.name)}
                 onBlur={() => handleInputBlur(inputRefs.name)}
                 onChange={handleInputChange}
-                placeholder="Your Name"
+                placeholder=" "
               />
-              <label htmlFor="name"><i className="fas fa-user"></i> Name</label>
+              <label htmlFor="name"><i className="fas fa-user"></i> Your Name</label>
             </div>
 
             <div className="form-group">
@@ -336,9 +281,9 @@ const Contact = () => {
                 onFocus={() => handleInputFocus(inputRefs.email)}
                 onBlur={() => handleInputBlur(inputRefs.email)}
                 onChange={handleInputChange}
-                placeholder="Your Email"
+                placeholder=" "
               />
-              <label htmlFor="email"><i className="fas fa-envelope"></i> Email</label>
+              <label htmlFor="email"><i className="fas fa-envelope"></i> Your Email</label>
             </div>
 
             <div className="form-group">
@@ -351,9 +296,9 @@ const Contact = () => {
                 onFocus={() => handleInputFocus(inputRefs.phone)}
                 onBlur={() => handleInputBlur(inputRefs.phone)}
                 onChange={handleInputChange}
-                placeholder="Your Phone Number"
+                placeholder=" "
               />
-              <label htmlFor="phone"><i className="fas fa-phone"></i> Phone</label>
+              <label htmlFor="phone"><i className="fas fa-phone"></i> Phone Number</label>
             </div>
 
             <div className="form-group">
@@ -365,9 +310,9 @@ const Contact = () => {
                 onFocus={() => handleInputFocus(inputRefs.message)}
                 onBlur={() => handleInputBlur(inputRefs.message)}
                 onChange={handleInputChange}
-                placeholder="Your Message"
+                placeholder=" "
               />
-              <label htmlFor="message"><i className="fas fa-comment-alt"></i> Message</label>
+              <label htmlFor="message"><i className="fas fa-comment-alt"></i> Your Message</label>
             </div>
             <button
               type="submit"
@@ -392,14 +337,10 @@ const Contact = () => {
 
         <div className="canvas-container">
           <Canvas
-            className="w-full h-screen"
+            className="w-full h-full"
             camera={{ position: [0, 0, 10] }}
-            style={{
-              background: 'linear-gradient(135deg, #FF4C4C, #20b5ff98)'
-            }}
-            gl={{ antialias: true }}
+            gl={{ antialias: true, alpha: true }}
           >
-            <fog attach="fog" args={['#FF4C4C', 15, 30]} />
             <Suspense fallback={<Loader />}>
               <ambientLight intensity={0.7} />
               <directionalLight position={[1, 1, 1]} intensity={2} />
@@ -433,7 +374,7 @@ const Contact = () => {
           <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="social-icon">
             <i className="fab fa-twitter"></i>
           </a>
-          <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer" className="social-icon">
+          <a href="https://www.instagram.com/mohd_rifad_/" target="_blank" rel="noopener noreferrer" className="social-icon">
             <i className="fab fa-instagram"></i>
           </a>
           <a href="https://dribbble.com/" target="_blank" rel="noopener noreferrer" className="social-icon">

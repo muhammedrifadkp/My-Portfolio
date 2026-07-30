@@ -4,8 +4,8 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
-import Features from './pages/Features'
 import AI from './pages/AI'
+import NotFound from './pages/NotFound'
 import Navbar from './components/Navbar.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 
@@ -28,9 +28,8 @@ const App = () => {
             <Route path='/about' element={<About />} />
             <Route path='/projects' element={<Projects />} />
             <Route path='/contact' element={<Contact />} />
-            <Route path='/features' element={<Features />} />
             <Route path='/ai' element={<AI />} />
-            <Route path='*' element={<Home />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
 
           {/* Advanced Features */}

@@ -1,347 +1,414 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Text, Sphere, Line, OrbitControls, Html } from '@react-three/drei';
-import { motion } from 'framer-motion';
+import { Float, OrbitControls, Html, MeshDistortMaterial, Line, Stars } from '@react-three/drei';
+import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
 import * as THREE from 'three';
+import './SkillConstellation.css';
 
-// Skill data with categories and proficiency
-const skillsData = {
-  frontend: {
+// Tech matrix dataset for Muhammed Rifad KP
+const techMatrix = [
+  {
+    id: 'frontend',
+    category: 'Frontend & 3D WebGL',
+    color: '#00F0FF',
+    position: [-4.2, 0.8, 0],
+    shape: 'cube',
     skills: [
-      { name: 'React', level: 95, color: '#61DAFB' },
-      { name: 'JavaScript', level: 90, color: '#F7DF1E' },
-      { name: 'Three.js', level: 85, color: '#000000' },
-      { name: 'HTML5', level: 95, color: '#E34F26' },
-      { name: 'CSS3', level: 90, color: '#1572B6' },
-      { name: 'Tailwind', level: 88, color: '#38B2AC' }
-    ],
-    position: [0, 0, 0],
-    color: '#4A90E2'
+      { name: 'React.js 18', level: 95, icon: 'fab fa-react', desc: 'SPA & SSR architecture with dynamic hooks, state management, and virtual DOM diffing.' },
+      { name: 'JavaScript ES6+', level: 95, icon: 'fab fa-js', desc: 'Asynchronous event loops, dynamic imports, Web APIs, and functional code patterns.' },
+      { name: 'Three.js & WebGL', level: 88, icon: 'fas fa-cube', desc: '3D canvas rendering, shaders, GLTF models, lighting setups, and camera controller math.' },
+      { name: 'Next.js App Router', level: 92, icon: 'fas fa-globe', desc: 'Full-stack SSR, static site generation, server actions, and edge API routes.' },
+      { name: 'Tailwind CSS', level: 90, icon: 'fas fa-wind', desc: 'Responsive dark design systems, glassmorphism utilities, and custom theme tokens.' },
+      { name: 'GSAP Animations', level: 90, icon: 'fas fa-magic', desc: 'ScrollTrigger timelines, 3D transform matrices, SVG morphing, and micro-interactions.' }
+    ]
   },
-  backend: {
+  {
+    id: 'backend',
+    category: 'Backend & MERN Stack',
+    color: '#9D00FF',
+    position: [4.2, 0.8, 0],
+    shape: 'torus',
     skills: [
-      { name: 'Node.js', level: 85, color: '#339933' },
-      { name: 'Express', level: 80, color: '#000000' },
-      { name: 'MongoDB', level: 75, color: '#47A248' },
-      { name: 'JWT', level: 85, color: '#000000' },
-      { name: 'REST API', level: 88, color: '#FF6B6B' }
-    ],
-    position: [8, 0, 0],
-    color: '#7ED321'
+      { name: 'Node.js', level: 90, icon: 'fab fa-node-js', desc: 'Non-blocking I/O event loops, stream processing, microservices, and server architecture.' },
+      { name: 'Express.js', level: 88, icon: 'fas fa-server', desc: 'RESTful API controllers, authentication middleware, error boundaries, and route modules.' },
+      { name: 'MongoDB Database', level: 85, icon: 'fas fa-database', desc: 'Document indexing, Mongoose schemas, aggregation pipelines, and cloud Atlas databases.' },
+      { name: 'REST & WebSockets', level: 92, icon: 'fas fa-network-wired', desc: 'Real-time two-way web sockets, HTTP standards, JSON web tokens, and Webhook dispatchers.' },
+      { name: 'JWT & Security', level: 88, icon: 'fas fa-shield-alt', desc: 'Bcrypt hashing, token refresh strategies, CORS policies, and rate-limiting security.' }
+    ]
   },
-  tools: {
+  {
+    id: 'devops',
+    category: 'DevOps & Architecture',
+    color: '#FF007A',
+    position: [0, -2.5, 0],
+    shape: 'cylinder',
     skills: [
-      { name: 'Git', level: 90, color: '#F05032' },
-      { name: 'GitHub', level: 88, color: '#181717' },
-      { name: 'Vite', level: 85, color: '#646CFF' },
-      { name: 'Vercel', level: 80, color: '#000000' },
-      { name: 'VS Code', level: 95, color: '#007ACC' }
-    ],
-    position: [-8, 0, 0],
-    color: '#F5A623'
+      { name: 'Git & GitHub', level: 92, icon: 'fab fa-github', desc: 'Version control branching, pull request code reviews, and Git action automated pipelines.' },
+      { name: 'Vercel Edge Hosting', level: 95, icon: 'fas fa-cloud', desc: 'Automated CI/CD deployments, edge functions, custom DNS domains, and CDN caching.' },
+      { name: 'Vite 7 Bundler', level: 90, icon: 'fas fa-bolt', desc: 'Lightning-fast HMR server, Rollup module bundling, and optimized code splitting.' },
+      { name: 'Postman & Testing', level: 88, icon: 'fas fa-vial', desc: 'Automated API endpoint testing, request suites, environment staging, and load validation.' }
+    ]
   }
-};
+];
 
-// Individual skill orb component
-const SkillOrb = ({ skill, position, categoryColor, onClick }) => {
-  const meshRef = useRef();
-  const [hovered, setHovered] = useState(false);
-  
+// Central Holographic Energy Core
+const HolographicCore = () => {
+  const innerRef = useRef();
+  const ringRef = useRef();
+
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.01;
-      meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime + position[0]) * 0.1;
+    const t = state.clock.getElapsedTime();
+    if (innerRef.current) {
+      innerRef.current.rotation.y = t * 0.4;
+      innerRef.current.rotation.x = t * 0.2;
+    }
+    if (ringRef.current) {
+      ringRef.current.rotation.z = -t * 0.6;
+      ringRef.current.rotation.x = Math.sin(t) * 0.2;
     }
   });
 
-  const orbSize = (skill.level / 100) * 0.8 + 0.2;
+  return (
+    <group position={[0, 0, 0]}>
+      {/* Dynamic Pulsing Core Sphere */}
+      <Float speed={2} rotationIntensity={0.8} floatIntensity={0.6}>
+        <mesh ref={innerRef}>
+          <sphereGeometry args={[1.0, 32, 32]} />
+          <MeshDistortMaterial
+            color="#00F0FF"
+            emissive="#9D00FF"
+            emissiveIntensity={0.9}
+            roughness={0.1}
+            distort={0.35}
+            speed={2}
+          />
+        </mesh>
+      </Float>
+
+      {/* Rotating Laser Halo Ring */}
+      <mesh ref={ringRef}>
+        <torusGeometry args={[1.8, 0.03, 16, 80]} />
+        <meshBasicMaterial color="#00F0FF" transparent opacity={0.6} wireframe />
+      </mesh>
+
+      {/* Outer Hologram Wireframe Grid */}
+      <mesh>
+        <sphereGeometry args={[2.2, 16, 16]} />
+        <meshBasicMaterial color="#9D00FF" transparent opacity={0.08} wireframe />
+      </mesh>
+    </group>
+  );
+};
+
+// 3D Holographic Skill Crystal Module
+const SkillCrystal = ({ sector, skill, position, onSelect, isHovered, setIsHovered }) => {
+  const crystalRef = useRef();
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (crystalRef.current) {
+      crystalRef.current.rotation.y = t * 0.6 + position[0];
+      crystalRef.current.rotation.x = Math.sin(t + position[1]) * 0.25;
+      crystalRef.current.position.y = position[1] + Math.sin(t * 1.5 + position[0]) * 0.08;
+    }
+  });
 
   return (
     <group position={position}>
-      <Sphere
-        ref={meshRef}
-        args={[orbSize, 32, 32]}
-        onPointerOver={() => setHovered(true)}
-        onPointerOut={() => setHovered(false)}
-        onClick={onClick}
-        scale={hovered ? 1.2 : 1}
+      {/* 3D Solid Mesh with distinct geometry */}
+      <mesh
+        ref={crystalRef}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          setIsHovered(skill.name);
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => {
+          setIsHovered(null);
+          document.body.style.cursor = 'default';
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelect(skill, sector.category);
+        }}
+        scale={isHovered === skill.name ? 1.35 : 1.0}
       >
+        {sector.shape === 'cube' && <boxGeometry args={[0.5, 0.5, 0.5]} />}
+        {sector.shape === 'torus' && <torusGeometry args={[0.3, 0.12, 16, 32]} />}
+        {sector.shape === 'cylinder' && <cylinderGeometry args={[0.25, 0.35, 0.55, 16]} />}
+
         <meshStandardMaterial
           color={skill.color}
-          emissive={skill.color}
-          emissiveIntensity={hovered ? 0.3 : 0.1}
-          transparent
-          opacity={0.8}
+          emissive={sector.color}
+          emissiveIntensity={isHovered === skill.name ? 0.9 : 0.35}
+          roughness={0.2}
+          metalness={0.8}
         />
-      </Sphere>
-      
-      {/* Skill name label */}
-      <Html distanceFactor={10} position={[0, orbSize + 0.5, 0]}>
-        <div className="bg-black/80 text-white px-2 py-1 rounded text-xs whitespace-nowrap">
-          {skill.name} - {skill.level}%
+      </mesh>
+
+      {/* Outer Wireframe Halo */}
+      <mesh scale={isHovered === skill.name ? 1.4 : 1.15}>
+        {sector.shape === 'cube' && <boxGeometry args={[0.5, 0.5, 0.5]} />}
+        {sector.shape === 'torus' && <torusGeometry args={[0.3, 0.12, 16, 32]} />}
+        {sector.shape === 'cylinder' && <cylinderGeometry args={[0.25, 0.35, 0.55, 16]} />}
+
+        <meshBasicMaterial
+          color={sector.color}
+          transparent
+          opacity={isHovered === skill.name ? 0.6 : 0.2}
+          wireframe
+        />
+      </mesh>
+
+      {/* Holographic HTML Tag */}
+      <Html distanceFactor={13} position={[0, 0.7, 0]} center>
+        <div 
+          className={`holo-skill-chip ${isHovered === skill.name ? 'active' : ''}`}
+          onClick={() => onSelect(skill, sector.category)}
+        >
+          <div className="chip-indicator" style={{ background: sector.color, boxShadow: `0 0 10px ${sector.color}` }}></div>
+          <i className={skill.icon}></i>
+          <span className="chip-title">{skill.name}</span>
+          <span className="chip-percent" style={{ color: sector.color }}>{skill.level}%</span>
         </div>
       </Html>
-      
-      {/* Particle effects around orb */}
-      <ParticleRing radius={orbSize + 0.3} count={skill.level / 10} color={skill.color} />
     </group>
   );
 };
 
-// Particle ring around skill orbs
-const ParticleRing = ({ radius, count, color }) => {
-  const points = useMemo(() => {
-    const temp = [];
-    for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2;
-      temp.push(
-        new THREE.Vector3(
-          Math.cos(angle) * radius,
-          Math.sin(angle * 2) * 0.1,
-          Math.sin(angle) * radius
-        )
-      );
-    }
-    return temp;
-  }, [radius, count]);
+// Laser Energy Beams connecting Core to Sectors
+const LaserBeams = () => {
+  const lines = useMemo(() => {
+    const beams = [];
+    techMatrix.forEach((sector) => {
+      // Beam from Core (0,0,0) to Sector Center
+      beams.push({ points: [[0, 0, 0], sector.position], color: sector.color, width: 2 });
 
-  return (
-    <group>
-      {points.map((point, index) => (
-        <Sphere key={index} position={point} args={[0.02]}>
-          <meshBasicMaterial color={color} />
-        </Sphere>
-      ))}
-    </group>
-  );
-};
-
-// Connection lines between related skills
-const SkillConnections = () => {
-  const connections = [
-    // Frontend connections
-    [[0, 0, 0], [1.5, 0.5, 0]], // React to JavaScript
-    [[1.5, 0.5, 0], [0, 1, 0]], // JavaScript to Three.js
-    [[0, -1, 0], [1, -0.5, 0]], // HTML to CSS
-    
-    // Backend connections
-    [[8, 0, 0], [9.5, 0.5, 0]], // Node.js to Express
-    [[9.5, 0.5, 0], [8, 1, 0]], // Express to MongoDB
-    
-    // Cross-category connections
-    [[1.5, 0.5, 0], [8, 0, 0]], // JavaScript to Node.js
-    [[-6, 0, 0], [0, 0, 0]], // Git to React
-  ];
+      // Beams from Sector Center to individual skill crystals
+      sector.skills.forEach((skill, idx) => {
+        const angle = (idx / sector.skills.length) * Math.PI * 2;
+        const radius = 1.8;
+        const crystalPos = [
+          sector.position[0] + Math.cos(angle) * radius,
+          sector.position[1] + Math.sin(angle * 2) * 0.4,
+          sector.position[2] + Math.sin(angle) * radius
+        ];
+        beams.push({ points: [sector.position, crystalPos], color: sector.color, width: 1 });
+      });
+    });
+    return beams;
+  }, []);
 
   return (
     <>
-      {connections.map((connection, index) => (
+      {lines.map((beam, idx) => (
         <Line
-          key={index}
-          points={connection}
-          color="#ffffff"
+          key={idx}
+          points={beam.points}
+          color={beam.color}
           opacity={0.3}
           transparent
-          lineWidth={1}
+          lineWidth={beam.width}
         />
       ))}
     </>
   );
 };
 
-// Main 3D scene component
-const SkillScene = ({ selectedCategory, onSkillClick }) => {
+// Main 3D Matrix Scene
+const CyberMatrixScene = ({ selectedSectorId, onSelectSkill }) => {
   const { camera } = useThree();
-  
-  useFrame(() => {
-    camera.lookAt(0, 0, 0);
-  });
+  const [hoveredSkill, setHoveredSkill] = useState(null);
+
+  // Smooth Camera GSAP focus when a sector is selected
+  useEffect(() => {
+    if (!selectedSectorId) {
+      gsap.to(camera.position, { x: 0, y: 0, z: 13.5, duration: 1.4, ease: 'power3.inOut' });
+      return;
+    }
+    const targetSector = techMatrix.find(s => s.id === selectedSectorId);
+    if (targetSector) {
+      gsap.to(camera.position, {
+        x: targetSector.position[0] * 0.8,
+        y: targetSector.position[1] * 0.8 + 0.4,
+        z: targetSector.position[2] + 7.5,
+        duration: 1.4,
+        ease: 'power3.inOut'
+      });
+    }
+  }, [selectedSectorId, camera]);
 
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
-      <pointLight position={[-10, -10, -10]} intensity={0.5} color="#4A90E2" />
-      
-      {/* Render skill orbs for each category */}
-      {Object.entries(skillsData).map(([categoryName, categoryData]) => {
-        if (selectedCategory && selectedCategory !== categoryName) return null;
-        
-        return categoryData.skills.map((skill, index) => {
-          const angle = (index / categoryData.skills.length) * Math.PI * 2;
-          const radius = 3;
-          const position = [
-            categoryData.position[0] + Math.cos(angle) * radius,
-            categoryData.position[1] + Math.sin(angle) * 0.5,
-            categoryData.position[2] + Math.sin(angle) * radius
-          ];
-          
-          return (
-            <SkillOrb
-              key={`${categoryName}-${skill.name}`}
-              skill={skill}
-              position={position}
-              categoryColor={categoryData.color}
-              onClick={() => onSkillClick(skill, categoryName)}
-            />
-          );
-        });
-      })}
-      
-      {/* Category center labels */}
-      {Object.entries(skillsData).map(([categoryName, categoryData]) => {
-        if (selectedCategory && selectedCategory !== categoryName) return null;
-        
+      <ambientLight intensity={0.7} />
+      <pointLight position={[10, 15, 10]} intensity={1.5} color="#00F0FF" />
+      <pointLight position={[-10, -15, -10]} intensity={1.5} color="#9D00FF" />
+
+      <Stars radius={80} depth={40} count={3000} factor={4} saturation={0} fade speed={1.5} />
+
+      {/* Central Energy Core */}
+      <HolographicCore />
+
+      {/* Sector Nodes & Crystals */}
+      {techMatrix.map((sector) => {
+        if (selectedSectorId && selectedSectorId !== sector.id) return null;
+
         return (
-          <Text
-            key={categoryName}
-            position={categoryData.position}
-            fontSize={0.8}
-            color={categoryData.color}
-            anchorX="center"
-            anchorY="middle"
-          >
-            {categoryName.toUpperCase()}
-          </Text>
+          <group key={sector.id}>
+            {/* Floating Sector Header Badge */}
+            <Html position={sector.position} center distanceFactor={14}>
+              <div className="sector-header-badge" style={{ borderColor: sector.color, boxShadow: `0 0 18px ${sector.color}40` }}>
+                <span className="badge-glow-dot" style={{ background: sector.color }}></span>
+                <span className="badge-text">{sector.category}</span>
+              </div>
+            </Html>
+
+            {/* Individual Skill Crystals */}
+            {sector.skills.map((skill, idx) => {
+              const angle = (idx / sector.skills.length) * Math.PI * 2;
+              const radius = 1.8;
+              const position = [
+                sector.position[0] + Math.cos(angle) * radius,
+                sector.position[1] + Math.sin(angle * 2) * 0.4,
+                sector.position[2] + Math.sin(angle) * radius
+              ];
+
+              return (
+                <SkillCrystal
+                  key={skill.name}
+                  sector={sector}
+                  skill={skill}
+                  position={position}
+                  onSelect={onSelectSkill}
+                  isHovered={hoveredSkill}
+                  setIsHovered={setHoveredSkill}
+                />
+              );
+            })}
+          </group>
         );
       })}
-      
-      <SkillConnections />
-      <OrbitControls enablePan={false} enableZoom={true} enableRotate={true} />
+
+      <LaserBeams />
+
+      <OrbitControls
+        enablePan={false}
+        enableZoom={true}
+        maxDistance={16}
+        minDistance={9}
+        maxPolarAngle={Math.PI / 2 + 0.3}
+        minPolarAngle={Math.PI / 2 - 0.3}
+        autoRotate={!selectedSectorId}
+        autoRotateSpeed={0.9}
+      />
     </>
   );
 };
 
-// Main component
+// Main Export Component
 const SkillConstellation = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSkill, setSelectedSkill] = useState(null);
+  const [selectedSectorId, setSelectedSectorId] = useState(null);
+  const [activeModalSkill, setActiveModalSkill] = useState(null);
 
-  const handleSkillClick = (skill, category) => {
-    setSelectedSkill({ ...skill, category });
+  const handleSelectSkill = (skill, categoryTitle) => {
+    setActiveModalSkill({ ...skill, categoryTitle });
   };
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative">
-      {/* Category Filter Buttons */}
-      <div className="absolute top-6 left-6 z-10 flex flex-wrap gap-2">
-        <motion.button
-          onClick={() => setSelectedCategory(null)}
-          className={`px-4 py-2 rounded-full transition-all ${
-            !selectedCategory 
-              ? 'bg-white text-gray-900' 
-              : 'bg-white/20 text-white hover:bg-white/30'
-          }`}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+    <div className="cyber-matrix-wrapper">
+      {/* Top HUD Filter Bar */}
+      <div className="hud-nav-bar">
+        <button
+          className={`hud-btn ${!selectedSectorId ? 'active' : ''}`}
+          onClick={() => setSelectedSectorId(null)}
         >
-          All Skills
-        </motion.button>
-        
-        {Object.entries(skillsData).map(([categoryName, categoryData]) => (
-          <motion.button
-            key={categoryName}
-            onClick={() => setSelectedCategory(categoryName)}
-            className={`px-4 py-2 rounded-full transition-all ${
-              selectedCategory === categoryName
-                ? 'bg-white text-gray-900'
-                : 'bg-white/20 text-white hover:bg-white/30'
-            }`}
+          <i className="fas fa-layer-group" style={{ color: '#00F0FF' }}></i> All Sectors Matrix
+        </button>
+
+        {techMatrix.map((sector) => (
+          <button
+            key={sector.id}
+            className={`hud-btn ${selectedSectorId === sector.id ? 'active' : ''}`}
+            onClick={() => setSelectedSectorId(sector.id)}
             style={{
-              backgroundColor: selectedCategory === categoryName ? categoryData.color : undefined
+              borderColor: selectedSectorId === sector.id ? sector.color : undefined,
+              boxShadow: selectedSectorId === sector.id ? `0 0 15px ${sector.color}40` : undefined
             }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
-            {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
-          </motion.button>
+            <span className="hud-dot" style={{ background: sector.color }}></span>
+            <span>{sector.category}</span>
+          </button>
         ))}
       </div>
 
-      {/* Instructions */}
-      <div className="absolute top-6 right-6 z-10 bg-black/50 text-white p-4 rounded-lg max-w-xs">
-        <h3 className="font-semibold mb-2">🌟 Interactive Skills</h3>
-        <ul className="text-sm space-y-1">
-          <li>• Click and drag to rotate</li>
-          <li>• Scroll to zoom in/out</li>
-          <li>• Hover over orbs for details</li>
-          <li>• Click orbs for more info</li>
-        </ul>
+      {/* Guide Pill */}
+      <div className="hud-guide-pill">
+        <span className="pulse-cyan-dot"></span> 3D WebGL Matrix | Drag to Rotate | Click Crystals to Inspect
       </div>
 
-      {/* 3D Canvas */}
-      <Canvas camera={{ position: [0, 5, 15], fov: 60 }}>
-        <SkillScene 
-          selectedCategory={selectedCategory} 
-          onSkillClick={handleSkillClick}
+      {/* 3D WebGL Canvas */}
+      <Canvas camera={{ position: [0, 0, 13.5], fov: 46 }}>
+        <CyberMatrixScene
+          selectedSectorId={selectedSectorId}
+          onSelectSkill={handleSelectSkill}
         />
       </Canvas>
 
-      {/* Skill Detail Modal */}
-      {selectedSkill && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="absolute bottom-6 left-6 bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl max-w-sm z-10"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-              {selectedSkill.name}
-            </h3>
-            <button
-              onClick={() => setSelectedSkill(null)}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            >
-              ✕
+      {/* Cyber Glass Inspection Modal */}
+      <AnimatePresence>
+        {activeModalSkill && (
+          <motion.div
+            className="cyber-modal-card"
+            initial={{ opacity: 0, y: 30, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 30, scale: 0.94 }}
+            transition={{ duration: 0.3 }}
+          >
+            <button className="cyber-modal-close" onClick={() => setActiveModalSkill(null)}>
+              <i className="fas fa-times"></i>
             </button>
-          </div>
-          
-          <div className="space-y-3">
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span>Proficiency</span>
-                <span>{selectedSkill.level}%</span>
+
+            <div className="cyber-modal-header">
+              <div className="skill-icon-frame">
+                <i className={activeModalSkill.icon}></i>
               </div>
-              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div>
+                <span className="cyber-sector-lbl">{activeModalSkill.categoryTitle}</span>
+                <h3 className="cyber-skill-title">{activeModalSkill.name}</h3>
+              </div>
+            </div>
+
+            <p className="cyber-skill-body">{activeModalSkill.desc}</p>
+
+            <div className="cyber-benchmark-box">
+              <div className="benchmark-text">
+                <span>Engineering Proficiency</span>
+                <span className="benchmark-value">{activeModalSkill.level}%</span>
+              </div>
+              <div className="benchmark-track">
                 <motion.div
-                  className="h-2 rounded-full"
-                  style={{ backgroundColor: selectedSkill.color }}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${selectedSkill.level}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="benchmark-fill"
+                  initial={{ width: '0%' }}
+                  animate={{ width: `${activeModalSkill.level}%` }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
                 />
               </div>
             </div>
-            
-            <div className="text-sm text-gray-600 dark:text-gray-300">
-              <strong>Category:</strong> {selectedSkill.category}
-            </div>
-            
-            <div className="text-sm text-gray-600 dark:text-gray-300">
-              Experience level: {selectedSkill.level >= 90 ? 'Expert' : selectedSkill.level >= 75 ? 'Advanced' : 'Intermediate'}
-            </div>
-          </div>
-        </motion.div>
-      )}
 
-      {/* Legend */}
-      <div className="absolute bottom-6 right-6 bg-black/50 text-white p-4 rounded-lg z-10">
-        <h4 className="font-semibold mb-2">Legend</h4>
-        <div className="space-y-1 text-sm">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span>Frontend</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span>Backend</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <span>Tools</span>
-          </div>
-        </div>
-      </div>
+            <div className="cyber-modal-footer">
+              <div className="footer-metric">
+                <span className="metric-lbl">Skill Tier</span>
+                <span className="metric-val">{activeModalSkill.level >= 90 ? 'Production Lead' : 'Senior Specialist'}</span>
+              </div>
+              <div className="footer-metric">
+                <span className="metric-lbl">Status</span>
+                <span className="metric-val active">⚡ Active in Production</span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

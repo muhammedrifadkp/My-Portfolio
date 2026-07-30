@@ -100,17 +100,78 @@ function getAdultNames(users) {
   // Example code snippets
   const codeExamples = [
     {
+      name: 'Interactive Counter',
+      code: `function InteractiveDemo() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState('Visitor');
+
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div style={{
+      padding: '24px',
+      background: 'linear-gradient(135deg, #00F0FF 0%, #7000FF 100%)',
+      borderRadius: '16px',
+      color: 'white',
+      textAlign: 'center',
+      fontFamily: 'system-ui, sans-serif'
+    }}>
+      <h2 style={{ margin: '0 0 10px 0', fontSize: '1.4rem' }}>Hello, {name}! 👋</h2>
+      <p style={{ opacity: 0.9 }}>You've clicked the button {count} times</p>
+      <button
+        onClick={handleClick}
+        style={{
+          padding: '12px 24px',
+          margin: '12px 0',
+          background: '#ffffff',
+          color: '#7000FF',
+          border: 'none',
+          borderRadius: '24px',
+          cursor: 'pointer',
+          fontWeight: '700',
+          fontSize: '1rem',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+        }}
+      >
+        Click Me! 🎉
+      </button>
+      <br />
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        style={{
+          padding: '8px 16px',
+          borderRadius: '20px',
+          border: '1px solid rgba(255,255,255,0.4)',
+          background: 'rgba(255,255,255,0.2)',
+          color: 'white',
+          textAlign: 'center',
+          outline: 'none',
+          marginTop: '10px'
+        }}
+      />
+    </div>
+  );
+}
+
+<InteractiveDemo />`
+    },
+    {
       name: 'Simple Test',
       code: `function SimpleTest() {
   return (
     <div style={{
       padding: '20px',
-      background: '#f0f0f0',
-      borderRadius: '8px',
+      background: '#1a1a2e',
+      color: '#00F0FF',
+      borderRadius: '12px',
       textAlign: 'center'
     }}>
-      <h2 style={{ color: '#333' }}>✅ React Live is Working!</h2>
-      <p>This is a simple test component.</p>
+      <h2>✅ React Live Ready!</h2>
+      <p style={{ color: '#fff' }}>This component renders dynamically in real-time.</p>
     </div>
   );
 }

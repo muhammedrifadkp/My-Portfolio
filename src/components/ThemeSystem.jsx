@@ -133,7 +133,6 @@ const themes = {
 export const ThemeProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState('morning');
   const [autoMode, setAutoMode] = useState(true);
-  const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
 
   // Get current time-based theme
@@ -154,37 +153,6 @@ export const ThemeProvider = ({ children }) => {
     if (month >= 8 && month <= 10) return 'autumn';
     return 'winter';
   };
-
-  // Get user location
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude
-          });
-        },
-        (error) => console.log('Location access denied')
-      );
-    }
-  }, []);
-
-  // Fetch weather data (mock implementation)
-  useEffect(() => {
-    if (location && autoMode) {
-      // Mock weather API call
-      const mockWeather = () => {
-        const conditions = ['clear', 'clouds', 'rain'];
-        const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
-        setWeather({ main: randomCondition });
-      };
-      
-      mockWeather();
-      const interval = setInterval(mockWeather, 300000); // Update every 5 minutes
-      return () => clearInterval(interval);
-    }
-  }, [location, autoMode]);
 
   // Auto theme selection
   useEffect(() => {
@@ -223,8 +191,7 @@ export const ThemeProvider = ({ children }) => {
     autoMode,
     setAutoMode,
     themes,
-    weather,
-    location
+    weather
   };
 
   return (
@@ -252,8 +219,7 @@ export const ThemeControlPanel = () => {
     autoMode, 
     setAutoMode, 
     themes, 
-    weather, 
-    location 
+    weather
   } = useContext(ThemeContext);
   
   const [isOpen, setIsOpen] = useState(false);
@@ -315,7 +281,7 @@ export const ThemeControlPanel = () => {
                 </h4>
                 {weather && (
                   <p className="text-sm opacity-75">
-                    Weather: {weather.main} {location && '📍'}
+                    Weather: {weather.main}
                   </p>
                 )}
               </div>
@@ -366,7 +332,7 @@ export const ThemeControlPanel = () => {
               {/* Theme Info */}
               <div className="mt-4 text-xs opacity-75" style={{ color: currentTheme.text }}>
                 {autoMode ? (
-                  <p>🤖 Themes change automatically based on time and weather</p>
+                  <p>🤖 Themes change automatically based on time of day</p>
                 ) : (
                   <p>🎨 Manual theme selection active</p>
                 )}

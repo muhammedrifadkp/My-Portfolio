@@ -264,15 +264,7 @@ const Navbar = () => {
               Projects
             </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              to="/features"
-              className={`nav-link ${location.pathname === '/features' ? 'active' : ''}`}
-              onClick={handleNavClick}
-            >
-              Features
-            </Link>
-          </li>
+
           <li className="nav-item">
             <Link
               to="/ai"
@@ -329,15 +321,7 @@ const Navbar = () => {
                 Projects
               </Link>
             </li>
-            <li>
-              <Link
-                to="/features"
-                className={location.pathname === '/features' ? 'active' : ''}
-                onClick={handleNavClick}
-              >
-                Features
-              </Link>
-            </li>
+
             <li>
               <Link
                 to="/ai"

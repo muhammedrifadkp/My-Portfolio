@@ -104,9 +104,9 @@ export const getEnvVar = (primaryKey, fallbackKey = null, defaultValue = null) =
  */
 export const getEmailJSConfig = () => {
   return {
-    serviceId: getEnvVar('VITE_EMAILJS_SERVICE_ID', 'VITE_APP_EMAILJS_SERVICE_ID'),
-    templateId: getEnvVar('VITE_EMAILJS_TEMPLATE_ID', 'VITE_APP_EMAILJS_TEMPLATE_ID'),
-    publicKey: getEnvVar('VITE_EMAILJS_PUBLIC_KEY', 'VITE_APP_EMAILJS_PUBLIC_KEY')
+    serviceId: getEnvVar('VITE_EMAILJS_SERVICE_ID', 'VITE_APP_EMAILJS_SERVICE_ID', 'service_gfrbuaj'),
+    templateId: getEnvVar('VITE_EMAILJS_TEMPLATE_ID', 'VITE_APP_EMAILJS_TEMPLATE_ID', 'template_ieuwrka'),
+    publicKey: getEnvVar('VITE_EMAILJS_PUBLIC_KEY', 'VITE_APP_EMAILJS_PUBLIC_KEY', 'Drfo3y3Sfl30PhGXF')
   };
 };
 

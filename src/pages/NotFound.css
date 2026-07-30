@@ -1,0 +1,179 @@
+/* NotFound.css - Cyber Dark 404 Page Styling */
+.not-found-page {
+  min-height: 100vh;
+  background: #070711;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  padding: 100px 24px;
+}
+
+.not-found-wrapper {
+  max-width: 720px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Glass Card */
+.not-found-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(13, 13, 28, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  padding: 56px 44px;
+  text-align: center;
+  backdrop-filter: blur(24px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 0, 122, 0.15);
+  width: 100%;
+}
+
+.error-badge-glitch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 0, 122, 0.12);
+  border: 1px solid rgba(255, 0, 122, 0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  color: #FF007A;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.dot-pink {
+  width: 8px;
+  height: 8px;
+  background: #FF007A;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #FF007A;
+  animation: pulsePink 2s infinite ease-in-out;
+}
+
+@keyframes pulsePink {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.not-found-code {
+  font-size: 7.5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0 0 20px 0;
+  background: linear-gradient(135deg, #00F0FF 0%, #7000FF 50%, #FF007A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -2px;
+  filter: drop-shadow(0 0 35px rgba(0, 240, 255, 0.4));
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.not-found-text h2 {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+
+.not-found-text p {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin-bottom: 40px;
+}
+
+.url-code {
+  background: rgba(0, 240, 255, 0.12);
+  color: #00F0FF;
+  padding: 3px 12px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.95rem;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+}
+
+/* Action Buttons */
+.not-found-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.35s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #00F0FF 0%, #7000FF 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.35);
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.5);
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.action-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.action-btn.outline {
+  background: transparent;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: #00F0FF;
+}
+
+.action-btn.outline:hover {
+  background: rgba(0, 240, 255, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.25);
+}
+
+@media (max-width: 768px) {
+  .not-found-code {
+    font-size: 5rem;
+  }
+
+  .not-found-card {
+    padding: 36px 20px;
+  }
+
+  .not-found-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

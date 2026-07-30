@@ -134,9 +134,8 @@ export const sanitizeInput = (input) => {
     .replace(/expression\s*\(/gi, '')
     // Remove @import CSS
     .replace(/@import/gi, '')
-    // Trim and limit length
-    .trim()
-    .substring(0, 1000);
+    // Limit length
+    .substring(0, 2000);
 };
 
 // Security: Email validation (more flexible)
@@ -146,26 +145,23 @@ export const validateEmail = (email) => {
   return emailRegex.test(email) && email.length <= 254;
 };
 
-// Security: Phone validation (more flexible)
+// Security: Phone validation (optional or flexible)
 export const validatePhone = (phone) => {
-  if (!phone || phone.length === 0) return false;
-  // Allow various phone formats
-  const phoneRegex = /^[\+]?[0-9\s\-\(\)\.]{7,20}$/;
-  return phoneRegex.test(phone);
+  if (!phone || phone.trim().length === 0) return true; // Optional field
+  const phoneRegex = /^[\+]?[0-9\s\-\(\)\.]{5,25}$/;
+  return phoneRegex.test(phone.trim());
 };
 
-// Security: Name validation (more flexible)
+// Security: Name validation (flexible)
 export const validateName = (name) => {
-  if (!name || name.length === 0) return false;
-  // Allow letters, spaces, hyphens, apostrophes, and dots
-  const nameRegex = /^[a-zA-Z\s\-\.']{1,100}$/;
-  return nameRegex.test(name) && name.trim().length >= 2;
+  if (!name || name.trim().length === 0) return false;
+  return name.trim().length >= 2 && name.trim().length <= 100;
 };
 
-// Security: Message validation (more flexible)
+// Security: Message validation (flexible)
 export const validateMessage = (message) => {
-  if (!message || message.length === 0) return false;
-  return message.trim().length >= 5 && message.length <= 2000;
+  if (!message || message.trim().length === 0) return false;
+  return message.trim().length >= 2 && message.length <= 2500;
 };
 
 // Security: Rate limiting for form submissions

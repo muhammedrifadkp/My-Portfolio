@@ -579,166 +579,54 @@ const AIAssistant = () => {
 
   // Universal AI Response Generator with Gemini API
   const generateAIResponse = async (userInput) => {
-    // Security: No input details exposed
+    const q = userInput.toLowerCase();
+    const isRifadQuery = (
+      q.includes('rifad') || q.includes('muhammed') || q.includes('creator') ||
+      q.includes('skill') || q.includes('project') || q.includes('contact') ||
+      q.includes('email') || q.includes('phone') || q.includes('experience')
+    );
 
-    // First try Gemini API if available
+    if (isRifadQuery) {
+      return generateComprehensiveResponse(userInput);
+    }
+
     try {
       const geminiResponse = await callGeminiAPI(userInput);
       if (geminiResponse) {
-        // Security: No response details exposed
         return geminiResponse;
       }
     } catch (error) {
-      // Security: No error details exposed
-      // Fallback to built-in knowledge
+      console.warn("Gemini API notice:", error);
     }
 
-    // Fallback to comprehensive built-in knowledge
-    // Security: No fallback details exposed
     return generateComprehensiveResponse(userInput);
   };
 
-  // Advanced Gemini 2.0 Flash API Integration
   const callGeminiAPI = async (userInput) => {
-    // Use environment variables for API key (secure)
-    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY ||
-                           import.meta.env.REACT_APP_GEMINI_API_KEY ||
-                           null;
+    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+    const models = ['gemini-flash-latest', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-pro-latest'];
 
-    // Security: No environment details exposed
+    for (const model of models) {
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: userInput }] }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 2048 }
+          })
+        });
 
-    if (!GEMINI_API_KEY) {
-      // Security: No configuration details exposed
-      throw new Error('Service temporarily unavailable');
-    }
-
-    try {
-      // Security: No API call details exposed
-
-      // Use the latest Gemini 2.0 Flash model for faster, more accurate responses
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are Rifad AI, an advanced AI assistant created and developed by Muhammed Rifad KP, a Full Stack Developer & 3D Web Specialist from India. You were built by Rifad to showcase his AI development skills and provide intelligent assistance to portfolio visitors. You have comprehensive knowledge about both Rifad's expertise and general technical topics.
-
-CONTEXT ABOUT RIFAD:
-- Full Stack Developer with 2+ years experience
-- Expert in React (95%), JavaScript (90%), Three.js (85%), Node.js (80%)
-- AI Development Skills: Built this AI assistant using Gemini API, React Live, and advanced prompt engineering
-- Built projects: CDC Attendance System, Zuditt Platform, 3D Portfolio with AI integration
-- Specializes in 3D web experiences, AI integration, modern UI/UX, and performance optimization
-- Uses technologies: React, Three.js, Node.js, Express, MongoDB, Tailwind CSS, Vercel, AI APIs
-- Created this AI assistant as a demonstration of his AI development capabilities
-- GitHub: github.com/muhammedrifadkp
-- Portfolio: muhammedrifad.vercel.app
-- Email: muhammedrifadkp@gmail.com
-- Location: Calicut, Kerala, India
-
-ABOUT YOUR CREATION:
-- You were built by Rifad using Google's Gemini API
-- Integrated into his React portfolio with custom UI/UX
-- Designed to showcase his AI development and integration skills
-- Features advanced conversation handling and technical knowledge
-
-USER QUESTION: "${userInput}"
-
-INSTRUCTIONS:
-1. If about Rifad: Provide detailed, specific information about his skills, projects, or experience
-2. If general technical: Give comprehensive explanation, then connect to Rifad's relevant expertise
-3. If code request: Provide complete, working code examples with explanations
-4. Be professional, informative, and engaging
-5. Use proper markdown formatting with headers, lists, and emphasis
-6. For code: Use proper code blocks with language syntax highlighting
-7. Include practical examples and real-world applications
-8. End with a relevant follow-up question to encourage further conversation
-9. Keep responses detailed but concise (aim for 200-500 words)
-
-SPECIAL FOR CODE REQUESTS:
-- Provide complete, working code examples
-- Include HTML, CSS, and JavaScript as requested
-- Add comments explaining key parts
-- Show responsive design principles
-- Include modern best practices
-- Make code production-ready
-
-IMPORTANT IDENTITY:
-- Always mention that you were created and developed by Rifad when asked about your origin
-- Emphasize that you're a demonstration of Rifad's AI development skills
-- You represent Rifad's expertise in AI integration and modern web development
-- You're part of his portfolio showcasing advanced technical capabilities
-
-Respond as Rifad's custom-built AI assistant with deep technical knowledge and professional insight.`
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.8,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 2048,
-            candidateCount: 1,
-          },
-          safetySettings: [
-            {
-              category: "HARM_CATEGORY_HARASSMENT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_HATE_SPEECH",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            }
-          ]
-        })
-      });
-
-      if (response.ok) {
-        // Security: No response details exposed
-        const data = await response.json();
-        // Security: No data details exposed
-
-        const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-        if (aiResponse) {
-          // Security: No extraction details exposed
-
-          // Clean and format the response
-          const formattedResponse = aiResponse
-            .replace(/\*\*(.*?)\*\*/g, '**$1**')
-            .replace(/\*(.*?)\*/g, '*$1*')
-            .trim();
-
-          return `## 🧠 **Advanced AI Response**\n\n${formattedResponse}\n\n---\n\n*Powered by Gemini 2.0 Flash • Optimized for Rifad's Portfolio*`;
-        } else {
-          // Security: No error details exposed
+        if (response.ok) {
+          const data = await response.json();
+          const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (aiResponse) {
+            return aiResponse.trim();
+          }
         }
-      } else {
-        const errorData = await response.json();
-        // Security: No error details exposed
-
-        // Handle specific API errors
-        if (response.status === 429) {
-          throw new Error('API rate limit exceeded. Please try again in a moment.');
-        } else if (response.status === 403) {
-          throw new Error('API key invalid or quota exceeded.');
-        } else {
-          throw new Error(`Gemini API error: ${response.status}`);
-        }
+      } catch (error) {
+        console.warn(`Gemini model ${model} notice:`, error);
       }
-    } catch (error) {
-      // Security: No error details exposed
-      throw error;
     }
 
     return null;

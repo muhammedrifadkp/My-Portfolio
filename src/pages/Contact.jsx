@@ -224,16 +224,6 @@ const Contact = () => {
             <p>{import.meta.env.VITE_CONTACT_PHONE || "+91 7356852496"}</p>
           </div>
         </div>
-
-        <div className="contact-info-item">
-          <div className="info-icon">
-            <i className="fas fa-clock"></i>
-          </div>
-          <div className="info-details">
-            <h3>Working Hours</h3>
-            <p>Mon - Fri: 9AM - 6PM</p>
-          </div>
-        </div>
       </div>
 
       {/* Main Contact Container - Preserving Original Structure */}

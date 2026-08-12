@@ -3,7 +3,32 @@ import { Link, useLocation } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import './Navbar.css';
-import logoModel from '../assets/3d/RIFAD_logo_texture_3D.glb';
+// WebGL Error Boundary to catch 3D context crashes gracefully
+class WebGLErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.warn("WebGL Error caught in Navbar:", error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="logo-fallback-2d">
+          <span className="logo-text">RIFAD</span>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 // Enhanced 3D Logo Component with Auto-Reset
 const Logo3D = ({ controlsRef, onStateChange }) => {
@@ -215,24 +240,26 @@ const Navbar = () => {
       <div className="navbar-container">
         <Link to="/" className="navbar-logo" onClick={handleNavClick}>
           <div className={`logo-3d-container ${logoState.isUserControlling ? 'user-controlling' : ''} ${logoState.isResetting ? 'resetting' : ''}`}>
-            <Canvas
-              camera={{ position: [0, 0, 5], fov: 50 }}
-              gl={{ antialias: true, alpha: true }}
-            >
-              <ambientLight intensity={0.6} />
-              <directionalLight position={[2, 2, 2]} intensity={1} />
-              <Suspense fallback={null}>
-                <OrbitControls
-                  ref={controlsRef}
-                  enableZoom={true}
-                  enablePan={false}
-                  enableRotate={true}
-                  enableDamping={true}
-                  dampingFactor={0.05}
-                />
-                <Logo3D controlsRef={controlsRef} onStateChange={setLogoState} />
-              </Suspense>
-            </Canvas>
+            <WebGLErrorBoundary>
+              <Canvas
+                camera={{ position: [0, 0, 5], fov: 50 }}
+                gl={{ antialias: true, alpha: true }}
+              >
+                <ambientLight intensity={0.6} />
+                <directionalLight position={[2, 2, 2]} intensity={1} />
+                <Suspense fallback={null}>
+                  <OrbitControls
+                    ref={controlsRef}
+                    enableZoom={true}
+                    enablePan={false}
+                    enableRotate={true}
+                    enableDamping={true}
+                    dampingFactor={0.05}
+                  />
+                  <Logo3D controlsRef={controlsRef} onStateChange={setLogoState} />
+                </Suspense>
+              </Canvas>
+            </WebGLErrorBoundary>
           </div>
         </Link>
 
@@ -284,20 +311,19 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLScu7u0djCdILfQ4X4HKiqrdUF9j__Qerbsp_-o5SuUvt7a3Xg/viewform?usp=publish-editor"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-btn-link"
-              onClick={closeMenu}
+            <Link
+              to="/survey"
+              className={`nav-btn-link ${location.pathname === '/survey' ? 'active' : ''}`}
+              onClick={handleNavClick}
             >
               Survey Form
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="nav-btn-icon">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
               </svg>
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -357,15 +383,13 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLScu7u0djCdILfQ4X4HKiqrdUF9j__Qerbsp_-o5SuUvt7a3Xg/viewform?usp=publish-editor"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mobile-btn-link"
-                onClick={closeMenu}
+              <Link
+                to="/survey"
+                className={`mobile-btn-link ${location.pathname === '/survey' ? 'active' : ''}`}
+                onClick={handleNavClick}
               >
                 Survey Form
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

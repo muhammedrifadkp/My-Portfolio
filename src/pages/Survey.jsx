@@ -7,6 +7,7 @@ const Survey = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     courseClass: '',
+    division: '',
     skillLevel: '',
     toolsKnown: [],
     otherToolsKnown: '',
@@ -133,6 +134,10 @@ const Survey = () => {
       newErrors.courseClass = 'This is a required question';
     }
 
+    if (!formData.division) {
+      newErrors.division = 'This is a required question';
+    }
+
     if (!formData.skillLevel) {
       newErrors.skillLevel = 'This is a required question';
     }
@@ -194,10 +199,11 @@ const Survey = () => {
       ? `Other: ${formData.otherMostInterestedSkill.trim()}`
       : formData.mostInterestedSkill;
 
-    // Exact 8 Mapped Fields sent to Apps Script
+    // Mapped Fields sent to Apps Script
     const payload = {
       fullName: formData.fullName.trim(),
       course: formData.courseClass,
+      division: formData.division,
       currentSkill: formData.skillLevel,
       knownTools: knownToolsFormatted.join(', '),
       learningInterests: learningInterestsFormatted.join(', '),
@@ -240,6 +246,7 @@ const Survey = () => {
     setFormData({
       fullName: '',
       courseClass: '',
+      division: '',
       skillLevel: '',
       toolsKnown: [],
       otherToolsKnown: '',
@@ -350,6 +357,30 @@ const Survey = () => {
               </select>
             </div>
             {errors.courseClass && <div className="gf-error-msg">⚠️ {errors.courseClass}</div>}
+          </div>
+
+          {/* Question: Division / Batch */}
+          <div
+            className={`gf-card ${errors.division ? 'gf-card-error' : ''} ${activeCard === 'division' ? 'gf-card-active' : ''}`}
+            onClick={() => setActiveCard('division')}
+          >
+            <div className="gf-question-title">
+              Division / Batch <span className="gf-required">*</span>
+            </div>
+            <div className="gf-input-wrapper">
+              <select
+                name="division"
+                className="gf-select-box"
+                value={formData.division}
+                onChange={handleInputChange}
+                onFocus={() => setActiveCard('division')}
+              >
+                <option value="">Choose</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+              </select>
+            </div>
+            {errors.division && <div className="gf-error-msg">⚠️ {errors.division}</div>}
           </div>
 
           {/* Question 3: Current Skill Level */}

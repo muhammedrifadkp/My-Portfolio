@@ -22,12 +22,14 @@
     "emailjs-com": "^3.2.0",
     "framer-motion": "^12.16.0",
     "gsap": "^3.13.0",
+    "lucide-react": "^1.31.0",
     "prism-react-renderer": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-live": "^4.1.8",
     "react-router-dom": "^6.21.1",
     "react-vertical-timeline-component": "^3.6.0",
+    "recharts": "^3.10.1",
     "three": "^0.160.1"
   },
   "devDependencies": {

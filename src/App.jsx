@@ -6,6 +6,7 @@ import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import AI from './pages/AI'
 import Survey from './pages/Survey'
+import Dashboard from './pages/Dashboard'
 import NotFound from './pages/NotFound'
 import Navbar from './components/Navbar.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
@@ -33,6 +34,7 @@ const App = () => {
               <Route path='/contact' element={<Contact />} />
               <Route path='/ai' element={<AI />} />
               <Route path='/survey' element={<Survey />} />
+              <Route path='/dashboard' element={<Dashboard />} />
               <Route path='*' element={<NotFound />} />
             </Routes>
 

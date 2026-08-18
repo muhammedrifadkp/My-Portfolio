@@ -45,6 +45,38 @@ const SKILL_COLORS = {
   'Advanced': '#8b5cf6'
 };
 
+// Course ordering rank (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2)
+const getCourseRank = (courseStr) => {
+  if (!courseStr) return 999;
+  const str = String(courseStr).trim().toLowerCase();
+
+  if (str.includes('+1') || str.includes('plus one') || str === 'plus 1') return 1;
+  if (str.includes('+2') || str.includes('plus two') || str === 'plus 2') return 2;
+  if (str.includes('d1') || str.includes('degree 1') || str.includes('degree 1st') || str.includes('1st degree')) return 3;
+  if (str.includes('d2') || str.includes('degree 2') || str.includes('degree 2nd') || str.includes('2nd degree')) return 4;
+  if (str.includes('d3') || str.includes('degree 3') || str.includes('degree 3rd') || str.includes('3rd degree')) return 5;
+  if (str.includes('p1') || str.includes('pg 1') || str.includes('pg 1st') || str.includes('1st pg')) return 6;
+  if (str.includes('p2') || str.includes('pg 2') || str.includes('pg 2nd') || str.includes('2nd pg')) return 7;
+
+  return 100;
+};
+
+const getShortCourseLabel = (course) => {
+  if (!course) return '';
+  const str = String(course).trim();
+  const lower = str.toLowerCase();
+
+  if (lower.includes('+1') || lower.includes('plus one')) return '+1';
+  if (lower.includes('+2') || lower.includes('plus two')) return '+2';
+  if (lower.includes('d1') || lower.includes('degree 1') || lower.includes('degree 1st')) return 'D1';
+  if (lower.includes('d2') || lower.includes('degree 2') || lower.includes('degree 2nd')) return 'D2';
+  if (lower.includes('d3') || lower.includes('degree 3') || lower.includes('degree 3rd')) return 'D3';
+  if (lower.includes('p1') || lower.includes('pg 1') || lower.includes('pg 1st')) return 'P1';
+  if (lower.includes('p2') || lower.includes('pg 2') || lower.includes('pg 2nd')) return 'P2';
+
+  return str;
+};
+
 const Dashboard = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -174,7 +206,13 @@ const Dashboard = () => {
 
   // Filter options lists extracted from data
   const filterOptions = useMemo(() => {
-    const courses = Array.from(new Set(students.map(s => s.course).filter(Boolean))).sort();
+    const courses = Array.from(new Set(students.map(s => s.course).filter(Boolean)))
+      .sort((a, b) => {
+        const rankA = getCourseRank(a);
+        const rankB = getCourseRank(b);
+        if (rankA !== rankB) return rankA - rankB;
+        return a.localeCompare(b);
+      });
     const divisions = Array.from(new Set(students.map(s => s.division).filter(Boolean))).sort();
     const skills = ['Beginner', 'Basic', 'Intermediate', 'Good', 'Advanced'];
     const interestedSkills = Array.from(new Set(students.map(s => s.mostInterestedSkill).filter(Boolean))).sort();
@@ -339,12 +377,39 @@ const Dashboard = () => {
       }));
   }, [filteredStudents]);
 
+  // Cycle course filter sequence (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2 -> All)
+  const handleCycleCourseFilter = () => {
+    const orderedCourses = filterOptions.courses;
+    if (orderedCourses.length === 0) return;
+
+    if (courseFilter === 'All') {
+      setCourseFilter(orderedCourses[0]);
+    } else {
+      const currentIndex = orderedCourses.indexOf(courseFilter);
+      if (currentIndex === -1 || currentIndex === orderedCourses.length - 1) {
+        setCourseFilter('All');
+      } else {
+        setCourseFilter(orderedCourses[currentIndex + 1]);
+      }
+    }
+    setCurrentPage(1);
+  };
+
   // Table Sorting & Display calculation
   const sortedStudents = useMemo(() => {
     const copy = [...filteredStudents];
     copy.sort((a, b) => {
       let valA = a[sortField] || '';
       let valB = b[sortField] || '';
+
+      if (sortField === 'course') {
+        const rankA = getCourseRank(a.course);
+        const rankB = getCourseRank(b.course);
+        if (rankA !== rankB) {
+          return sortOrder === 'asc' ? rankA - rankB : rankB - rankA;
+        }
+      }
+
       if (typeof valA === 'string') valA = valA.toLowerCase();
       if (typeof valB === 'string') valB = valB.toLowerCase();
       if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
@@ -789,39 +854,83 @@ const Dashboard = () => {
             </div>
 
             {/* Detailed Student Data Table */}
-            <div className="table-card">
-              <div className="table-header">
+            <div className="table-card" id="detailed-responses-table">
+              <div className="table-header flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                  <h2 className="chart-title">Detailed Student Responses</h2>
-                  <span className="chart-subtitle">
+                  <h2 className="chart-title flex items-center gap-2">
+                    Detailed Student Responses
+                  </h2>
+                  <span className="chart-subtitle block">
                     {viewMode === 'full'
                       ? `Showing all ${sortedStudents.length} student records`
                       : `Showing ${displayedStudents.length} of ${sortedStudents.length} student records`}
                   </span>
+
+                  {/* Course Filter Quick Pills in Header (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2) */}
+                  <div className="flex flex-wrap items-center gap-1.5 mt-3">
+                    <span className="text-xs font-semibold text-slate-400 mr-1 flex items-center gap-1">
+                      <Filter className="w-3 h-3 text-sky-400" /> Course Filter:
+                    </span>
+                    <button
+                      onClick={() => { setCourseFilter('All'); setCurrentPage(1); }}
+                      className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
+                        courseFilter === 'All'
+                          ? 'bg-sky-500 text-slate-950 font-bold shadow-sm'
+                          : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/80'
+                      }`}
+                    >
+                      All
+                    </button>
+                    {filterOptions.courses.map(c => (
+                      <button
+                        key={c}
+                        onClick={() => { setCourseFilter(c); setCurrentPage(1); }}
+                        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
+                          courseFilter === c
+                            ? 'bg-sky-500 text-slate-950 font-bold shadow-sm'
+                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/80'
+                        }`}
+                        title={`Filter by ${c}`}
+                      >
+                        {getShortCourseLabel(c)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                {/* View Mode Toggle Controls */}
-                <div className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-lg border border-slate-700/80">
+                {/* View Mode & Cycle Filter Controls */}
+                <div className="flex flex-wrap items-center gap-2 self-start md:self-auto">
                   <button
-                    onClick={() => { setViewMode('paginated'); setCurrentPage(1); }}
-                    className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
-                      viewMode === 'paginated'
-                        ? 'bg-sky-500 text-slate-950 shadow-md'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                    }`}
+                    onClick={handleCycleCourseFilter}
+                    className="px-3 py-1.5 text-xs font-bold bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 rounded-md border border-sky-500/30 transition-all flex items-center gap-1"
+                    title="Cycle through course filter (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2)"
                   >
-                    Paginated View
+                    <span>Next Course</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </button>
-                  <button
-                    onClick={() => { setViewMode('full'); setCurrentPage(1); }}
-                    className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
-                      viewMode === 'full'
-                        ? 'bg-sky-500 text-slate-950 shadow-md'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                    }`}
-                  >
-                    Full Content Display
-                  </button>
+
+                  <div className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-lg border border-slate-700/80">
+                    <button
+                      onClick={() => { setViewMode('paginated'); setCurrentPage(1); }}
+                      className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
+                        viewMode === 'paginated'
+                          ? 'bg-sky-500 text-slate-950 shadow-md'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                      }`}
+                    >
+                      Paginated View
+                    </button>
+                    <button
+                      onClick={() => { setViewMode('full'); setCurrentPage(1); }}
+                      className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
+                        viewMode === 'full'
+                          ? 'bg-sky-500 text-slate-950 shadow-md'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                      }`}
+                    >
+                      Full Content Display
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -829,6 +938,7 @@ const Dashboard = () => {
                 <table className="student-table">
                   <thead>
                     <tr>
+                      <th className="w-12 text-center">No.</th>
                       <th onClick={() => handleSort('fullName')}>
                         Student Name <ArrowUpDown className="inline w-3 h-3 ml-1" />
                       </th>
@@ -853,8 +963,11 @@ const Dashboard = () => {
                   </thead>
                   <tbody>
                     {displayedStudents.length > 0 ? (
-                      displayedStudents.map(student => (
+                      displayedStudents.map((student, idx) => (
                         <tr key={student.id}>
+                          <td className="text-center font-mono text-slate-400 text-xs font-semibold">
+                            {(currentPage - 1) * itemsPerPage + idx + 1}
+                          </td>
                           <td className="font-semibold text-slate-100 whitespace-nowrap">{student.fullName}</td>
                           <td className="whitespace-nowrap">{student.course}</td>
                           <td className="whitespace-nowrap">{student.division}</td>
@@ -875,7 +988,7 @@ const Dashboard = () => {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="8" className="text-center py-6 text-slate-400">
+                        <td colSpan="9" className="text-center py-6 text-slate-400">
                           No student records match the selected filters.
                         </td>
                       </tr>

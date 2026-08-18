@@ -285,10 +285,7 @@ const Survey = () => {
                 Thank you! Your response has been submitted successfully.
               </p>
               <div className="gf-modal-actions">
-                <button onClick={handleReset} className="gf-modal-btn-primary">
-                  Submit another response
-                </button>
-                <button onClick={handleExit} className="gf-modal-btn-exit">
+                <button onClick={handleExit} className="gf-modal-btn-primary">
                   Exit
                 </button>
               </div>

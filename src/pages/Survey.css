@@ -450,3 +450,32 @@
   }
 }
 
+/* Loading Spinners */
+.gf-loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(103, 58, 183, 0.15);
+  border-top-color: #673ab7;
+  border-radius: 50%;
+  animation: gfSpin 0.8s linear infinite;
+  margin: 0 auto 16px auto;
+}
+
+.gf-btn-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: gfSpin 0.8s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@keyframes gfSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+

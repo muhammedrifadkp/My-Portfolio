@@ -270,6 +270,19 @@ const Survey = () => {
   return (
     <div className="gf-page-bg">
       <div className="gf-container">
+        {/* Submitting Loading Overlay */}
+        {isSubmitting && (
+          <div className="gf-modal-overlay">
+            <div className="gf-modal-card" style={{ textAlign: 'center', padding: '36px 24px' }}>
+              <div className="gf-loading-spinner"></div>
+              <h3 className="gf-modal-title" style={{ fontSize: '1.25rem', marginBottom: '8px' }}>Submitting response...</h3>
+              <p className="gf-modal-msg" style={{ marginBottom: 0, color: '#5f6368', fontSize: '0.9rem' }}>
+                Please wait while your answers are being recorded.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Success Popup Modal */}
         {submitted && (
           <div className="gf-modal-overlay">
@@ -615,7 +628,14 @@ const Survey = () => {
           {/* Actions */}
           <div className="gf-actions-row">
             <button type="submit" className="gf-submit-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit'}
+              {isSubmitting ? (
+                <>
+                  <span className="gf-btn-spinner"></span>
+                  Submitting...
+                </>
+              ) : (
+                'Submit'
+              )}
             </button>
             <button type="button" onClick={handleReset} className="gf-clear-btn" disabled={isSubmitting}>
               Clear form

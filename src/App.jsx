@@ -13,7 +13,7 @@ import ScrollToTop from './components/ScrollToTop.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 // Advanced Components
-import AIAssistant from './components/AIAssistant'
+// import AIAssistant from './components/AIAssistant'
 import { ThemeProvider } from './components/ThemeSystem'
 
 // Security: Initialize security measures
@@ -38,8 +38,8 @@ const App = () => {
               <Route path='*' element={<NotFound />} />
             </Routes>
 
-            {/* Advanced Features */}
-            <AIAssistant />
+            {/* Advanced Features - Temporarily Disabled */}
+            {/* <AIAssistant /> */}
           </BrowserRouter>
         </main>
       </ThemeProvider>

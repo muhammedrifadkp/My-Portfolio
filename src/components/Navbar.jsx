@@ -3,6 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import './Navbar.css';
+import logoModel from '../assets/3d/RIFAD_logo_texture_3D.glb';
+
+useGLTF.preload(logoModel);
 // WebGL Error Boundary to catch 3D context crashes gracefully
 class WebGLErrorBoundary extends React.Component {
   constructor(props) {
@@ -238,7 +241,7 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo" onClick={handleNavClick}>
+        <div className="navbar-logo">
           <div className={`logo-3d-container ${logoState.isUserControlling ? 'user-controlling' : ''} ${logoState.isResetting ? 'resetting' : ''}`}>
             <WebGLErrorBoundary>
               <Canvas
@@ -261,7 +264,7 @@ const Navbar = () => {
               </Canvas>
             </WebGLErrorBoundary>
           </div>
-        </Link>
+        </div>
 
         <ul className="nav-menu">
           <li className="nav-item">

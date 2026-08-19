@@ -187,12 +187,21 @@ const AI = () => {
 
   const fetchGeminiResponse = async (userPrompt) => {
     const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!GEMINI_API_KEY || !GEMINI_API_KEY.startsWith('AIza')) {
+      return null;
+    }
+
     const candidateModels = [
-      'gemini-flash-latest',
       'gemini-2.0-flash',
-      'gemini-2.0-flash-lite',
-      'gemini-pro-latest'
+      'gemini-1.5-flash',
+      'gemini-1.5-pro',
+      'gemini-2.0-flash-lite'
     ];
+
+    const systemPrompt = `You are Rifad AI Assistant, an intelligent AI helper built into Muhammed Rifad KP's 3D Portfolio website.
+Muhammed Rifad KP is a Full Stack Developer & 3D Web Specialist based in India with 2+ years of experience in React, JavaScript (ES6+), Three.js, Node.js, Express, MongoDB, and modern web applications.
+His contact email is muhammedrifadkp3@gmail.com, GitHub is https://github.com/muhammedrifadkp, and Portfolio is https://muhammedrifad.vercel.app/.
+Provide friendly, highly technical, clear, and formatted markdown responses to user queries. If asked about Rifad, highlight his expertise and projects. If asked general technical/coding questions, answer thoroughly with clean code examples where appropriate.`;
 
     for (const model of candidateModels) {
       try {
@@ -200,6 +209,9 @@ const AI = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            system_instruction: {
+              parts: [{ text: systemPrompt }]
+            },
             contents: [{ parts: [{ text: userPrompt }] }],
             generationConfig: { temperature: 0.7, maxOutputTokens: 2048 }
           })

@@ -12,6 +12,8 @@ import {
   Pie,
   Cell
 } from 'recharts';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import {
   Users,
   BookOpen,
@@ -29,7 +31,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Code,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Download,
+  X
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -90,6 +94,7 @@ const Dashboard = () => {
   const [interestedSkillFilter, setInterestedSkillFilter] = useState('All');
   const [mainGoalFilter, setMainGoalFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [tableNameSearch, setTableNameSearch] = useState('');
 
   // Table State
   const [sortField, setSortField] = useState('fullName');
@@ -229,6 +234,10 @@ const Dashboard = () => {
       if (skillLevelFilter !== 'All' && student.currentSkill !== skillLevelFilter) return false;
       if (interestedSkillFilter !== 'All' && student.mostInterestedSkill !== interestedSkillFilter) return false;
       if (mainGoalFilter !== 'All' && student.mainGoal !== mainGoalFilter) return false;
+      if (tableNameSearch.trim() !== '') {
+        const nameQuery = tableNameSearch.toLowerCase().trim();
+        if (!student.fullName.toLowerCase().includes(nameQuery)) return false;
+      }
       if (searchQuery.trim() !== '') {
         const query = searchQuery.toLowerCase();
         const matchesName = student.fullName.toLowerCase().includes(query);
@@ -237,7 +246,7 @@ const Dashboard = () => {
       }
       return true;
     });
-  }, [students, courseFilter, divisionFilter, skillLevelFilter, interestedSkillFilter, mainGoalFilter, searchQuery]);
+  }, [students, courseFilter, divisionFilter, skillLevelFilter, interestedSkillFilter, mainGoalFilter, tableNameSearch, searchQuery]);
 
   // Reset Filters
   const handleResetFilters = () => {
@@ -247,6 +256,7 @@ const Dashboard = () => {
     setInterestedSkillFilter('All');
     setMainGoalFilter('All');
     setSearchQuery('');
+    setTableNameSearch('');
     setCurrentPage(1);
   };
 
@@ -437,6 +447,133 @@ const Dashboard = () => {
       setSortField(field);
       setSortOrder('asc');
     }
+  };
+
+  // Export Filtered Students Data to PDF
+  const handleExportPDF = () => {
+    if (!sortedStudents || sortedStudents.length === 0) {
+      alert('No student records available to export.');
+      return;
+    }
+
+    const doc = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    const primaryColor = [15, 23, 42]; // slate-900
+
+    // Header Background Banner
+    doc.setFillColor(...primaryColor);
+    doc.rect(0, 0, 297, 24, 'F');
+
+    // Header Title
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(15);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Detailed Student Responses Report', 14, 15);
+
+    // Timestamp & Record Count
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    const timestampStr = new Date().toLocaleString();
+    doc.text(`Generated: ${timestampStr}  |  Total Records: ${sortedStudents.length}`, 283, 15, { align: 'right' });
+
+    // Active Filters Summary Line
+    const activeFilters = [];
+    if (courseFilter !== 'All') activeFilters.push(`Course: ${courseFilter}`);
+    if (divisionFilter !== 'All') activeFilters.push(`Div: ${divisionFilter}`);
+    if (skillLevelFilter !== 'All') activeFilters.push(`Skill: ${skillLevelFilter}`);
+    if (interestedSkillFilter !== 'All') activeFilters.push(`Interested: ${interestedSkillFilter}`);
+    if (mainGoalFilter !== 'All') activeFilters.push(`Goal: ${mainGoalFilter}`);
+    if (tableNameSearch.trim() !== '') activeFilters.push(`Name Filter: "${tableNameSearch.trim()}"`);
+    if (searchQuery.trim() !== '') activeFilters.push(`Global Search: "${searchQuery.trim()}"`);
+
+    const filterText = activeFilters.length > 0
+      ? `Applied Filters: ${activeFilters.join(' | ')}`
+      : 'Applied Filters: None (Showing All Students)';
+
+    doc.setTextColor(71, 85, 105);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'italic');
+    doc.text(filterText, 14, 30);
+
+    // Table Column Definitions
+    const tableColumns = [
+      { header: '#', dataKey: 'no' },
+      { header: 'Student Name', dataKey: 'fullName' },
+      { header: 'Course', dataKey: 'course' },
+      { header: 'Div', dataKey: 'division' },
+      { header: 'Current Skill', dataKey: 'currentSkill' },
+      { header: 'Interested Skill', dataKey: 'mostInterestedSkill' },
+      { header: 'Main Goal', dataKey: 'mainGoal' },
+      { header: 'Learning Interests', dataKey: 'learningInterests' },
+      { header: 'Specific Request', dataKey: 'specificLearning' },
+    ];
+
+    const tableRows = sortedStudents.map((student, idx) => ({
+      no: idx + 1,
+      fullName: student.fullName || '-',
+      course: student.course || '-',
+      division: student.division || '-',
+      currentSkill: student.currentSkill || '-',
+      mostInterestedSkill: student.mostInterestedSkill || '-',
+      mainGoal: student.mainGoal || '-',
+      learningInterests: Array.isArray(student.learningInterests) ? student.learningInterests.join(', ') : '-',
+      specificLearning: student.specificLearning || '-'
+    }));
+
+    autoTable(doc, {
+      columns: tableColumns,
+      body: tableRows,
+      startY: 34,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2.5,
+        overflow: 'linebreak',
+        valign: 'middle'
+      },
+      headStyles: {
+        fillColor: [30, 41, 59],
+        textColor: [248, 250, 252],
+        fontStyle: 'bold',
+        fontSize: 8.5
+      },
+      alternateRowStyles: {
+        fillColor: [248, 250, 252]
+      },
+      columnStyles: {
+        no: { cellWidth: 10, halign: 'center' },
+        fullName: { cellWidth: 35, fontStyle: 'bold' },
+        course: { cellWidth: 18 },
+        division: { cellWidth: 14 },
+        currentSkill: { cellWidth: 24 },
+        mostInterestedSkill: { cellWidth: 32 },
+        mainGoal: { cellWidth: 34 },
+        learningInterests: { cellWidth: 48 },
+        specificLearning: { cellWidth: 48 }
+      },
+      didDrawPage: (data) => {
+        const pageCount = doc.internal.getNumberOfPages();
+        doc.setFontSize(8);
+        doc.setTextColor(148, 163, 184);
+        doc.text(
+          `Page ${data.pageNumber} of ${pageCount}`,
+          283,
+          203,
+          { align: 'right' }
+        );
+        doc.text(
+          'Sirajul Huda Student IT & Digital Skills Interest Survey',
+          14,
+          203
+        );
+      }
+    });
+
+    const dateStr = new Date().toISOString().slice(0, 10);
+    doc.save(`Student_Responses_Report_${dateStr}.pdf`);
   };
 
   return (
@@ -898,18 +1035,54 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {/* View Mode & Cycle Filter Controls */}
-                <div className="flex flex-wrap items-center gap-2 self-start md:self-auto">
+                {/* View Mode, Name Search & PDF Export Controls */}
+                <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
+                  {/* Dedicated Name Search Filter */}
+                  <div className="relative min-w-[200px] sm:min-w-[230px]">
+                    <input
+                      type="text"
+                      className="w-full bg-slate-900/90 text-slate-100 text-xs placeholder:text-slate-400 pl-8 pr-7 py-2 rounded-lg border border-slate-700/80 focus:border-sky-500 focus:outline-none transition-all shadow-inner"
+                      placeholder="Search student name..."
+                      value={tableNameSearch}
+                      onChange={(e) => {
+                        setTableNameSearch(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                    />
+                    <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
+                    {tableNameSearch && (
+                      <button
+                        onClick={() => { setTableNameSearch(''); setCurrentPage(1); }}
+                        className="absolute right-2 top-2.5 text-slate-400 hover:text-slate-200 transition-colors"
+                        title="Clear name filter"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Export PDF Button */}
+                  <button
+                    onClick={handleExportPDF}
+                    className="px-3.5 py-2 text-xs font-bold bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white rounded-lg shadow-md hover:shadow-sky-500/25 transition-all flex items-center gap-1.5 border border-sky-400/30 active:scale-95 cursor-pointer"
+                    title="Export filtered student responses report to PDF"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Export PDF</span>
+                  </button>
+
+                  {/* Cycle Course Filter */}
                   <button
                     onClick={handleCycleCourseFilter}
-                    className="px-3 py-1.5 text-xs font-bold bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 rounded-md border border-sky-500/30 transition-all flex items-center gap-1"
+                    className="px-3 py-2 text-xs font-bold bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/30 transition-all flex items-center gap-1 cursor-pointer"
                     title="Cycle through course filter (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2)"
                   >
                     <span>Next Course</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
 
-                  <div className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-lg border border-slate-700/80">
+                  {/* View Mode Toggle */}
+                  <div className="flex items-center gap-1 bg-slate-900/90 p-1 rounded-lg border border-slate-700/80">
                     <button
                       onClick={() => { setViewMode('paginated'); setCurrentPage(1); }}
                       className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
@@ -918,7 +1091,7 @@ const Dashboard = () => {
                           : 'text-slate-300 hover:text-white hover:bg-slate-800'
                       }`}
                     >
-                      Paginated View
+                      Paginated
                     </button>
                     <button
                       onClick={() => { setViewMode('full'); setCurrentPage(1); }}
@@ -928,7 +1101,7 @@ const Dashboard = () => {
                           : 'text-slate-300 hover:text-white hover:bg-slate-800'
                       }`}
                     >
-                      Full Content Display
+                      Full List
                     </button>
                   </div>
                 </div>

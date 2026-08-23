@@ -286,7 +286,7 @@ const Home = () => {
             </h2>
 
             <p className="bio">
-              Full Stack Developer specializing in <strong>MERN stack & Next.js</strong>. 
+              I am <strong>Muhammed Rifad KP</strong>, a Full Stack Developer & 3D Web Specialist based in Kerala, India specializing in <strong>MERN stack & Next.js</strong>. 
               Delivered <strong>10+ live production web applications</strong> across e-commerce, 
               real estate, and healthcare with 2+ years of full-stack engineering mentorship experience.
             </p>

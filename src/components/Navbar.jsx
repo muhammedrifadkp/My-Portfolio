@@ -211,6 +211,8 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const controlsRef = useRef();
   const [logoState, setLogoState] = useState({ isUserControlling: false, isResetting: false });
+  const isSyllabusPage = location.pathname.startsWith('/syllabus');
+  const isBatchDetailPage = location.pathname.startsWith('/syllabus/') && location.pathname !== '/syllabus';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -220,6 +222,11 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Hide navbar on individual batch pages (/syllabus/:id) - Placed after all hooks!
+  if (isBatchDetailPage) {
+    return null;
+  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -239,7 +246,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isSyllabusPage ? 'syllabus-navbar' : ''}`}>
       <div className="navbar-container">
         <div className="navbar-logo">
           <div className={`logo-3d-container ${logoState.isUserControlling ? 'user-controlling' : ''} ${logoState.isResetting ? 'resetting' : ''}`}>
@@ -292,6 +299,15 @@ const Navbar = () => {
               onClick={handleNavClick}
             >
               Projects
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/syllabus"
+              className={`nav-link ${location.pathname.startsWith('/syllabus') ? 'active' : ''}`}
+              onClick={handleNavClick}
+            >
+              Syllabus
             </Link>
           </li>
 
@@ -364,6 +380,15 @@ const Navbar = () => {
                 onClick={handleNavClick}
               >
                 Projects
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/syllabus"
+                className={location.pathname.startsWith('/syllabus') ? 'active' : ''}
+                onClick={handleNavClick}
+              >
+                Syllabus
               </Link>
             </li>
 

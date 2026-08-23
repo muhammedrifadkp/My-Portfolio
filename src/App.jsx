@@ -3,6 +3,8 @@ import { Route, Routes, BrowserRouter } from "react-router-dom"
 import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
+import Syllabus from './pages/Syllabus'
+import BatchSyllabus from './pages/BatchSyllabus'
 import Contact from './pages/Contact'
 import AI from './pages/AI'
 import Survey from './pages/Survey'
@@ -31,6 +33,8 @@ const App = () => {
               <Route path='/' element={<Home />} />
               <Route path='/about' element={<About />} />
               <Route path='/projects' element={<Projects />} />
+              <Route path='/syllabus' element={<Syllabus />} />
+              <Route path='/syllabus/:batchId' element={<BatchSyllabus />} />
               <Route path='/contact' element={<Contact />} />
               <Route path='/ai' element={<AI />} />
               <Route path='/survey' element={<Survey />} />

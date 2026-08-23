@@ -280,3 +280,61 @@
   }
 }
 
+/* Light LMS Theme Navbar Override for Syllabus Pages */
+.navbar.syllabus-navbar {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.navbar.syllabus-navbar.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-bottom-color: #CBD5E1;
+}
+
+.navbar.syllabus-navbar .nav-link {
+  color: #475569;
+}
+
+.navbar.syllabus-navbar .nav-link:hover {
+  color: #2563EB;
+}
+
+.navbar.syllabus-navbar .nav-link.active {
+  color: #2563EB;
+  font-weight: 700;
+}
+
+.navbar.syllabus-navbar .nav-link.active::after {
+  background: #2563EB;
+}
+
+.navbar.syllabus-navbar .nav-btn-link {
+  background: #2563EB;
+  color: #ffffff;
+  border: 1px solid #2563EB;
+}
+
+.navbar.syllabus-navbar .nav-btn-link:hover {
+  background: #1D4ED8;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.navbar.syllabus-navbar .toggle-btn span {
+  background: #0F172A;
+}
+
+.navbar.syllabus-navbar .mobile-menu {
+  background: rgba(255, 255, 255, 0.98);
+  border-top: 1px solid #E2E8F0;
+}
+
+.navbar.syllabus-navbar .mobile-menu a {
+  color: #0F172A;
+}
+
+

@@ -1,0 +1,1108 @@
+/* PlusOneSyllabus.css — Professional Light LMS Theme */
+
+.plus1-syllabus-container {
+  width: 100%;
+  color: #0F172A;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* -------------------- SYLLABUS HEADER -------------------- */
+.syllabus-header-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.main-dashboard-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.main-dashboard-subtitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2563EB;
+  margin: 0;
+}
+
+.main-dashboard-subtext {
+  font-size: 0.95rem;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.5;
+  max-width: 900px;
+}
+
+.header-metadata-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.meta-chip {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  padding: 5px 12px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* -------------------- OVERALL PROGRESS CARD -------------------- */
+.overall-progress-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 24px 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.progress-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-section-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.progress-percentage-text {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #2563EB;
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 12px;
+  background: #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #2563EB;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.progress-counts-text {
+  font-size: 0.88rem;
+  color: #64748B;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* -------------------- DASHBOARD STATS GRID -------------------- */
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.stat-icon-wrapper {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.blue-icon { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+.green-icon { background: #DCFCE7; color: #166534; border: 1px solid #BBF7D0; }
+.amber-icon { background: #FEF3C7; color: #D97706; border: 1px solid #FDE68A; }
+.purple-icon { background: #F3E8FF; color: #7E22CE; border: 1px solid #E9D5FF; }
+.indigo-icon { background: #EEF2FF; color: #4338CA; border: 1px solid #C7D2FE; }
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748B;
+  letter-spacing: 0.3px;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.2;
+}
+
+.stat-value.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9rem;
+}
+
+.stat-value.text-sm {
+  font-size: 0.85rem;
+}
+
+/* -------------------- CONTINUE LEARNING SECTION -------------------- */
+.continue-learning-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.status-item-card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.status-item-card.primary-status { border-left: 4px solid #2563EB; }
+.status-item-card.secondary-status { border-left: 4px solid #7E22CE; }
+.status-item-card.completed-status { border-left: 4px solid #166534; }
+
+.status-badge-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.primary-status .status-badge-label { color: #2563EB; }
+.secondary-status .status-badge-label { color: #7E22CE; }
+.completed-status .status-badge-label { color: #166534; }
+
+.status-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.class-number-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+.class-topic-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.empty-status-text {
+  font-size: 0.9rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.action-link-btn {
+  margin-top: 8px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.primary-btn {
+  background: #2563EB;
+  color: #FFFFFF;
+  border: none;
+}
+
+.primary-btn:hover { background: #1D4ED8; }
+
+.outline-btn {
+  background: #FFFFFF;
+  color: #2563EB;
+  border: 1px solid #BFDBFE;
+}
+
+.outline-btn:hover { background: #EFF6FF; }
+
+/* -------------------- MODULE PROGRESS BREAKDOWN -------------------- */
+.module-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.module-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.module-progress-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  padding: 18px 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.module-progress-card:hover {
+  border-color: #CBD5E1;
+  background: #FAFAFA;
+}
+
+.mod-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mod-num-chip {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #2563EB;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.mod-class-count {
+  font-size: 0.78rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.mod-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mod-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mod-title i {
+  color: #2563EB;
+  margin-right: 6px;
+}
+
+.mod-progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #475569;
+  font-weight: 600;
+}
+
+.mod-pct {
+  color: #2563EB;
+}
+
+.mod-track {
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mod-fill {
+  height: 100%;
+  background: #2563EB;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+/* -------------------- CONTROLS & FILTER BAR -------------------- */
+.filter-controls-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-box-wrapper {
+  flex: 1;
+  min-width: 280px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  color: #94A3B8;
+  font-size: 0.95rem;
+}
+
+.syllabus-search-input {
+  width: 100%;
+  padding: 10px 38px 10px 40px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  color: #0F172A;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.syllabus-search-input:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #94A3B8;
+  cursor: pointer;
+}
+
+.filter-dropdowns-group {
+  display: flex;
+  gap: 12px;
+}
+
+.filter-select {
+  padding: 10px 14px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  color: #0F172A;
+  font-size: 0.88rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+/* -------------------- DETAILED MODULES & CLASS CARDS -------------------- */
+.detailed-modules-container {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.detailed-module-block {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.module-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 1px solid #F1F5F9;
+  padding-bottom: 16px;
+}
+
+.mod-block-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2563EB;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.mod-block-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 4px 0;
+}
+
+.mod-block-title i {
+  color: #2563EB;
+  margin-right: 8px;
+}
+
+.mod-block-purpose {
+  font-size: 0.92rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.mod-block-badge {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Module Real Project Card (Distinct Light Blue) */
+.real-project-card {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rp-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #1D4ED8;
+  letter-spacing: 0.5px;
+}
+
+.rp-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1E40AF;
+  margin: 0;
+}
+
+.rp-desc {
+  font-size: 0.9rem;
+  color: #1E3A8A;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.multi-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.mp-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.mp-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #2563EB;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mp-desc {
+  font-size: 0.82rem;
+  color: #475569;
+  margin: 0;
+}
+
+/* Class Cards Grid */
+.classes-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.class-item-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.class-item-card.status-border-completed { border-top: 3px solid #166534; }
+.class-item-card.status-border-in-progress { border-top: 3px solid #2563EB; }
+.class-item-card.status-border-not-started { border-top: 3px solid #94A3B8; }
+
+.class-card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.class-number-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+/* Status Dropdown */
+.status-dropdown {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+}
+
+.status-style-not-started {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+}
+
+.status-style-in-progress {
+  background: #DBEAFE;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.status-style-completed {
+  background: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #BBF7D0;
+}
+
+.class-card-content {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.class-title-text {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.class-concept-text {
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.class-objective-block {
+  font-size: 0.8rem;
+  color: #64748B;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.class-card-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.open-guide-link-btn {
+  background: none;
+  border: none;
+  color: #2563EB;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.open-guide-link-btn:hover {
+  text-decoration: underline;
+}
+
+.notes-icon-badge {
+  color: #D97706;
+  font-size: 0.85rem;
+}
+
+/* -------------------- FINAL SPECIALIZATIONS -------------------- */
+.final-specialization-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.spec-header-block {
+  text-align: left;
+}
+
+.spec-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #7E22CE;
+  background: #F3E8FF;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.spec-header-block h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 8px 0 4px 0;
+}
+
+.spec-header-block p {
+  color: #64748B;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.spec-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.spec-option-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spec-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #EFF6FF;
+  color: #2563EB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.spec-option-card h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.spec-option-card p {
+  font-size: 0.82rem;
+  color: #64748B;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.project-requirements-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.project-requirements-box h4 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 12px 0;
+}
+
+.req-items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.req-box {
+  font-size: 0.82rem;
+  color: #475569;
+}
+
+.req-box strong {
+  color: #0F172A;
+}
+
+/* -------------------- TEACHING GUIDE MODAL -------------------- */
+.modal-backdrop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.modal-dialog-card {
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 32px;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-close-icon-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #475569;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-top-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 14px;
+}
+
+.modal-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.modal-class-num {
+  background: #2563EB;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.modal-mod-name {
+  background: #F1F5F9;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.modal-topic-heading {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.modal-concept-quote {
+  font-size: 0.92rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.framework-flow-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 10px 16px;
+  flex-wrap: wrap;
+}
+
+.flow-step {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #1D4ED8;
+}
+
+.flow-arrow {
+  color: #94A3B8;
+  font-size: 0.8rem;
+}
+
+.teacher-guide-container {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.guide-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 10px;
+}
+
+.guide-header-row h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+}
+
+.duration-tags {
+  display: flex;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.guide-steps-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guide-step-card {
+  display: flex;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.guide-step-card.task-highlight-card {
+  background: #EFF6FF;
+  border-color: #BFDBFE;
+}
+
+.step-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #2563EB;
+  color: #FFFFFF;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+
+.step-content strong {
+  font-size: 0.85rem;
+  color: #0F172A;
+}
+
+.step-content p {
+  font-size: 0.88rem;
+  color: #475569;
+  margin: 2px 0 0 0;
+  line-height: 1.45;
+}
+
+.teacher-checklist-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.teacher-checklist-box h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 10px 0;
+}
+
+.checklist-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #334155;
+  cursor: pointer;
+}
+
+.modal-notes-textarea {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  padding: 10px;
+  color: #0F172A;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.modal-bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #E2E8F0;
+  padding-top: 16px;
+}
+
+.modal-status-info {
+  font-size: 0.85rem;
+  color: #64748B;
+}
+
+.modal-btns-row {
+  display: flex;
+  gap: 10px;
+}
+
+.complete-action-btn {
+  padding: 8px 16px;
+  background: #166534;
+  color: #FFFFFF;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.reopen-action-btn {
+  padding: 8px 16px;
+  background: #FEF3C7;
+  color: #D97706;
+  border: 1px solid #FDE68A;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dismiss-modal-btn {
+  padding: 8px 16px;
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* -------------------- RESPONSIVE -------------------- */
+@media (max-width: 1200px) {
+  .dashboard-stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .classes-grid-3col { grid-template-columns: repeat(2, 1fr); }
+  .module-grid-3col { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .dashboard-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .status-cards-row { grid-template-columns: 1fr; }
+  .classes-grid-3col { grid-template-columns: 1fr; }
+  .module-grid-3col { grid-template-columns: 1fr; }
+  .spec-options-grid { grid-template-columns: 1fr; }
+  .req-items-grid { grid-template-columns: 1fr; }
+  .checklist-options-grid { grid-template-columns: 1fr; }
+  .main-dashboard-title { font-size: 1.8rem; }
+}

@@ -3,14 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
-  <!-- Favicon - Custom "R" Logo -->
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYmdHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izc2NGJhMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjE2IiBmaWxsPSJ1cmwoI2JnR3JhZGllbnQpIi8+CiAgPHBhdGggZD0iTTkgOCBMOSAyNCBMMTEuNSAyNCBMMTEuNSAxNyBMMTYgMTcgTDE5LjUgMjQgTDIyLjUgMjQgTDE4LjUgMTYuNSBDMjAuNSAxNS44IDIxLjUgMTQuMiAyMS41IDEyIEMyMS41IDkgMTkuNSA4IDE3IDggTDkgOCBaIE0xMS41IDEwLjUgTDE2LjUgMTAuNSBDMTcuOCAxMC41IDE5IDExLjIgMTkgMTIuNSBDMTkgMTMuOCAxNy44IDE0LjUgMTYuNSAxNC41IEwxMS41IDE0LjUgTDExLjUgMTAuNSBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" type="image/svg+xml" />
+  <!-- Favicon & Multi-Platform Icons (Google Search & Mobile compliant) -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="/favicon.svg" />
-
-  <!-- Web App Manifest -->
+  <!-- Web App Manifest Theme -->
   <meta name="theme-color" content="#667eea" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -26,7 +27,8 @@
   <meta name="author" content="Muhammed Rifad KP" />
   <meta name="robots" content="index, follow" />
 
-  <!-- Open Graph Meta Tags -->
+  <!-- Open Graph Meta Tags (Site Name for Google Search Results) -->
+  <meta property="og:site_name" content="Rifad" />
   <meta property="og:title" content="Muhammed Rifad KP | Full Stack Developer & 3D Web Specialist" />
   <meta property="og:description" content="Official portfolio of Muhammed Rifad KP - Full Stack Developer specializing in React, Three.js, and modern web development." />
   <meta property="og:type" content="website" />
@@ -39,7 +41,16 @@
   <meta name="twitter:description" content="Official portfolio of Muhammed Rifad KP - Full Stack Developer specializing in React, Three.js, and modern web development." />
   <meta name="twitter:image" content="https://muhammedrifad.vercel.app/profile.png" />
 
-  <!-- Structured Data (JSON-LD) for Google Rich Results -->
+  <!-- Structured Data (JSON-LD) for Google Search Site Name & Person Rich Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Rifad",
+    "alternateName": ["Muhammed Rifad", "Rifad KP", "Muhammed Rifad KP"],
+    "url": "https://muhammedrifad.vercel.app/"
+  }
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

@@ -3,6 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import { getBatchBySlug } from '../data/syllabusData';
 import PlusOneSyllabus from '../components/syllabus/PlusOneSyllabus';
 import PlusTwoSyllabus from '../components/syllabus/PlusTwoSyllabus';
+import Degree1Syllabus from '../components/syllabus/Degree1Syllabus';
+import Degree2Syllabus from '../components/syllabus/Degree2Syllabus';
+import Degree3Syllabus from '../components/syllabus/Degree3Syllabus';
+import Pg1Syllabus from '../components/syllabus/Pg1Syllabus';
+import Pg2Syllabus from '../components/syllabus/Pg2Syllabus';
 import './BatchSyllabus.css';
 
 const BatchSyllabus = () => {
@@ -12,8 +17,14 @@ const BatchSyllabus = () => {
   const decodedBatchId = batchId ? decodeURIComponent(batchId) : '';
   const batch = getBatchBySlug(batchId);
   const batchName = batch ? batch.name : (decodedBatchId || 'Batch');
-  const isPlusOne = decodedBatchId === '+1' || batchId === '+1';
-  const isPlusTwo = decodedBatchId === '+2' || batchId === '+2' || batchId === 'plus-2';
+  const normalizedId = (decodedBatchId || batchId || '').toLowerCase().trim();
+  const isPlusOne = normalizedId === '+1' || normalizedId === 'plus-1' || normalizedId === 'plus 1';
+  const isPlusTwo = normalizedId === '+2' || normalizedId === 'plus-2' || normalizedId === 'plus 2';
+  const isDegreeOne = normalizedId === 'degree-1' || normalizedId === 'degree 1';
+  const isDegreeTwo = normalizedId === 'degree-2' || normalizedId === 'degree 2';
+  const isDegreeThree = normalizedId === 'degree-3' || normalizedId === 'degree 3';
+  const isPgOne = normalizedId === 'pg-1' || normalizedId === 'pg 1';
+  const isPgTwo = normalizedId === 'pg-2' || normalizedId === 'pg 2';
 
   return (
     <section className="batch-syllabus-page">
@@ -34,6 +45,16 @@ const BatchSyllabus = () => {
           <PlusOneSyllabus />
         ) : isPlusTwo ? (
           <PlusTwoSyllabus />
+        ) : isDegreeOne ? (
+          <Degree1Syllabus />
+        ) : isDegreeTwo ? (
+          <Degree2Syllabus />
+        ) : isDegreeThree ? (
+          <Degree3Syllabus />
+        ) : isPgOne ? (
+          <Pg1Syllabus />
+        ) : isPgTwo ? (
+          <Pg2Syllabus />
         ) : (
           <div className="batch-syllabus-card" ref={contentRef}>
             <div className="batch-header-block">

@@ -18,6 +18,8 @@ import ErrorBoundary from './components/ErrorBoundary.jsx'
 // import AIAssistant from './components/AIAssistant'
 import { ThemeProvider } from './components/ThemeSystem'
 
+import ModuleDetail from './pages/ModuleDetail'
+
 // Security: Initialize security measures
 import './utils/security'
 
@@ -35,6 +37,8 @@ const App = () => {
               <Route path='/projects' element={<Projects />} />
               <Route path='/syllabus' element={<Syllabus />} />
               <Route path='/syllabus/:batchId' element={<BatchSyllabus />} />
+              <Route path='/syllabus/:batchId/module/:moduleId' element={<ModuleDetail />} />
+              <Route path='/syllabus/:batchId/:moduleId' element={<ModuleDetail />} />
               <Route path='/contact' element={<Contact />} />
               <Route path='/ai' element={<AI />} />
               <Route path='/survey' element={<Survey />} />

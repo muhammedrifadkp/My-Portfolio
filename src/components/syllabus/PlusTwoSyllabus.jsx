@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import {
   PLUS_TWO_MODULES,
   PLUS_TWO_CAPSTONE_OPTIONS,
@@ -356,10 +357,11 @@ const PlusTwoSyllabus = () => {
           {PLUS_TWO_MODULES.map((mod) => {
             const mMetric = metrics.moduleProgress[mod.id] || { percentage: 0, completed: 0, total: mod.classes.length };
             return (
-              <div
-                className="module-progress-card"
+              <Link
+                to={`/syllabus/+2/module/${mod.id}`}
+                className="module-progress-card clickable-module-card"
                 key={mod.id}
-                onClick={() => setSelectedModuleId(mod.id)}
+                style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div className="mod-card-top">
                   <span className="mod-num-chip">Module {mod.number < 10 ? `0${mod.number}` : mod.number}</span>
@@ -380,8 +382,12 @@ const PlusTwoSyllabus = () => {
                       style={{ width: `${mMetric.percentage}%` }}
                     ></div>
                   </div>
+                  <div className="mod-open-link" style={{ marginTop: '0.75rem', fontSize: '0.8rem', fontWeight: '700', color: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span>Open Module Guide</span>
+                    <i className="fas fa-arrow-right"></i>
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

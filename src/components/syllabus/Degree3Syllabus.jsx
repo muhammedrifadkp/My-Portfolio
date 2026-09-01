@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import {
   DEGREE_3_MODULES,
   DEGREE_3_SPECIALIZATION_OPTIONS,
@@ -316,10 +317,11 @@ const Degree3Syllabus = () => {
           {DEGREE_3_MODULES.map((mod) => {
             const modMetric = metrics.moduleMetrics.find((m) => m.moduleId === mod.id) || { percentage: 0, completed: 0 };
             return (
-              <div
-                className={`module-progress-card ${selectedModuleId === mod.id ? 'active-mod-card' : ''}`}
+              <Link
+                to={`/syllabus/degree-3/module/${mod.id}`}
+                className="module-progress-card clickable-module-card"
                 key={mod.id}
-                onClick={() => setSelectedModuleId(selectedModuleId === mod.id ? 'all' : mod.id)}
+                style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <div className="mod-card-top">
                   <span className="mod-num-chip">Module {mod.number < 10 ? `0${mod.number}` : mod.number}</span>
@@ -340,8 +342,12 @@ const Degree3Syllabus = () => {
                       style={{ width: `${modMetric.percentage}%` }}
                     ></div>
                   </div>
+                  <div className="mod-open-link" style={{ marginTop: '0.75rem', fontSize: '0.8rem', fontWeight: '700', color: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span>Open Module Guide</span>
+                    <i className="fas fa-arrow-right"></i>
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

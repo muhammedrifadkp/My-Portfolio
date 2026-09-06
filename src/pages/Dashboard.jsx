@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import {
   BarChart,
   Bar,
@@ -593,6 +594,13 @@ const Dashboard = () => {
               </p>
             </div>
             <div className="dashboard-actions">
+              <Link
+                to="/registered-students"
+                className="view-students-portal-btn inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg transition-all hover:scale-105 text-sm"
+              >
+                <Users className="w-4 h-4" />
+                <span>Registered Students Database (Batch-wise)</span>
+              </Link>
               {lastUpdated && (
                 <div className="last-updated-badge">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />

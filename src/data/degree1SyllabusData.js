@@ -1,7 +1,7 @@
-// Degree 1st Year Digital Skills Syllabus Data Structure
-// Framework: LEARN -> DEMONSTRATE -> PRACTICE -> CREATE -> COMPLETE
+import { MODULE_0_FOUNDATION } from './foundationSyllabusData';
 
 export const DEGREE_1_MODULES = [
+  MODULE_0_FOUNDATION,
   {
     id: 'deg1-mod-1',
     number: 1,

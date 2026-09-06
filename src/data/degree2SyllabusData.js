@@ -1,102 +1,102 @@
-// Degree 2nd Year Digital Skills Syllabus Data Structure
-// Framework: LEARN -> DEMONSTRATE -> PRACTICE -> CREATE -> COMPLETE
+import { MODULE_0_FOUNDATION } from './foundationSyllabusData';
 
 export const DEGREE_2_MODULES = [
+  MODULE_0_FOUNDATION,
   {
     id: 'deg2-mod-1',
     number: 1,
-    title: 'Full-Stack Web Development & Modern Web Apps',
-    purpose: 'Master CSS Grid/Flexbox layouts, JavaScript ES6+ modern features, DOM state management, API data fetching, and React basics.',
-    icon: 'fas fa-laptop-code',
-    color: '#3B82F6',
+    title: 'Photoshop Practical Design & Compositing',
+    purpose: 'Master advanced Photoshop techniques, layers, photo retouching, background removal, digital posters, and thumbnail compositing.',
+    icon: 'fas fa-paint-brush',
+    color: '#00F0FF',
     realProject: {
-      title: 'Dynamic Web Application with Live API Integration',
-      description: 'Students build a multi-page interactive web app fetching live data from a REST API (Weather/Crypto/Movies) with dynamic UI updates.'
+      title: 'Commercial Product Poster & Composite Graphic',
+      description: 'Students blend multiple images, apply lighting effects, color matching, shadows, and typography to create a commercial brand poster.'
     },
     classes: [
       {
         id: 'deg2-cls-1',
         classNum: 1,
-        topic: 'Advanced CSS Layouts (CSS Grid vs Flexbox)',
-        simpleConcept: 'Designing 2D grid structures (`grid-template-columns`, `gap`, `grid-area`) vs 1D Flexbox layouts.',
-        objective: 'Build complex dashboard layouts using CSS Grid and Flexbox combination.',
+        topic: 'Photoshop Layer Selection & Advanced Cutouts',
+        simpleConcept: 'Using Pen tool, Object Selection, and Select Subject for pixel-precise subject isolation.',
+        objective: 'Extract complex subjects cleanly from busy backgrounds.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain 1D vs 2D layout math, `auto-fit`, `minmax()`, and grid placement shorthand.',
-          demonstrate: 'Build a responsive analytics dashboard layout with sidebar, header, stat cards, and chart area.',
-          practice: 'Construct a 4-card responsive grid layout using `grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))`.',
-          realWorldExample: 'Layout architecture of platforms like YouTube, Trello, and Notion.',
-          practicalTask: 'Create an e-commerce product gallery page layout using CSS Grid.',
-          expectedOutput: 'Clean responsive grid layout without horizontal scrollbars.'
+          explain: 'Explain edge refinement, anti-aliasing, and mask feathering.',
+          demonstrate: 'Isolate a model/product with hair details using Select & Mask workspace.',
+          practice: 'Extract 2 product images and place them on transparent backgrounds.',
+          realWorldExample: 'E-commerce product catalog design and banner ads.',
+          practicalTask: 'Extract a product image cleanly and save as transparent PNG.',
+          expectedOutput: 'Clean cutout PNG with sharp edges.'
         }
       },
       {
         id: 'deg2-cls-2',
         classNum: 2,
-        topic: 'Modern JavaScript (ES6+, Arrow Functions, Destructuring)',
-        simpleConcept: 'Writing clean JS with `const`/`let`, arrow functions, template literals, array methods (`map`, `filter`, `reduce`).',
-        objective: 'Utilize ES6+ syntax to transform and manipulate data structures efficiently.',
+        topic: 'Photo Retouching, Healing & Color Correction',
+        simpleConcept: 'Removing unwanted blemishes, skin smoothing, Spot Healing Brush, and Curves/Levels adjustments.',
+        objective: 'Retouch portrait photographs and adjust lighting exposure.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain immutability, arrow function scoping, object destructuring, and array `.map()` vs `.filter()`.',
-          demonstrate: 'Transform an array of product objects to render formatted HTML cards dynamically.',
-          practice: 'Filter a list of student records based on score threshold using `.filter()` and render using `.map()`.',
-          realWorldExample: 'Filtering search results on Amazon and dynamic feed rendering on Twitter.',
-          practicalTask: 'Write a JS script that filters an array of items and renders matching cards on screen.',
-          expectedOutput: 'Working dynamic list filter script.'
+          explain: 'Explain frequency separation basics, exposure histogram, and adjustment layers.',
+          demonstrate: 'Retouch a portrait using Spot Healing tool and adjust Curves for vibrant tones.',
+          practice: 'Fix 1 underexposed portrait photo and remove background objects.',
+          realWorldExample: 'Fashion magazine photo editing and portrait retouching.',
+          practicalTask: 'Retouch a sample portrait photo and correct color balance.',
+          expectedOutput: 'Polished portrait photo with clean skin and balanced lighting.'
         }
       },
       {
         id: 'deg2-cls-3',
         classNum: 3,
-        topic: 'Asynchronous JS, Fetch API & JSON Handling',
-        simpleConcept: 'Understanding Promises, `async/await`, making HTTP requests (`fetch`), and handling JSON data.',
-        objective: 'Fetch live remote data from REST APIs and render dynamic content on web pages.',
+        topic: 'Layer Blending Modes, Shadows & Compositing',
+        simpleConcept: 'Combining separate images seamlessly using Multiply, Screen, Overlay, and realistic drop shadows.',
+        objective: 'Composite subjects into new background scenes with realistic lighting.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain HTTP GET requests, JSON data format, loading states, and error handling with try/catch.',
-          demonstrate: 'Fetch current weather data from OpenWeather API and update DOM elements live.',
-          practice: 'Fetch random quotes or dog images from a public API and display on button click.',
-          realWorldExample: 'Live stock tickers, crypto price trackers, and news feed widgets.',
-          practicalTask: 'Build a web widget that fetches and displays live data from a public REST API.',
-          expectedOutput: 'Functional API widget rendering real-time external data.'
+          explain: 'Explain blend mode categories (darken, lighten, contrast) and manual drop shadow painting.',
+          demonstrate: 'Place a shoe product into a neon street scene, match color tone, and draw ground shadows.',
+          practice: 'Composite a sports product into an outdoor stadium background.',
+          realWorldExample: 'Movie poster designs and high-end advertising composites.',
+          practicalTask: 'Create a composite graphic placing a product into an artificial background scene.',
+          expectedOutput: 'Realistic image composite with matched lighting and shadows.'
         }
       },
       {
         id: 'deg2-cls-4',
         classNum: 4,
-        topic: 'React Fundamentals (JSX, Components & Props)',
-        simpleConcept: 'Introduction to React library, component architecture, JSX syntax, and passing data via Props.',
-        objective: 'Understand React single-page app concepts and build reusable functional UI components.',
+        topic: 'Typography, Vector Shapes & Poster Design',
+        simpleConcept: 'Combining text hierarchy, font pairs, vector shapes, and smart objects for poster layouts.',
+        objective: 'Design promotional event posters and marketing banners.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Compare vanilla DOM manipulation vs React Virtual DOM component state rendering.',
-          demonstrate: 'Create a Vite React app, build `<Header />`, `<Card />`, and `<Footer />` components.',
-          practice: 'Create a reusable `<ProductCard />` component receiving `title`, `price`, and `image` props.',
-          realWorldExample: 'Component-driven frontends built at Meta, Netflix, and Airbnb.',
-          practicalTask: 'Build a 3-component React layout with props passed dynamically.',
-          expectedOutput: 'Working React application running on Vite dev server.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain font pairing rules, alignment grid, text wrap, and contrast.',
+          demonstrate: 'Design a concert poster with bold header text, event details, and graphics.',
+          practice: 'Create a workshop banner with 3 text levels and logo graphic.',
+          realWorldExample: 'Music festival posters and social media event graphics.',
+          practicalTask: 'Design a 1080x1350 Instagram promotional event poster.',
+          expectedOutput: 'High-quality event poster PSD and JPEG.'
         }
       },
       {
         id: 'deg2-cls-5',
         classNum: 5,
-        topic: 'React State Management & Hooks (`useState`, `useEffect`)',
-        simpleConcept: 'Managing component state with `useState` hook and side-effects/data fetching with `useEffect`.',
-        objective: 'Manage reactive UI state and run side-effects inside React components.',
+        topic: 'YouTube Thumbnails & Social Media Visuals',
+        simpleConcept: 'Designing high CTR (Click-Through Rate) YouTube thumbnails with glowing effects and bold titles.',
+        objective: 'Produce eye-catching thumbnails optimized for mobile and desktop screens.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain reactivity, state immutability, dependency arrays in `useEffect`, and re-rendering cycles.',
-          demonstrate: 'Build an interactive To-Do app or shopping cart counter with state persistence.',
-          practice: 'Create a search filter input component in React that updates a filtered list in real-time.',
-          realWorldExample: 'Interactive form inputs, shopping cart updates, and live search bars.',
-          practicalTask: 'Build an interactive React To-Do List app with add, toggle, and delete features.',
-          expectedOutput: 'Fully functional React state-managed application.'
+          explain: 'Explain CTR psychology, face expression emphasis, stroke outline, and color contrast.',
+          demonstrate: 'Create a YouTube tech review thumbnail with cutouts, outer glow, and large text.',
+          practice: 'Design 1 YouTube thumbnail for a gaming or tech vlog.',
+          realWorldExample: 'Viral YouTube video thumbnails driving millions of views.',
+          practicalTask: 'Create a 1280x720 YouTube video thumbnail with glowing cutout and title.',
+          expectedOutput: 'High-contrast 1280x720 YouTube thumbnail.'
         }
       }
     ]
@@ -104,98 +104,98 @@ export const DEGREE_2_MODULES = [
   {
     id: 'deg2-mod-2',
     number: 2,
-    title: 'AI-Powered Application Building & Smart Tools',
-    purpose: 'Learn how to integrate AI APIs (OpenAI/Anthropic), build AI-powered web tools, and utilize prompt-driven code generators.',
-    icon: 'fas fa-microchip',
-    color: '#8B5CF6',
+    title: 'Professional Video Editing & Motion Content Creation',
+    purpose: 'Master CapCut Desktop & Premiere Pro basics, multi-track timeline editing, speed ramping, transitions, auto-captions, and viral short-form video production.',
+    icon: 'fas fa-video',
+    color: '#3B82F6',
     realProject: {
-      title: 'AI Assistant Web Utility App',
-      description: 'Build a functional web interface connected to an AI API that generates text responses, translates languages, or summarizes code.'
+      title: '60-Second Promotional Short Reel',
+      description: 'Students edit a vertical commercial reel with beat syncing, animated text overlays, color grading, and auto-captions.'
     },
     classes: [
       {
         id: 'deg2-cls-6',
         classNum: 6,
-        topic: 'AI APIs Overview & API Key Security',
-        simpleConcept: 'Understanding REST endpoints for OpenAI / Anthropic Claude APIs, request payloads, and securing `.env` keys.',
-        objective: 'Make secure API requests to LLM endpoints and parse model responses.',
+        topic: 'Video Editing Interface & Multi-Track Timelines',
+        simpleConcept: 'Understanding 1080p/4K resolution, 9:16 vertical reels format, media bin organization, and timeline tracks.',
+        objective: 'Set up vertical video projects and organize raw footage.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain API authentication headers, token usage costs, system messages, and environment variables.',
-          demonstrate: 'Send a prompt request to OpenAI/Claude API endpoint using JS `fetch` and log response.',
-          practice: 'Create a simple frontend form that sends a user question to an AI endpoint and displays the answer.',
-          realWorldExample: 'Customer service chatbots, automated email copilot tools, and AI writing assistants.',
-          practicalTask: 'Build a minimal AI Chat interface sending user queries to an API and showing replies.',
-          expectedOutput: 'Working AI chatbot web interface.'
+          explain: 'Explain sequence settings, frame rates (24fps vs 60fps), and timeline tracks.',
+          demonstrate: 'Launch CapCut Desktop/Premiere, import media, set 9:16 ratio, and arrange clips.',
+          practice: 'Import 4 video clips and 1 audio track into timeline.',
+          realWorldExample: 'Creating Instagram Reels, YouTube Shorts, and TikTok ads.',
+          practicalTask: 'Create a 1080x1920 vertical video sequence with 4 clips.',
+          expectedOutput: 'Organized video timeline ready for editing.'
         }
       },
       {
         id: 'deg2-cls-7',
         classNum: 7,
-        topic: 'AI-Assisted Coding with v0, Bolt & Cursor',
-        simpleConcept: 'Using AI code generators (v0.dev, Cursor IDE, Claude) to build production UI components from natural language prompts.',
-        objective: 'Speed up web development by 5x using prompt-driven UI generation and AI code reviews.',
+        topic: 'Precision Trimming, Speed Ramping & Beat Syncing',
+        simpleConcept: 'Cutting unwanted footage, smooth speed curves (fast-forward to slow-mo), and matching cuts to music beat.',
+        objective: 'Create dynamic video pacing synced to background music rhythm.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Demonstrate prompt engineering for code generation, reviewing generated code, and debugging AI output.',
-          demonstrate: 'Prompt v0/Cursor to generate a complex pricing table component, refine styling, and integrate into app.',
-          practice: 'Generate a landing page hero section using AI prompts, customize colors, and embed in project.',
-          realWorldExample: 'Rapid prototyping of startup MVP apps in hours instead of weeks.',
-          practicalTask: 'Prompt AI to build a full responsive landing page section, review, and integrate locally.',
-          expectedOutput: 'High-quality React UI component built via AI code assistance.'
+          explain: 'Explain speed ramping curves, optical flow smooth slow-motion, and beat markers.',
+          demonstrate: 'Apply speed ramp curve to a sports clip and snap cuts on music bass drops.',
+          practice: 'Sync 4 action clips to background audio beat.',
+          realWorldExample: 'Fast-paced travel vlogs and fitness promo reels.',
+          practicalTask: 'Sync a 15-second promo video to background music beats with 1 slow-mo speed ramp.',
+          expectedOutput: 'Dynamic beat-synced short video.'
         }
       },
       {
         id: 'deg2-cls-8',
         classNum: 8,
-        topic: 'Building an AI Content Generator Web App',
-        simpleConcept: 'Combining a React form with AI API calls to generate social media posts, blog outlines, or email templates.',
-        objective: 'Build a specialized AI utility web application with input parameters and formatted output display.',
+        topic: 'Auto-Captions, Text Animations & Animated Titles',
+        simpleConcept: 'Generating speech-to-text automated captions, text highlight colors, and lower third titles.',
+        objective: 'Add readable, animated text and speech captions to videos.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain user input parameters (tone, length, topic), prompt templating, and copy-to-clipboard functionality.',
-          demonstrate: 'Build a Social Media Post Generator app: user enters topic -> AI outputs 3 caption variations + hashtags.',
-          practice: 'Create an Email Drafting Assistant where users select tone (formal/friendly) and topic to generate drafts.',
-          realWorldExample: 'SaaS tools like Jasper AI, Copy.ai, and marketing copy generators.',
-          practicalTask: 'Deploy an AI Copy Generator web app with copy-to-clipboard button and loading spinner.',
-          expectedOutput: 'Polished AI content generation web app.'
+          explain: 'Explain caption font readability, yellow/cyan pop colors, and lower thirds.',
+          demonstrate: 'Run auto-caption generator, format font style, and add speaker title.',
+          practice: 'Generate captions for a 30-second speaking video clip.',
+          realWorldExample: 'Social media reels designed for sound-off viewing.',
+          practicalTask: 'Add animated title card and auto-captions to a 30-second voiceover reel.',
+          expectedOutput: 'Accurate, stylized video reel with animated captions.'
         }
       },
       {
         id: 'deg2-cls-9',
         classNum: 9,
-        topic: 'Multimodal AI (Vision & Audio API Integration)',
-        simpleConcept: 'Using AI image analysis APIs (analyzing uploaded photos) and text-to-speech voice generation in web apps.',
-        objective: 'Build web applications that accept image inputs or output audio speech using multimodal AI.',
+        topic: 'Transitions, Keyframe Zoom & Masking Effects',
+        simpleConcept: 'Applying whip zoom transitions, animating scale/position with keyframes, and video masking.',
+        objective: 'Apply smooth camera transitions and keyframe motion effects.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain base64 image encoding, GPT-4 Vision / Claude Vision API capabilities, and audio streaming.',
-          demonstrate: 'Upload a image file -> AI describes contents and suggests alt-text or caption.',
-          practice: 'Build an image descriptor tool where users upload an image and receive an automated AI description.',
-          realWorldExample: 'Accessibility alt-text generators, automated receipt scanners, and visual search.',
-          practicalTask: 'Create an Image Analyzer web widget that processes uploaded photos using AI vision.',
-          expectedOutput: 'Working multimodal AI web application.'
+          explain: 'Explain keyframe start/end values, smooth motion easing, and mask reveals.',
+          demonstrate: 'Add whip zoom transition and keyframe a digital zoom into subject face.',
+          practice: 'Apply 2 transitions and 1 keyframe zoom effect.',
+          realWorldExample: 'High-energy commercial promos and YouTube video intros.',
+          practicalTask: 'Create a video intro with keyframe zoom and transition effect.',
+          expectedOutput: 'Smooth animated video with keyframed motion.'
         }
       },
       {
         id: 'deg2-cls-10',
         classNum: 10,
-        topic: 'Deploying AI Web Applications to Vercel / Netlify',
-        simpleConcept: 'Hosting React apps online, setting up environment variables, custom domains, and continuous deployment via Git.',
-        objective: 'Deploy a production React AI application to cloud hosting platforms like Vercel or Netlify.',
+        topic: 'Audio Ducking, Sound FX & Color Grading',
+        simpleConcept: 'Lowering background music during voiceover (ducking), adding sound FX (whoosh, pop), and color filters.',
+        objective: 'Balance audio tracks and apply color grading for cinema look.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain GitHub repo connection, build settings (`npm run build`), environment variable configuration, and HTTPS.',
-          demonstrate: 'Push project code to GitHub, connect repo to Vercel, set `VITE_AI_API_KEY`, and deploy live URL.',
-          practice: 'Publish your React web application online and share the live public web link.',
-          realWorldExample: 'Production release pipeline for modern web applications.',
-          practicalTask: 'Deploy your web project to Vercel and submit a working live URL.',
-          expectedOutput: 'Live HTTPS web URL displaying the deployed React app.'
+          explain: 'Explain audio dB levels (-12dB speech, -24dB music), sound FX placement, and LUT color filters.',
+          demonstrate: 'Duck music behind voiceover, insert whoosh sound on transition, and color grade clips.',
+          practice: 'Balance voiceover with music and apply 1 color grade filter.',
+          realWorldExample: 'Professional brand commercials and documentary filmmaking.',
+          practicalTask: 'Export a finished 60-second vertical promotional video reel in 1080p HD.',
+          expectedOutput: 'Final MP4 vertical reel ready for publishing.'
         }
       }
     ]
@@ -203,98 +203,98 @@ export const DEGREE_2_MODULES = [
   {
     id: 'deg2-mod-3',
     number: 3,
-    title: 'Advanced Vector Design & Brand Identity',
-    purpose: 'Master Adobe Illustrator vector path drawing, logo design theory, color psychology, and brand guidelines creation.',
-    icon: 'fas fa-vector-square',
-    color: '#00F0FF',
+    title: 'Web Development Foundations (HTML5 & CSS3 Layouts)',
+    purpose: 'Learn semantic HTML5 structure, CSS styling, box model, Flexbox layout system, CSS Grid, and building responsive web pages.',
+    icon: 'fas fa-code',
+    color: '#10B981',
     realProject: {
-      title: 'Complete Corporate Brand Identity Guide',
-      description: 'Design a primary logo mark, secondary typography system, color palette swatch deck, and brand mockup guidelines.'
+      title: 'Responsive Multi-Page Personal Portfolio Website',
+      description: 'Students code a responsive personal website with homepage, about section, project gallery, and contact form.'
     },
     classes: [
       {
         id: 'deg2-cls-11',
         classNum: 11,
-        topic: 'Illustrator Masterclass: Pen Tool & Anchor Points',
-        simpleConcept: 'Mastering vector Bezier curves, anchor point handles, Pathfinder tool, and precision vector drawing.',
-        objective: 'Draw complex custom vector shapes and icons with smooth Bezier curves.',
+        topic: 'HTML5 Semantic Structure, Tags & Page Blueprint',
+        simpleConcept: 'Using `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>` instead of plain divs.',
+        objective: 'Construct accessible, SEO-friendly HTML web pages.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain corner vs smooth anchor points, handle direction, Pathfinder union/minus front, and Shape Builder.',
-          demonstrate: 'Trace a complex mascot silhouette using Pen Tool and refine anchor point curvature.',
-          practice: 'Complete a vector Pen Tool precision tracing challenge with 10 custom icon paths.',
-          realWorldExample: 'Vector icon design for app interfaces, brand logos, and custom typography.',
-          practicalTask: 'Trace and vector-render a custom complex brand icon using Illustrator Pen Tool.',
-          expectedOutput: 'Clean vector path illustration saved as AI/SVG.'
+          explain: 'Explain document outline, semantic tag SEO value, headings (`h1`-`h6`), and list structures.',
+          demonstrate: 'Build index.html boilerplate with semantic header, main section, and footer.',
+          practice: 'Create a profile webpage with header title, paragraph bio, and skills list.',
+          realWorldExample: 'Standard web document architecture across professional websites.',
+          practicalTask: 'Create `index.html` with semantic structure for a personal bio page.',
+          expectedOutput: 'Valid HTML5 semantic document.'
         }
       },
       {
         id: 'deg2-cls-12',
         classNum: 12,
-        topic: 'Logo Design Principles & Brand Typography Systems',
-        simpleConcept: 'Understanding logo styles (Wordmark, Emblem, Combination Mark), optical alignment, and font pairing.',
-        objective: 'Construct a memorable corporate logo mark applying design grid principles.',
+        topic: 'CSS Styling, Box Model, Typography & Colors',
+        simpleConcept: 'Understanding margin, border, padding, content height/width, Google Fonts, and HSL/HEX color palettes.',
+        objective: 'Apply custom CSS styles, fonts, and box spacing.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain golden ratio grids, negative space utilization, kerning, tracking, and logo scalability test.',
-          demonstrate: 'Design a tech startup logo using geometric grid lines and custom kerning on brand name.',
-          practice: 'Sketch 3 logo concepts on paper and digitize the best concept into an Illustrator grid.',
-          realWorldExample: 'Corporate branding rebrands like Mastercard, FedEx, and Airbnb.',
-          practicalTask: 'Create a professional combination logo mark (icon + typography) on a design grid.',
-          expectedOutput: 'Scalable vector logo mark in dark and light background variations.'
+          explain: 'Explain box-sizing: border-box, font-family imports, line-height, and CSS color codes.',
+          demonstrate: 'Style a text card with rounded borders, Google Font Outfit, padding, and subtle shadow.',
+          practice: 'Style 3 feature cards with custom background colors and font styling.',
+          realWorldExample: 'Modern visual aesthetics in web design.',
+          practicalTask: 'Create `style.css` and format headings, paragraph cards, and buttons.',
+          expectedOutput: 'Visually appealing styled HTML page.'
         }
       },
       {
         id: 'deg2-cls-13',
         classNum: 13,
-        topic: 'Color Psychology, Palette Gradients & Swatch Systems',
-        simpleConcept: 'Color theory (RGB vs CMYK), brand emotional psychology, creating 60-30-10 color rules, and gradient meshes.',
-        objective: 'Develop a harmonious brand color palette system and apply modern gradient meshes.',
+        topic: 'CSS Flexbox Layout System & Alignment',
+        simpleConcept: 'Using `display: flex`, `flex-direction`, `justify-content`, `align-items`, and `gap` for responsive alignment.',
+        objective: 'Build navbar headers and card grids using Flexbox.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain warm vs cool color psychology, accessible contrast ratios (WCAG AAA), and gradient stops.',
-          demonstrate: 'Create a 5-color brand swatch palette with hex codes, Pantone equivalents, and custom gradient mesh.',
-          practice: 'Build a brand color palette card for a healthcare vs tech vs luxury coffee brand.',
-          realWorldExample: 'Spotify green, Cadbury purple, and Coca-Cola red brand color recognition.',
-          practicalTask: 'Design a 5-swatch brand color palette sheet with hex codes and gradient specs.',
-          expectedOutput: 'Professional brand color palette specification sheet.'
+          explain: 'Explain main axis vs cross axis, space-between, center alignment, and flex-wrap.',
+          demonstrate: 'Build a responsive navigation header with logo on left and links on right.',
+          practice: 'Construct a 3-column pricing table using Flexbox.',
+          realWorldExample: 'Navbar layouts and horizontal content rows across major websites.',
+          practicalTask: 'Build a flexbox navigation header and 3-card features section.',
+          expectedOutput: 'Clean flexbox layout webpage.'
         }
       },
       {
         id: 'deg2-cls-14',
         classNum: 14,
-        topic: 'Photoshop Brand Product Mockups & Smart Objects',
-        simpleConcept: 'Applying vector designs onto 3D photorealistic mockups (t-shirts, business cards, signage) using Smart Objects.',
-        objective: 'Place 2D designs into realistic 3D product mockups using Photoshop Smart Objects and perspective transforms.',
+        topic: 'CSS Grid & Responsive Media Queries',
+        simpleConcept: 'Using `display: grid`, `grid-template-columns`, `minmax()`, and `@media` queries for mobile responsiveness.',
+        objective: 'Create 2D responsive webpage layouts adapting to mobile screens.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain Smart Objects non-destructive editing, displacement maps, and lighting blend modes.',
-          demonstrate: 'Double-click Smart Object layer in mockup PSD, paste vector logo, save, and view realistic product preview.',
-          practice: 'Place your logo design onto a 3D business card mockup, storefront sign, and tote bag mockup.',
-          realWorldExample: 'Client design pitch presentations and portfolio showcases.',
-          practicalTask: 'Render 3 realistic product mockups showcasing your brand logo in real-world contexts.',
-          expectedOutput: 'High-resolution photorealistic product mockup images.'
+          explain: 'Explain 2D grid placement, mobile-first design, and screen breakpoint media queries.',
+          demonstrate: 'Build a responsive project grid that changes from 3 columns on desktop to 1 column on mobile.',
+          practice: 'Add media query to collapse navbar on screens smaller than 768px.',
+          realWorldExample: 'Responsive web applications viewable seamlessly on phones and desktops.',
+          practicalTask: 'Create a 3-column image gallery that becomes 1-column on mobile screens.',
+          expectedOutput: 'Fully responsive mobile-friendly webpage layout.'
         }
       },
       {
         id: 'deg2-cls-15',
         classNum: 15,
-        topic: 'Assembling a PDF Brand Identity Style Guide',
-        simpleConcept: 'Compiling brand assets into a multi-page PDF brand manual covering logo usage, typography, colors, and incorrect usage.',
-        objective: 'Export a professional multi-page Brand Guidelines PDF document.',
+        topic: 'Web Hosting, GitHub Pages & Live Website Deployment',
+        simpleConcept: 'Pushing code to GitHub repository and hosting live website using GitHub Pages or Vercel.',
+        objective: 'Publish personal website code live on the internet with custom link.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain brand guide structure: Mission -> Logo clear space -> Palette -> Typography -> Mockups.',
-          demonstrate: 'Assemble a 6-page Brand Guidelines document in Illustrator/InDesign and export interactive PDF.',
-          practice: 'Compile your logo, swatches, typography, and mockups into a 4-page mini brand book.',
-          realWorldExample: 'Enterprise brand manuals provided to design agencies and media partners.',
-          practicalTask: 'Create a 4-page Brand Identity Guidelines PDF book.',
-          expectedOutput: 'Complete multi-page Brand Identity PDF document.'
+          explain: 'Explain web servers, static hosting, GitHub web interface, and live domain URLs.',
+          demonstrate: 'Upload project repository to GitHub, enable GitHub Pages, and open live website URL.',
+          practice: 'Deploy personal HTML portfolio page live on GitHub Pages.',
+          realWorldExample: 'Publishing client websites and online portfolios.',
+          practicalTask: 'Deploy student portfolio website live and verify URL on mobile phone.',
+          expectedOutput: 'Live HTTPS website link.'
         }
       }
     ]
@@ -302,98 +302,98 @@ export const DEGREE_2_MODULES = [
   {
     id: 'deg2-mod-4',
     number: 4,
-    title: 'Professional Video Editing & Motion Graphics',
-    purpose: 'Master Premiere Pro sequence workflows, After Effects motion graphics intro, keyframe masking, speed ramping, and sound design.',
-    icon: 'fas fa-film',
-    color: '#10B981',
+    title: 'JavaScript & Interactive Web UI Basics',
+    purpose: 'Master core JavaScript programming fundamentals, variables, functions, DOM manipulation, click events, and dynamic webpage interactivity.',
+    icon: 'fas fa-terminal',
+    color: '#8B5CF6',
     realProject: {
-      title: 'Commercial Brand Promo Video with Motion Graphics',
-      description: 'Produce a 45-second promo video featuring dynamic speed ramps, animated lower thirds, motion title card, and layered sound effects.'
+      title: 'Interactive Web Tool (Task Manager / Quiz App)',
+      description: 'Students program a dynamic JavaScript application with user input, interactive state updates, and dynamic DOM rendering.'
     },
     classes: [
       {
         id: 'deg2-cls-16',
         classNum: 16,
-        topic: 'Premiere Pro Multi-Track Editing & Proxy Workflows',
-        simpleConcept: 'Organizing complex multi-track timelines, proxy video creation for smooth editing, and keyboard shortcut mastery.',
-        objective: 'Manage multi-camera video timelines and streamline editing speed using custom proxy media.',
+        topic: 'JavaScript Basics: Variables, Data Types & Console',
+        simpleConcept: 'Using `let`, `const`, strings, numbers, booleans, arrays, objects, and browser Developer Tools (`console.log`).',
+        objective: 'Write basic JavaScript scripts and log outputs in browser console.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain proxy video rendering (editing in 720p, exporting in 4K), track targeting, and 3-point editing.',
-          demonstrate: 'Create proxies for 4K footage, cut between 2 camera angles seamlessly, and organize timeline audio tracks.',
-          practice: 'Edit a 2-camera interview scene, toggling between A-roll speaker and B-roll action footage.',
-          realWorldExample: 'High-end documentary editing and commercial television production.',
-          practicalTask: 'Assemble a multi-track A-roll/B-roll video sequence with smooth footage switches.',
-          expectedOutput: 'Clean multi-layer video timeline sequence.'
+          explain: 'Explain JS role in web stack, `const` vs `let`, data types, and console inspection.',
+          demonstrate: 'Open browser console, declare variables, create array of student names, and output values.',
+          practice: 'Declare 3 variables and create an object representing a product.',
+          realWorldExample: 'Storing user inputs and session data in web apps.',
+          practicalTask: 'Write a script defining student variables and output message to browser console.',
+          expectedOutput: 'Working console output script.'
         }
       },
       {
         id: 'deg2-cls-17',
         classNum: 17,
-        topic: 'Speed Ramping, Time Remapping & Optical Flow',
-        simpleConcept: 'Creating dramatic slow-motion and fast-forward transitions by manipulating clip time curves.',
-        objective: 'Apply smooth speed ramps with Optical Flow frame interpolation.',
+        topic: 'Functions, Conditions (If/Else) & Event Listeners',
+        simpleConcept: 'Creating reusable functions, conditional logic, and responding to button clicks with `addEventListener`.',
+        objective: 'Add interactive click handlers to webpage elements.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain 60fps/120fps high frame rate footage, velocity graphs, speed ramp handles, and Optical Flow.',
-          demonstrate: 'Create a speed ramp: fast clip -> sudden smooth slow motion -> fast exit transition.',
-          practice: 'Apply speed ramping to a 10-second sports or dance video clip.',
-          realWorldExample: 'Action sports edits, car commercials, and cinematic travel reels.',
-          practicalTask: 'Edit a 15-second cinematic speed ramp sequence with smooth speed transitions.',
-          expectedOutput: 'High-energy video edit featuring smooth speed ramping.'
+          explain: 'Explain function parameters, return values, `if`/`else` decisions, and click event listeners.',
+          demonstrate: 'Create a button that triggers a function to display a popup message when clicked.',
+          practice: 'Build a button that changes text message based on counter count.',
+          realWorldExample: 'Interactive form submit buttons and modal popups.',
+          practicalTask: 'Create an interactive button that toggles message state on click.',
+          expectedOutput: 'Working click event listener webpage.'
         }
       },
       {
         id: 'deg2-cls-18',
         classNum: 18,
-        topic: 'After Effects Intro: Text Animators & Shape Layers',
-        simpleConcept: 'Introduction to Adobe After Effects interface, composition settings, shape animators, and trim paths.',
-        objective: 'Build motion graphic title cards and animated logo reveals in After Effects.',
+        topic: 'DOM Manipulation: Changing Text, Styles & Classes',
+        simpleConcept: 'Using `document.querySelector`, `.textContent`, `.style`, and `.classList.toggle` to dynamically alter web elements.',
+        objective: 'Manipulate HTML elements dynamically using JavaScript DOM methods.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain Compositions vs Sequences, Easy Ease (F9), Graph Editor velocity curves, and Trim Paths.',
-          demonstrate: 'Create a logo reveal animation using shape layer trim paths and animated text opacity.',
-          practice: 'Animate a 5-second lower third title card with smooth slide-in and line draw effects.',
-          realWorldExample: 'Broadcast television graphics, YouTube channel intros, and app promo animations.',
-          practicalTask: 'Build an animated lower-third title card in After Effects and export alpha transparent video.',
-          expectedOutput: 'Rendered motion graphic title card with transparent alpha channel.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain Document Object Model (DOM), selecting elements, modifying text, and toggling CSS classes.',
+          demonstrate: 'Build a Dark Mode toggle button that switches page background color and text.',
+          practice: 'Build a button that changes heading text and text color on click.',
+          realWorldExample: 'Dark Mode toggles and dynamic UI theme switches.',
+          practicalTask: 'Build a functional Dark Mode / Light Mode toggle for a webpage.',
+          expectedOutput: 'Working theme toggle webpage.'
         }
       },
       {
         id: 'deg2-cls-19',
         classNum: 19,
-        topic: 'Professional Sound Design, SFX & Audio Mastering',
-        simpleConcept: 'Layering Foley sound effects (whooshes, risers, hits), room tone, compression, and loudness normalization (LUFS).',
-        objective: 'Build immersive audio soundscapes and master final video audio loudness levels.',
+        topic: 'Form Handling & Dynamic Input Reading',
+        simpleConcept: 'Reading user input values from `<input>` fields, validating inputs, and rendering dynamic list items.',
+        objective: 'Process user form entries and display generated content dynamically.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain sound effect layering (impact + WHOOSH + swoosh), EQ frequencies, compressor threshold, and -14 LUFS standard.',
-          demonstrate: 'Add swoosh audio to video transitions, impact bass drop to title reveal, and normalize final audio mix.',
-          practice: 'Build a multi-track sound effect layer for a 15-second silent action video sequence.',
-          realWorldExample: 'Hollywood movie trailer sound design and commercial soundscapes.',
-          practicalTask: 'Complete a full sound design layer with whooshes, impacts, background music, and voiceover.',
-          expectedOutput: 'Rich multi-layered audio track perfectly timed to video visuals.'
+          explain: 'Explain `input.value`, `e.preventDefault()`, input validation, and creating HTML elements dynamically (`createElement`).',
+          demonstrate: 'Build a simple To-Do List app where typing a task and clicking "Add" inserts a new list item.',
+          practice: 'Create a calculator tool that takes 2 numbers from inputs and displays sum.',
+          realWorldExample: 'Comment sections, search bars, and task management apps.',
+          practicalTask: 'Build an interactive To-Do List web app where users can add and remove tasks.',
+          expectedOutput: 'Working interactive To-Do List web application.'
         }
       },
       {
         id: 'deg2-cls-20',
         classNum: 20,
-        topic: 'Final Commercial Video Render & YouTube/Reels Export',
-        simpleConcept: 'Exporting settings for web streaming: H.264 / HEVC codecs, bitrate targets (VBR 2-pass), and thumbnail design.',
-        objective: 'Export optimal video files for various social platforms and design high-CTR video thumbnails.',
+        topic: 'API Data Fetching (`fetch` & Async JS Intro)',
+        simpleConcept: 'Fetching live data from external APIs using `fetch()` and displaying dynamic API information on screen.',
+        objective: 'Retrieve live web API data and render dynamic UI elements.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain codecs (H.264, ProRes), bitrates (target vs max bitrate), resolution matching, and thumbnail click-through rates.',
-          demonstrate: 'Export 1080p MP4 master file; design a high-contrast YouTube thumbnail graphic in Photoshop.',
-          practice: 'Export your promo video with high quality render settings and create a YouTube thumbnail card.',
-          realWorldExample: 'Digital marketing agency content delivery standards.',
-          practicalTask: 'Export final promo video MP4 and produce matching high-CTR thumbnail graphic.',
-          expectedOutput: 'Exported HD video file and matching eye-catching thumbnail.'
+          explain: 'Explain JSON data format, HTTP GET requests, `fetch()`, `.then()`, and async data rendering.',
+          demonstrate: 'Fetch a random quote or weather data from a free public API and display it inside a card.',
+          practice: 'Fetch user data from JSONPlaceholder API and display names in a list.',
+          realWorldExample: 'Live weather widgets, news feeds, and live stock prices.',
+          practicalTask: 'Build a live Quote Generator web app fetching data from an external API.',
+          expectedOutput: 'Working live API fetch web application.'
         }
       }
     ]
@@ -401,98 +401,98 @@ export const DEGREE_2_MODULES = [
   {
     id: 'deg2-mod-5',
     number: 5,
-    title: 'Digital Marketing & Social Media Growth',
-    purpose: 'Learn digital marketing strategy, Meta Ads Manager basics, Search Engine Optimization (SEO), content funnel creation, and analytics.',
-    icon: 'fas fa-bullhorn',
-    color: '#F59E0B',
+    title: 'AI Tools & AI Productivity Mastery',
+    purpose: 'Master generative AI tools (ChatGPT, Claude, Midjourney/DALL-E), prompt engineering, AI coding assistants, and automated workflow productivity.',
+    icon: 'fas fa-robot',
+    color: '#EC4899',
     realProject: {
-      title: '30-Day Digital Growth & Ad Campaign Strategy',
-      description: 'Students outline a target buyer persona, design 3 ad creative variations, set up a sample Meta Ad campaign, and build an analytics tracking report.'
+      title: 'AI-Powered Digital Content & Automation Workflow',
+      description: 'Students generate complete brand strategy, marketing copy, AI graphics, and web code using AI prompt engineering.'
     },
     classes: [
       {
         id: 'deg2-cls-21',
         classNum: 21,
-        topic: 'Digital Marketing Funnel & Buyer Persona Mapping',
-        simpleConcept: 'Understanding TOFU (Awareness), MOFU (Consideration), BOFU (Conversion) marketing funnel stages.',
-        objective: 'Define target customer demographics, pain points, and map content for every sales funnel stage.',
+        topic: 'Generative AI Overview & Prompt Engineering Techniques',
+        simpleConcept: 'Understanding LLMs (ChatGPT, Claude), role prompting, system instructions, and chain-of-thought prompting.',
+        objective: 'Formulate precise AI prompts to get accurate, high-quality responses.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain Customer Acquisition Cost (CAC), Lifetime Value (LTV), buyer personas, and customer journey maps.',
-          demonstrate: 'Build a detailed Customer Persona sheet for an online clothing store vs online tech course.',
-          practice: 'Map out 3 content ideas for Awareness, 3 for Consideration, and 2 for Conversion for a brand.',
-          realWorldExample: 'E-commerce sales funnels and SaaS product onboarding marketing.',
-          practicalTask: 'Create a complete Buyer Persona document and 3-stage marketing funnel strategy.',
-          expectedOutput: 'Detailed customer persona profile and content funnel roadmap.'
+          explain: 'Explain prompt structure: Role + Task + Context + Format Constraints.',
+          demonstrate: 'Prompt ChatGPT as a Senior Copywriter to draft 5 viral headlines with specific guidelines.',
+          practice: 'Write a prompt asking AI to summarize a complex article into 3 bullet points.',
+          realWorldExample: 'Accelerating content writing and business communication with AI.',
+          practicalTask: 'Write structured prompts to generate a 5-day social media content plan.',
+          expectedOutput: 'Structured AI prompt template and generated content.'
         }
       },
       {
         id: 'deg2-cls-22',
         classNum: 22,
-        topic: 'Search Engine Optimization (SEO) & Keyword Research',
-        simpleConcept: 'On-page SEO (meta tags, headings, page speed), off-page SEO (backlinks), and keyword research tools.',
-        objective: 'Conduct keyword research and optimize web page meta titles, descriptions, and content for search engines.',
+        topic: 'AI Image Generation & Visual Prompting (DALL-E / Midjourney)',
+        simpleConcept: 'Generating custom AI art, stock photos, and logos by writing descriptive visual prompts.',
+        objective: 'Create original visual art and marketing graphics using AI image generators.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain search volume, keyword difficulty, intent (informational vs transactional), and Google Search Console.',
-          demonstrate: 'Use Google Keyword Planner / Ubersuggest to find 5 high-volume low-competition keywords.',
-          practice: 'Write SEO-optimized meta title, meta description, and heading structure for a blog article.',
-          realWorldExample: 'Ranking on page 1 of Google search for high-intent business terms.',
-          practicalTask: 'Perform keyword research for a business niche and write an optimized landing page meta tag set.',
-          expectedOutput: 'Keyword research spreadsheet and optimized SEO copy document.'
+          explain: 'Explain image prompt keywords: lighting, style, camera angle, aspect ratio, and artistic medium.',
+          demonstrate: 'Generate a futuristic product image using DALL-E/Bing Image Creator with custom prompt styling.',
+          practice: 'Generate 2 AI images for a sports brand concept.',
+          realWorldExample: 'Concept art, website hero images, and advertising illustration.',
+          practicalTask: 'Generate 3 high-resolution AI product images using descriptive text prompts.',
+          expectedOutput: 'Generated high-quality AI images.'
         }
       },
       {
         id: 'deg2-cls-23',
         classNum: 23,
-        topic: 'Meta Ads Manager Setup & Ad Targeting',
-        simpleConcept: 'Navigating Meta Business Suite, Campaign -> Ad Set -> Ad structure, custom audiences, and interest targeting.',
-        objective: 'Set up Meta Ad campaigns with precise audience targeting and budget allocation.',
+        topic: 'AI Code Generation & Web Development Assistants',
+        simpleConcept: 'Using AI tools (ChatGPT, GitHub Copilot, V0.dev) to generate HTML/CSS/JS code, debug errors, and refactor code.',
+        objective: 'Accelerate web development using AI coding assistants.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain Campaign objectives (Traffic, Leads, Sales), Pixel tracking, lookalike audiences, and A/B testing.',
-          demonstrate: 'Walk through Meta Ads Manager UI, create a lead generation campaign, and define demographic filters.',
-          practice: 'Configure an ad set targeting 18-25 year olds interested in web design in Kerala region.',
-          realWorldExample: 'Targeted Instagram and Facebook ad campaigns driving e-commerce sales.',
-          practicalTask: 'Draft a complete Meta Ad Campaign structure including audience parameters and daily budget.',
-          expectedOutput: 'Structured ad campaign spec sheet ready for live launch.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain AI coding capabilities, prompt-driven UI generation, and code review.',
+          demonstrate: 'Ask ChatGPT to generate a responsive CSS navigation bar with dropdown menus, then fix a bug.',
+          practice: 'Use AI assistant to write a JavaScript countdown timer function.',
+          realWorldExample: 'Rapid prototyping and automated debugging in modern software engineering.',
+          practicalTask: 'Use AI assistant to generate and debug a custom HTML/CSS pricing card widget.',
+          expectedOutput: 'Working HTML/CSS code generated with AI assistance.'
         }
       },
       {
         id: 'deg2-cls-24',
         classNum: 24,
-        topic: 'Ad Creative Design & Copywriting (AIDA Framework)',
-        simpleConcept: 'Writing persuasive ad copy using AIDA (Attention, Interest, Desire, Action) and designing high-converting ad visuals.',
-        objective: 'Draft high-converting ad copy and design 3 creative ad variation assets (Static, Carousel, Short Video).',
+        topic: 'AI Productivity for Documents, Summaries & Research',
+        simpleConcept: 'Using AI to summarize PDFs, extract key insights, draft professional emails, and create presentation outlines.',
+        objective: 'Utilize AI tools to automate daily academic and workplace document tasks.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain scroll-stopping hooks, clear Call To Action (CTA), visual contrast, and headline formulas.',
-          demonstrate: 'Write 2 ad copy variations using AIDA framework and pair with custom promo images.',
-          practice: 'Write 3 distinct ad copy hooks for a product launch and design matching 1080x1080 ad graphics.',
-          realWorldExample: 'Direct response advertising campaigns generating leads and instant online sales.',
-          practicalTask: 'Design 2 visual ad creatives and write accompanying AIDA ad copy for a product.',
-          expectedOutput: 'Complete ad creative package with visual graphics and copy.'
+          explain: 'Explain document upload analysis, data extraction, and executive summary creation.',
+          demonstrate: 'Upload a 10-page research PDF to AI tool, extract 5 key takeaways, and draft executive email.',
+          practice: 'Summarize a news report into a 2-paragraph executive brief using AI.',
+          realWorldExample: 'Corporate research synthesis and executive communication.',
+          practicalTask: 'Generate an executive project report summary and presentation outline using AI.',
+          expectedOutput: 'Polished executive report and presentation outline.'
         }
       },
       {
         id: 'deg2-cls-25',
         classNum: 25,
-        topic: 'Marketing Analytics, Meta Pixel & ROI Tracking',
-        simpleConcept: 'Tracking website conversions using Meta Pixel / Google Analytics 4, ROI calculation, and campaign optimization.',
-        objective: 'Analyze campaign performance metrics (CTR, CPC, CPA, ROAS) and optimize ad spend.',
+        topic: 'Ethical AI Usage, Copyright & Capstone Presentation',
+        simpleConcept: 'Understanding AI ethics, plagiarism prevention, fact-checking AI hallucinations, and presenting AI projects.',
+        objective: 'Apply ethical AI guidelines and deliver final project demo.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain Return On Ad Spend (ROAS), Click-Through Rate (CTR), Cost Per Click (CPC), and Meta Pixel event triggers.',
-          demonstrate: 'Analyze a sample ad dashboard report: identify losing ads (low CTR) vs winning ads (high ROAS).',
-          practice: 'Calculate ROAS, CTR, and profit for 3 sample ad campaigns and recommend budget reallocations.',
-          realWorldExample: 'Digital marketing reporting provided to business stakeholders and clients.',
-          practicalTask: 'Build a marketing performance summary dashboard report analyzing campaign metrics.',
-          expectedOutput: 'Marketing analytics report with data-driven optimization recommendations.'
+          explain: 'Explain AI hallucinations, verifying sources, copyright considerations, and human oversight.',
+          demonstrate: 'Review AI generated text for factual errors and refine for human tone.',
+          practice: 'Verify 3 facts generated by AI against reliable web sources.',
+          realWorldExample: 'Responsible AI adoption in business, journalism, and education.',
+          practicalTask: 'Present final Degree 2nd Year digital project to classroom using live demo.',
+          expectedOutput: 'Completed project presentation and live demonstration.'
         }
       }
     ]
@@ -501,28 +501,28 @@ export const DEGREE_2_MODULES = [
 
 export const DEGREE_2_SPECIALIZATION_OPTIONS = [
   {
-    id: 'track-fullstack',
-    title: 'Full-Stack Web & AI App Development',
-    icon: 'fas fa-laptop-code',
-    description: 'Focus on React UI development, REST API integrations, AI LLM endpoints, and Vercel cloud deployment.',
-    keySkills: ['React & Component Architecture', 'Async JS & Fetch REST APIs', 'AI API Integration (OpenAI/Claude)', 'Vercel Cloud Deployment'],
-    portfolioDeliverable: 'A live interactive React web app integrated with AI APIs hosted online.'
+    id: 'track-design',
+    title: 'Photoshop Design & Graphic Media',
+    icon: 'fas fa-paint-brush',
+    description: 'Master photo retouching, image compositing, poster typography, thumbnail design, and commercial branding graphics.',
+    keySkills: ['Photoshop Compositing', 'Layer Masks & Cutouts', 'Color Correction', 'Poster & Banner Layouts'],
+    portfolioDeliverable: 'A commercial product composite poster and 3 social media event banners.'
   },
   {
-    id: 'track-brand',
-    title: 'Vector Brand Architecture & Design',
-    icon: 'fas fa-vector-square',
-    description: 'Focus on Adobe Illustrator vector paths, corporate logo design grids, product mockups, and brand style guides.',
-    keySkills: ['Illustrator Pen Tool Precision', 'Grid Logo Construction', '3D Photoshop Mockups', 'PDF Brand Guide Compilation'],
-    portfolioDeliverable: 'A complete multi-page Corporate Brand Style Guide PDF and 3D mockup showcase.'
+    id: 'track-video',
+    title: 'Commercial Video & Reel Production',
+    icon: 'fas fa-video',
+    description: 'Master vertical short-form reel editing, speed ramping, beat syncing, auto-captions, sound design, and color grading.',
+    keySkills: ['CapCut & Premiere Pro', 'Beat Syncing & Trimming', 'Auto-Captions & Titles', 'Color Grading & Sound FX'],
+    portfolioDeliverable: 'A 60-second polished vertical commercial promo reel in 1080p HD.'
   },
   {
-    id: 'track-media-marketing',
-    title: 'Commercial Video Production & Digital Marketing',
-    icon: 'fas fa-bullhorn',
-    description: 'Focus on Premiere Pro multi-track editing, After Effects title animations, Meta ad targeting, and marketing analytics.',
-    keySkills: ['Premiere Pro & After Effects', 'Speed Ramping & Motion Titles', 'Meta Ads Manager Campaign Setup', 'Analytics & ROAS Optimization'],
-    portfolioDeliverable: 'A 45-second commercial promo video and complete Meta ad campaign strategy deck.'
+    id: 'track-web',
+    title: 'Web Foundations & Interactivity',
+    icon: 'fas fa-code',
+    description: 'Master semantic HTML5, CSS Flexbox/Grid, responsive web design, JavaScript DOM interactivity, and live GitHub deployment.',
+    keySkills: ['HTML5 & CSS3 Layouts', 'Flexbox & Grid', 'JavaScript DOM Interactivity', 'Live GitHub Deployment'],
+    portfolioDeliverable: 'A live responsive portfolio website hosted on GitHub Pages with interactive JS apps.'
   }
 ];
 

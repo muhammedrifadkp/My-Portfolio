@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getModuleConfig, getBatchConfig } from '../data/syllabusRegistry';
+import { useAuth } from '../context/AuthContext';
+import { canAccessBatch } from '../data/syllabusData';
 import './ModuleDetail.css';
 
 const ModuleDetail = () => {
   const { batchId, moduleId } = useParams();
   const navigate = useNavigate();
+  const { currentUser, userRole } = useAuth();
 
   const config = useMemo(() => {
     return getModuleConfig(batchId, moduleId);
@@ -13,6 +16,8 @@ const ModuleDetail = () => {
 
   const batch = config?.batch;
   const moduleData = config?.module;
+  const targetBatchId = batch?.id || batchId;
+  const isAccessAllowed = canAccessBatch(userRole, currentUser?.batch, targetBatchId);
 
   // LocalStorage State for Progress Tracking & Teacher Notes
   const storageKey = batch?.storageKey || 'syllabus_generic_progress';
@@ -119,6 +124,21 @@ const ModuleDetail = () => {
       [classId]: !prev[classId]
     }));
   };
+
+  if (!isAccessAllowed) {
+    return (
+      <div className="module-detail-page not-found-state">
+        <div className="not-found-card">
+          <i className="fas fa-lock" style={{ color: '#2563EB', fontSize: '3rem', marginBottom: '1rem' }}></i>
+          <h2>Module Access Protected</h2>
+          <p>You must be logged in as a student of <strong>{batch?.name || batchId}</strong> (or a higher batch) or as IT Sir to view this module guide.</p>
+          <Link to={`/syllabus/${encodeURIComponent(batchId)}`} className="back-btn">
+            <i className="fas fa-key"></i> Unlock {batch?.name || batchId} Syllabus
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (!batch || !moduleData) {
     return (

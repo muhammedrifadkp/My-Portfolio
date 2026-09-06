@@ -1,3 +1,4 @@
+import { FOUNDATION_MODULES } from './foundationSyllabusData';
 import { PLUS_ONE_MODULES } from './plus1SyllabusData';
 import { PLUS_TWO_MODULES } from './plus2SyllabusData';
 import { DEGREE_1_MODULES } from './degree1SyllabusData';
@@ -8,6 +9,17 @@ import { PG_2_MODULES } from './pg2SyllabusData';
 
 // Map batch slug or ID to module list and localStorage progress key
 export const BATCH_MAP = {
+  'foundation': {
+    id: 'foundation',
+    slug: 'foundation',
+    name: 'Foundation Course (Universal Orientation)',
+    shortName: 'Foundation',
+    level: 'Universal Starter Track',
+    difficulty: 'Universal / All Streams',
+    storageKey: 'syllabus_foundation_progress',
+    modules: FOUNDATION_MODULES,
+    color: '#10B981'
+  },
   '+1': {
     id: '+1',
     slug: '+1',
@@ -116,6 +128,7 @@ export const getBatchConfig = (batchIdParam) => {
   if (!batchIdParam) return null;
   const decoded = decodeURIComponent(batchIdParam).trim().toLowerCase();
   
+  if (decoded === 'foundation' || decoded === 'foundation-course') return BATCH_MAP['foundation'];
   if (decoded === '+1' || decoded === 'plus-1' || decoded === 'plus 1') return BATCH_MAP['+1'];
   if (decoded === '+2' || decoded === 'plus-2' || decoded === 'plus 2') return BATCH_MAP['+2'];
   if (decoded === 'degree-1' || decoded === 'degree 1') return BATCH_MAP['degree-1'];

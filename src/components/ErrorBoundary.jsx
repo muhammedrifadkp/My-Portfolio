@@ -43,9 +43,28 @@ class ErrorBoundary extends React.Component {
           }}>
             Something went wrong
           </h2>
-          <p style={{ color: '#94a3b8', marginBottom: '2rem', maxWidth: '500px' }}>
-            A rendering issue occurred. This might be due to WebGL context limits or browser graphics settings.
+          <p style={{ color: '#94a3b8', marginBottom: '1rem', maxWidth: '600px' }}>
+            A rendering issue occurred. Details below:
           </p>
+          {this.state.error && (
+            <pre style={{
+              background: 'rgba(255,0,0,0.1)',
+              border: '1px solid rgba(255,0,0,0.3)',
+              color: '#ff6b6b',
+              padding: '1rem',
+              borderRadius: '8px',
+              maxWidth: '800px',
+              width: '100%',
+              overflowX: 'auto',
+              textAlign: 'left',
+              marginBottom: '1.5rem',
+              fontSize: '0.85rem'
+            }}>
+              {this.state.error.toString()}
+              {"\n\n"}
+              {this.state.error.stack}
+            </pre>
+          )}
           <button
             onClick={this.handleReload}
             style={{

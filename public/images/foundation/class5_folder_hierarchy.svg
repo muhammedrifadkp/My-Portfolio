@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" rx="16" fill="url(#bg5)"/>
+
+  <!-- Title -->
+  <text x="400" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#F59E0B" text-anchor="middle">FILE EXPLORER &amp; DIRECTORY TREE HIERARCHY</text>
+  <text x="400" y="65" font-family="system-ui, sans-serif" font-size="13" fill="#94A3B8" text-anchor="middle">Class 05 Organized Root Folder, Subfolders, &amp; File Naming Rules</text>
+
+  <!-- DIRECTORY TREE GRAPHIC -->
+  <g transform="translate(100, 90)">
+    <rect width="600" height="320" rx="12" fill="#1E293B" stroke="#F59E0B" stroke-width="2"/>
+
+    <!-- Root Level -->
+    <g transform="translate(40, 30)">
+      <path d="M0 0 H25 V5 H10 V20 H0 Z" fill="#F59E0B"/>
+      <rect x="0" y="5" width="30" height="20" rx="2" fill="#F59E0B"/>
+      <text x="40" y="20" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#FBBF24">📁 Documents (Root Directory)</text>
+    </g>
+
+    <!-- Branch line 1 -->
+    <path d="M55 60 V100 H90" stroke="#64748B" stroke-width="2" fill="none"/>
+    <g transform="translate(100, 85)">
+      <rect x="0" y="5" width="28" height="18" rx="2" fill="#3B82F6"/>
+      <text x="35" y="20" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#60A5FA">📁 Sirajul_Huda_Digital_Skills</text>
+    </g>
+
+    <!-- Branch subfolders -->
+    <path d="M115 115 V155 H150" stroke="#64748B" stroke-width="2" fill="none"/>
+    <g transform="translate(160, 140)">
+      <rect x="0" y="5" width="25" height="16" rx="2" fill="#10B981"/>
+      <text x="32" y="18" font-family="system-ui, sans-serif" font-size="12" fill="#A7F3D0">📁 Module_01_Hardware (Subfolder)</text>
+    </g>
+    <!-- Sub-files inside Module 1 -->
+    <path d="M175 168 V195 H210" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <text x="220" y="200" font-family="monospace" font-size="11" fill="#CBD5E1">📄 Class1_PC_Specs.docx</text>
+    <path d="M175 168 V220 H210" stroke="#475569" stroke-width="1.5" fill="none"/>
+    <text x="220" y="225" font-family="monospace" font-size="11" fill="#CBD5E1">🖼️ Hardware_Diagram.png</text>
+
+    <!-- Branch subfolder 2 -->
+    <path d="M115 115 V255 H150" stroke="#64748B" stroke-width="2" fill="none"/>
+    <g transform="translate(160, 240)">
+      <rect x="0" y="5" width="25" height="16" rx="2" fill="#8B5CF6"/>
+      <text x="32" y="18" font-family="system-ui, sans-serif" font-size="12" fill="#C084FC">📁 Module_02_OS_Files (Subfolder)</text>
+    </g>
+
+    <!-- Callout Box on Right -->
+    <rect x="420" y="40" width="150" height="240" rx="8" fill="#0F172A" stroke="#334155" stroke-width="1"/>
+    <text x="430" y="65" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#FBBF24">Golden Rules:</text>
+    <text x="430" y="95" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">1. No spaces in names</text>
+    <text x="430" y="115" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">   Use_Underscores</text>
+    <text x="430" y="145" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">2. Include Date/Class</text>
+    <text x="430" y="165" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">   e.g. Class1_Notes</text>
+    <text x="430" y="195" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">3. Avoid saving on</text>
+    <text x="430" y="215" font-family="system-ui, sans-serif" font-size="10" fill="#EF4444">   Desktop clutter!</text>
+  </g>
+</svg>

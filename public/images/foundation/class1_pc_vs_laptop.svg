@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="accentGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" rx="16" fill="url(#bg)"/>
+  
+  <!-- Header Title -->
+  <text x="400" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#10B981" text-anchor="middle">DESKTOP WORKSTATION vs PORTABLE LAPTOP</text>
+  <text x="400" y="65" font-family="system-ui, sans-serif" font-size="13" fill="#94A3B8" text-anchor="middle">Class 01 Visual Component Comparison &amp; Hardware Layout</text>
+
+  <!-- LEFT: Desktop Workstation -->
+  <g transform="translate(40, 90)">
+    <rect width="340" height="320" rx="12" fill="url(#cardBg)" stroke="#3B82F6" stroke-width="2"/>
+    <text x="170" y="30" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#60A5FA" text-anchor="middle">Desktop Workstation PC</text>
+    
+    <!-- Monitor -->
+    <rect x="80" y="55" width="180" height="110" rx="6" fill="#0F172A" stroke="#94A3B8" stroke-width="3"/>
+    <rect x="88" y="63" width="164" height="94" rx="3" fill="#1E293B"/>
+    <path d="M120 75 L160 115 L220 75" stroke="#3B82F6" stroke-width="3" fill="none"/>
+    <text x="170" y="115" font-family="system-ui, sans-serif" font-size="11" fill="#38BDF8" text-anchor="middle">Display Monitor</text>
+    
+    <!-- Monitor Stand -->
+    <rect x="155" y="165" width="30" height="25" fill="#64748B"/>
+    <ellipse cx="170" cy="190" rx="45" ry="6" fill="#475569"/>
+    
+    <!-- CPU Tower -->
+    <rect x="270" y="80" width="55" height="115" rx="4" fill="#0F172A" stroke="#60A5FA" stroke-width="2"/>
+    <circle cx="297" cy="98" r="6" fill="#10B981"/> <!-- Power button -->
+    <rect x="280" y="115" width="35" height="4" fill="#475569"/> <!-- USB port -->
+    <rect x="280" y="125" width="35" height="4" fill="#475569"/>
+    <circle cx="297" cy="155" r="14" fill="#1E293B" stroke="#3B82F6" stroke-width="1.5"/> <!-- Fan -->
+    <text x="297" y="210" font-family="system-ui, sans-serif" font-size="10" fill="#93C5FD" text-anchor="middle">CPU Tower</text>
+
+    <!-- Keyboard & Mouse -->
+    <rect x="80" y="210" width="140" height="25" rx="3" fill="#0F172A" stroke="#64748B" stroke-width="1.5"/>
+    <text x="150" y="226" font-family="system-ui, sans-serif" font-size="9" fill="#94A3B8" text-anchor="middle">Keyboard</text>
+    <ellipse cx="245" cy="222" rx="12" ry="16" fill="#0F172A" stroke="#64748B" stroke-width="1.5"/>
+    <line x1="245" y1="206" x2="245" y2="216" stroke="#64748B" stroke-width="1.5"/>
+    <text x="245" y="248" font-family="system-ui, sans-serif" font-size="9" fill="#94A3B8" text-anchor="middle">Mouse</text>
+
+    <!-- Features Pill -->
+    <rect x="20" y="270" width="300" height="36" rx="8" fill="#0F172A"/>
+    <text x="170" y="293" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1" text-anchor="middle">⚡ High Power • Modular Parts • Separate Monitor</text>
+  </g>
+
+  <!-- RIGHT: Laptop -->
+  <g transform="translate(420, 90)">
+    <rect width="340" height="320" rx="12" fill="url(#cardBg)" stroke="#10B981" stroke-width="2"/>
+    <text x="170" y="30" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#34D399" text-anchor="middle">Portable Laptop</text>
+
+    <!-- Laptop Screen -->
+    <rect x="75" y="60" width="190" height="120" rx="6" fill="#0F172A" stroke="#10B981" stroke-width="2.5"/>
+    <rect x="83" y="68" width="174" height="104" rx="3" fill="#1E293B"/>
+    <circle cx="170" cy="64" r="2.5" fill="#34D399"/> <!-- Webcam -->
+    <text x="170" y="125" font-family="system-ui, sans-serif" font-size="11" fill="#6EE7B7" text-anchor="middle">Built-in Display &amp; Webcam</text>
+
+    <!-- Laptop Base -->
+    <path d="M50 180 L290 180 L310 200 L30 200 Z" fill="#0F172A" stroke="#64748B" stroke-width="2"/>
+    <rect x="100" y="184" width="140" height="10" rx="2" fill="#334155"/> <!-- Keyboard area -->
+    <rect x="145" y="195" width="50" height="4" rx="1" fill="#475569"/> <!-- Trackpad -->
+    
+    <!-- Power Button & Battery indicator -->
+    <circle cx="275" cy="188" r="3" fill="#10B981"/>
+
+    <!-- Annotations -->
+    <text x="170" y="235" font-family="system-ui, sans-serif" font-size="11" fill="#A7F3D0" text-anchor="middle">Built-in Battery • Trackpad • All-in-One</text>
+    
+    <!-- Features Pill -->
+    <rect x="20" y="270" width="300" height="36" rx="8" fill="#0F172A"/>
+    <text x="170" y="293" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1" text-anchor="middle">🔋 Battery Powered • Highly Portable • Built-in Wi-Fi</text>
+  </g>
+</svg>

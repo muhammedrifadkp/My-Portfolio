@@ -1,92 +1,102 @@
-// PG 2nd Year (Postgraduate Final Year) Digital Mastery & Career Launch Syllabus Data
-// Engineered directly from PG 2nd Year student survey responses: Custom AI Tool Building (e.g. Islamic Studies AI Tools), Cinema-Style AI Video Production, Full-Stack Web Apps (React/JS/Python), Digital Marketing & Meta Ads, and Global Freelancing (Upwork/Fiverr) & Career Launch.
+// PG 2nd Year Digital Skills Syllabus Data Structure
+// Framework: LEARN -> DEMONSTRATE -> PRACTICE -> CREATE -> COMPLETE
 
 export const PG_2_MODULES = [
   {
     id: 'pg2-mod-1',
     number: 1,
-    title: 'Advanced AI Tool Building & Custom Knowledge Agents',
-    purpose: 'Learn to build custom AI-powered web tools, domain research assistants (e.g. Islamic Studies AI Tools), prompt frameworks, and knowledge base chatbots using APIs.',
-    color: '#7C3AED',
-    icon: 'fas fa-robot',
+    title: 'Executive IT Leadership & Project Management',
+    purpose: 'Master Agile/Scrum methodologies, JIRA project tracking, technical product management, IT governance, and strategic tech leadership.',
+    icon: 'fas fa-user-tie',
+    color: '#00F0FF',
     realProject: {
-      title: 'Custom AI Research Assistant & Domain Knowledge Tool',
-      description: 'Build and deploy a functional custom AI web application capable of retrieving domain knowledge, answering complex queries, and assisting academic research.'
+      title: 'Executive Software Product Roadmap & Agile Release Plan',
+      description: 'Students design an enterprise software product roadmap, create user stories in JIRA/Trello, and structure sprint release plans.'
     },
     classes: [
       {
-        id: 'pg2-c1',
+        id: 'pg2-cls-1',
         classNum: 1,
-        topic: 'AI API Fundamentals & Prompt Framework Architecture',
-        simpleConcept: 'Connecting web applications directly to OpenAI and Claude APIs to generate custom AI responses programmatically.',
-        objective: 'Understand API keys, HTTP request headers, system prompts, temperature parameters, and JSON response formats.',
+        topic: 'Agile & Scrum Frameworks in Enterprise Tech',
+        simpleConcept: 'Understanding Agile manifesto, Scrum roles (Product Owner, Scrum Master, Dev Team), Sprint ceremonies, and backlog prioritization.',
+        objective: 'Implement Scrum frameworks and run Sprint planning sessions.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain API endpoints, authentication, token usage cost management, and structuring system prompts for domain-specific AI.',
-          demonstrate: 'Make a live API call to OpenAI/Claude API in JS/Python to generate structured answers based on custom context.',
-          practicalTask: 'Write an API script that sends user questions to an AI model and formats the answer into structured bullet points.',
-          expectedOutput: 'Working code script making successful API requests to an LLM.'
+          explain: 'Explain Sprints (2-week cycles), Daily Standups, Sprint Review, Retrospective, and Backlog Grooming.',
+          demonstrate: 'Set up an Agile board on Trello/JIRA, define a Product Backlog, and estimate story points.',
+          practice: 'Create 5 User Stories for an e-commerce mobile app feature backlog.',
+          realWorldExample: 'Software delivery management in global tech corporations.',
+          practicalTask: 'Create an Agile Product Backlog with 5 prioritized User Stories.',
+          expectedOutput: 'Configured Product Backlog in Agile project tool.'
         }
       },
       {
-        id: 'pg2-c2',
+        id: 'pg2-cls-2',
         classNum: 2,
-        topic: 'Building Domain-Specific AI Tools (e.g. Islamic Studies & Academic AI)',
-        simpleConcept: 'Creating specialized AI prompts and knowledge databases for specific fields like Islamic Studies or Literature.',
-        objective: 'Engineer domain-specific AI assistants with strict guardrails, accurate sources, and specialized terminology.',
+        topic: 'User Stories, Acceptance Criteria & JIRA Management',
+        simpleConcept: 'Writing user stories in "As a [user], I want [feature] so that [benefit]" format with strict Given-When-Then acceptance criteria.',
+        objective: 'Write clear User Stories with verified Acceptance Criteria.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Discuss domain prompt engineering, citation verification, avoiding hallucinations in specialized fields, and multi-language support.',
-          demonstrate: 'Build a prototype AI tool that searches and translates specialized academic or historical texts accurately.',
-          practicalTask: 'Design a specialized prompt framework for a custom domain assistant (e.g. Islamic Studies QA or Academic Helper).',
-          expectedOutput: 'Functional AI prompt system tailored to a specialized subject area.'
+          explain: 'Explain INVEST criteria for User Stories, Definition of Done (DoD), and Acceptance Criteria testing.',
+          demonstrate: 'Write User Story for user registration with 4 testable acceptance criteria.',
+          practice: 'Write User Story and acceptance criteria for a shopping cart checkout step.',
+          realWorldExample: 'Technical Product Spec documentation in software engineering teams.',
+          practicalTask: 'Write 3 complete User Stories with Given-When-Then Acceptance Criteria.',
+          expectedOutput: 'Formal Technical Product Spec document.'
         }
       },
       {
-        id: 'pg2-c3',
+        id: 'pg2-cls-3',
         classNum: 3,
-        topic: 'RAG (Retrieval-Augmented Generation) & PDF Document Q&A',
-        simpleConcept: 'Allowing AI to read, search, and answer questions directly from custom uploaded PDFs and documents.',
-        objective: 'Understand document chunking, embeddings, vector search concepts, and PDF text extraction for AI.',
+        topic: 'Tech Product Roadmap & Feature Prioritization (RICE Framework)',
+        simpleConcept: 'Using Reach, Impact, Confidence, Effort (RICE) scoring to prioritize feature roadmaps objectively.',
+        objective: 'Prioritize feature backlogs using data-driven scoring frameworks.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain RAG architecture: Document parsing -> Embeddings -> Vector Search -> LLM Synthesis.',
-          demonstrate: 'Upload a 50-page reference document to a RAG pipeline and query precise facts with page citations.',
-          practicalTask: 'Build a document Q&A interface where users upload a document and receive source-backed AI answers.',
-          expectedOutput: 'Document search tool providing accurate answers with page references.'
+          explain: 'Explain RICE formula: `(Reach * Impact * Confidence) / Effort`, MoSCoW method, and roadmap quarter planning (Q1-Q4).',
+          demonstrate: 'Build a RICE scoring spreadsheet evaluating 10 proposed web app features to select top 3 for Q1.',
+          practice: 'Calculate RICE scores for 4 feature ideas and rank priority order.',
+          realWorldExample: 'Product Management prioritization decisions at Google and Microsoft.',
+          practicalTask: 'Build a RICE Feature Prioritization sheet evaluating 6 product features.',
+          expectedOutput: 'Calculated RICE Product Prioritization spreadsheet.'
         }
       },
       {
-        id: 'pg2-c4',
+        id: 'pg2-cls-4',
         classNum: 4,
-        topic: 'AI Workflows & Automation Agents (n8n & Zapier AI Integration)',
-        simpleConcept: 'Automating multi-step workflows by connecting AI models with email, databases, and web services.',
-        objective: 'Build automated AI workflows that trigger based on events (e.g. automated email summarization or lead scoring).',
+        topic: 'IT Governance, Risk Management & Compliance (GDPR/ISO)',
+        simpleConcept: 'Understanding data privacy laws (GDPR), cybersecurity risk assessment, backup recovery plans, and ISO compliance.',
+        objective: 'Assess IT security risks and draft compliance policies.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain workflow triggers, webhook payloads, data transformations, and connecting AI nodes in n8n/Zapier.',
-          demonstrate: 'Build an automated agent that receives a web form submission, summarizes it with AI, and sends an alert.',
-          practicalTask: 'Create a 3-step automated workflow connecting a web form, AI analysis, and automated notification.',
-          expectedOutput: 'Active automated workflow handling incoming data autonomously.'
+          explain: 'Explain data privacy principles, risk probability vs impact matrix, data breach response, and compliance audits.',
+          demonstrate: 'Conduct an IT Risk Assessment for a cloud web application, identifying vulnerabilities and mitigation steps.',
+          practice: 'Draft a simple Data Privacy Policy for a customer web app.',
+          realWorldExample: 'Enterprise compliance management and cybersecurity governance.',
+          practicalTask: 'Create an IT Risk Assessment Matrix for an enterprise software project.',
+          expectedOutput: 'IT Risk Assessment & Security Policy document.'
         }
       },
       {
-        id: 'pg2-c5',
+        id: 'pg2-cls-5',
         classNum: 5,
-        topic: 'Deploying Custom AI Web Applications to Live Servers',
-        simpleConcept: 'Packaging your AI tool into a clean user interface and deploying it live on the web for public use.',
-        objective: 'Integrate front-end form inputs with back-end AI API endpoints and deploy live on Vercel/Render.',
+        topic: 'Executive Communication & Leadership Pitching',
+        simpleConcept: 'Presenting technical roadmaps to C-level executives, stakeholder alignment, and managing project budget expectations.',
+        objective: 'Deliver executive IT project proposals to leadership stakeholders.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover API key security (environment variables .env), rate limiting, loading spinners, and cloud deployment.',
-          demonstrate: 'Deploy a complete AI Web App to Vercel with secure serverless API functions.',
-          practicalTask: 'Deploy your custom AI tool live on Vercel and test public access on mobile and desktop.',
-          expectedOutput: 'A live, publicly accessible URL for your custom AI web application.'
+          explain: 'Explain executive summary brevity, ROI justification, risk disclosure, and visual roadmap presentation.',
+          demonstrate: 'Deliver a 5-minute executive pitch for a $50k IT infrastructure upgrade proposal.',
+          practice: 'Present a 2-minute project pitch to class acting as executive board.',
+          realWorldExample: 'Securing executive approval and budget for IT projects.',
+          practicalTask: 'Deliver a 5-minute Executive Tech Leadership presentation for a new IT initiative.',
+          expectedOutput: 'Executive IT Leadership Pitch & Slides.'
         }
       }
     ]
@@ -94,88 +104,98 @@ export const PG_2_MODULES = [
   {
     id: 'pg2-mod-2',
     number: 2,
-    title: 'Full-Stack Web Engineering (React, Modern JS & APIs)',
-    purpose: 'Master enterprise full-stack web application development using modern JavaScript ES6+, React component architecture, REST APIs, and state management.',
-    color: '#0284C7',
-    icon: 'fas fa-code-branch',
+    title: 'Advanced AI Agents & Enterprise Automation',
+    purpose: 'Master multi-agent AI frameworks (AutoGPT, CrewAI, LangChain basics), custom LLM API integrations (OpenAI/Claude API), vector embeddings, and autonomous agent workflows.',
+    icon: 'fas fa-robot',
+    color: '#3B82F6',
     realProject: {
-      title: 'Interactive Full-Stack Web Application with Dynamic Data',
-      description: 'Build and launch a modern React application connected to external REST APIs with state management, routing, and responsive CSS.'
+      title: 'Autonomous Multi-Agent AI Business Solution',
+      description: 'Students configure an autonomous AI agent workflow that conducts research, generates content, and executes automated multi-step actions.'
     },
     classes: [
       {
-        id: 'pg2-c6',
+        id: 'pg2-cls-6',
         classNum: 6,
-        topic: 'Modern JavaScript ES6+ Architecture (Arrow Functions, Destructuring, Async/Await)',
-        simpleConcept: 'Writing clean, modern JavaScript logic used by professional software engineering teams.',
-        objective: 'Master ES6 modules, array methods (.map, .filter, .reduce), destructuring, and async/await promises.',
+        topic: 'Autonomous AI Agents Overview & Architecture',
+        simpleConcept: 'Understanding the difference between simple chatbots vs autonomous AI agents (Goal + Memory + Tools + Planning loop).',
+        objective: 'Architect autonomous multi-step AI agent systems.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain synchronous vs asynchronous execution, promises, fetch API, and clean code structure.',
-          demonstrate: 'Fetch live weather or news data from a public REST API using async/await and display it on screen.',
-          practicalTask: 'Write JS code to fetch data from an open API, filter results, and render cards dynamically.',
-          expectedOutput: 'A dynamic web page fetching and displaying API data without page refresh.'
+          explain: 'Explain Agentic loop: Perception -> Planning -> Tool Execution -> Evaluation -> Completion.',
+          demonstrate: 'Show how an AI agent uses web search tools to research a topic and write a summary independently.',
+          practice: 'Diagram an autonomous AI market research agent flow.',
+          realWorldExample: 'Next-generation AI automation replacing manual multi-step tasks.',
+          practicalTask: 'Design a functional architecture diagram for an autonomous AI research agent.',
+          expectedOutput: 'AI Agent Architecture Blueprint.'
         }
       },
       {
-        id: 'pg2-c7',
+        id: 'pg2-cls-7',
         classNum: 7,
-        topic: 'React Fundamentals, Components & JSX Structure',
-        simpleConcept: 'Building websites using reusable UI components in React.',
-        objective: 'Understand React virtual DOM, JSX syntax, component hierarchy, and prop passing.',
+        topic: 'OpenAI & Anthropic Claude API Integration',
+        simpleConcept: 'Connecting to OpenAI API (`gpt-4o`) or Claude API via Python/JavaScript, passing API keys, and handling JSON responses.',
+        objective: 'Call LLM APIs programmatically in software code.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Teach why modern web apps use React, component reusability, props vs state, and JSX rules.',
-          demonstrate: 'Create a React project using Vite and build modular Navbar, Card, and Footer components.',
-          practicalTask: 'Build a reusable Product Card component in React and render a list using props.',
-          expectedOutput: 'Modular React project with reusable components.'
+          explain: 'Explain API endpoints, authentication headers, model parameters (`temperature`, `max_tokens`), and system messages.',
+          demonstrate: 'Write a 15-line JS/Python script that sends a prompt to OpenAI API and prints the response.',
+          practice: 'Modify script to adjust temperature parameter and observe creativity changes.',
+          realWorldExample: 'Embedding AI intelligence directly into commercial web applications.',
+          practicalTask: 'Write a working code script that sends custom requests to an LLM API and receives structured output.',
+          expectedOutput: 'Working LLM API integration script.'
         }
       },
       {
-        id: 'pg2-c8',
+        id: 'pg2-cls-8',
         classNum: 8,
-        topic: 'React State Management & Hooks (useState, useEffect)',
-        simpleConcept: 'Managing dynamic application state like user inputs, shopping carts, and live data updates.',
-        objective: 'Master useState for reactive UI updates and useEffect for side effects and data fetching.',
+        topic: 'Vector Embeddings & Semantic Search (Pinecone / ChromaDB Intro)',
+        simpleConcept: 'Converting text documents into vector numbers (embeddings) and searching for semantically similar information.',
+        objective: 'Understand vector databases and semantic document retrieval.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain state reactivity, re-rendering triggers, effect dependency arrays, and handling form inputs.',
-          demonstrate: 'Build an interactive Task Manager app in React with add, edit, complete, and delete states.',
-          practicalTask: 'Create an interactive calculator or shopping cart in React using useState and useEffect.',
-          expectedOutput: 'Working interactive React application with state management.'
+          explain: 'Explain text embeddings, cosine similarity, vector databases, and Retrieval-Augmented Generation (RAG).',
+          demonstrate: 'Generate embeddings for 3 text snippets using OpenAI embeddings API and compare similarity scores.',
+          practice: 'Perform a semantic search query matching a question to relevant document chunks.',
+          realWorldExample: 'Powering intelligent Enterprise Search engines and AI knowledge bots.',
+          practicalTask: 'Build a basic semantic search script comparing query embeddings to document vectors.',
+          expectedOutput: 'Semantic Search Embeddings demonstration script.'
         }
       },
       {
-        id: 'pg2-c9',
+        id: 'pg2-cls-9',
         classNum: 9,
-        topic: 'Multi-Page Web Routing & Third-Party API Integration',
-        simpleConcept: 'Adding multi-page navigation (React Router) and connecting live databases.',
-        objective: 'Implement React Router DOM for seamless single-page application (SPA) routing.',
+        topic: 'Multi-Agent Frameworks (CrewAI / Auto-GPT Workflow Setup)',
+        simpleConcept: 'Setting up CrewAI/Auto-GPT agents with specific roles (Researcher, Writer, Editor) collaborating to complete a complex task.',
+        objective: 'Build multi-agent AI teams with specialized roles and tasks.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain single-page app routing, dynamic URL parameters (:id), Link navigation, and loading states.',
-          demonstrate: 'Build a multi-page dashboard with Home, Details, and Settings pages without browser page reload.',
-          practicalTask: 'Implement React Router in a web project with dynamic detail pages for items.',
-          expectedOutput: 'A multi-page React single-page application with smooth route transitions.'
+          explain: 'Explain agent roles, tools (Web Search, File Writer), delegation between agents, and sequential execution.',
+          demonstrate: 'Set up a CrewAI workflow: Researcher agent searches web news -> Writer agent drafts article -> Editor agent reviews quality.',
+          practice: 'Define roles and tasks for a 2-agent customer support escalation crew.',
+          realWorldExample: 'Automated content teams and market intelligence multi-agent pipelines.',
+          practicalTask: 'Configure a multi-agent AI workflow executing a 2-step automated collaborative task.',
+          expectedOutput: 'Working multi-agent AI workflow execution.'
         }
       },
       {
-        id: 'pg2-c10',
+        id: 'pg2-cls-10',
         classNum: 10,
-        topic: 'Full-Stack Web App Optimization & Production Vercel Build',
-        simpleConcept: 'Optimizing web application speed, accessibility, and deploying a production build.',
-        objective: 'Perform code splitting, lighthouse optimization, environment setup, and Vercel production build.',
+        topic: 'AI Agent Guardrails, Monitoring & Production Deployment',
+        simpleConcept: 'Setting safety guardrails, budget limits, error fallback loops, and deploying AI agent services live.',
+        objective: 'Deploy secure, cost-managed AI agents in production environments.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain production build assets, minification, bundle optimization, and continuous deployment git integration.',
-          demonstrate: 'Run `npm run build` and deploy a production-grade React app to Vercel with clean Lighthouse scores.',
-          practicalTask: 'Build, optimize, and deploy your complete React Web Application live on Vercel.',
-          expectedOutput: 'A production-ready React web app live URL on Vercel.'
+          explain: 'Explain API cost monitoring, rate limit handling, preventing infinite loops, and content safety moderation.',
+          demonstrate: 'Add API rate limit error handling and token cost logging to an AI agent script.',
+          practice: 'Implement a token budget cap in code to prevent overspending.',
+          realWorldExample: 'Enterprise AI safety governance and infrastructure cost control.',
+          practicalTask: 'Deploy a monitored AI agent service with cost caps and fallback handling.',
+          expectedOutput: 'Production-ready monitored AI agent deployment.'
         }
       }
     ]
@@ -183,88 +203,98 @@ export const PG_2_MODULES = [
   {
     id: 'pg2-mod-3',
     number: 3,
-    title: 'Cinema-Style Video Production & AI Media Creation',
-    purpose: 'Master cinema-style video creation using AI video generators (Runway/Pika/Midjourney), cinematic camera movement, color grading, and After Effects motion graphics.',
-    color: '#D97706',
-    icon: 'fas fa-film',
+    title: 'Digital Product Design & Full-Scale Production',
+    purpose: 'Master UI/UX design in Figma, wireframing, interactive prototyping, design systems, and transforming designs into full-stack web applications.',
+    icon: 'fas fa-palette',
+    color: '#10B981',
     realProject: {
-      title: '90-Second Cinematic AI Commercial Video & Trailer',
-      description: 'Produce a high-end cinematic promotional trailer using AI video generation, camera movement prompts, color grading, sound design, and After Effects motion graphics.'
+      title: 'Full-Scale Interactive UI/UX Figma Design & Web Prototype',
+      description: 'Students design a mobile/web product in Figma with component design systems, interactive prototypes, and web code implementation.'
     },
     classes: [
       {
-        id: 'pg2-c11',
+        id: 'pg2-cls-11',
         classNum: 11,
-        topic: 'AI Video Generation & Cinema Prompting (Runway Gen-2 & Pika)',
-        simpleConcept: 'Creating realistic cinematic video shots from text prompts and keyframe images using AI.',
-        objective: 'Master text-to-video, image-to-video, motion brush controls, and camera movement parameters.',
+        topic: 'Figma UI/UX Fundamentals, Frames & Vector Tools',
+        simpleConcept: 'Navigating Figma interface, frames (mobile vs desktop), vector shapes, typography, and visual alignment grids.',
+        objective: 'Construct clean UI wireframes and screens in Figma.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain AI video generation models, prompt syntax for camera movement (pan, tilt, zoom, tracking shot), and frame consistency.',
-          demonstrate: 'Generate a 4-second cinematic camera pan shot from a Midjourney image using Runway Gen-2.',
-          practicalTask: 'Generate 4 cinematic video shots with specific camera movements (tracking, aerial zoom, dolly).',
-          expectedOutput: 'A collection of 4 seamless AI-generated cinematic video clips.'
+          explain: 'Explain UI design principles, 8pt spatial grid system, contrast ratios, and frame canvas management.',
+          demonstrate: 'Build a mobile app login screen wireframe in Figma using text, input shapes, and primary button.',
+          practice: 'Create a desktop homepage hero section frame in Figma.',
+          realWorldExample: 'Professional UI design workflows across global product companies.',
+          practicalTask: 'Design a 2-screen mobile UI wireframe in Figma.',
+          expectedOutput: 'Clean Figma mobile UI wireframe file.'
         }
       },
       {
-        id: 'pg2-c12',
+        id: 'pg2-cls-12',
         classNum: 12,
-        topic: 'Cinematic Storyboarding, Shot Types & Visual Composition',
-        simpleConcept: 'Planning cinematic storytelling using establishing shots, close-ups, overhead angles, and pacing.',
-        objective: 'Design a professional video storyboard with focal length, rule of thirds, and lighting setups.',
+        topic: 'Figma Auto Layout & Responsive UI Components',
+        simpleConcept: 'Using Figma Auto Layout (`Shift + A`), flex-like spacing, padding, constraints, and responsive component resizing.',
+        objective: 'Build responsive UI layouts using Figma Auto Layout.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Teach cinema shot types (Wide, Medium, Close-Up, Extreme Close-Up), lighting (key, fill, rim), and color temperature.',
-          demonstrate: 'Assemble a 6-shot cinematic storyboard sequence for a product trailer or short film concept.',
-          practicalTask: 'Create a 6-shot cinematic storyboard sequence for a 60-second video project.',
-          expectedOutput: 'A complete visual storyboard document detailing shot angles and camera moves.'
+          explain: 'Explain Auto Layout direction (vertical/horizontal), hug content vs fill container, and nested auto layout frames.',
+          demonstrate: 'Build a responsive button and navigation bar that automatically resizes when text changes.',
+          practice: 'Create a card component with image, title, and badge using Auto Layout.',
+          realWorldExample: 'Scalable UI design systems built for seamless developer handoff.',
+          practicalTask: 'Create 3 responsive UI components using Figma Auto Layout.',
+          expectedOutput: 'Figma file with Auto Layout components.'
         }
       },
       {
-        id: 'pg2-c13',
+        id: 'pg2-cls-13',
         classNum: 13,
-        topic: 'After Effects Compositing, VFX & Motion Graphics',
-        simpleConcept: 'Adding visual effects, 3D text overlays, and motion graphics to elevate video production quality.',
-        objective: 'Master After Effects keyframing, 3D camera tracker, text motion graphics, and green screen keying.',
+        topic: 'Design Systems, Color Styles & Reusable Component Libraries',
+        simpleConcept: 'Creating design tokens (Color styles, Typography hierarchy, Shadow elevation) and reusable Component variants.',
+        objective: 'Construct a reusable Design System library in Figma.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover keyframe easing (Easy Ease), graph editor speed curves, track matte masking, and 3D camera layer setup.',
-          demonstrate: 'Track a 3D cinematic text title onto a moving video background in After Effects.',
-          practicalTask: 'Create a cinematic title reveal animation with particles and motion blur in After Effects.',
-          expectedOutput: 'An animated Motion Graphics video clip exported in high resolution.'
+          explain: 'Explain Design Systems (Material Design, Tailwind UI), component state variants (Default, Hover, Disabled), and token naming.',
+          demonstrate: 'Set up a mini Design System with 4 color styles, 3 font styles, and a primary button variant component.',
+          practice: 'Create a card component with 2 variant states in Figma.',
+          realWorldExample: 'Maintaining consistent brand UI across large engineering teams.',
+          practicalTask: 'Build a Figma Design System file with color tokens, typography, and button variants.',
+          expectedOutput: 'Complete mini Design System library in Figma.'
         }
       },
       {
-        id: 'pg2-c14',
+        id: 'pg2-cls-14',
         classNum: 14,
-        topic: '3D Animation & Asset Integration Concepts (Blender / Ae 3D)',
-        simpleConcept: 'Introducing 3D models, textures, and camera fly-throughs for high-end video visuals.',
-        objective: 'Understand 3D asset import, lighting setups, material textures, and camera animation concepts.',
+        topic: 'Interactive Prototyping, Smart Animate & Micro-Interactions',
+        simpleConcept: 'Connecting Figma screens with interactive prototyping links, Smart Animate transitions, overlays, and hover states.',
+        objective: 'Create clickable, realistic interactive UI prototypes in Figma.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain 3D space coordinates (X, Y, Z), HDRI environment lighting, keyframe 3D camera rotation, and rendering.',
-          demonstrate: 'Import a 3D product model and animate a 360-degree camera orbit around the object.',
-          practicalTask: 'Render a 3D logo or product showcase scene with realistic lighting and reflections.',
-          expectedOutput: 'A 3D animated showcase video clip.'
+          explain: 'Explain prototype triggers (On Click, On Hover, While Pressing), Smart Animate easing, and modal overlays.',
+          demonstrate: 'Link 3 app screens into a clickable prototype with smooth slide transitions and modal popup overlay.',
+          practice: 'Add click interaction connecting a product list screen to a product detail screen.',
+          realWorldExample: 'Usability testing interactive prototypes with users before writing code.',
+          practicalTask: 'Build a 3-screen clickable interactive prototype in Figma.',
+          expectedOutput: 'Clickable interactive Figma prototype link.'
         }
       },
       {
-        id: 'pg2-c15',
+        id: 'pg2-cls-15',
         classNum: 15,
-        topic: 'Final Cinema Reel Mastering, Color LUTs & Sound Scoring',
-        simpleConcept: 'Combining AI shots, VFX, sound design, color grading, and titles into a Hollywood-grade commercial reel.',
-        objective: 'Edit, grade with cinematic LUTs, mix orchestral sound score, and export final 4K video.',
+        topic: 'Figma Handoff to Code & Web Implementation',
+        simpleConcept: 'Extracting CSS properties, SVG assets, font specifications from Figma Dev Mode and implementing designs in code.',
+        objective: 'Transform Figma UI designs into live responsive web application code.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Discuss sound design layering (risers, hits, sub-booms), color space mastering, and high-bitrate export settings.',
-          demonstrate: 'Perform final audio mix and color grade on a 90-second cinematic trailer project.',
-          practicalTask: 'Produce, render, and export your complete 90-second Cinematic AI Video Commercial.',
-          expectedOutput: 'A 90-second high-resolution Cinematic Commercial Trailer video.'
+          explain: 'Explain Figma Dev Mode, exporting vector SVGs, inspecting spacing tokens, and translating designs to HTML/CSS/Tailwind.',
+          demonstrate: 'Inspect a Figma hero card design and code the exact matching HTML/CSS layout in VS Code.',
+          practice: 'Code a styled button matching Figma specifications precisely.',
+          realWorldExample: 'Designer-to-Developer handoff in professional tech companies.',
+          practicalTask: 'Implement a coded web component matching your Figma UI design pixel-perfect.',
+          expectedOutput: 'Live web page component matching Figma design.'
         }
       }
     ]
@@ -272,88 +302,98 @@ export const PG_2_MODULES = [
   {
     id: 'pg2-mod-4',
     number: 4,
-    title: 'Strategic Digital Marketing, E-Commerce & Sales Funnels',
-    purpose: 'Master digital marketing campaigns, Search Engine Optimization (SEO), Meta Ads (Facebook/Instagram), Google Ads, and Amazon/Shopify E-Commerce store setup.',
-    color: '#059669',
-    icon: 'fas fa-bullhorn',
+    title: 'International Freelancing & Agency Operations',
+    purpose: 'Master setting up a digital agency, acquiring international B2B clients, retainer contracts, team scaling, pricing strategies, and global agency monetization.',
+    icon: 'fas fa-chart-line',
+    color: '#8B5CF6',
     realProject: {
-      title: 'Complete Digital Marketing Campaign & E-Commerce Funnel',
-      description: 'Launch an end-to-end digital marketing strategy including SEO keyword research, high-converting Meta ad graphics, and an E-Commerce store strategy.'
+      title: 'Global Digital Agency Launch & Client Acquisition System',
+      description: 'Students build a complete digital agency brand, service catalog, cold outreach pipeline, retainer agreement, and client onboarding system.'
     },
     classes: [
       {
-        id: 'pg2-c16',
+        id: 'pg2-cls-16',
         classNum: 16,
-        topic: 'Search Engine Optimization (SEO) & High-Intent Keyword Strategy',
-        simpleConcept: 'Ranking websites higher on Google search results to get free organic customer traffic.',
-        objective: 'Master On-Page SEO, Meta Titles, Alt Text, Keyword Research (Ahrefs/SEMrush concepts), and Technical SEO.',
+        topic: 'Digital Agency Niche Selection & Service Packaging',
+        simpleConcept: 'Positioning an agency for a high-value niche (e.g., E-Commerce Video Reels / Real Estate Web Dev), defining core service offers, and pricing.',
+        objective: 'Define high-ticket agency service packages and niche positioning.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain search intent (informational vs transactional), title tag optimization, schema markup, and backlink strategies.',
-          demonstrate: 'Perform an SEO audit on a live website and optimize heading tags, meta descriptions, and keywords.',
-          practicalTask: 'Conduct keyword research for a business niche and optimize a web page for search engines.',
-          expectedOutput: 'An SEO audit report and fully keyword-optimized content page.'
+          explain: 'Explain generalist vs specialist agency rates, productized service packaging, and high-ticket pricing models.',
+          demonstrate: 'Define a specialized agency offering: "Monthly Video Reel Production for Dental Clinics" priced at $2,000/month.',
+          practice: 'Draft a niche agency service offer with defined deliverables and target market.',
+          realWorldExample: 'Scaling digital service agencies to 6-figure recurring revenues.',
+          practicalTask: 'Create an Agency Niche Specification & Service Offer catalog sheet.',
+          expectedOutput: 'Defined Digital Agency Service Catalog.'
         }
       },
       {
-        id: 'pg2-c17',
+        id: 'pg2-cls-17',
         classNum: 17,
-        topic: 'Meta Ads Manager (Facebook & Instagram Paid Advertising)',
-        simpleConcept: 'Running targeted paid ad campaigns on Instagram and Facebook to drive leads and sales.',
-        objective: 'Master Meta Business Suite, Campaign Objectives (Leads/Sales), Audience Targeting, and Pixel Tracking.',
+        topic: 'International B2B Cold Outreach & Lead Generation (LinkedIn / Email)',
+        simpleConcept: 'Building target lead lists (Apollo.io/LinkedIn Sales Navigator), writing personalized cold emails, and booking sales calls.',
+        objective: 'Build B2B lead generation pipelines and execute cold outreach campaigns.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain ad account structure (Campaign -> Ad Set -> Ad), lookalike audiences, ROAS (Return on Ad Spend), and retargeting.',
-          demonstrate: 'Set up a targeted Lead Generation ad campaign in Meta Ads Manager live on screen.',
-          practicalTask: 'Design 2 high-converting ad creatives and configure a complete Meta Ad campaign strategy.',
-          expectedOutput: 'Configured Meta Ads campaign mockup with target audience and ad creatives.'
+          explain: 'Explain cold email deliverability (SPF/DKIM/DMARC), email personalization, 3-step follow-up sequences, and booking discovery calls.',
+          demonstrate: 'Build a 3-step personalized B2B cold email outreach sequence offering a free website audit to potential clients.',
+          practice: 'Write a cold email message targeting business owners with a custom value hook.',
+          realWorldExample: 'Acquiring US/UK/European clients for remote digital agencies.',
+          practicalTask: 'Write a 3-step B2B cold outreach campaign sequence.',
+          expectedOutput: 'B2B Cold Outreach Campaign Sequence document.'
         }
       },
       {
-        id: 'pg2-c18',
+        id: 'pg2-cls-18',
         classNum: 18,
-        topic: 'Google PPC Search Ads & High-Converting Landing Page Design',
-        simpleConcept: 'Capturing active buyers searching on Google and directing them to a high-converting sales landing page.',
-        objective: 'Create Google Search campaigns, ad copy extensions, and design high-converting sales landing pages.',
+        topic: 'Discovery Calls, Sales Presentations & Closing Contracts',
+        simpleConcept: 'Conducting Zoom discovery calls, uncovering client business problems, presenting high-value proposals, and handling objections.',
+        objective: 'Execute strategic sales discovery calls and close high-ticket service contracts.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain Pay-Per-Click (PPC) bidding, Quality Score, negative keywords, and landing page Call-to-Action (CTA) placement.',
-          demonstrate: 'Build a Google Search ad with sitelink extensions and design a matching landing page wireframe.',
-          practicalTask: 'Write 3 Google search ad variations and structure a conversion-focused sales landing page.',
-          expectedOutput: 'Google PPC campaign setup with copy variations and landing page layout.'
+          explain: 'Explain SPIN selling (Situation, Problem, Implication, Need-payoff), presenting proposals live on call, and closing techniques.',
+          demonstrate: 'Roleplay a 10-minute client discovery call: ask probing business questions, present solution, and handle price objections.',
+          practice: 'Practice handling common client objections ("Your price is too high", "Send me an email").',
+          realWorldExample: 'Closing $5,000+ agency service contracts on video calls.',
+          practicalTask: 'Conduct a mock client discovery call and draft a custom master service proposal.',
+          expectedOutput: 'Completed Master Service Proposal document.'
         }
       },
       {
-        id: 'pg2-c19',
+        id: 'pg2-cls-19',
         classNum: 19,
-        topic: 'E-Commerce Platform Setup (Amazon Seller Central & Shopify)',
-        simpleConcept: 'Setting up an online store to list products, manage inventory, and process customer payments.',
-        objective: 'Understand Amazon product listing optimization, A+ content, Shopify store architecture, and payment gateways.',
+        topic: 'Retainer Agreements, Master Contracts & Legal Compliance',
+        simpleConcept: 'Structuring monthly recurring retainer contracts, Master Services Agreements (MSA), Statements of Work (SOW), and NDA agreements.',
+        objective: 'Draft legally compliant agency contracts and recurring retainer agreements.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover Amazon product SEO keywords, bullet point structure, Shopify themes, payment gateways (Stripe/PayPal), and shipping.',
-          demonstrate: 'Build a mockup Shopify store product page with high-res imagery, reviews, and checkout buttons.',
-          practicalTask: 'Create an optimized E-Commerce product listing with images, bullet features, and SEO description.',
-          expectedOutput: 'An optimized E-Commerce product store page setup.'
+          explain: 'Explain monthly retainers vs one-off projects, IP ownership transfer upon payment, termination clauses, and late payment penalties.',
+          demonstrate: 'Review a standard Agency Statement of Work (SOW) agreement specifying scope, timeline, monthly retainer fee, and terms.',
+          practice: 'Draft a 1-page SOW contract for a web maintenance retainer service.',
+          realWorldExample: 'Protecting agency businesses legally and securing predictable monthly recurring revenue.',
+          practicalTask: 'Draft a complete Master Service Agreement (MSA) and SOW contract template.',
+          expectedOutput: 'Legal Agency Service Contract Template.'
         }
       },
       {
-        id: 'pg2-c20',
+        id: 'pg2-cls-20',
         classNum: 20,
-        topic: 'Social Media Content Strategy, Analytics & Funnel Automation',
-        simpleConcept: 'Creating content calendars, tracking conversion analytics, and nurturing leads automatically.',
-        objective: 'Utilize Google Analytics 4 (GA4), content scheduling tools, and automated email marketing funnels.',
+        topic: 'Agency Client Onboarding, SOPs & Team Scaling',
+        simpleConcept: 'Building Standard Operating Procedures (SOPs), client onboarding questionnaires, hiring freelancers, and delegating work.',
+        objective: 'Systematize agency operations and client onboarding workflows.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain sales funnel stages (Awareness -> Interest -> Decision -> Action), GA4 conversion tracking, and email automation.',
-          demonstrate: 'Set up a 3-email automated sequence in Mailchimp/Klaviyo triggered by form submission.',
-          practicalTask: 'Design a 30-day social media content calendar and map out an automated sales funnel.',
-          expectedOutput: 'A 30-day marketing content calendar and visual sales funnel map.'
+          explain: 'Explain SOP creation (Loom video + step-by-step checklist), client kickoff onboarding forms, project management boards, and profit margins.',
+          demonstrate: 'Build a Notion/Trello Client Onboarding portal with welcome checklist, asset submission link, and project timeline.',
+          practice: 'Write an SOP checklist for delivering a weekly social media graphic bundle.',
+          realWorldExample: 'Building automated agency operations that run smoothly without owner bottleneck.',
+          practicalTask: 'Create an automated Client Onboarding portal and team SOP checklist.',
+          expectedOutput: 'Complete Agency Client Onboarding & SOP system.'
         }
       }
     ]
@@ -361,88 +401,98 @@ export const PG_2_MODULES = [
   {
     id: 'pg2-mod-5',
     number: 5,
-    title: 'Postgraduate Career Launch, Global Freelancing & Capstone',
-    purpose: 'Launch your professional career with global freelancing profiles (Upwork/Fiverr), high-converting client proposals, an ATS-optimized master resume, and final portfolio presentation.',
-    color: '#2563EB',
-    icon: 'fas fa-user-graduate',
+    title: 'Master Capstone Project & Executive Industry Portfolio',
+    purpose: 'Construct an executive-level master portfolio, deliver the Postgraduate Master Capstone Project defense, and receive Master Certification in Digital Skills & IT Leadership.',
+    icon: 'fas fa-graduation-cap',
+    color: '#EC4899',
     realProject: {
-      title: 'Live Global Freelance Profile, ATS Resume & Capstone Hub',
-      description: 'Publish a high-ranking Upwork/Fiverr freelance profile, ATS-optimized master resume, and present your final Postgraduate Capstone Portfolio.'
+      title: 'Postgraduate Master Capstone Defense & Executive Industry Portfolio',
+      description: 'Students defend their Master Capstone Project featuring an AI Agent System, Figma UI Design, Agency System, and Web Platform.'
     },
     classes: [
       {
-        id: 'pg2-c21',
+        id: 'pg2-cls-21',
         classNum: 21,
-        topic: 'Global Freelancing Mastery (Upwork & Fiverr Profile Optimization)',
-        simpleConcept: 'Setting up high-paying freelance accounts to land international clients for digital services.',
-        objective: 'Build top-rated Upwork and Fiverr profiles with specialized titles, overview copy, and portfolio tags.',
+        topic: 'Executive Master Portfolio Curation & Personal Branding',
+        simpleConcept: 'Curating an elite executive digital portfolio website showcasing AI systems, agency case studies, UI prototypes, and enterprise metrics.',
+        objective: 'Build an elite executive digital portfolio showcasing master-level projects.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain profile keyword SEO, pricing strategy (hourly vs fixed-price), client trust badges, and niche specialization.',
-          demonstrate: 'Build a top 1% Upwork specialized profile overview targeting high-ticket international clients.',
-          practicalTask: 'Create and refine your professional freelance profile overview, title, and skill tags.',
-          expectedOutput: 'A fully formatted professional freelance profile draft ready for publication.'
+          explain: 'Explain executive personal branding, presenting multi-disciplinary mastery (AI + UX + Agency + Dev), and high-level case study design.',
+          demonstrate: 'Review an executive IT leader portfolio, dissecting case study narrative structure and visual presentation.',
+          practice: 'Draft executive summary for your master portfolio website.',
+          realWorldExample: 'Positioning for executive roles (CTO, Product Director, Agency Founder).',
+          practicalTask: 'Assemble an executive master portfolio website showcasing all Postgraduate project deliverables.',
+          expectedOutput: 'Published Master Executive Portfolio website.'
         }
       },
       {
-        id: 'pg2-c22',
+        id: 'pg2-cls-22',
         classNum: 22,
-        topic: 'Winning Client Proposals, Pitching & Contract Negotiations',
-        simpleConcept: 'Writing custom proposals that win clients and negotiating fair pricing for digital projects.',
-        objective: 'Master the 4-part proposal formula, video cover letters (Loom), scope management, and pricing negotiation.',
+        topic: 'Thought Leadership, Technical Publishing & Speaker Profile',
+        simpleConcept: 'Writing technical industry articles on Medium/LinkedIn, publishing open-source projects, and establishing thought leadership.',
+        objective: 'Establish digital industry thought leadership through technical publishing.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Teach proposal hook, problem diagnosis, solution outline, call to action, and handling price objections.',
-          demonstrate: 'Write a winning proposal response to a sample client job posting live in class.',
-          practicalTask: 'Write 2 winning proposal templates responding to realistic client job briefs.',
-          expectedOutput: 'Custom proposal templates ready to send to prospective clients.'
+          explain: 'Explain content marketing for executives, writing technical breakdown articles, GitHub repository documentation, and industry authority.',
+          demonstrate: 'Draft a technical case study breakdown article: "How I Built an Autonomous AI Agent Team for B2B Market Research".',
+          practice: 'Write an outline for a technical industry article based on your capstone project.',
+          realWorldExample: 'Attracting high-value advisory roles, consulting clients, and executive opportunities.',
+          practicalTask: 'Write and publish a technical industry case study article on LinkedIn/Medium.',
+          expectedOutput: 'Published technical industry article.'
         }
       },
       {
-        id: 'pg2-c23',
+        id: 'pg2-cls-23',
         classNum: 23,
-        topic: 'ATS-Optimized Master Resume & LinkedIn Executive Branding',
-        simpleConcept: 'Crafting a resume that passes AI job screeners (ATS) and building an active LinkedIn network.',
-        objective: 'Optimize resume formatting for Applicant Tracking Systems (ATS) and upgrade LinkedIn profile for recruiters.',
+        topic: 'Executive Career Positioning & C-Suite Interview Strategy',
+        simpleConcept: 'Navigating executive recruiter networks, negotiating high-ticket consulting retainers/salaries, and executive interview mastery.',
+        objective: 'Prepare for C-suite executive interviews and strategic consulting proposals.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain ATS keyword scanning, action verb bullet points, LinkedIn headline optimization, and networking outreach.',
-          demonstrate: 'Audit a resume using ATS scanner software and reformat bullet points into quantified achievement statements.',
-          practicalTask: 'Reformat your professional resume with ATS-friendly layout and update your LinkedIn profile headline.',
-          expectedOutput: 'An ATS-tested 1-page master resume PDF and updated LinkedIn profile layout.'
+          explain: 'Explain executive search firm engagement, equity vs salary negotiation, advisory board roles, and strategic vision presentation.',
+          demonstrate: 'Conduct a mock executive interview answering strategic questions on AI implementation and team management.',
+          practice: 'Practice delivering a 3-minute executive vision pitch for a digital transformation project.',
+          realWorldExample: 'Securing senior technology leadership roles and high-value consulting contracts.',
+          practicalTask: 'Draft a comprehensive Executive Career Positioning Document & 3-year vision statement.',
+          expectedOutput: 'Executive Career Positioning Document.'
         }
       },
       {
-        id: 'pg2-c24',
+        id: 'pg2-cls-24',
         classNum: 24,
-        topic: 'Client Project Management, Contracts & Quality Delivery',
-        simpleConcept: 'Managing freelance client projects professionally, setting deadlines, and getting paid securely.',
-        objective: 'Utilize project management tools (Trello/Notion), contract agreements, invoicing, and client handoffs.',
+        topic: 'Master Capstone Dry Run & Peer Review Evaluation',
+        simpleConcept: 'Conducting a full rehearsal defense of the Master Capstone Project with peer feedback, slide refinements, and live demo testing.',
+        objective: 'Rehearse Master Capstone defense and incorporate peer evaluation feedback.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain scope creep prevention, milestone payments, client feedback loops, and final asset handoffs.',
-          demonstrate: 'Set up a client project board in Notion detailing deliverables, assets, and delivery deadlines.',
-          practicalTask: 'Create a client project onboarding checklist and formal service contract agreement.',
-          expectedOutput: 'A client onboarding document and project management template.'
+          explain: 'Explain presentation timing control, live software demo backup plans, crisp Q&A responses, and slide visual polish.',
+          demonstrate: 'Conduct a sample 7-minute capstone rehearsal defense and provide structured constructive critique.',
+          practice: 'Deliver a 5-minute draft presentation of your Master Capstone Project to peer group.',
+          realWorldExample: 'Academic thesis defense and corporate board meeting dry runs.',
+          practicalTask: 'Execute full rehearsal defense of your Master Capstone Project and refine based on feedback.',
+          expectedOutput: 'Refined Master Capstone Presentation & Demo.'
         }
       },
       {
-        id: 'pg2-c25',
+        id: 'pg2-cls-25',
         classNum: 25,
-        topic: 'Final Postgraduate Capstone Defense & Portfolio Exhibition',
-        simpleConcept: 'Presenting your complete digital skills portfolio to instructors and peers for graduation certification.',
-        objective: 'Deliver a 3-minute professional capstone presentation showcasing your live web app, media assets, and AI tools.',
+        topic: 'Postgraduate Master Capstone Defense & Certification',
+        simpleConcept: 'Delivering the official Postgraduate Master Capstone Project defense to evaluation board and receiving Master Certification.',
+        objective: 'Successfully defend Master Capstone Project and graduate with Master Certification.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Review final portfolio evaluation criteria: technical quality, design aesthetic, live accessibility, and presentation confidence.',
-          demonstrate: 'Demonstrate a model 3-minute capstone presentation walk-through of a live web portfolio.',
-          practicalTask: 'Present your final postgraduate digital portfolio live to the class.',
-          expectedOutput: 'Graduation Capstone certification and complete live portfolio website.'
+          explain: 'Moderate final Postgraduate Master Capstone Defense evaluations, score against master rubric, and present graduation certificates.',
+          demonstrate: 'Evaluate student live demonstrations of AI systems, UI designs, and web platforms.',
+          practice: 'Deliver final 10-minute Master Capstone Project defense with live software demonstration.',
+          realWorldExample: 'Master Degree Defense and professional industry certification.',
+          practicalTask: 'Deliver final 10-minute Postgraduate Master Capstone Defense.',
+          expectedOutput: 'Successful Master Capstone Defense and Graduation Certification.'
         }
       }
     ]
@@ -451,28 +501,28 @@ export const PG_2_MODULES = [
 
 export const PG_2_SPECIALIZATION_OPTIONS = [
   {
-    id: 'pg2-spec-1',
-    title: 'Custom AI Tool Building & Web Engineering',
+    id: 'track-leadership',
+    title: 'Executive IT Leadership & Product Management',
+    icon: 'fas fa-user-tie',
+    description: 'Master Agile/Scrum sprint planning, technical spec documentation, RICE feature prioritization, IT risk management, and executive pitching.',
+    keySkills: ['Agile & Scrum Sprints', 'JIRA & Spec Writing', 'RICE Feature Prioritization', 'Executive Leadership Pitching'],
+    portfolioDeliverable: 'An enterprise product roadmap, backlog specification, and executive pitch deck.'
+  },
+  {
+    id: 'track-ai-agents',
+    title: 'Advanced AI Agents & Multi-Agent Automation',
     icon: 'fas fa-robot',
-    description: 'Develop custom AI-powered web tools, domain research assistants (e.g. Islamic Studies AI tools), and full-stack React web applications.',
-    keySkills: ['OpenAI/Claude API', 'React & Async JS', 'Custom AI Agents', 'Vercel Deployment'],
-    portfolioDeliverable: 'Live Domain AI Research Assistant Web App & Full-Stack React Project'
+    description: 'Master autonomous AI agent loops, LLM APIs (OpenAI/Claude), vector embeddings, semantic search, and CrewAI multi-agent teams.',
+    keySkills: ['Autonomous Agent Loops', 'OpenAI & Claude APIs', 'Vector Embeddings & Semantic Search', 'CrewAI Multi-Agent Teams'],
+    portfolioDeliverable: 'A working autonomous multi-agent AI system and API code implementation.'
   },
   {
-    id: 'pg2-spec-2',
-    title: 'Cinema-Style AI Video & Motion Media Production',
-    icon: 'fas fa-film',
-    description: 'Produce high-end cinema-style commercial videos, AI video animations, After Effects motion graphics, and color-graded trailers.',
-    keySkills: ['Runway Gen-2 AI Video', 'After Effects VFX', 'Cinematic LUTs', 'Sound Scoring'],
-    portfolioDeliverable: '90-Second Cinematic AI Commercial Video Trailer & VFX Reel'
-  },
-  {
-    id: 'pg2-spec-3',
-    title: 'Digital Marketing, E-Commerce & Global Freelancing',
-    icon: 'fas fa-briefcase',
-    description: 'Launch digital ad campaigns, SEO strategies, Amazon/Shopify product stores, and top-rated Upwork/Fiverr freelance profiles.',
-    keySkills: ['SEO & Meta Paid Ads', 'E-Commerce Store Setup', 'Upwork & Proposals', 'ATS Master Resume'],
-    portfolioDeliverable: 'Live Freelance Hub, Digital Marketing Campaign Strategy & E-Commerce Store'
+    id: 'track-agency',
+    title: 'Digital Product UI/UX & Agency Operations',
+    icon: 'fas fa-chart-line',
+    description: 'Master Figma Auto Layout UI design, interactive prototyping, B2B cold outreach pipelines, agency retainer contracts, and team SOPs.',
+    keySkills: ['Figma UI/UX & Prototyping', 'B2B Lead Gen Outreach', 'Retainer Contracts & SOW', 'Agency Operations & SOPs'],
+    portfolioDeliverable: 'A clickable Figma UI prototype, client acquisition pipeline, and agency launch system.'
   }
 ];
 
@@ -482,8 +532,9 @@ export const calculatePg2Metrics = (savedProgress) => {
   let inProgressClasses = 0;
 
   const moduleMetrics = PG_2_MODULES.map((mod) => {
-    let modTotal = mod.classes.length;
+    const modClasses = mod.classes.length;
     let modCompleted = 0;
+    let modInProgress = 0;
 
     mod.classes.forEach((cls) => {
       totalClasses++;
@@ -493,16 +544,17 @@ export const calculatePg2Metrics = (savedProgress) => {
         modCompleted++;
       } else if (status === 'IN PROGRESS') {
         inProgressClasses++;
+        modInProgress++;
       }
     });
 
-    const percentage = modTotal > 0 ? Math.round((modCompleted / modTotal) * 100) : 0;
+    const percent = modClasses > 0 ? Math.round((modCompleted / modClasses) * 100) : 0;
     return {
       moduleId: mod.id,
-      title: mod.title,
-      total: modTotal,
+      total: modClasses,
       completed: modCompleted,
-      percentage
+      inProgress: modInProgress,
+      percentage: percent
     };
   });
 

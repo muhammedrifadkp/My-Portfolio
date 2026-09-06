@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg13" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" rx="16" fill="url(#bg13)"/>
+
+  <!-- Title -->
+  <text x="400" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#8B5CF6" text-anchor="middle">AI STUDY ASSISTANTS &amp; EFFECTIVE PROMPTING</text>
+  <text x="400" y="65" font-family="system-ui, sans-serif" font-size="13" fill="#94A3B8" text-anchor="middle">Class 13 Asking AI Chatbots (ChatGPT/Gemini) Clear Academic Questions</text>
+
+  <!-- MOCKUP OF AI CHAT INTERFACE -->
+  <g transform="translate(60, 90)">
+    <rect width="680" height="320" rx="12" fill="#1E293B" stroke="#8B5CF6" stroke-width="2"/>
+    
+    <!-- AI Header Bar -->
+    <rect x="15" y="15" width="650" height="35" rx="6" fill="#0F172A"/>
+    <circle cx="35" cy="32" r="10" fill="#8B5CF6"/>
+    <text x="35" y="36" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">🤖</text>
+    <text x="55" y="37" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#C084FC">AI Study Assistant (Google Gemini / ChatGPT)</text>
+
+    <!-- Student Prompt Bubble -->
+    <rect x="180" y="65" font-size="11" width="480" height="50" rx="10" fill="#3B82F6"/>
+    <text x="195" y="86" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">👤 Student Prompt:</text>
+    <text x="195" y="104" font-family="system-ui, sans-serif" font-size="11" fill="#EFF6FF">"Explain the difference between CPU and RAM in simple Malayalam/English with 3 bullet points."</text>
+
+    <!-- AI Response Bubble -->
+    <rect x="20" y="130" width="520" height="120" rx="10" fill="#0F172A" stroke="#8B5CF6" stroke-width="1"/>
+    <text x="35" y="152" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#C084FC">🤖 AI Response:</text>
+    <text x="35" y="172" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">1. CPU is the Computer Brain (executes math &amp; instructions).</text>
+    <text x="35" y="192" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">2. RAM is the Temporary Study Desk (holds active open apps).</text>
+    <text x="35" y="212" font-family="system-ui, sans-serif" font-size="10" fill="#CBD5E1">3. When PC turns off, RAM clears but CPU stays ready!</text>
+
+    <!-- Rule Footer Box -->
+    <rect x="20" y="260" width="640" height="40" rx="8" fill="#1E293B" stroke="#F59E0B" stroke-width="1"/>
+    <text x="340" y="285" font-family="system-ui, sans-serif" font-size="11" fill="#FBBF24" text-anchor="middle">💡 Golden AI Rule: Use AI to understand &amp; summarize, NEVER copy-paste without reading!</text>
+  </g>
+</svg>

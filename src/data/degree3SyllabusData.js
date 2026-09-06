@@ -5,98 +5,98 @@ export const DEGREE_3_MODULES = [
   {
     id: 'deg3-mod-1',
     number: 1,
-    title: 'Advanced AI Engineering, Prompting & AI Agents',
-    purpose: 'Master Claude 3.5 Sonnet, ChatGPT 4o, Custom GPT builder, AI Agent automations (n8n/Make), and AI-driven workflow optimization.',
-    icon: 'fas fa-brain',
-    color: '#8B5CF6',
+    title: 'Modern Web Development (React & Web Apps)',
+    purpose: 'Master React.js fundamentals, component-based UI, JSX syntax, props, useState/useEffect hooks, API integrations, and Vercel/Netlify deployment.',
+    icon: 'fas fa-laptop-code',
+    color: '#3B82F6',
     realProject: {
-      title: 'Autonomous AI Agent Workflow System',
-      description: 'Students build a custom AI Agent or automated n8n/Make pipeline that monitors inputs, processes content using AI models, and posts formatted reports.'
+      title: 'Single-Page React Web Application with Live API Integration',
+      description: 'Students build and deploy a multi-component React app with live data fetching, interactive search/filter, and responsive state UI.'
     },
     classes: [
       {
         id: 'deg3-cls-1',
         classNum: 1,
-        topic: 'Advanced Prompt Engineering & Chain-of-Thought Reasoning',
-        simpleConcept: 'Mastering Chain-of-Thought (CoT), Tree-of-Thought, system prompt architecture, and few-shot formatting for complex reasoning.',
-        objective: 'Architect bulletproof system prompts for deterministic AI responses.',
+        topic: 'React.js Overview, JSX & Component Architecture',
+        simpleConcept: 'Understanding React virtual DOM, JSX syntax rules, modular component design, and Vite React starter setups.',
+        objective: 'Set up Vite React project and construct reusable UI components.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain system prompt framing, JSON output enforcement, Few-Shot examples, and Chain-of-Thought reasoning steps.',
-          demonstrate: 'Build a system prompt forcing AI to act as a strict code auditor and output findings strictly in JSON.',
-          practice: 'Architect a system prompt that parses unstructured text and outputs clean JSON schema.',
-          realWorldExample: 'Enterprise customer support routing engines and automated financial document extraction.',
-          practicalTask: 'Write a complex system prompt enforcing JSON schema output for student report evaluation.',
-          expectedOutput: 'Deterministic AI prompt returning clean JSON output.'
+          explain: 'Explain component trees, JSX syntax vs HTML, and modular code separation.',
+          demonstrate: 'Create a Vite React app (`npm create vite`), build `Header`, `Card`, and `Footer` components.',
+          practice: 'Create a custom `ProductCard` React component rendering title and image.',
+          realWorldExample: 'Modern web app UI architecture (Netflix, Airbnb, Spotify).',
+          practicalTask: 'Build a React project with 3 custom reusable components.',
+          expectedOutput: 'Working React web application running on local dev server.'
         }
       },
       {
         id: 'deg3-cls-2',
         classNum: 2,
-        topic: 'Building Custom GPTs & Knowledge Base Assistants',
-        simpleConcept: 'Creating specialized Custom GPTs / Claude Projects with custom instructions, uploaded documentation, and actions.',
-        objective: 'Build a domain-specific custom AI assistant with custom uploaded knowledge bases.',
+        topic: 'React State Management (`useState`) & Event Handling',
+        simpleConcept: 'Using `useState` hook to handle dynamic UI state changes, counter buttons, and form inputs.',
+        objective: 'Manage reactive state updates and handle user interaction events in React.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain RAG (Retrieval-Augmented Generation), vector databases, context injection, and GPT Action triggers.',
-          demonstrate: 'Build a "College Academic Advisor GPT" trained on university course syllabus PDFs.',
-          practice: 'Create a custom GPT assistant trained on a specific company policy document or software manual.',
-          realWorldExample: 'Internal company knowledge base bots answering HR and technical questions instantly.',
-          practicalTask: 'Build a custom AI assistant trained on a multi-page reference PDF file.',
-          expectedOutput: 'Functional custom AI assistant answering questions based on uploaded documents.'
+          explain: 'Explain state immutability, re-rendering triggers, and `useState` hook syntax.',
+          demonstrate: 'Build an interactive counter app and a live text input preview component using `useState`.',
+          practice: 'Build a Like/Unlike button component that updates count dynamically.',
+          realWorldExample: 'Like buttons, cart item counts, and interactive forms.',
+          practicalTask: 'Build a React component with stateful input fields and dynamic counter.',
+          expectedOutput: 'Interactive React component with working state updates.'
         }
       },
       {
         id: 'deg3-cls-3',
         classNum: 3,
-        topic: 'AI Agents & Autonomous Workflow Automations',
-        simpleConcept: 'Understanding AI Agents (Goal -> Plan -> Action -> Tool Use) and no-code automation platforms (Make.com / n8n).',
-        objective: 'Connect AI APIs with web webhooks and automated workflow triggers.',
+        topic: 'React Effects (`useEffect`) & Live API Data Fetching',
+        simpleConcept: 'Using `useEffect` for side-effects, fetching REST API data on component mount, and showing loading states.',
+        objective: 'Fetch and render external API data in React components dynamically.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain agentic loops, tool calling, API webhooks, trigger events, and automated multi-step workflows.',
-          demonstrate: 'Build a Make.com scenario: New Gmail received -> AI summarizes message -> sends Slack notification.',
-          practice: 'Build a 3-step automation: Google Form response -> AI formats response -> auto-generates email reply.',
-          realWorldExample: 'Automated lead processing in sales operations and social media auto-posting pipelines.',
-          practicalTask: 'Create an automated workflow triggering AI document processing on form submission.',
-          expectedOutput: 'Working no-code AI automation workflow.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain dependency array `[]`, `async`/`await` inside `useEffect`, and loading spinners.',
+          demonstrate: 'Fetch data from JSONPlaceholder/OpenWeather API inside `useEffect` and render dynamic cards.',
+          practice: 'Fetch news articles from a free API and display them in a responsive card grid.',
+          realWorldExample: 'Live dashboard data feeds and social media timelines.',
+          practicalTask: 'Fetch live API data in React and display formatted items in a grid.',
+          expectedOutput: 'Live API data rendering React app.'
         }
       },
       {
         id: 'deg3-cls-4',
         classNum: 4,
-        topic: 'AI Content Pipelines (Scripts, Images & Voiceover)',
-        simpleConcept: 'Combining Claude + Midjourney/Leonardo + ElevenLabs + AI Video generators for end-to-end media automation.',
-        objective: 'Build a multi-tool AI pipeline for automated video, podcast, or report production.',
+        topic: 'Tailwind CSS & Styling Modern React Components',
+        simpleConcept: 'Using utility-first Tailwind CSS classes (`flex`, `bg-blue-500`, `rounded-xl`, `hover:scale-105`) for rapid UI styling.',
+        objective: 'Style React components quickly using Tailwind CSS classes.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain media pipeline automation: script generation -> voice synthesis -> visual generation -> auto assembly.',
-          demonstrate: 'Generate a 1-minute educational video using 4 interconnected AI tools.',
-          practice: 'Execute an AI workflow to produce a fully narrated visual story video from a single prompt.',
-          realWorldExample: 'Automated video publishing for news outlets and educational content creators.',
-          practicalTask: 'Produce a complete narrated media asset using a 4-stage AI tool pipeline.',
-          expectedOutput: 'Complete AI-generated audio-visual project asset.'
+          explain: 'Explain utility CSS concepts, responsive prefixes (`md:`, `lg:`), and hover states.',
+          demonstrate: 'Install Tailwind CSS in React project and style a landing page hero section with gradient buttons.',
+          practice: 'Style 3 pricing cards using Tailwind utility classes.',
+          realWorldExample: 'High-speed UI development in modern tech startups.',
+          practicalTask: 'Style a complete React landing page using Tailwind CSS utility classes.',
+          expectedOutput: 'Visually impressive Tailwind-styled React application.'
         }
       },
       {
         id: 'deg3-cls-5',
         classNum: 5,
-        topic: 'AI Ethics, Bias Auditing & Enterprise Compliance',
-        simpleConcept: 'Auditing AI output for bias, hallucination risks, copyright liabilities, data privacy (GDPR), and enterprise deployment policies.',
-        objective: 'Conduct risk assessments for deploying AI systems in production corporate environments.',
+        topic: 'Production Build & Vercel/Netlify Deployment',
+        simpleConcept: 'Building production bundle (`npm run build`) and deploying live React website to Vercel/Netlify.',
+        objective: 'Deploy production-ready React web application to live web server.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain training data bias, privacy protection, intellectual property laws, and human-in-the-loop validation.',
-          demonstrate: 'Audit an AI model response for hallucinated facts and privacy leaks.',
-          practice: 'Draft an AI Usage Policy document for an enterprise business or educational institution.',
-          realWorldExample: 'Corporate IT governance for AI deployment in healthcare and banking.',
-          practicalTask: 'Write a comprehensive AI Ethics & Compliance audit report for a proposed AI deployment.',
-          expectedOutput: 'Structured AI compliance policy document.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain production build minification, static assets, Vercel CLI / GitHub integration.',
+          demonstrate: 'Connect GitHub repository to Vercel and deploy live React website with SSL certificate.',
+          practice: 'Deploy personal React portfolio project live on Vercel.',
+          realWorldExample: 'Launching commercial web products to global audiences.',
+          practicalTask: 'Deploy student React application live and share accessible HTTPS link.',
+          expectedOutput: 'Live production HTTPS link for React web app.'
         }
       }
     ]
@@ -104,98 +104,98 @@ export const DEGREE_3_MODULES = [
   {
     id: 'deg3-mod-2',
     number: 2,
-    title: 'Master Data Analytics & Advanced MS Excel',
-    purpose: 'Master lookup functions (XLOOKUP, VLOOKUP), Pivot Tables, Slicers, advanced conditional formulas, and executive dashboards.',
-    icon: 'fas fa-chart-line',
+    title: 'Advanced Data Analytics & Excel Power Query Dashboards',
+    purpose: 'Master Power Query data transformation, INDEX/MATCH, XLOOKUP, advanced Pivot Tables, slicers, and building interactive business intelligence dashboards in MS Excel.',
+    icon: 'fas fa-chart-bar',
     color: '#10B981',
     realProject: {
-      title: 'Executive Data Analytics & Interactive Dashboard',
-      description: 'Clean a raw multi-thousand row dataset, write lookup formulas, build Pivot Tables with interactive Slicers, and export an executive dashboard.'
+      title: 'Interactive Executive Business Intelligence Dashboard',
+      description: 'Students clean raw sales data with Power Query, calculate KPIs, create Pivot Charts, and construct a dynamic executive dashboard.'
     },
     classes: [
       {
         id: 'deg3-cls-6',
         classNum: 6,
-        topic: 'Advanced Lookup Formulas (XLOOKUP, INDEX-MATCH & VLOOKUP)',
-        simpleConcept: 'Mastering XLOOKUP for multi-column lookups, wildcard searching, and replacing legacy VLOOKUP/INDEX-MATCH.',
-        objective: 'Perform complex data merging across multiple worksheets using XLOOKUP and dynamic arrays.',
+        topic: 'Power Query Data Cleaning & Automated ETL Workflows',
+        simpleConcept: 'Importing raw CSV/Excel files into Power Query, splitting columns, removing duplicates, and unpivoting data.',
+        objective: 'Automate raw data cleaning and transformation using Power Query.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain lookup array vs return array, handling `#N/A` errors (`if_not_found`), and two-way lookups.',
-          demonstrate: 'Merge customer names and order history from 2 separate sheets into 1 master dataset using XLOOKUP.',
-          practice: 'Use XLOOKUP to match product IDs with pricing data across multi-tab workbook.',
-          realWorldExample: 'Merging customer CRM data with transactional accounting tables.',
-          practicalTask: 'Combine 2 raw data tables into a master report using XLOOKUP and error handling.',
-          expectedOutput: 'Accurate combined data sheet with zero lookup errors.'
+          explain: 'Explain ETL (Extract, Transform, Load), data types, unpivoting, and refreshable query steps.',
+          demonstrate: 'Import messy multi-branch sales data, clean missing values, split names, and load clean table into Excel.',
+          practice: 'Clean a 100-row messy survey dataset using Power Query.',
+          realWorldExample: 'Corporate data analyst daily data preparation workflows.',
+          practicalTask: 'Clean a raw CSV dataset using Power Query and load clean table.',
+          expectedOutput: 'Automated, clean data table ready for analysis.'
         }
       },
       {
         id: 'deg3-cls-7',
         classNum: 7,
-        topic: 'Nested Logic Formulas (`SUMIFS`, `COUNTIFS`, `AVERAGEIFS`, `IF/AND/OR`)',
-        simpleConcept: 'Multi-criteria conditional mathematical calculations and logical evaluation formulas.',
-        objective: 'Extract targeted aggregate business metrics based on multiple filtering conditions.',
+        topic: 'Advanced Lookup Formulas (XLOOKUP, INDEX/MATCH & Nested IFs)',
+        simpleConcept: 'Using `XLOOKUP` for flexible left/right lookups, `INDEX/MATCH` combinations, and multi-condition logical formulas.',
+        objective: 'Execute complex multi-table data lookup calculations in Excel.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain syntax of `SUMIFS(sum_range, criteria_range1, criteria1, ...)`, date ranges, and boolean logic.',
-          demonstrate: 'Calculate total revenue for "South Region" in "Q3" for "Product A" using `SUMIFS`.',
-          practice: 'Write formulas to count transactions exceeding $500 made by active subscribers.',
-          realWorldExample: 'Financial reporting, sales target metrics, and inventory audits.',
-          practicalTask: 'Build a summary table with `SUMIFS` and `COUNTIFS` formulas evaluating 3 simultaneous criteria.',
-          expectedOutput: 'Dynamic summary table automatically updating with criteria changes.'
+          explain: 'Explain XLOOKUP exact match vs wildcard, multi-criteria lookup with INDEX/MATCH, and error handling with `IFERROR`.',
+          demonstrate: 'Match student IDs to exam grades and calculate bonus points based on attendance.',
+          practice: 'Write XLOOKUP formula retrieving employee salary and department based on ID.',
+          realWorldExample: 'Financial modeling and enterprise database lookup operations.',
+          practicalTask: 'Build a multi-table lookup sheet calculating order totals with XLOOKUP and IFERROR.',
+          expectedOutput: 'Accurate lookup spreadsheet without formula errors.'
         }
       },
       {
         id: 'deg3-cls-8',
         classNum: 8,
-        topic: 'Pivot Tables, Calculated Fields & Interactive Slicers',
-        simpleConcept: 'Summarizing massive datasets into Pivot Tables, grouping dates, adding calculated fields, and interactive Slicer buttons.',
-        objective: 'Build interactive Pivot Tables with dynamic time grouping and visual slicer filters.',
+        topic: 'Advanced Pivot Tables, Calculated Fields & Data Slicers',
+        simpleConcept: 'Grouping data by dates, adding Calculated Fields/Items, and linking interactive timeline slicers.',
+        objective: 'Analyze large datasets dynamically using advanced Pivot Table features.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain Values vs Rows vs Columns vs Filters, percentage of grand total display, and Timeline slicers.',
-          demonstrate: 'Create a Pivot Table summarizing sales by Category and Quarter; add region Slicers.',
-          practice: 'Build a Pivot Table from 500 sales rows and add Slicer buttons for Category and City.',
-          realWorldExample: 'Executive sales summaries and quarterly financial performance tracking.',
-          practicalTask: 'Construct a Pivot Table with interactive Category and Date Slicers.',
-          expectedOutput: 'Interactive Pivot Table filtering data on Slicer clicks.'
+          explain: 'Explain Pivot Table cache, calculated fields, percentage of total summaries, and date grouping.',
+          demonstrate: 'Create a Pivot Table analyzing revenue by region and product category, add Slicer for Year.',
+          practice: 'Build Pivot Table summarizing monthly sales growth per region.',
+          realWorldExample: 'Sales reporting and performance tracking in corporate companies.',
+          practicalTask: 'Construct a Pivot Table with slicers analyzing a 500-row sales dataset.',
+          expectedOutput: 'Interactive Pivot Table with connected slicers.'
         }
       },
       {
         id: 'deg3-cls-9',
         classNum: 9,
-        topic: 'Data Cleaning, Validation Rules & Conditional Formatting',
-        simpleConcept: 'Removing duplicates, text-to-columns, data validation dropdown lists, and dynamic color heatmap formatting.',
-        objective: 'Clean dirty raw data and enforce data entry validation rules with visual heatmaps.',
+        topic: 'Pivot Charts, KPI Cards & Dashboard Layout Design',
+        simpleConcept: 'Creating dynamic Pivot Charts (Column, Line, Donut), key performance indicator (KPI) metric cards, and dashboard themes.',
+        objective: 'Design visually compelling executive KPI dashboard screens.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain `TRIM()`, `PROPER()`, duplicate removal, custom validation lists, and formula-based conditional rules.',
-          demonstrate: 'Clean a messy contact list (extra spaces, inconsistent capitalization) and highlight top 10% values in green.',
-          practice: 'Clean a raw data dump and create a dropdown validation menu for status selection.',
-          realWorldExample: 'Preparing clean data pipelines for corporate business intelligence tools.',
-          practicalTask: 'Clean a raw dataset, apply validation dropdowns, and highlight key metrics with conditional formatting.',
-          expectedOutput: 'Clean dataset with dropdown inputs and visual highlight rules.'
+          explain: 'Explain visual hierarchy, removing gridlines, metric card design, and color palettes for management reports.',
+          demonstrate: 'Design an executive dashboard screen with 3 KPI cards (Total Revenue, Avg Order, Top Region) and 2 charts.',
+          practice: 'Create 2 Pivot Charts formatted with custom colors and clean labels.',
+          realWorldExample: 'Executive board meeting presentation dashboards.',
+          practicalTask: 'Design a single-screen Excel KPI dashboard with slicer controls.',
+          expectedOutput: 'Professional executive dashboard sheet.'
         }
       },
       {
         id: 'deg3-cls-10',
         classNum: 10,
-        topic: 'Building Executive Analytics Dashboards & Chart Combo Cards',
-        simpleConcept: 'Combining KPI summary cards, combo charts (bar + line), Pivot charts, and Slicers into an executive dashboard.',
-        objective: 'Design a clean, C-suite executive dashboard layout in Excel.',
+        topic: 'Dashboard Interactivity, Protection & Executive Report Export',
+        simpleConcept: 'Connecting slicers to multiple Pivot Tables simultaneously, locking sheet cells, and exporting PDF reports.',
+        objective: 'Finalize interactive Excel dashboard and export for management.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain gridlines removal, KPI card layout, chart color harmony, and lock protection.',
-          demonstrate: 'Assemble a single-screen executive dashboard featuring 4 KPI cards and 2 connected Pivot charts.',
-          practice: 'Build a sales executive dashboard layout connected to a master data sheet.',
-          realWorldExample: 'C-suite executive business performance reviews and monthly board meetings.',
-          practicalTask: 'Create an executive Excel Analytics Dashboard with KPI cards, charts, and Slicers.',
-          expectedOutput: 'Polished executive Excel dashboard workbook.'
+          explain: 'Explain Slicer Report Connections, protecting dashboard worksheets, and print/PDF setup.',
+          demonstrate: 'Connect 1 Slicer to 4 Pivot Tables so clicking a button updates all charts on screen at once.',
+          practice: 'Set up Slicer Report Connections across 2 charts.',
+          realWorldExample: 'Self-service business intelligence dashboards for managers.',
+          practicalTask: 'Export completed interactive Excel sales dashboard as executive PDF report.',
+          expectedOutput: 'Fully functional interactive Excel dashboard and PDF export.'
         }
       }
     ]
@@ -203,98 +203,98 @@ export const DEGREE_3_MODULES = [
   {
     id: 'deg3-mod-3',
     number: 3,
-    title: 'Full-Stack Web Engineering & Cybersecurity',
-    purpose: 'Understand web security principles (OWASP Top 10), ethical hacking fundamentals, HTTPS, JWT authentication, and full-stack app deployment.',
-    icon: 'fas fa-shield-alt',
-    color: '#00F0FF',
+    title: 'Digital Marketing, SEO & Local Business Growth',
+    purpose: 'Master search engine optimization (SEO), Google My Business local listings, Facebook/Instagram ad campaign setup, Google Analytics 4, and digital marketing strategy.',
+    icon: 'fas fa-bullhorn',
+    color: '#F59E0B',
     realProject: {
-      title: 'Secure Full-Stack Web App & Security Audit',
-      description: 'Build a web application with secure user authentication (JWT/OAuth) and write a security audit report evaluating OWASP vulnerabilities.'
+      title: 'Comprehensive Digital Marketing & Local SEO Campaign',
+      description: 'Students conduct keyword research, create a Google Business Profile setup, design ad creatives, and build a 30-day marketing plan.'
     },
     classes: [
       {
         id: 'deg3-cls-11',
         classNum: 11,
-        topic: 'Web Security Fundamentals & OWASP Top 10',
-        simpleConcept: 'Understanding common web vulnerabilities: SQL Injection, Cross-Site Scripting (XSS), CSRF, and broken authentication.',
-        objective: 'Identify web security vulnerabilities and understand mitigation strategies.',
+        topic: 'Search Engine Optimization (SEO) & Keyword Research',
+        simpleConcept: 'Understanding search engine algorithms, keyword intent (transactional vs informational), Google Keyword Planner, and search volume.',
+        objective: 'Perform keyword research and identify high-value search terms.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain OWASP Top 10 risks, SQL parameterization, input sanitization, and Content Security Policy (CSP).',
-          demonstrate: 'Demonstrate SQL injection vulnerability in a vulnerable test lab app and show parameterization fix.',
-          practice: 'Audit a sample codebase for unescaped user inputs causing XSS vulnerabilities.',
-          realWorldExample: 'Securing online banking applications and e-commerce payment gateways.',
-          practicalTask: 'Perform a security audit on sample code snippets and document identified vulnerabilities and fixes.',
-          expectedOutput: 'Security assessment audit report highlighting code vulnerabilities.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain organic search vs paid ads, keyword difficulty, search intent, and long-tail keywords.',
+          demonstrate: 'Use Google Keyword Planner / Ubersuggest to find 10 low-competition keywords for a local bakery.',
+          practice: 'Find 5 target keywords for a local IT training institute.',
+          realWorldExample: 'Ranking websites on Google search results page 1.',
+          practicalTask: 'Create an SEO keyword research spreadsheet with 10 targeted keywords and search metrics.',
+          expectedOutput: 'Structured SEO keyword research document.'
         }
       },
       {
         id: 'deg3-cls-12',
         classNum: 12,
-        topic: 'Ethical Hacking & Penetration Testing Tools Intro',
-        simpleConcept: 'Understanding ethical hacking methodology (Reconnaissance -> Scanning -> Exploitation) and tools like Wireshark, Nmap, and Burp Suite.',
-        objective: 'Understand network scanning basics and HTTP packet inspection using ethical hacking tools.',
+        topic: 'On-Page SEO & Content Optimization',
+        simpleConcept: 'Optimizing page title tags, meta descriptions, H1/H2 tags, URL slugs, image ALT text, and content readability.',
+        objective: 'Optimize HTML webpage elements for higher search engine ranking.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain legal authorization, white-hat vs black-hat, port scanning, and intercepting HTTP traffic in Burp Suite.',
-          demonstrate: 'Scan local network ports using Nmap in a sandbox and inspect HTTP GET/POST headers in Burp Suite.',
-          practice: 'Capture and inspect network request headers using browser developer tools and Wireshark capture.',
-          realWorldExample: 'Cybersecurity vulnerability assessments and bug bounty programs.',
-          practicalTask: 'Inspect network traffic headers of a web application and document request parameters.',
-          expectedOutput: 'Network request inspection log and security header summary.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain title tag character limits (60 chars), meta description click-through rate, and image optimization.',
+          demonstrate: 'Write optimized meta titles, descriptions, and heading structure for a digital marketing service page.',
+          practice: 'Optimize an un-optimized HTML page with target keywords in titles, headers, and ALT tags.',
+          realWorldExample: 'SEO copywriting for e-commerce and business blogs.',
+          practicalTask: 'Write optimized Meta Title, Description, and H1 tags for 3 website pages.',
+          expectedOutput: 'Complete On-Page SEO optimization specification sheet.'
         }
       },
       {
         id: 'deg3-cls-13',
         classNum: 13,
-        topic: 'Authentication & Authorization (JWT & Password Hashing)',
-        simpleConcept: 'Password hashing with bcrypt, JSON Web Tokens (JWT) for session authentication, and protected API routes.',
-        objective: 'Implement secure user authentication with password hashing and JWT token handling.',
+        topic: 'Local SEO & Google Business Profile Optimization',
+        simpleConcept: 'Setting up and optimizing a Google Business Profile (Google Maps listing), local citations, customer reviews, and NAP consistency.',
+        objective: 'Setup and rank local business listings on Google Maps.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain plaintext password dangers, salt + bcrypt hashing, JWT payload structure, and Authorization headers.',
-          demonstrate: 'Hash a user password with bcrypt, issue a signed JWT token on login, and verify token on protected route.',
-          practice: 'Build a login API handler that validates credentials and returns a signed JWT token.',
-          realWorldExample: 'User login systems on Google, modern web apps, and mobile APIs.',
-          practicalTask: 'Create a password hashing and JWT token generation code routine.',
-          expectedOutput: 'Functional authentication script issuing and validating JWT tokens.'
+          explain: 'Explain Local 3-Pack ranking factors: Name-Address-Phone (NAP), business category, customer reviews, and geotagged photos.',
+          demonstrate: 'Walk through Google Business Profile creation, adding services, opening hours, and response strategy for reviews.',
+          practice: 'Draft a Google Business profile setup plan for a local retail shop.',
+          realWorldExample: 'Driving local foot traffic and phone calls to restaurants, clinics, and shops.',
+          practicalTask: 'Create a complete Google Business Profile optimization checklist for a local business.',
+          expectedOutput: 'Local Business SEO optimization plan.'
         }
       },
       {
         id: 'deg3-cls-14',
         classNum: 14,
-        topic: 'Database Management Basics (SQL & MongoDB)',
-        simpleConcept: 'Relational databases (SQL queries: `SELECT`, `INSERT`, `UPDATE`) vs NoSQL document databases (MongoDB collections).',
-        objective: 'Write database queries to create, read, update, and delete (CRUD) records.',
+        topic: 'Meta Ads Manager (Facebook & Instagram Ad Campaigns)',
+        simpleConcept: 'Understanding Meta Ads Manager structure (Campaign -> Ad Set -> Ad), audience targeting, budgeting, and ad formats.',
+        objective: 'Configure Meta social media ad campaigns with target audience segmentation.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain tables/rows (SQL) vs collections/documents (MongoDB), primary keys, foreign keys, and indexes.',
-          demonstrate: 'Execute SQL queries to create a `users` table, insert 3 records, and run filtered `WHERE` queries.',
-          practice: 'Write CRUD database operations for an e-commerce product inventory database.',
-          realWorldExample: 'Backend data storage powering web applications and mobile apps.',
-          practicalTask: 'Write a set of SQL/NoSQL queries executing full CRUD operations on a database dataset.',
-          expectedOutput: 'Verified database query script returning expected dataset records.'
+          explain: 'Explain campaign objectives (Awareness, Leads, Sales), custom audiences, pixel tracking, and daily ad budget setting.',
+          demonstrate: 'Create a lead generation ad campaign setup in Meta Ads Manager demo, targeting local demographics.',
+          practice: 'Define target audience parameters (age, location, interests) for a clothing brand ad.',
+          realWorldExample: 'Scaling online sales and lead acquisition via Instagram & Facebook advertising.',
+          practicalTask: 'Build a complete Meta Ad campaign plan with targeted audiences and budget allocation.',
+          expectedOutput: 'Comprehensive Meta Ad campaign blueprint.'
         }
       },
       {
         id: 'deg3-cls-15',
         classNum: 15,
-        topic: 'Full-Stack Application Deployment & Environment Safety',
-        simpleConcept: 'Connecting frontend to backend API, managing production environment variables, and automated HTTPS SSL certificates.',
-        objective: 'Deploy a full-stack web application securely to cloud hosting servers.',
+        topic: 'Google Analytics 4 (GA4) & Digital Campaign Tracking',
+        simpleConcept: 'Installing GA4 tracking code, understanding users, sessions, bounce rate, event tracking, and traffic sources.',
+        objective: 'Analyze digital website traffic and measure marketing campaign performance.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain CORS (Cross-Origin Resource Sharing), SSL/TLS certificates, process managers (PM2), and cloud hosting (Render/Vercel).',
-          demonstrate: 'Deploy a full-stack node/web app, configure CORS headers, set production environment variables, and verify HTTPS.',
-          practice: 'Deploy your full-stack web project with working API endpoints and secure environment keys.',
-          realWorldExample: 'Production release pipeline for modern cloud software applications.',
-          practicalTask: 'Publish a full-stack web application live online with HTTPS encryption enabled.',
-          expectedOutput: 'Live secure web application URL.'
+          explain: 'Explain acquisition channels (Organic, Direct, Paid, Referral), user engagement metrics, and conversion goals.',
+          demonstrate: 'Navigate GA4 interface, view real-time traffic, analyze top pages, and set up event conversions.',
+          practice: 'Interpret a sample GA4 analytics report to identify top performing traffic sources.',
+          realWorldExample: 'Measuring return on investment (ROI) for digital advertising campaigns.',
+          practicalTask: 'Create a digital marketing performance report analyzing web traffic metrics.',
+          expectedOutput: 'Digital Marketing campaign analytics report.'
         }
       }
     ]
@@ -302,98 +302,98 @@ export const DEGREE_3_MODULES = [
   {
     id: 'deg3-mod-4',
     number: 4,
-    title: 'Enterprise Media Suite & Brand Design',
-    purpose: 'Master high-end Photoshop manipulation, advanced Illustrator vector branding, promo video mastering, and corporate creative direction.',
-    icon: 'fas fa-layer-group',
-    color: '#3B82F6',
+    title: 'Freelancing, E-Commerce & Monetization',
+    purpose: 'Master international freelancing platforms (Upwork, Fiverr), profile building, proposal writing, pricing strategies, payment gateways, and launching e-commerce stores.',
+    icon: 'fas fa-briefcase',
+    color: '#8B5CF6',
     realProject: {
-      title: 'Enterprise Brand Campaign Master Deck',
-      description: 'Create a high-end composite Photoshop visual, vector logo suite, 30-second promo video, and campaign launch presentation.'
+      title: 'Professional Freelance Agency Profile & Monetization Launch',
+      description: 'Students build a verified freelance profile, write winning client proposals, define service packages, and launch an online storefront.'
     },
     classes: [
       {
         id: 'deg3-cls-16',
         classNum: 16,
-        topic: 'Photoshop Masterclass: Advanced Compositing & Lighting',
-        simpleConcept: 'Blending multiple images seamlessly using layer masks, atmospheric depth, matched light sources, and dodge/burn.',
-        objective: 'Construct complex surreal or photorealistic multi-image composited artwork.',
+        topic: 'Freelancing Platforms Overview (Upwork, Fiverr & LinkedIn)',
+        simpleConcept: 'Understanding global freelance marketplaces, service gig packages vs hourly jobs, and platform commission structures.',
+        objective: 'Select optimal freelance platforms and construct professional freelancer profiles.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain light source direction, rim light highlights, shadows, color matching adjustment layers, and camera depth of field.',
-          demonstrate: 'Blend 4 distinct photos (landscape + model + sky + particles) into a single cohesive cinematic key art photo.',
-          practice: 'Composite a product into a futuristic dynamic background with matching shadows and highlights.',
-          realWorldExample: 'Hollywood movie posters, AAA video game covers, and luxury ad campaigns.',
-          practicalTask: 'Create a 4-layer photorealistic composite visual image in Photoshop.',
-          expectedOutput: 'High-end composited image asset saved as PSD and 4K PNG.'
+          explain: 'Explain Upwork Job Success Score (JSS), Fiverr Level system, profile bio optimization, and portfolio showcase.',
+          demonstrate: 'Analyze top-rated freelancer profiles on Upwork/Fiverr, dissecting title, bio, video intro, and pricing tiers.',
+          practice: 'Draft a professional freelancer bio highlighting digital skills (Video Editing / Web Dev / Graphics).',
+          realWorldExample: 'Earning USD income through international remote freelance work.',
+          practicalTask: 'Write a high-converting freelance profile bio and service catalog list.',
+          expectedOutput: 'Optimized professional freelance profile document.'
         }
       },
       {
         id: 'deg3-cls-17',
         classNum: 17,
-        topic: 'Illustrator Vector Masterclass: Isometric & 3D Artwork',
-        simpleConcept: 'Using Illustrator 3D and Materials tools, isometric design grids, and complex vector illustrations.',
-        objective: 'Design isometric 3D vector graphics and complex vector illustrations.',
+        topic: 'Winning Proposal Writing & Client Communication',
+        simpleConcept: 'Writing custom proposal letters that convert job posts into paid contracts, asking discovery questions, and closing deals.',
+        objective: 'Draft persuasive freelance job proposals and manage client communications.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain 30-degree isometric grid angles, 3D Extrude & Bevel, vector lighting, and ambient occlusion.',
-          demonstrate: 'Build an isometric vector workstation or city building graphic using Illustrator 3D tools.',
-          practice: 'Create a 3D isometric vector icon set for a modern technology website.',
-          realWorldExample: 'SaaS website illustrations, tech conference graphics, and modern UI vector art.',
-          practicalTask: 'Design an isometric 3D vector graphic illustration in Illustrator.',
-          expectedOutput: 'Scalable 3D isometric vector artwork file.'
+          explain: 'Explain the 4-part proposal formula: Acknowledge Problem + Proposed Solution + Relevant Work Sample + Call to Action.',
+          demonstrate: 'Review a real Upwork client job post and draft a tailored winning proposal live in class.',
+          practice: 'Write a response proposal for a sample client request looking for a social media video editor.',
+          realWorldExample: 'Converting client inquiries into paid freelance projects.',
+          practicalTask: 'Write 2 custom proposal cover letters targeting specific sample freelance job posts.',
+          expectedOutput: '2 high-converting freelance job proposals.'
         }
       },
       {
         id: 'deg3-cls-18',
         classNum: 18,
-        topic: 'High-End Video Editing, Motion Tracking & Color Match',
-        simpleConcept: 'Motion tracking camera movement in After Effects/Premiere, screen replacement, and shot-to-shot color matching.',
-        objective: 'Apply motion tracking to pin graphics onto moving video elements and color match multi-camera shots.',
+        topic: 'Service Pricing, Contracts & International Payments',
+        simpleConcept: 'Setting hourly vs fixed-price rates, milestone payments, invoicing, contract scope protection, and foreign exchange payouts.',
+        objective: 'Structure profitable pricing packages and secure payment methods.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain 2D vs 3D camera tracking, Mocha AE tracking, Lumetri Color Match, and vector scope skin tone lines.',
-          demonstrate: 'Track a moving smartphone screen and replace screen content with custom video overlay.',
-          practice: 'Track a text graphic onto a moving vehicle or person in a video clip.',
-          realWorldExample: 'Commercial VFX, screen replacements in movies, and high-end brand promos.',
-          practicalTask: 'Complete a video tracking edit pinning graphics onto moving video footage.',
-          expectedOutput: 'Rendered video sequence with accurate motion tracking.'
+          explain: 'Explain scope creep prevention, deposit upfront policies, Payoneer/PayPal/Bank transfer payouts, and tax compliance.',
+          demonstrate: 'Calculate hourly billable rate (Expenses + Desired Income / Hours) and build a 3-tier pricing table (Basic, Standard, Premium).',
+          practice: 'Create a 3-tier service pricing package for a digital graphic service.',
+          realWorldExample: 'Managing freelance business finances and international client billing.',
+          practicalTask: 'Create a 3-tier service pricing table with clear deliverables and milestones.',
+          expectedOutput: 'Structured 3-tier freelance service pricing catalog.'
         }
       },
       {
         id: 'deg3-cls-19',
         classNum: 19,
-        topic: 'PowerPoint & Keynote Executive Presentation Design',
-        simpleConcept: 'Designing high-impact slide decks: visual storytelling, slide master layouts, custom data charts, and smooth morph transitions.',
-        objective: 'Design an executive pitch deck applying modern presentation design principles.',
+        topic: 'E-Commerce Storefront Setup (Shopify & WooCommerce Basics)',
+        simpleConcept: 'Setting up an online store, adding products, setting up categories, shopping cart, and local payment gateway integration.',
+        objective: 'Build and configure a functional e-commerce online store.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain 1-idea-per-slide rule, visual contrast, custom slide masters, vector icon usage, and Morph transition.',
-          demonstrate: 'Redesign a cluttered text slide into a sleek, visual 3-column executive deck slide.',
-          practice: 'Design a 5-slide startup pitch deck with title slide, problem, solution, data chart, and contact slide.',
-          realWorldExample: 'Venture capital pitch decks, corporate keynote presentations, and client proposals.',
-          practicalTask: 'Design a 6-slide executive presentation deck with custom graphics and Morph transitions.',
-          expectedOutput: 'Polished executive presentation slide deck (PPTX/PDF).'
+          explain: 'Explain e-commerce architecture, product photos/descriptions, checkout process, and shipping settings.',
+          demonstrate: 'Build a demo online store on Shopify/WooCommerce, upload 2 products, and test checkout workflow.',
+          practice: 'Upload 1 digital/physical product with title, description, price, and image to store.',
+          realWorldExample: 'Launching online brands, apparel stores, and digital product shops.',
+          practicalTask: 'Configure a functional demo e-commerce store with 3 products.',
+          expectedOutput: 'Working e-commerce storefront demo.'
         }
       },
       {
         id: 'deg3-cls-20',
         classNum: 20,
-        topic: 'Creative Direction & Portfolio Review',
-        simpleConcept: 'Developing a unique artistic voice, organizing a creative portfolio, writing case studies, and presenting work to clients.',
-        objective: 'Compile creative design projects into a unified professional portfolio showcase.',
+        topic: 'Digital Product Monetization & Content Business Models',
+        simpleConcept: 'Monetizing digital products (templates, ebooks, stock assets), digital courses, affiliate marketing, and subscription models.',
+        objective: 'Design passive income digital product monetization strategies.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain portfolio structure (Problem -> Solution -> Process -> Final Result), Behance/Dribbble presentation.',
-          demonstrate: 'Review a Behance case study presentation: break down project process, sketches, and final renders.',
-          practice: 'Draft a written case study breakdown for your best creative project.',
-          realWorldExample: 'Creative director hiring portfolios and agency pitch decks.',
-          practicalTask: 'Publish a comprehensive creative project case study deck on Behance/Portfolio.',
-          expectedOutput: 'Complete professional creative portfolio project showcase.'
+          explain: 'Explain digital product creation (Canva templates, Notion setups, Lightroom presets), Gumroad sales, and affiliate links.',
+          demonstrate: 'Set up a digital product listing on Gumroad/Etsy selling a social media template pack.',
+          practice: 'Create a concept for 1 digital product you can create and sell online.',
+          realWorldExample: 'Generating recurring passive income from reusable digital assets.',
+          practicalTask: 'Create a digital product monetization plan with product mockups and pricing.',
+          expectedOutput: 'Digital product monetization blueprint.'
         }
       }
     ]
@@ -401,98 +401,98 @@ export const DEGREE_3_MODULES = [
   {
     id: 'deg3-mod-5',
     number: 5,
-    title: 'Digital Career Mastery, E-Commerce & Freelancing',
-    purpose: 'Master Amazon Seller / E-Commerce basics, Upwork & Fiverr freelancing profile setup, speed touch typing, and job interview preparation.',
-    icon: 'fas fa-briefcase',
-    color: '#F59E0B',
+    title: 'Career Mastery, Portfolio & Industry Capstone Project',
+    purpose: 'Build an industry-grade master digital portfolio, optimize LinkedIn professional profile, prepare for tech job interviews, and execute the final degree capstone project.',
+    icon: 'fas fa-award',
+    color: '#EC4899',
     realProject: {
-      title: 'Digital Career Launch Kit',
-      description: 'Set up a professional freelance profile (Upwork/Fiverr), list a sample Amazon product, polish LinkedIn resume, and pass typing certification.'
+      title: 'Final Degree Industry Master Capstone Project & Defense',
+      description: 'Students deliver a master capstone portfolio featuring web apps, video reels, graphic brand kits, and analytics dashboards.'
     },
     classes: [
       {
         id: 'deg3-cls-21',
         classNum: 21,
-        topic: 'Amazon Seller & E-Commerce Operations Overview',
-        simpleConcept: 'Understanding Amazon FBA vs FBM, product listing creation, keyword optimization, pricing strategies, and order fulfillment.',
-        objective: 'Understand Amazon seller central workflow and create an optimized e-commerce product listing.',
+        topic: 'Master Portfolio Architecture & Case Study Presentation',
+        simpleConcept: 'Organizing digital projects into problem-solution case studies, showcasing real metrics, and personal branding.',
+        objective: 'Structure digital projects into compelling portfolio case studies.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain ASIN numbers, bullet point keyword placement, A+ content, Amazon FBA fee structures, and reviews.',
-          demonstrate: 'Walk through Amazon product listing creation: title optimization, key feature bullet points, and product images.',
-          practice: 'Write an optimized product title, 5 bullet points, and description for an e-commerce product.',
-          realWorldExample: 'Managing online stores on Amazon, Flipkart, Shopify, and global market hubs.',
-          practicalTask: 'Draft a complete optimized Amazon product listing spec sheet.',
-          expectedOutput: 'High-converting Amazon e-commerce product listing draft.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain case study format: Problem Statement + Role + Tools Used + Process + Final Results & Screenshots.',
+          demonstrate: 'Review a top-tier digital portfolio case study, highlighting visual proof and quantifiable achievements.',
+          practice: 'Write a case study outline for 1 project created during the degree program.',
+          realWorldExample: 'Winning job offers at leading tech companies and agencies.',
+          practicalTask: 'Write 2 complete project case studies for your digital portfolio website.',
+          expectedOutput: '2 detailed project case study documents.'
         }
       },
       {
         id: 'deg3-cls-22',
         classNum: 22,
-        topic: 'Freelancing Mastery (Upwork, Fiverr & Direct Client Outreach)',
-        simpleConcept: 'Creating high-converting freelance profiles, writing winning client proposals, pricing services, and client communication.',
-        objective: 'Set up professional freelance profiles and write winning proposal pitches.',
+        topic: 'LinkedIn Profile Optimization & Professional Networking',
+        simpleConcept: 'Optimizing LinkedIn headline, summary bio, featured work section, experience highlights, and networking outreach.',
+        objective: 'Build an optimized professional LinkedIn profile to attract recruiters.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain profile optimization, portfolio attachment, proposal hook framing, hourly vs fixed rates, and client reviews.',
-          demonstrate: 'Review winning Upwork proposal template: greeting -> proof of understanding -> past work link -> CTA question.',
-          practice: 'Write 2 custom proposal responses for sample freelance job postings in video editing or web dev.',
-          realWorldExample: 'Building a independent remote freelancing career earning global currency income.',
-          practicalTask: 'Create an optimized Upwork/Fiverr profile draft and write 2 winning job proposals.',
-          expectedOutput: 'Verified freelance profile setup and winning proposal templates.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain recruiter search keywords, LinkedIn All-Star status, engaging post content, and connection request etiquette.',
+          demonstrate: 'Optimize a LinkedIn profile step-by-step: headline formula, keyword-rich about section, and linking portfolio.',
+          practice: 'Draft a keyword-optimized LinkedIn headline and about section.',
+          realWorldExample: 'Attracting inbound job interviews and recruiter messages on LinkedIn.',
+          practicalTask: 'Update LinkedIn profile with optimized headline, about bio, and portfolio link.',
+          expectedOutput: 'All-Star level professional LinkedIn profile.'
         }
       },
       {
         id: 'deg3-cls-23',
         classNum: 23,
-        topic: 'Speed Touch Typing & Fast Workplace Productivity',
-        simpleConcept: 'Advanced speed typing drills in English (target 40+ WPM) and keyboard shortcut mastery for ultimate workplace speed.',
-        objective: 'Achieve 40+ WPM typing speed with 95%+ accuracy and master workplace keyboard efficiency.',
+        topic: 'Resume Building, Cover Letters & Job Application Strategy',
+        simpleConcept: 'Crafting ATS-friendly (Applicant Tracking System) single-page tech resumes, tailored cover letters, and job search strategy.',
+        objective: 'Create ATS-compliant professional tech resume and job application materials.',
         teacherGuide: {
-          theoryDuration: '10 min',
-          practicalDuration: '45 min',
-          explain: 'Explain typing ergonomics, speed milestones, advanced punctuation typing, and OS/app global shortcuts.',
-          demonstrate: 'Conduct live speed typing demonstration on Monkeytype / Keybr aiming for 50+ WPM.',
-          practice: 'Perform 30 minutes of intensive speed typing exercises focusing on error reduction.',
-          realWorldExample: 'High-speed administrative roles, live chat support, coding, and rapid content creation.',
-          practicalTask: 'Complete a 5-minute typing speed test achieving >35 WPM with 95% accuracy.',
-          expectedOutput: 'Verified typing speed certificate or test score screenshot.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain ATS scanner formatting rules, action verbs, quantifying results (e.g. "Increased engagement by 40%"), and clean templates.',
+          demonstrate: 'Build an ATS-optimized resume using Reactive Resume / Canva, customizing for a Digital Specialist role.',
+          practice: 'Draft 3 bullet points quantifying project achievements for your resume.',
+          realWorldExample: 'Passing automated HR resume screeners and securing interviews.',
+          practicalTask: 'Build a single-page ATS-optimized tech resume in PDF format.',
+          expectedOutput: 'Professional single-page ATS tech resume.'
         }
       },
       {
         id: 'deg3-cls-24',
         classNum: 24,
-        topic: 'LinkedIn Profile Optimization & Personal Branding',
-        simpleConcept: 'Optimizing LinkedIn headline, About section, featured projects, networking outreach messages, and content posting strategy.',
-        objective: 'Transform your LinkedIn profile into a recruiter-magnet personal brand portfolio.',
+        topic: 'Tech & Creative Job Interview Preparation',
+        simpleConcept: 'Preparing for behavioral interview questions (STAR method), technical portfolio reviews, salary negotiation, and mock interviews.',
+        objective: 'Master interview techniques and articulate technical skills confidently.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain LinkedIn search algorithm, keyword-rich headline, banner image design, and networking outreach messages.',
-          demonstrate: 'Audit a LinkedIn profile: update headline to "Digital Developer & Media Strategist", add featured links.',
-          practice: 'Write a compelling 200-word LinkedIn About summary highlighting skills and project achievements.',
-          realWorldExample: 'Attracting direct job interview invitations from recruiters and agency founders.',
-          practicalTask: 'Update your LinkedIn profile with professional banner, headline, summary, and project links.',
-          expectedOutput: 'Fully optimized, recruiter-ready LinkedIn profile.'
+          explain: 'Explain STAR method (Situation, Task, Action, Result), answering "Tell me about yourself", and asking smart questions.',
+          demonstrate: 'Conduct a mock interview session demonstrating how to walk a recruiter through a live portfolio website.',
+          practice: 'Practice answering 2 common behavioral interview questions using the STAR framework.',
+          realWorldExample: 'Securing high-paying jobs and negotiating salary offers.',
+          practicalTask: 'Record a 2-minute video pitch introducing yourself and walking through your digital portfolio.',
+          expectedOutput: '2-minute video portfolio introduction pitch.'
         }
       },
       {
         id: 'deg3-cls-25',
         classNum: 25,
-        topic: 'Digital Resume, Interview Prep & Capstone Graduation',
-        simpleConcept: 'Designing an ATS-friendly resume, mock interview practice for tech/media roles, and final capstone project presentation.',
-        objective: 'Prepare an ATS-compliant PDF resume and present final capstone graduation project.',
+        topic: 'Degree Master Capstone Defense & Project Presentation',
+        simpleConcept: 'Presenting the comprehensive final Degree Capstone Project to instructors and peer audience with live demonstration.',
+        objective: 'Deliver final capstone project defense and receive degree completion certification.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Explain ATS (Applicant Tracking System) parsing, action-verb bullet points, STAR interview method, and final evaluation.',
-          demonstrate: 'Review an ATS-formatted single-page resume and conduct a mock interview question session.',
-          practice: 'Build your 1-page ATS resume in Canva/Word and present your capstone project deck to the class.',
-          realWorldExample: 'Securing high-paying entry-level software engineering, design, and marketing career positions.',
-          practicalTask: 'Submit 1-page ATS resume and present your final digital skills capstone project.',
-          expectedOutput: 'Completed ATS Resume PDF and successful Capstone Project presentation.'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Explain presentation delivery, managing live tech demos, handling Q&A, and showcasing end-to-end skill mastery.',
+          demonstrate: 'Moderate final student capstone project presentations and evaluate against industry rubric.',
+          practice: 'Deliver a 5-minute live demonstration of master capstone project to class.',
+          realWorldExample: 'Final university capstone defense and professional project showcase.',
+          practicalTask: 'Deliver final 5-minute Degree Capstone Project presentation and live demo.',
+          expectedOutput: 'Successful Capstone Project defense and graduation readiness.'
         }
       }
     ]
@@ -501,28 +501,28 @@ export const DEGREE_3_MODULES = [
 
 export const DEGREE_3_SPECIALIZATION_OPTIONS = [
   {
-    id: 'track-ai-automation',
-    title: 'Advanced AI Engineering & Agent Automation',
-    icon: 'fas fa-brain',
-    description: 'Focus on Claude 3.5 prompt engineering, Custom GPT creation, n8n/Make AI Agent workflows, and compliance auditing.',
-    keySkills: ['Chain-of-Thought Prompting', 'Custom GPT / RAG Creation', 'No-Code AI Automation (n8n/Make)', 'AI Ethics & Compliance Auditing'],
-    portfolioDeliverable: 'An autonomous AI Agent workflow system and custom knowledge-trained AI assistant.'
+    id: 'track-fullstack',
+    title: 'Modern Web Apps & Full-Stack',
+    icon: 'fas fa-laptop-code',
+    description: 'Build single-page React applications with live API data integration, Tailwind CSS styling, and Vercel cloud deployment.',
+    keySkills: ['React.js & Hooks', 'Tailwind CSS', 'REST API Integration', 'Vercel Deployment'],
+    portfolioDeliverable: 'A live responsive React web application hosted on Vercel.'
   },
   {
-    id: 'track-data-analytics',
-    title: 'Enterprise Data Analytics & Excel Dashboarding',
-    icon: 'fas fa-chart-line',
-    description: 'Focus on XLOOKUP formulas, multi-criteria logic, Pivot Tables with interactive Slicers, and C-suite executive dashboards.',
-    keySkills: ['Advanced XLOOKUP & Formulas', 'Pivot Tables & Dynamic Slicers', 'Data Cleaning & Validation Rules', 'Executive Analytics Dashboard Design'],
-    portfolioDeliverable: 'A complete multi-tab Executive Excel Analytics Dashboard workbook.'
+    id: 'track-analytics',
+    title: 'Data Analytics & Power Query Dashboards',
+    icon: 'fas fa-chart-bar',
+    description: 'Clean raw enterprise datasets with Power Query, write complex lookup formulas, build Pivot Charts, and construct executive KPI dashboards.',
+    keySkills: ['Power Query ETL', 'XLOOKUP & Formulas', 'Pivot Charts & Slicers', 'Executive KPI Dashboards'],
+    portfolioDeliverable: 'An interactive MS Excel Business Intelligence Dashboard with live slicers.'
   },
   {
-    id: 'track-career-freelance',
-    title: 'Full-Stack Cybersecurity & Freelance Career Mastery',
+    id: 'track-freelance',
+    title: 'Digital Marketing & Freelance Monetization',
     icon: 'fas fa-briefcase',
-    description: 'Focus on OWASP web security, Amazon seller basics, Upwork/Fiverr freelance setup, speed touch typing, and LinkedIn branding.',
-    keySkills: ['OWASP Web Security & JWT Auth', 'Amazon E-Commerce Listing Setup', 'Upwork/Fiverr Client Proposals', 'LinkedIn Optimization & ATS Resume'],
-    portfolioDeliverable: 'A verified freelance profile deck, ATS resume, and live secure full-stack web project.'
+    description: 'Execute keyword SEO research, set up Meta Ads campaigns, launch e-commerce storefronts, and build international freelance client pipelines.',
+    keySkills: ['SEO & Local Business Maps', 'Meta Ads Manager', 'Upwork & Fiverr Profiles', 'E-Commerce Storefronts'],
+    portfolioDeliverable: 'A complete freelance business profile, campaign plan, and live online store.'
   }
 ];
 

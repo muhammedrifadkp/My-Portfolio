@@ -1,92 +1,102 @@
-// PG 1st Year (Postgraduate 1st Year) Digital Skills Syllabus Data
-// Designed based on Postgraduate student survey demands: Advanced MS Office (Word/Excel/PowerPoint), Arabic/Malayalam Typing, Graphic Design (Photoshop/Canva), Video Editing, Applied AI Research Tools, and Web Development.
+// PG 1st Year Digital Skills Syllabus Data Structure
+// Framework: LEARN -> DEMONSTRATE -> PRACTICE -> CREATE -> COMPLETE
 
 export const PG_1_MODULES = [
   {
     id: 'pg1-mod-1',
     number: 1,
-    title: 'Advanced Enterprise Office & Multi-Language Digital Typing',
-    purpose: 'Master enterprise-grade document creation, data analytics in Excel, high-impact executive presentations, and Arabic/Malayalam touch typing for modern workplaces.',
-    color: '#2563EB',
-    icon: 'fas fa-file-excel',
+    title: 'Enterprise Office Productivity & Management',
+    purpose: 'Master advanced executive document workflows, complex Excel financial modeling, automated office reporting, and team collaboration systems.',
+    icon: 'fas fa-briefcase',
+    color: '#00F0FF',
     realProject: {
-      title: 'Automated Financial Dashboard & Dual-Language Executive Report',
-      description: 'Build a dynamic Excel dashboard with XLOOKUP and Pivot Charts, alongside a professionally formatted multi-language report using Arabic and Malayalam touch typing.'
+      title: 'Enterprise Operational Management Package',
+      description: 'Students build an automated Excel financial model, formal executive report document, and corporate presentation slide deck.'
     },
     classes: [
       {
-        id: 'pg1-c1',
+        id: 'pg1-cls-1',
         classNum: 1,
-        topic: 'Enterprise Document Formatting & Automated Styling (MS Word)',
-        simpleConcept: 'Designing long-form academic and business reports with automated Tables of Contents, styles, and citation managers.',
-        objective: 'Master structural styles, section breaks, auto-numbering, and referencing in MS Word.',
+        topic: 'Executive Document Formatting & Publishing',
+        simpleConcept: 'Mastering document styles, table of contents, headers/footers, watermark security, and PDF publishing for corporate board reports.',
+        objective: 'Format formal executive reports conforming to corporate documentation standards.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain document hierarchy, style sets, headers/footers, and automated citation tools (Mendeley/Zotero integration).',
-          demonstrate: 'Demonstrate creating a 10-page thesis document layout with automated table of contents and page numbering.',
-          practicalTask: 'Format a multi-page document with custom heading styles, cover page, and cross-references.',
-          expectedOutput: 'A clean, print-ready PDF executive report with working table of contents.'
+          explain: 'Explain typography hierarchy, document section breaks, captioning figures, and PDF security settings.',
+          demonstrate: 'Format a 10-page corporate report with custom styles, automated table of contents, and cover page.',
+          practice: 'Format a 5-page business proposal document with styled headings and table of contents.',
+          realWorldExample: 'Corporate annual reports and board meeting documentation.',
+          practicalTask: 'Create a 5-page formatted executive report with automated table of contents.',
+          expectedOutput: 'Clean, professionally formatted executive PDF report.'
         }
       },
       {
-        id: 'pg1-c2',
+        id: 'pg1-cls-2',
         classNum: 2,
-        topic: 'Master Excel Data Lookup & Logical Formulas (XLOOKUP, VLOOKUP, IF/IFS)',
-        simpleConcept: 'Extracting and analyzing business data instantly using modern lookup and conditional formulas.',
-        objective: 'Perform advanced data queries across multiple worksheets using XLOOKUP, INDEX/MATCH, and nested IF logic.',
+        topic: 'Financial Modeling & Advanced Formulas in MS Excel',
+        simpleConcept: 'Using `SUMIFS`, `COUNTIFS`, `INDEX/MATCH`, `XLOOKUP`, `PMT`, and `NPV` for corporate budgeting and financial forecasting.',
+        objective: 'Build multi-tab financial models and budget forecast spreadsheets.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover lookup mechanisms, approximate vs exact match, error handling with IFERROR, and multi-criteria evaluation.',
-          demonstrate: 'Show how to search student or sales databases with XLOOKUP and clean broken references with IFERROR.',
-          practicalTask: 'Build a dynamic lookup sheet querying 500+ records to retrieve employee or student performance data.',
-          expectedOutput: 'Functional Excel spreadsheet with error-free XLOOKUP formulas.'
+          explain: 'Explain financial model structure, dynamic inputs vs output cells, audit formula tools, and scenario analysis.',
+          demonstrate: 'Build a 3-year revenue and expense forecast model with dynamic growth parameters.',
+          practice: 'Calculate loan EMI payments using PMT function and build amortization schedule.',
+          realWorldExample: 'Corporate budgeting, financial planning, and investment evaluation.',
+          practicalTask: 'Construct a 3-year financial budget forecast spreadsheet with dynamic formulas.',
+          expectedOutput: 'Accurate multi-year financial model spreadsheet.'
         }
       },
       {
-        id: 'pg1-c3',
+        id: 'pg1-cls-3',
         classNum: 3,
-        topic: 'Excel Data Analytics, Pivot Tables & Dynamic Dashboards',
-        simpleConcept: 'Summarizing massive data sets into visual, interactive analytical charts and slicers.',
-        objective: 'Construct interactive Pivot Tables, calculated fields, and KPI dashboards.',
+        topic: 'Power Query Data Transformation & Consolidations',
+        simpleConcept: 'Consolidating multiple Excel files from a folder automatically, unpivoting data tables, and setting up automated refresh.',
+        objective: 'Automate multi-source data consolidation workflows in Excel.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain data aggregation, grouping date ranges, conditional formatting, and dashboard slicers.',
-          demonstrate: 'Build an interactive sales dashboard live on screen using Pivot Charts and timelines.',
-          practicalTask: 'Import raw survey data and turn it into a 4-chart interactive executive dashboard with slicers.',
-          expectedOutput: 'An interactive Excel Dashboard file containing Pivot Charts and slice filters.'
+          explain: 'Explain Power Query folder connections, appending queries, merging tables, and data type validation.',
+          demonstrate: 'Combine 12 monthly sales CSV files into a single unified data master table automatically using Power Query.',
+          practice: 'Merge 2 customer datasets on common ID key using Power Query.',
+          realWorldExample: 'Automating monthly multi-branch financial report consolidation.',
+          practicalTask: 'Consolidate multiple monthly sales files into one automated Power Query master dataset.',
+          expectedOutput: 'Automated data consolidation query setup.'
         }
       },
       {
-        id: 'pg1-c4',
+        id: 'pg1-cls-4',
         classNum: 4,
-        topic: 'Executive Slide Design & Storytelling (MS PowerPoint)',
-        simpleConcept: 'Creating pitch decks and academic presentations that captivate audiences with clean layout principles.',
-        objective: 'Apply visual hierarchy, slide master customization, infographics, and smooth morph transitions.',
+        topic: 'Executive PowerPoint Slide Decks & Data Visualization',
+        simpleConcept: 'Designing executive pitch decks, data-driven charts, infographic layouts, and delivering corporate presentations.',
+        objective: 'Create persuasive data-driven executive slide decks.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Teach the 6x6 rule, contrast, typography pairing, iconography, and PowerPoint Morph transition.',
-          demonstrate: 'Transform a bullet-heavy text slide into a modern infographic slide with Morph animation.',
-          practicalTask: 'Design a 5-slide executive presentation pitch deck adhering to modern design principles.',
-          expectedOutput: 'A 5-slide PPTX deck with custom Master Layouts and Morph transitions.'
+          explain: 'Explain Minto Pyramid Principle, visual storytelling, reducing slide clutter, and chart emphasis techniques.',
+          demonstrate: 'Design a 5-slide strategic corporate presentation with clean chart highlights and key takeaways.',
+          practice: 'Create 2 slides presenting business quarterly growth metrics visually.',
+          realWorldExample: 'Board of directors presentations and investor fundraising pitch decks.',
+          practicalTask: 'Design a 5-slide executive presentation summarizing business performance.',
+          expectedOutput: 'Polished 5-slide executive presentation PPTX.'
         }
       },
       {
-        id: 'pg1-c5',
+        id: 'pg1-cls-5',
         classNum: 5,
-        topic: 'Arabic & Malayalam Touch Typing & Multi-Language Workplace Tools',
-        simpleConcept: 'Typing efficiently in Arabic and Malayalam using standard keyboard layouts for regional and international communication.',
-        objective: 'Master touch typing techniques for Arabic (Keyman/InScript) and Malayalam Unicode layouts.',
+        topic: 'Cloud Collaboration Systems & Enterprise Storage Security',
+        simpleConcept: 'Managing Google Workspace / Microsoft 365 permissions, shared drives, version history, and document access security.',
+        objective: 'Configure secure team cloud storage and collaborative document workflows.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain keyboard layout maps, finger placement, right-to-left alignment, and font encoding (Unicode).',
-          demonstrate: 'Demonstrate typing a bilingual document in Word with Arabic RTL and Malayalam font styles.',
-          practicalTask: 'Type a 200-word paragraph in Arabic and Malayalam accurately within the lab timeframe.',
-          expectedOutput: 'A formatted Word document containing clean Arabic and Malayalam translated text.'
+          explain: 'Explain role-based access controls (Viewer vs Editor), version recovery, activity audit logs, and data security.',
+          demonstrate: 'Set up a Google Shared Drive with specific department folders, permission levels, and version rollback.',
+          practice: 'Configure folder access restrictions and test version restoration.',
+          realWorldExample: 'Enterprise cloud document governance and team security.',
+          practicalTask: 'Create an enterprise cloud drive folder structure with defined access permissions.',
+          expectedOutput: 'Configured cloud storage workspace security plan.'
         }
       }
     ]
@@ -94,88 +104,98 @@ export const PG_1_MODULES = [
   {
     id: 'pg1-mod-2',
     number: 2,
-    title: 'Professional Graphic Design & Visual Communication',
-    purpose: 'Master graphic design tools like Adobe Photoshop and Canva Pro to produce high-impact branding assets and marketing visuals.',
-    color: '#059669',
-    icon: 'fas fa-palette',
+    title: 'Advanced Data Science & Business Intelligence (Power BI)',
+    purpose: 'Master Power BI Desktop, DAX formulas (CALCULATE, SUMX, RELATED), interactive report visual layouts, data modeling, and business intelligence dashboards.',
+    icon: 'fas fa-chart-line',
+    color: '#3B82F6',
     realProject: {
-      title: 'Complete Corporate Brand Identity Kit',
-      description: 'Design a comprehensive brand kit including logo concepts, poster flyers, social media banners, and digital business cards.'
+      title: 'Enterprise Power BI Business Intelligence Dashboard',
+      description: 'Students build a multi-page Power BI dashboard with star-schema data models, DAX measures, and interactive report visuals.'
     },
     classes: [
       {
-        id: 'pg1-c6',
+        id: 'pg1-cls-6',
         classNum: 6,
-        topic: 'Photoshop Workspace, Layers & Non-Destructive Editing',
-        simpleConcept: 'Understanding layers, layer masks, and smart objects to edit images without ruining original files.',
-        objective: 'Master Photoshop layer hierarchies, masks, smart objects, and essential selection tools.',
+        topic: 'Power BI Desktop Interface & Star-Schema Data Modeling',
+        simpleConcept: 'Importing data sources into Power BI, creating Relationships (1-to-Many), Fact vs Dimension tables, and Star-Schema design.',
+        objective: 'Construct efficient relational data models in Power BI.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover raster vs vector, non-destructive editing using Layer Masks, Adjustment Layers, and Selection tools.',
-          demonstrate: 'Demonstrate isolating a product from a background using Select Subject and Masking.',
-          practicalTask: 'Cut out 3 objects and composite them cleanly into a new background scene.',
-          expectedOutput: 'A multi-layered PSD composition with non-destructive layer masks.'
+          explain: 'Explain Star-Schema vs Snowflake schema, primary/foreign keys, and cross-filter direction.',
+          demonstrate: 'Import Sales Fact table and Customer/Product Dimension tables, establishing active 1-to-many relationships.',
+          practice: 'Link a Date Dimension table to Sales Fact table in Power BI Model View.',
+          realWorldExample: 'Enterprise data warehouse modeling and business intelligence architecture.',
+          practicalTask: 'Build a Star-Schema relational model connecting 3 tables in Power BI.',
+          expectedOutput: 'Valid Star-Schema data model in Power BI.'
         }
       },
       {
-        id: 'pg1-c7',
+        id: 'pg1-cls-7',
         classNum: 7,
-        topic: 'Photo Retouching, Color Correction & Generative Fill AI',
-        simpleConcept: 'Enhancing photo quality, correcting colors, and using Photoshop Generative AI to expand images.',
-        objective: 'Perform portrait retouching, color grading, object removal, and AI generative fill.',
+        topic: 'DAX Basics: Measures vs Calculated Columns & Core Functions',
+        simpleConcept: 'Writing Data Analysis Expressions (DAX) using `SUM`, `AVERAGE`, `COUNTROWS`, `DIVIDE`, and understanding Measure evaluation context.',
+        objective: 'Write DAX formulas for dynamic business metrics calculation.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain curves, levels, healing brush, clone stamp, and Adobe Firefly Generative Fill in Photoshop.',
-          demonstrate: 'Remove blemishes from a photo and use Generative Fill to replace background elements.',
-          practicalTask: 'Retouch an underexposed photo and seamlessly add/remove elements using AI fill.',
-          expectedOutput: 'High-resolution before/after images showing professional color correction and edit.'
+          explain: 'Explain Row Context vs Filter Context, why to use Measures over Calculated Columns, and `DIVIDE()` error prevention.',
+          demonstrate: 'Write DAX measures for Total Revenue, Total Profit, and Profit Margin %.',
+          practice: 'Create a DAX measure calculating Average Order Value.',
+          realWorldExample: 'Calculating KPI metrics dynamically across global company dashboards.',
+          practicalTask: 'Write 4 DAX measures calculating key financial KPI metrics in Power BI.',
+          expectedOutput: 'Working DAX measures table in Power BI.'
         }
       },
       {
-        id: 'pg1-c8',
+        id: 'pg1-cls-8',
         classNum: 8,
-        topic: 'Canva Pro for Rapid Branding & Social Media Graphics',
-        simpleConcept: 'Designing promotional flyers, posters, and Instagram graphics effortlessly using Canva Pro.',
-        objective: 'Utilize Canva Brand Kits, custom grids, animations, and social media template design.',
+        topic: 'Advanced DAX: `CALCULATE`, Time Intelligence & Filters',
+        simpleConcept: 'Using `CALCULATE()` to override filter context, `SAMEPERIODLASTYEAR`, `YTD`, and year-over-year (YoY) growth calculations.',
+        objective: 'Execute time-intelligence data analysis using advanced DAX functions.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Teach color theory, visual hierarchy, alignment, margin rules, and brand consistency.',
-          demonstrate: 'Create an event poster and resize it into Instagram Story, Reel cover, and banner formats.',
-          practicalTask: 'Design an event poster and export a complete 3-size social media promotion pack.',
-          expectedOutput: 'A 3-part social media graphics pack exported in high-res PNG format.'
+          explain: 'Explain `CALCULATE()` filter modifier, date table requirements, and `TOTALYTD()` vs `SAMEPERIODLASTYEAR()`.',
+          demonstrate: 'Write DAX measure calculating Year-Over-Year Sales Growth % comparing current sales to previous year.',
+          practice: 'Create a YTD Revenue DAX measure in Power BI.',
+          realWorldExample: 'Corporate quarterly growth analysis and financial performance tracking.',
+          practicalTask: 'Write DAX measures calculating YTD Revenue and YoY Growth %.',
+          expectedOutput: 'Advanced Time Intelligence DAX measures in Power BI.'
         }
       },
       {
-        id: 'pg1-c9',
+        id: 'pg1-cls-9',
         classNum: 9,
-        topic: 'Vector Logos & Typography Design Principles',
-        simpleConcept: 'Combining font hierarchy, logo marks, and vectors to build recognizable brand identity.',
-        objective: 'Create vector logos, typography pairing rules, and vector path manipulations.',
+        topic: 'Power BI Visualizations, Bookmarks & Interactive Buttons',
+        simpleConcept: 'Building matrix tables, line/bar charts, card visuals, tooltips, bookmarks, and page navigation buttons.',
+        objective: 'Design intuitive, interactive Power BI report pages.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Discuss typography classifications (Serif, Sans-serif, Script), kerning, tracking, and logo symbolism.',
-          demonstrate: 'Design a minimal corporate logo combining typography with a geometric icon mark.',
-          practicalTask: 'Create a logo concept for a startup with primary, secondary, and mark variations.',
-          expectedOutput: 'Vector logo file exported in transparent PNG and SVG formats.'
+          explain: 'Explain visual hierarchy, custom tooltips, bookmark state saving, and button actions.',
+          demonstrate: 'Build a Power BI report page with 3 KPI cards, 2 charts, and a bookmark button toggling chart views.',
+          practice: 'Add custom tooltip page showing regional breakdown on hover over chart.',
+          realWorldExample: 'Interactive executive dashboards for enterprise decision makers.',
+          practicalTask: 'Design an interactive Power BI report page with connected visual filters.',
+          expectedOutput: 'Interactive single-page Power BI report.'
         }
       },
       {
-        id: 'pg1-c10',
+        id: 'pg1-cls-10',
         classNum: 10,
-        topic: 'Digital Business Banners & Marketing Collateral Assembly',
-        simpleConcept: 'Assembling all design components into professional print and digital marketing collateral.',
-        objective: 'Prepare print-ready CMYK PDFs and RGB web banners with bleed and margin guidelines.',
+        topic: 'Power BI Service, Scheduled Refresh & Executive Publishing',
+        simpleConcept: 'Publishing reports to Power BI Service cloud workspace, configuring gateway scheduled refresh, and sharing dashboard apps.',
+        objective: 'Publish Power BI reports to cloud service for automated team access.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain CMYK vs RGB color spaces, DPI/PPI resolution requirements, and print bleed margins.',
-          demonstrate: 'Set up a business card template with bleed lines and export print-ready PDF files.',
-          practicalTask: 'Design a double-sided business card and corporate brochure with proper print margins.',
-          expectedOutput: 'Print-ready PDF files with crop marks and CMYK color profile.'
+          explain: 'Explain Power BI Service workspaces, app publishing, data gateways, and automated daily refresh.',
+          demonstrate: 'Publish Power BI Desktop file to Power BI Service cloud, configure dashboard tiles, and test share link.',
+          practice: 'Publish a report to personal Power BI workspace and pin a KPI card to a dashboard.',
+          realWorldExample: 'Delivering live automated business intelligence dashboards to company executives.',
+          practicalTask: 'Publish completed Power BI dashboard report to cloud workspace.',
+          expectedOutput: 'Live cloud Power BI report and workspace URL.'
         }
       }
     ]
@@ -183,88 +203,98 @@ export const PG_1_MODULES = [
   {
     id: 'pg1-mod-3',
     number: 3,
-    title: 'Video Production & Motion Graphics Studio',
-    purpose: 'Learn video editing techniques in Premiere Pro & CapCut, sound design, animated captions, and promotional reel creation.',
-    color: '#D97706',
-    icon: 'fas fa-video',
+    title: 'Corporate Digital Marketing & Brand Strategy',
+    purpose: 'Master strategic brand positioning, multi-channel digital campaigns, performance marketing, content marketing funnels, and marketing ROI analytics.',
+    icon: 'fas fa-bullhorn',
+    color: '#10B981',
     realProject: {
-      title: 'Cinematic Promotional Reel & Explainer Video',
-      description: 'Edit a 60-second high-energy promotional video complete with jump cuts, background score, captions, and motion graphics.'
+      title: '360-Degree Corporate Digital Marketing Strategy & Campaign',
+      description: 'Students design a full corporate marketing campaign including audience personas, content funnels, paid media plan, and KPI tracking.'
     },
     classes: [
       {
-        id: 'pg1-c11',
+        id: 'pg1-cls-11',
         classNum: 11,
-        topic: 'Video Editing Fundamentals (CapCut & Premiere Pro Interface)',
-        simpleConcept: 'Importing clips, timeline trimming, organizing footage, and mastering basic cuts.',
-        objective: 'Understand aspect ratios (16:9 vs 9:16), frame rates (24fps vs 60fps), and timeline assembly.',
+        topic: 'Strategic Brand Positioning & Buyer Persona Architecture',
+        simpleConcept: 'Defining value propositions, brand identity guidelines, customer demographic/psychographic personas, and competitive mapping.',
+        objective: 'Construct detailed customer buyer personas and brand positioning strategy.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain project setup, A-roll vs B-roll footage, ripple edit, razor tool, and timeline organization.',
-          demonstrate: 'Import raw interview clips and assemble a 30-second structured timeline cut.',
-          practicalTask: 'Cut down 5 raw video clips into a tight 30-second sequence without filler pauses.',
-          expectedOutput: 'A clean timeline sequence exported as 1080p MP4.'
+          explain: 'Explain brand messaging frameworks, pain point mapping, unique selling proposition (USP), and positioning matrices.',
+          demonstrate: 'Create a comprehensive Buyer Persona profile for an enterprise software product.',
+          practice: 'Draft a brand positioning statement for a new digital service.',
+          realWorldExample: 'Corporate marketing strategy development in multinational companies.',
+          practicalTask: 'Build 2 target buyer persona profiles for a corporate brand.',
+          expectedOutput: 'Detailed Buyer Persona and Brand Positioning document.'
         }
       },
       {
-        id: 'pg1-c12',
+        id: 'pg1-cls-12',
         classNum: 12,
-        topic: 'Audio Editing, Voiceover Enhancement & Sound Effects',
-        simpleConcept: 'Cleaning background noise, balancing music levels, and adding impact sound effects.',
-        objective: 'Apply noise reduction, audio equalization (EQ), ducking, and sound effect layering.',
+        topic: 'Full-Funnel Content Marketing Strategy (TOFU, MOFU, BOFU)',
+        simpleConcept: 'Designing content for Top of Funnel (Awareness), Middle of Funnel (Consideration), and Bottom of Funnel (Conversion).',
+        objective: 'Map multi-stage content funnels driving lead acquisition and sales.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain audio decibel levels (-6dB peak rule), background music ducking, and pop filter cleaning.',
-          demonstrate: 'Denoise a background hum from a voice track and lower background music automatically when speaking.',
-          practicalTask: 'Add background music and 3 sound effects (whoosh, pop, click) to a video project.',
-          expectedOutput: 'Video project with crystal-clear voiceover and balanced background score.'
+          explain: 'Explain content mapping per funnel stage: blogs/social at TOFU, webinars/case studies at MOFU, free trials at BOFU.',
+          demonstrate: 'Design a 30-day full-funnel content marketing calendar for B2B company.',
+          practice: 'Create 3 content ideas for each funnel stage for an e-learning platform.',
+          realWorldExample: 'Inbound marketing funnels driving automated lead generation.',
+          practicalTask: 'Create a 30-day full-funnel content marketing campaign plan.',
+          expectedOutput: 'Complete Full-Funnel Content Marketing Blueprint.'
         }
       },
       {
-        id: 'pg1-c13',
+        id: 'pg1-cls-13',
         classNum: 13,
-        topic: 'Auto-Captions, Text Animations & Kinetic Typography',
-        simpleConcept: 'Adding engaging animated captions and lower thirds to increase viewer retention.',
-        objective: 'Generate auto-captions, style highlight colors, and animate lower-third title graphics.',
+        topic: 'Performance Marketing & Omnichannel Paid Ads (Meta & Google)',
+        simpleConcept: 'Structuring paid ad budgets across Google Search, Display, Meta Ads, LinkedIn Ads, and calculating Customer Acquisition Cost (CAC).',
+        objective: 'Design performance marketing paid media allocation plans.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Discuss video caption engagement statistics, color highlighting key words, and font readability.',
-          demonstrate: 'Generate auto-captions in CapCut/Premiere, style words with yellow highlights, and animate entrance.',
-          practicalTask: 'Add animated multi-color captions and lower third speaker tags to a talking-head video.',
-          expectedOutput: 'Reel video with dynamic animated captions synced to speech.'
+          explain: 'Explain CAC vs LTV (Lifetime Value), ROAS (Return on Ad Spend), conversion tracking pixels, and A/B ad testing.',
+          demonstrate: 'Build a monthly $5,000 paid media budget allocation model across search and social channels.',
+          practice: 'Calculate ROAS and CPA metrics for a sample ad campaign.',
+          realWorldExample: 'Managing multi-channel performance ad budgets for growth brands.',
+          practicalTask: 'Formulate an omnichannel paid ad budget strategy with projected ROI.',
+          expectedOutput: 'Performance Marketing Budget & ROI Strategy sheet.'
         }
       },
       {
-        id: 'pg1-c14',
+        id: 'pg1-cls-14',
         classNum: 14,
-        topic: 'Color Grading, LUTs & Visual Transitions',
-        simpleConcept: 'Giving raw video a professional color look and smooth scene transitions.',
-        objective: 'Apply Lumetri color adjustments, Look-Up Tables (LUTs), and seamless transition effects.',
+        topic: 'Email Marketing Automation & Lead Nurturing Workflows',
+        simpleConcept: 'Setting up automated email drip campaigns (Mailchimp/Klaviyo), lead scoring, segmentation, and conversion copywriting.',
+        objective: 'Build automated email marketing drip campaigns and lead nurturing flows.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain color correction vs grading, exposure adjustment, saturation, and cinematic LUT application.',
-          demonstrate: 'Color grade a dull smartphone clip into a warm cinematic look using Lumetri color controls.',
-          practicalTask: 'Color grade 3 different video clips and apply smooth zoom/whip transitions between scenes.',
-          expectedOutput: 'Color-graded video file showing enhanced vibrant tones.'
+          explain: 'Explain email open rates, click-through rates (CTR), automated triggers, welcome series, and abandoned cart recovery.',
+          demonstrate: 'Build a 3-step automated welcome email sequence for new newsletter subscribers.',
+          practice: 'Write conversion copy for a promotional email campaign.',
+          realWorldExample: 'Automated customer onboarding and retention marketing.',
+          practicalTask: 'Design a 3-step automated lead nurturing email sequence with copy.',
+          expectedOutput: 'Complete automated email marketing workflow.'
         }
       },
       {
-        id: 'pg1-c15',
+        id: 'pg1-cls-15',
         classNum: 15,
-        topic: 'Short-Form Social Media Promo Reel Production',
-        simpleConcept: 'Combining cuts, audio, captions, color, and motion graphics into a complete 60-second promo.',
-        objective: 'Produce, render, and export an Instagram Reel / YouTube Short optimized for mobile screens.',
+        topic: 'Digital Marketing Analytics & Executive Campaign Reporting',
+        simpleConcept: 'Consolidating multi-channel analytics into executive dashboards, calculating ROI, and presenting marketing insights.',
+        objective: 'Synthesize digital marketing metrics into executive strategy reports.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Discuss hook timing (first 3 seconds), fast pacing, thumbnail creation, and export presets (H.264 MP4).',
-          demonstrate: 'Review a finished 60s promo reel and demonstrate high-quality export settings.',
-          practicalTask: 'Edit and render a complete 60-second vertical promotional video ready for publishing.',
-          expectedOutput: 'Full 1080x1920 MP4 promotional reel ready for social media posting.'
+          explain: 'Explain executive reporting KPIs, attribution models (First Click vs Last Touch), and recommendations synthesis.',
+          demonstrate: 'Build a single-page executive marketing performance report combining SEO, Paid Ads, and Email metrics.',
+          practice: 'Write 3 strategic recommendations based on a sample campaign analytics sheet.',
+          realWorldExample: 'Presenting quarterly marketing performance to Chief Marketing Officers (CMOs).',
+          practicalTask: 'Create an executive digital marketing campaign performance report.',
+          expectedOutput: 'Executive Digital Marketing Performance & ROI Report.'
         }
       }
     ]
@@ -272,88 +302,98 @@ export const PG_1_MODULES = [
   {
     id: 'pg1-mod-4',
     number: 4,
-    title: 'Applied AI Research Tools & Academic Productivity',
-    purpose: 'Leverage modern AI tools (ChatGPT, Claude 3.5, Midjourney, Consensus) for academic research, literature synthesis, and prompt engineering.',
-    color: '#7C3AED',
-    icon: 'fas fa-brain',
+    title: 'Web & Cloud Solutions for Enterprise',
+    purpose: 'Master enterprise web architecture, CMS deployment (WordPress/Webflow), cloud hosting (AWS/Vercel), domain management, SSL, and web portal administration.',
+    icon: 'fas fa-cloud',
+    color: '#8B5CF6',
     realProject: {
-      title: 'AI-Assisted Research Literature Synthesis & Knowledge Agent',
-      description: 'Build a research synthesis pipeline using AI prompting, paper summarization, and custom GPT knowledge tools.'
+      title: 'Enterprise Web Portal & Cloud Hosting Deployment',
+      description: 'Students configure an enterprise CMS website, set up SSL security, manage cloud hosting, and optimize page load performance.'
     },
     classes: [
       {
-        id: 'pg1-c16',
+        id: 'pg1-cls-16',
         classNum: 16,
-        topic: 'Prompt Engineering Mastery for LLMs (ChatGPT & Claude)',
-        simpleConcept: 'Writing clear instructions to get accurate, high-quality responses from AI models.',
-        objective: 'Master System Prompts, Few-Shot Prompting, Chain-of-Thought reasoning, and Role Assignment.',
+        topic: 'Enterprise Web Architecture & Content Management Systems (CMS)',
+        simpleConcept: 'Understanding web client-server architecture, headless CMS vs monolithic CMS (WordPress, Webflow, Strapi), and database backends.',
+        objective: 'Select and architect appropriate CMS platforms for enterprise websites.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain context window limitations, hallucination prevention, persona prompting, and structured JSON output.',
-          demonstrate: 'Compare a vague prompt with a structured mega-prompt to produce a detailed analysis document.',
-          practicalTask: 'Write a 4-part structured prompt to analyze a complex business case study with AI.',
-          expectedOutput: 'A documented prompt template producing accurate, structured output.'
+          explain: 'Explain web architecture layers (Frontend, API Gateway, CMS, Database), security, and scalable infrastructure.',
+          demonstrate: 'Set up a local or cloud WordPress/Webflow website instance with enterprise theme template.',
+          practice: 'Create 3 web pages with customized content blocks and navigation menu.',
+          realWorldExample: 'Managing corporate web portals for global businesses.',
+          practicalTask: 'Configure a multi-page enterprise CMS website structure.',
+          expectedOutput: 'Configured CMS website structure.'
         }
       },
       {
-        id: 'pg1-c17',
+        id: 'pg1-cls-17',
         classNum: 17,
-        topic: 'AI Academic Literature Discovery & Paper Summarization',
-        simpleConcept: 'Using AI tools to search, summarize, and extract insights from academic research papers.',
-        objective: 'Utilize Consensus, Elicit, SciSpace, and Claude to analyze dense PDF papers and generate citations.',
+        topic: 'Cloud Hosting Administration (AWS, Vercel & cPanel Basics)',
+        simpleConcept: 'Managing cloud web hosting servers, FTP file transfer, database configuration (MySQL), and environment variables.',
+        objective: 'Deploy web applications to cloud hosting servers.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Teach ethical AI usage in academic research, checking paper sources, citation formats, and literature reviews.',
-          demonstrate: 'Upload a research paper PDF to AI and extract methodology, key findings, and limitations in 2 minutes.',
-          practicalTask: 'Use AI literature tools to find 3 research papers on a topic and generate a comparative summary.',
-          expectedOutput: 'A structured 1-page literature matrix generated with AI assistance.'
+          explain: 'Explain server environments (Linux, Apache/Nginx), database creation, environment variables, and SSH keys.',
+          demonstrate: 'Set up MySQL database, upload web files via FTP/cPanel, and configure server settings.',
+          practice: 'Create a database user and connect web app configuration file.',
+          realWorldExample: 'System administration and cloud hosting operations.',
+          practicalTask: 'Deploy a web portal database and site instance to cloud hosting.',
+          expectedOutput: 'Working cloud-hosted web application instance.'
         }
       },
       {
-        id: 'pg1-c18',
+        id: 'pg1-cls-18',
         classNum: 18,
-        topic: 'AI Generative Image Creation (Midjourney, DALL-E & Ideogram)',
-        simpleConcept: 'Creating custom visual assets and illustrations by writing descriptive text prompts.',
-        objective: 'Write visual art prompts incorporating style tags, lighting, camera angles, and text rendering.',
+        topic: 'Domain Name System (DNS), SSL Certificates & Web Security',
+        simpleConcept: 'Configuring DNS A-records, CNAMEs, SSL HTTPS encryption certificates, Cloudflare CDN, and web security hardening.',
+        objective: 'Secure web domains with SSL certificates and CDN firewall protection.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain image prompt parameters (--ar aspect ratio, style raw), photorealism keywords, and Ideogram text rendering.',
-          demonstrate: 'Generate a 3D isometric product mock-up and a realistic photo illustration using text prompts.',
-          practicalTask: 'Generate 3 high-quality custom visual assets for a presentation or website using AI image tools.',
-          expectedOutput: 'A collection of 3 high-resolution AI-generated graphics.'
+          explain: 'Explain DNS propagation, SSL handshake, Cloudflare CDN caching, DDoS protection, and HTTPS redirection.',
+          demonstrate: 'Configure custom domain DNS settings, issue free Let\'s Encrypt SSL certificate, and set up Cloudflare protection.',
+          practice: 'Verify domain SSL HTTPS security rating using SSL Labs scanner.',
+          realWorldExample: 'Securing corporate web domains against cyber threats.',
+          practicalTask: 'Configure domain DNS records and verify HTTPS SSL security certificate.',
+          expectedOutput: 'Secured HTTPS domain setup.'
         }
       },
       {
-        id: 'pg1-c19',
+        id: 'pg1-cls-19',
         classNum: 19,
-        topic: 'AI Document Processing, Audio Transcripts & Note Automation',
-        simpleConcept: 'Converting long meeting recordings, lectures, and PDFs into structured notes automatically.',
-        objective: 'Utilize Whisper AI, NotebookLM, and AI summarizers for automated transcription and note-taking.',
+        topic: 'Website Speed Optimization & Technical SEO Audits',
+        simpleConcept: 'Optimizing page load speed (Google PageSpeed Insights), image compression, browser caching, and technical SEO fixes.',
+        objective: 'Audit and optimize web page loading speed and technical SEO scores.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover Google NotebookLM features, audio transcription tools, chapter splitting, and automated Q&A.',
-          demonstrate: 'Upload a 10-minute audio lecture to transcript AI and produce key takeaways and flashcards.',
-          practicalTask: 'Process a sample lecture audio file into action items, meeting minutes, and study notes.',
-          expectedOutput: 'Automated meeting minutes and structured note outline generated from audio.'
+          explain: 'Explain Core Web Vitals (LCP, FID, CLS), WebP image formatting, minification, and caching plugins.',
+          demonstrate: 'Run PageSpeed Insights on a website, compress images, enable caching, and improve performance score from 40 to 90+.',
+          practice: 'Audit a website performance score and fix 2 speed bottlenecks.',
+          realWorldExample: 'Optimizing high-traffic enterprise portals for search engine ranking and user experience.',
+          practicalTask: 'Conduct a technical website audit and implement speed optimization fixes.',
+          expectedOutput: 'Technical Web Audit & Speed Optimization Report.'
         }
       },
       {
-        id: 'pg1-c20',
+        id: 'pg1-cls-20',
         classNum: 20,
-        topic: 'Building Custom GPTs & Personal AI Knowledge Assistants',
-        simpleConcept: 'Creating a personalized AI assistant trained on specific guidelines and documents.',
-        objective: 'Configure custom GPT instructions, upload knowledge base files, and define actions.',
+        topic: 'Web Analytics, Error Logging & Uptime Monitoring',
+        simpleConcept: 'Setting up automated website uptime monitors (UptimeRobot), 404 error tracking, and backup schedules.',
+        objective: 'Implement continuous web monitoring and automated backup routines.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain Custom GPT architecture, knowledge retrieval, system instructions, and privacy controls.',
-          demonstrate: 'Build a custom "Academic Research Tutor" GPT that answers queries based on uploaded syllabus PDFs.',
-          practicalTask: 'Build a custom AI assistant tailored to your subject area or personal workflow.',
-          expectedOutput: 'A working Custom GPT link or saved AI assistant persona.'
+          explain: 'Explain 99.9% SLA uptime, automated database backups, error logging, and alert notifications.',
+          demonstrate: 'Set up automated UptimeRobot monitor sending instant SMS/Email alerts if website goes down.',
+          practice: 'Configure automated weekly database backup routine.',
+          realWorldExample: 'Ensuring 24/7 reliability for critical business websites.',
+          practicalTask: 'Set up an automated website uptime monitor and backup schedule.',
+          expectedOutput: 'Active website monitoring and backup configuration.'
         }
       }
     ]
@@ -361,88 +401,98 @@ export const PG_1_MODULES = [
   {
     id: 'pg1-mod-5',
     number: 5,
-    title: 'Web Development Foundations (HTML, CSS & JavaScript)',
-    purpose: 'Build modern, responsive websites using semantic HTML5, CSS Grid/Flexbox, and DOM-manipulating JavaScript, then deploy live.',
-    color: '#0284C7',
-    icon: 'fas fa-code',
+    title: 'AI for Business & Workflow Automation',
+    purpose: 'Master corporate AI adoption, custom GPTs, workflow automation platforms (Zapier/Make), AI document processing, and AI strategy execution.',
+    icon: 'fas fa-robot',
+    color: '#EC4899',
     realProject: {
-      title: 'Live Responsive Personal Portfolio & Web App',
-      description: 'Develop a fully responsive personal portfolio website with interactive projects, responsive navigation, and live Vercel deployment.'
+      title: 'Enterprise AI Workflow & Zapier Automation Solution',
+      description: 'Students build an automated business workflow connecting web forms, AI text processing, email notifications, and database logging.'
     },
     classes: [
       {
-        id: 'pg1-c21',
+        id: 'pg1-cls-21',
         classNum: 21,
-        topic: 'HTML5 Semantic Web Structure & Code Editors (VS Code)',
-        simpleConcept: 'Writing clean code structure with standard tags using Visual Studio Code.',
-        objective: 'Set up VS Code, extensions (Live Server), and write semantic HTML5 page structures.',
+        topic: 'Corporate AI Adoption & Enterprise Prompt Engineering',
+        simpleConcept: 'Structuring advanced multi-persona prompts, system prompts, few-shot prompting, and data security guidelines for enterprise LLMs.',
+        objective: 'Formulate enterprise-grade AI prompts for complex business operations.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain HTML boilerplate, semantic tags (<header>, <nav>, <main>, <section>, <footer>), and SEO metadata.',
-          demonstrate: 'Create a semantic HTML page with navigation menu, hero section, and contact form.',
-          practicalTask: 'Write a semantic HTML structure for a 3-page personal profile site.',
-          expectedOutput: 'Valid HTML5 file viewing cleanly in browser with Live Server.'
+          explain: 'Explain enterprise data privacy (preventing confidential leak), system role prompts, and JSON structured outputs.',
+          demonstrate: 'Build a master system prompt that acts as a Senior Financial Analyst evaluating quarterly reports into structured JSON.',
+          practice: 'Draft a system prompt enforcing formal corporate communication guidelines.',
+          realWorldExample: 'Enterprise AI integration across corporate departments.',
+          practicalTask: 'Create a library of 5 enterprise system prompts for key business operations.',
+          expectedOutput: 'Enterprise AI System Prompt Library.'
         }
       },
       {
-        id: 'pg1-c22',
+        id: 'pg1-cls-22',
         classNum: 22,
-        topic: 'CSS Styling, Color Schemes & Modern Typography',
-        simpleConcept: 'Styling plain web pages with colors, custom Google Fonts, margins, and borders.',
-        objective: 'Master CSS selectors, class rules, Box Model (margin, padding, border), and font loading.',
+        topic: 'Custom GPT Creation & Knowledge Base Integration',
+        simpleConcept: 'Building custom GPTs in ChatGPT, uploading company knowledge bases (PDFs/Docs), and setting custom action instructions.',
+        objective: 'Build custom AI assistants trained on company documentation.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover class vs ID selectors, CSS reset, Google Fonts embedding, and box-sizing: border-box.',
-          demonstrate: 'Style a plain HTML card into a sleek modern design element with drop shadows and rounded corners.',
-          practicalTask: 'Apply a cohesive color palette and typography rules to your HTML profile page.',
-          expectedOutput: 'A styled CSS stylesheet linked to HTML file.'
+          explain: 'Explain Retrieval-Augmented Generation (RAG) concepts, knowledge file indexing, and custom GPT instructions.',
+          demonstrate: 'Create a custom "Customer Support AI Bot" trained on a company product manual PDF.',
+          practice: 'Build a custom GPT assistant trained on a student handbook document.',
+          realWorldExample: 'Internal company knowledge bots for employees and customer service AI.',
+          practicalTask: 'Build and test a custom GPT assistant trained on specialized business documents.',
+          expectedOutput: 'Working custom GPT assistant trained on knowledge files.'
         }
       },
       {
-        id: 'pg1-c23',
+        id: 'pg1-cls-23',
         classNum: 23,
-        topic: 'Responsive Layout Engineering (Flexbox & CSS Grid)',
-        simpleConcept: 'Arranging webpage components side-by-side cleanly for mobile, tablet, and desktop screens.',
-        objective: 'Master Flexbox alignment, CSS Grid columns, and Media Queries for responsive design.',
+        topic: 'No-Code Workflow Automation (Zapier / Make.com Basics)',
+        simpleConcept: 'Creating automated workflows (Zaps) connecting web forms, Google Sheets, Gmail, Slack, and Trello without coding.',
+        objective: 'Build multi-app automated business workflows using Zapier or Make.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain flex-direction, justify-content, align-items, grid-template-columns, and @media breakpoints.',
-          demonstrate: 'Build a responsive 3-column feature grid that collapses into a single column on mobile screens.',
-          practicalTask: 'Create a responsive 3-column layout that adapts dynamically to browser screen width.',
-          expectedOutput: 'A fully responsive layout working smoothly across desktop and mobile screen sizes.'
+          explain: 'Explain Triggers, Actions, Filters, Multi-Step Zaps, and app webhook connections.',
+          demonstrate: 'Build a Zap: When a new lead submits Google Form -> Send email notification -> Add row to Google Sheet -> Post in Slack.',
+          practice: 'Build a 2-step automation sending email alert when a spreadsheet row updates.',
+          realWorldExample: 'Automating administrative business tasks and lead routing.',
+          practicalTask: 'Construct a 3-step automated business workflow connecting 3 apps.',
+          expectedOutput: 'Working automated multi-app workflow setup.'
         }
       },
       {
-        id: 'pg1-c24',
+        id: 'pg1-cls-24',
         classNum: 24,
-        topic: 'JavaScript Basics & Interactive DOM Manipulation',
-        simpleConcept: 'Adding interactivity like click events, dark mode toggles, and mobile menus to web pages.',
-        objective: 'Understand JS variables, functions, event listeners, and DOM element modification.',
+        topic: 'Combining AI & Automation (Zapier + OpenAI API)',
+        simpleConcept: 'Inserting OpenAI AI step inside Zapier to automatically summarize incoming customer emails or analyze lead quality.',
+        objective: 'Integrate AI text processing into automated business workflows.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Cover variables (const/let), querySelector, addEventListener, and modifying style/class properties.',
-          demonstrate: 'Build a Light/Dark theme toggle button that switches webpage background and text colors dynamically.',
-          practicalTask: 'Create an interactive mobile menu toggle button and a dynamic counter using JavaScript.',
-          expectedOutput: 'Working JavaScript file adding interactive toggles to the web page.'
+          explain: 'Explain AI automation steps, sentiment analysis, auto-generating response drafts, and intelligent lead routing.',
+          demonstrate: 'Build an AI Zap: When customer emails support -> OpenAI categorizes urgency and drafts response -> Send notification to team.',
+          practice: 'Build an AI Zap that summarizes incoming form submissions into 2 bullet points.',
+          realWorldExample: 'Intelligent AI customer service routing and lead qualification.',
+          practicalTask: 'Build an AI-powered automated workflow that processes text input and routes output.',
+          expectedOutput: 'Functional AI-integrated automation workflow.'
         }
       },
       {
-        id: 'pg1-c25',
+        id: 'pg1-cls-25',
         classNum: 25,
-        topic: 'Git, GitHub Repository & Live Vercel Web Deployment',
-        simpleConcept: 'Publishing your code to GitHub and deploying your website live to the internet for free.',
-        objective: 'Initialize Git, commit code, push to GitHub, and deploy to Vercel/GitHub Pages with custom domain URL.',
+        topic: 'Enterprise AI Governance, ROI & Capstone Defense',
+        simpleConcept: 'Evaluating AI ROI (time saved vs cost), governance policies, ethics, and presenting final PG 1st Year project.',
+        objective: 'Assess AI business value and present PG 1st Year capstone project.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Explain version control with Git, repository creation on GitHub, continuous deployment with Vercel.',
-          demonstrate: 'Push a website project to GitHub and deploy it live to a custom .vercel.app link in 3 minutes.',
-          practicalTask: 'Deploy your complete personal website live on Vercel and submit your public website URL.',
-          expectedOutput: 'A live, accessible public website URL hosted on Vercel/GitHub Pages.'
+          explain: 'Explain calculating hours saved per week, AI software subscription ROI, data privacy compliance, and team training.',
+          demonstrate: 'Moderate final PG 1st Year capstone presentations showcasing automated AI solutions.',
+          practice: 'Calculate annual cost savings of automating 5 hours/week of manual data entry.',
+          realWorldExample: 'Executive AI strategy presentations to C-suite leadership.',
+          practicalTask: 'Present final PG 1st Year AI & Automation Capstone project to class.',
+          expectedOutput: 'Successful presentation of PG 1st Year Capstone project.'
         }
       }
     ]
@@ -451,28 +501,28 @@ export const PG_1_MODULES = [
 
 export const PG_1_SPECIALIZATION_OPTIONS = [
   {
-    id: 'pg1-spec-1',
-    title: 'Enterprise Analytics & Data Visualization',
-    icon: 'fas fa-chart-line',
-    description: 'Build an automated multi-sheet business dashboard with dynamic formulas, Pivot visual charts, and multi-language reporting.',
-    keySkills: ['Excel XLOOKUP', 'Pivot Dashboards', 'Word Document Automation', 'Multi-Language Typing'],
-    portfolioDeliverable: 'Interactive Excel Data Dashboard & Dual-Language Executive Report PDF'
+    id: 'track-enterprise',
+    title: 'Enterprise Management & Power BI',
+    icon: 'fas fa-briefcase',
+    description: 'Master advanced document workflows, financial modeling, Star-Schema data models, DAX formulas, and Power BI dashboards.',
+    keySkills: ['Executive Financial Modeling', 'Power Query Consolidations', 'Star-Schema Data Models', 'DAX Measures & Power BI'],
+    portfolioDeliverable: 'An interactive Power BI Business Intelligence dashboard and financial model.'
   },
   {
-    id: 'pg1-spec-2',
-    title: 'Creative Media & Video Production Track',
-    icon: 'fas fa-film',
-    description: 'Produce a complete brand media kit including vector logos, social media posters, and a 60s color-graded commercial video reel.',
-    keySkills: ['Photoshop Editing', 'Canva Brand Kit', 'Premiere Pro Editing', 'Auto-Captions & LUTs'],
-    portfolioDeliverable: 'Brand Identity Design Kit & 60-Second Promotional Commercial Video'
+    id: 'track-strategy',
+    title: 'Corporate Digital Marketing & Brand Strategy',
+    icon: 'fas fa-bullhorn',
+    description: 'Master buyer personas, full-funnel content strategies, omnichannel paid media allocation, and executive ROI analytics reporting.',
+    keySkills: ['Buyer Persona Architecture', 'Full-Funnel Content Strategy', 'Omnichannel Paid Media', 'Marketing Analytics ROI'],
+    portfolioDeliverable: 'A 360-degree corporate digital marketing campaign strategy and ROI report.'
   },
   {
-    id: 'pg1-spec-3',
-    title: 'AI Research & Web Development Track',
-    icon: 'fas fa-laptop-code',
-    description: 'Develop a responsive web application and custom AI knowledge assistant hosted live on Vercel.',
-    keySkills: ['Custom GPT Building', 'Prompt Engineering', 'HTML5/CSS Grid/JS', 'Vercel Deployment'],
-    portfolioDeliverable: 'Live Deployed Personal Portfolio Website & Custom AI Research Assistant'
+    id: 'track-ai-automation',
+    title: 'Enterprise Cloud & AI Workflow Automation',
+    icon: 'fas fa-robot',
+    description: 'Master CMS web portals, cloud security, custom GPTs, Zapier multi-app workflows, and AI business automation.',
+    keySkills: ['Enterprise CMS & Hosting', 'SSL & DNS Security', 'Custom GPT Assistants', 'Zapier + OpenAI Automations'],
+    portfolioDeliverable: 'An automated business workflow integration connecting web forms, AI, and notifications.'
   }
 ];
 
@@ -482,8 +532,9 @@ export const calculatePg1Metrics = (savedProgress) => {
   let inProgressClasses = 0;
 
   const moduleMetrics = PG_1_MODULES.map((mod) => {
-    let modTotal = mod.classes.length;
+    const modClasses = mod.classes.length;
     let modCompleted = 0;
+    let modInProgress = 0;
 
     mod.classes.forEach((cls) => {
       totalClasses++;
@@ -493,16 +544,17 @@ export const calculatePg1Metrics = (savedProgress) => {
         modCompleted++;
       } else if (status === 'IN PROGRESS') {
         inProgressClasses++;
+        modInProgress++;
       }
     });
 
-    const percentage = modTotal > 0 ? Math.round((modCompleted / modTotal) * 100) : 0;
+    const percent = modClasses > 0 ? Math.round((modCompleted / modClasses) * 100) : 0;
     return {
       moduleId: mod.id,
-      title: mod.title,
-      total: modTotal,
+      total: modClasses,
       completed: modCompleted,
-      percentage
+      inProgress: modInProgress,
+      percentage: percent
     };
   });
 

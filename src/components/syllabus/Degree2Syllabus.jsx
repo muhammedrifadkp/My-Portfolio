@@ -22,9 +22,6 @@ const Degree2Syllabus = () => {
   });
 
   // Filter & Search States
-  const [selectedModuleId, setSelectedModuleId] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
   const [activeClassDetail, setActiveClassDetail] = useState(null);
 
   // Sync to LocalStorage on changes
@@ -97,40 +94,7 @@ const Degree2Syllabus = () => {
     }));
   };
 
-  // Filter Modules & Classes based on search query and status filters
-  const filteredModules = useMemo(() => {
-    return DEGREE_2_MODULES.map((mod) => {
-      if (selectedModuleId !== 'all' && mod.id !== selectedModuleId) {
-        return null;
-      }
 
-      const matchingClasses = mod.classes.filter((cls) => {
-        const clsStatus = savedProgress[cls.id]?.status || 'NOT STARTED';
-        if (statusFilter !== 'all' && clsStatus !== statusFilter) {
-          return false;
-        }
-
-        if (searchQuery.trim()) {
-          const q = searchQuery.toLowerCase();
-          const matchTopic = cls.topic.toLowerCase().includes(q);
-          const matchConcept = cls.simpleConcept.toLowerCase().includes(q);
-          const matchObjective = cls.objective.toLowerCase().includes(q);
-          return matchTopic || matchConcept || matchObjective;
-        }
-
-        return true;
-      });
-
-      if (matchingClasses.length === 0 && (selectedModuleId !== 'all' || searchQuery.trim() || statusFilter !== 'all')) {
-        return null;
-      }
-
-      return {
-        ...mod,
-        classes: matchingClasses
-      };
-    }).filter(Boolean);
-  }, [selectedModuleId, statusFilter, searchQuery, savedProgress]);
 
   return (
     <div className="degree-syllabus-container">
@@ -353,138 +317,7 @@ const Degree2Syllabus = () => {
         </div>
       </div>
 
-      {/* -------------------- CONTROLS & FILTER BAR -------------------- */}
-      <div className="filter-controls-bar">
-        <div className="search-box-wrapper">
-          <i className="fas fa-search search-icon"></i>
-          <input
-            type="text"
-            className="syllabus-search-input"
-            placeholder="Search React, AI APIs, Illustrator, Premiere, SEO..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchQuery && (
-            <button className="clear-search-btn" onClick={() => setSearchQuery('')}>
-              <i className="fas fa-times"></i>
-            </button>
-          )}
-        </div>
 
-        <div className="filter-dropdowns-group">
-          <select
-            className="filter-select"
-            value={selectedModuleId}
-            onChange={(e) => setSelectedModuleId(e.target.value)}
-          >
-            <option value="all">All 5 Modules</option>
-            {DEGREE_2_MODULES.map((m) => (
-              <option key={m.id} value={m.id}>
-                Module {m.number}: {m.title}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="filter-select"
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-          >
-            <option value="all">All Statuses</option>
-            <option value="NOT STARTED">Not Started</option>
-            <option value="IN PROGRESS">In Progress</option>
-            <option value="COMPLETED">Completed</option>
-          </select>
-        </div>
-      </div>
-
-      {/* -------------------- DETAILED MODULES & CLASSES -------------------- */}
-      <div className="detailed-modules-container">
-        {filteredModules.length === 0 ? (
-          <div className="no-results-card">
-            <i className="fas fa-search-minus no-results-icon"></i>
-            <h4>No matching classes found</h4>
-            <p>Try adjusting your search query or filter settings.</p>
-            <button className="reset-filter-btn" onClick={() => { setSearchQuery(''); setStatusFilter('all'); setSelectedModuleId('all'); }}>
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          filteredModules.map((mod) => {
-            const modMetric = metrics.moduleMetrics.find((m) => m.moduleId === mod.id) || { percentage: 0, completed: 0 };
-            return (
-              <div className="detailed-module-block" key={mod.id}>
-                <div className="module-block-header">
-                  <div>
-                    <div className="mod-block-tag">Module {mod.number}</div>
-                    <h2 className="mod-block-title">
-                      <i className={mod.icon || 'fas fa-cube'}></i> {mod.title}
-                    </h2>
-                    <p className="mod-block-purpose">{mod.purpose}</p>
-                  </div>
-                  <div className="mod-block-badge">
-                    {modMetric.completed} / {mod.classes.length} Completed ({modMetric.percentage}%)
-                  </div>
-                </div>
-
-                {mod.realProject && (
-                  <div className="real-project-card">
-                    <div className="rp-badge">
-                      <i className="fas fa-cube"></i> MODULE REAL PROJECT
-                    </div>
-                    <h4 className="rp-title">{mod.realProject.title}</h4>
-                    <p className="rp-desc">{mod.realProject.description}</p>
-                  </div>
-                )}
-
-                <div className="classes-grid-3col">
-                  {mod.classes.map((cls) => {
-                    const currentStatus = savedProgress[cls.id]?.status || 'NOT STARTED';
-                    const statusKey = currentStatus.toLowerCase().replace(' ', '-');
-
-                    return (
-                      <div
-                        className={`class-item-card status-border-${statusKey}`}
-                        key={cls.id}
-                      >
-                        <div className="class-card-top-row">
-                          <span className="class-number-tag">Class {cls.classNum}</span>
-                          <select
-                            className={`status-dropdown status-style-${statusKey}`}
-                            value={currentStatus}
-                            onChange={(e) => handleStatusChange(cls.id, e.target.value)}
-                          >
-                            <option value="NOT STARTED">Not Started</option>
-                            <option value="IN PROGRESS">In Progress</option>
-                            <option value="COMPLETED">✓ Completed</option>
-                          </select>
-                        </div>
-
-                        <div className="class-card-content" onClick={() => setActiveClassDetail(cls)}>
-                          <h4 className="class-title-text">{cls.topic}</h4>
-                          <p className="class-concept-text">{cls.simpleConcept}</p>
-                          <div className="class-objective-block">
-                            <strong>Objective:</strong> {cls.objective}
-                          </div>
-                        </div>
-
-                        <div className="class-card-bottom-row">
-                          <button
-                            className="open-guide-link-btn"
-                            onClick={() => setActiveClassDetail(cls)}
-                          >
-                            Open Teaching Guide →
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })
-        )}
-      </div>
 
       {/* -------------------- SPECIALIZATION & CAPSTONE TRACKS -------------------- */}
       <div className="final-specialization-card">

@@ -1,0 +1,153 @@
+/* RegisterStudentModal.css - White LMS Theme */
+
+.register-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.register-modal-content {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  padding: 35px 30px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  color: #0F172A;
+}
+
+.register-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #64748B;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.register-modal-close:hover {
+  background: #FEE2E2;
+  color: #DC2626;
+  border-color: #FCA5A5;
+}
+
+.register-modal-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.teacher-only-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  background: #FDF2F8;
+  border: 1px solid #FBCFE8;
+  color: #DB2777;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.register-modal-header h2 {
+  font-size: 1.6rem;
+  margin: 0 0 8px 0;
+  font-weight: 900;
+  color: #0F172A;
+}
+
+.register-modal-header p {
+  color: #475569;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.register-modal-content .auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.register-modal-content .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  width: 100%;
+}
+
+.register-modal-content .form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.register-modal-content .form-row .form-group {
+  flex: 1;
+}
+
+.register-modal-content .form-group label {
+  position: static !important;
+  display: block !important;
+  font-size: 0.86rem !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  margin-bottom: 4px;
+}
+
+.register-modal-content .form-group input,
+.register-modal-content .form-group select {
+  width: 100%;
+  padding: 14px 16px;
+  background: #F8FAFC !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 12px !important;
+  color: #0F172A !important;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.register-modal-content .form-group select option {
+  background: #FFFFFF;
+  color: #0F172A;
+}
+
+.register-modal-content .form-group input:focus,
+.register-modal-content .form-group select:focus {
+  border-color: #DB2777 !important;
+  box-shadow: 0 0 0 4px rgba(219, 39, 119, 0.15) !important;
+  background: #FFFFFF !important;
+}
+
+.register-submit {
+  background: #DB2777;
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+.register-submit:hover {
+  background: #BE185D;
+  box-shadow: 0 6px 18px rgba(219, 39, 119, 0.35);
+}

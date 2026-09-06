@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" rx="16" fill="url(#bg6)"/>
+
+  <!-- Title -->
+  <text x="400" y="40" font-family="system-ui, sans-serif" font-size="20" font-weight="800" fill="#10B981" text-anchor="middle">FILE COMPRESSION (.ZIP) &amp; CLOUD BACKUP WORKFLOW</text>
+  <text x="400" y="65" font-family="system-ui, sans-serif" font-size="13" fill="#94A3B8" text-anchor="middle">Class 06 Compress Folders to .ZIP &amp; Upload Backups to Google Drive</text>
+
+  <!-- 3 STEP WORKFLOW -->
+  <!-- STEP 1: Original Folder -->
+  <g transform="translate(50, 110)">
+    <rect width="200" height="260" rx="12" fill="#1E293B" stroke="#3B82F6" stroke-width="2"/>
+    <text x="100" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#60A5FA" text-anchor="middle">Step 1: Project Folder</text>
+    
+    <rect x="50" y="55" width="100" height="75" rx="6" fill="#3B82F6"/>
+    <text x="100" y="100" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">📁 My_Project</text>
+    
+    <text x="100" y="160" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1" text-anchor="middle">Multiple files &amp; notes</text>
+    <text x="100" y="180" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1" text-anchor="middle">Total Size: 45 MB</text>
+    <rect x="20" y="210" width="160" height="30" rx="6" fill="#0F172A"/>
+    <text x="100" y="230" font-family="system-ui, sans-serif" font-size="10" fill="#94A3B8" text-anchor="middle">Right-click Folder</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <path d="M265 240 H295" stroke="#10B981" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="280" y="230" font-family="system-ui, sans-serif" font-size="18" fill="#10B981" text-anchor="middle">➔</text>
+
+  <!-- STEP 2: Compressed ZIP Archive -->
+  <g transform="translate(300, 110)">
+    <rect width="200" height="260" rx="12" fill="#1E293B" stroke="#F59E0B" stroke-width="2"/>
+    <text x="100" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#FBBF24" text-anchor="middle">Step 2: Compress (.ZIP)</text>
+    
+    <!-- Zipper icon folder -->
+    <rect x="50" y="55" width="100" height="75" rx="6" fill="#F59E0B"/>
+    <line x1="100" y1="55" x2="100" y2="130" stroke="#0F172A" stroke-width="4" stroke-dasharray="4,4"/>
+    <text x="100" y="100" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#0F172A" text-anchor="middle">📦 My_Project.zip</text>
+
+    <text x="100" y="160" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1" text-anchor="middle">Single archived file</text>
+    <text x="100" y="180" font-family="system-ui, sans-serif" font-size="11" fill="#34D399" text-anchor="middle">Compressed: 18 MB</text>
+    <rect x="20" y="210" width="160" height="30" rx="6" fill="#0F172A"/>
+    <text x="100" y="230" font-family="system-ui, sans-serif" font-size="10" fill="#FBBF24" text-anchor="middle">Easy Email Attachment</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <text x="530" y="230" font-family="system-ui, sans-serif" font-size="18" fill="#10B981" text-anchor="middle">➔</text>
+
+  <!-- STEP 3: Google Drive Cloud -->
+  <g transform="translate(550, 110)">
+    <rect width="200" height="260" rx="12" fill="#1E293B" stroke="#10B981" stroke-width="2"/>
+    <text x="100" y="30" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#34D399" text-anchor="middle">Step 3: Cloud Backup</text>
+    
+    <!-- Cloud Graphic -->
+    <path d="M60 100 A25 25 0 0 1 110 80 A30 30 0 0 1 150 100 A20 20 0 0 1 140 130 H60 Z" fill="#10B981"/>
+    <text x="100" y="112" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#FFFFFF" text-anchor="middle">☁ Google Drive</text>
+
+    <text x="100" y="160" font-family="system-ui, sans-serif" font-size="11" fill="#CBD5E1" text-anchor="middle">Safe Cloud Storage</text>
+    <text x="100" y="180" font-family="system-ui, sans-serif" font-size="11" fill="#6EE7B7" text-anchor="middle">Access anywhere!</text>
+    <rect x="20" y="210" width="160" height="30" rx="6" fill="#0F172A"/>
+    <text x="100" y="230" font-family="system-ui, sans-serif" font-size="10" fill="#34D399" text-anchor="middle">✓ Never loses assignment</text>
+  </g>
+</svg>

@@ -1,0 +1,141 @@
+/* StudentBatchModal.css - White LMS Theme */
+
+.student-batch-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.student-batch-modal-content {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  padding: 35px 30px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  color: #0F172A;
+}
+
+.student-batch-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #64748B;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.student-batch-modal-close:hover {
+  background: #FEE2E2;
+  color: #DC2626;
+  border-color: #FCA5A5;
+}
+
+.student-batch-modal-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.batch-access-tag {
+  display: inline-block;
+  padding: 4px 14px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.student-batch-modal-header h2 {
+  font-size: 1.6rem;
+  margin: 0 0 8px 0;
+  font-weight: 900;
+  color: #0F172A;
+}
+
+.student-batch-modal-header p {
+  color: #475569;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.student-batch-modal-content .auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.student-batch-modal-content .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  width: 100%;
+}
+
+.student-batch-modal-content .form-group label {
+  position: static !important;
+  display: block !important;
+  font-size: 0.86rem !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  margin-bottom: 4px;
+}
+
+.student-batch-modal-content .form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #F8FAFC !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 12px !important;
+  color: #0F172A !important;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.student-batch-modal-content .form-group input::placeholder {
+  color: #94A3B8;
+}
+
+.student-batch-modal-content .form-group input:focus {
+  border-color: #2563EB !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15) !important;
+  background: #FFFFFF !important;
+}
+
+.student-submit {
+  background: #2563EB;
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+.student-submit:hover {
+  background: #1D4ED8;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}

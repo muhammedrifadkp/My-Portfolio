@@ -14,17 +14,14 @@ const PlusOneSyllabus = () => {
   const [savedProgress, setSavedProgress] = useState(() => {
     try {
       const item = localStorage.getItem(LOCAL_STORAGE_KEY);
-      return item ? JSON.parse(item) : {};
+      const parsed = item ? JSON.parse(item) : {};
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
     } catch (e) {
       console.error('Failed to parse syllabus progress from localStorage:', e);
       return {};
     }
   });
 
-  // Filter & Search States
-  const [selectedModuleId, setSelectedModuleId] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
   const [activeClassDetail, setActiveClassDetail] = useState(null);
 
   // Sync to LocalStorage on changes
@@ -132,48 +129,20 @@ const PlusOneSyllabus = () => {
     }));
   };
 
-  // Filter Modules & Classes based on search & filter selections
-  const filteredModules = useMemo(() => {
-    return PLUS_ONE_MODULES.filter((mod) => {
-      if (selectedModuleId !== 'all' && mod.id !== selectedModuleId) {
-        return false;
-      }
-      return true;
-    }).map((mod) => {
-      const matchingClasses = mod.classes.filter((cls) => {
-        const status = savedProgress[cls.id]?.status || 'NOT STARTED';
 
-        // Filter by Status
-        if (statusFilter !== 'all' && status !== statusFilter) {
-          return false;
-        }
-
-        // Filter by Search Query
-        if (searchQuery.trim() !== '') {
-          const q = searchQuery.toLowerCase();
-          const matchTopic = cls.topic.toLowerCase().includes(q);
-          const matchNum = `class ${cls.classNum}`.includes(q) || `${cls.classNum}` === q;
-          const matchConcept = cls.simpleConcept.toLowerCase().includes(q);
-          return matchTopic || matchNum || matchConcept;
-        }
-
-        return true;
-      });
-
-      return {
-        ...mod,
-        classes: matchingClasses
-      };
-    }).filter((mod) => mod.classes.length > 0 || (searchQuery === '' && statusFilter === 'all'));
-  }, [selectedModuleId, statusFilter, searchQuery, savedProgress]);
 
   return (
     <div className="plus1-syllabus-container">
       {/* -------------------- SYLLABUS HEADER -------------------- */}
       <div className="syllabus-header-card">
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+          <span className="meta-chip" style={{ background: 'rgba(0,240,255,0.1)', color: '#00D8E6', fontWeight: '700', border: '1px solid rgba(0,240,255,0.3)' }}>Higher Secondary</span>
+          <span className="meta-chip" style={{ background: 'rgba(59,130,246,0.1)', color: '#2563EB', fontWeight: '700', border: '1px solid rgba(59,130,246,0.3)' }}>50% Syllabus (First Half)</span>
+          <span className="meta-chip" style={{ background: 'rgba(16,185,129,0.1)', color: '#059669', fontWeight: '700', border: '1px solid rgba(16,185,129,0.3)' }}>Slow & Steady Pace</span>
+        </div>
         <h1 className="main-dashboard-title">+1 Digital Skills Syllabus</h1>
         <p className="main-dashboard-subtitle">
-          Practical Digital Skills Development Programme
+          Plus One Digital Foundations (Year 1)
         </p>
         <p className="main-dashboard-subtext">
           Learn by doing — build real-world computer, office, design, AI, web and coding confidence.
@@ -181,8 +150,8 @@ const PlusOneSyllabus = () => {
 
         {/* Subtle Metadata Chips */}
         <div className="header-metadata-chips">
-          <span className="meta-chip"><i className="fas fa-layer-group"></i> 10 Modules</span>
-          <span className="meta-chip"><i className="fas fa-book-reader"></i> 48 Classes</span>
+          <span className="meta-chip"><i className="fas fa-layer-group"></i> 6 Modules (Modules 1 to 6)</span>
+          <span className="meta-chip"><i className="fas fa-book-reader"></i> 30 Interactive Classes</span>
           <span className="meta-chip"><i className="fas fa-laptop-code"></i> Practical Learning</span>
         </div>
       </div>
@@ -389,163 +358,6 @@ const PlusOneSyllabus = () => {
             );
           })}
         </div>
-      </div>
-
-      {/* -------------------- CONTROLS & FILTER BAR -------------------- */}
-      <div className="filter-controls-bar">
-        <div className="search-box-wrapper">
-          <i className="fas fa-search search-icon"></i>
-          <input
-            type="text"
-            className="syllabus-search-input"
-            placeholder="Search by topic, class number, or keyword..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {searchQuery && (
-            <button className="clear-search-btn" onClick={() => setSearchQuery('')}>
-              <i className="fas fa-times"></i>
-            </button>
-          )}
-        </div>
-
-        <div className="filter-dropdowns-group">
-          {/* Module Selector */}
-          <select
-            className="filter-select"
-            value={selectedModuleId}
-            onChange={(e) => setSelectedModuleId(e.target.value)}
-          >
-            <option value="all">All 11 Modules</option>
-            {PLUS_ONE_MODULES.map((mod) => (
-              <option value={mod.id} key={mod.id}>
-                Module {mod.number}: {mod.title}
-              </option>
-            ))}
-          </select>
-
-          {/* Status Filter Selector */}
-          <select
-            className="filter-select"
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-          >
-            <option value="all">All Statuses</option>
-            <option value="NOT STARTED">Not Started</option>
-            <option value="IN PROGRESS">In Progress</option>
-            <option value="COMPLETED">Completed</option>
-          </select>
-        </div>
-      </div>
-
-      {/* -------------------- DETAILED MODULES & CLASSES -------------------- */}
-      <div className="detailed-modules-container">
-        {filteredModules.length === 0 ? (
-          <div className="no-results-card">
-            <i className="fas fa-search-minus no-results-icon"></i>
-            <h4>No matching classes found</h4>
-            <p>Try adjusting your search query or filter settings.</p>
-            <button className="reset-filter-btn" onClick={() => { setSearchQuery(''); setStatusFilter('all'); setSelectedModuleId('all'); }}>
-              Reset Filters
-            </button>
-          </div>
-        ) : (
-          filteredModules.map((mod) => {
-            const mMetric = metrics.moduleProgress[mod.id] || { percentage: 0, completed: 0, total: mod.classes.length };
-            return (
-              <div className="detailed-module-block" key={mod.id}>
-                {/* Module Header */}
-                <div className="module-block-header">
-                  <div>
-                    <div className="mod-block-tag">Module {mod.number}</div>
-                    <h2 className="mod-block-title">
-                      <i className={mod.icon}></i> {mod.title}
-                    </h2>
-                    <p className="mod-block-purpose">{mod.purpose}</p>
-                  </div>
-                  <div className="mod-block-badge">
-                    {mMetric.completed} / {mMetric.total} Completed ({mMetric.percentage}%)
-                  </div>
-                </div>
-
-                {/* Module Real Project Card */}
-                {mod.realProject && (
-                  <div className="real-project-card">
-                    <div className="rp-badge">
-                      <i className="fas fa-lightbulb"></i> MODULE REAL PROJECT
-                    </div>
-                    <h4 className="rp-title">{mod.realProject.title}</h4>
-                    <p className="rp-desc">{mod.realProject.description}</p>
-                  </div>
-                )}
-
-                {/* Multi Real Projects List */}
-                {mod.realProjects && (
-                  <div className="multi-projects-grid">
-                    {mod.realProjects.map((rp, idx) => (
-                      <div className="mp-card" key={idx}>
-                        <span className="mp-title"><i className="fas fa-star"></i> {rp.title}</span>
-                        <p className="mp-desc">{rp.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Class Cards Grid */}
-                <div className="classes-grid-3col">
-                  {mod.classes.map((cls) => {
-                    const currentStatus = savedProgress[cls.id]?.status || 'NOT STARTED';
-                    const hasNotes = Boolean(savedProgress[cls.id]?.teacherNotes);
-
-                    return (
-                      <div
-                        className={`class-item-card status-border-${currentStatus.toLowerCase().replace(' ', '-')}`}
-                        key={cls.id}
-                      >
-                        <div className="class-card-top-row">
-                          <span className="class-number-tag">Class {cls.classNum}</span>
-
-                          {/* Status Dropdown */}
-                          <select
-                            className={`status-dropdown status-style-${currentStatus.toLowerCase().replace(' ', '-')}`}
-                            value={currentStatus}
-                            onChange={(e) => handleStatusChange(cls.id, e.target.value)}
-                          >
-                            <option value="NOT STARTED">Not Started</option>
-                            <option value="IN PROGRESS">In Progress</option>
-                            <option value="COMPLETED">✓ Completed</option>
-                          </select>
-                        </div>
-
-                        <div className="class-card-content" onClick={() => setActiveClassDetail(cls)}>
-                          <h4 className="class-title-text">{cls.topic}</h4>
-                          <p className="class-concept-text">{cls.simpleConcept}</p>
-                          <div className="class-objective-block">
-                            <strong>Objective:</strong> {cls.objective}
-                          </div>
-                        </div>
-
-                        <div className="class-card-bottom-row">
-                          <button
-                            className="open-guide-link-btn"
-                            onClick={() => setActiveClassDetail(cls)}
-                          >
-                            Open Teaching Guide →
-                          </button>
-                          {hasNotes && (
-                            <span className="notes-icon-badge" title="Teacher notes added">
-                              <i className="fas fa-sticky-note"></i>
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })
-        )}
       </div>
 
       {/* -------------------- FINAL PROJECT SPECIALIZATIONS -------------------- */}

@@ -1,1051 +1,627 @@
-// Complete +2 Digital Skills Syllabus Data Structure (Development / Intermediate Level)
-// Philosophy: LEARN -> PRACTICE -> CREATE -> PUBLISH -> BUILD PORTFOLIO
+import { MODULE_0_FOUNDATION } from './foundationSyllabusData';
 
 export const PLUS_TWO_MODULES = [
+  MODULE_0_FOUNDATION,
   {
-    id: 'mod-p2-1',
-    number: 1,
-    title: 'Professional Digital Workspace & Cloud Productivity',
-    purpose: 'Master professional cloud workspace management, Google Workspace co-authoring, document formatting, and advanced PDF workflows.',
-    icon: 'fas fa-briefcase',
-    color: '#2563EB',
+    id: 'mod-7',
+    number: 7,
+    title: 'MS PowerPoint Fundamentals',
+    purpose: 'Master slide design, presentation layouts, animations, transitions, and projector presentation delivery.',
+    icon: 'fas fa-file-powerpoint',
+    color: '#E11D48',
     realProject: {
-      title: 'Create a Professional Student Digital Workspace',
-      description: 'Students build a cloud-synced Google Drive/Local directory tree with standardized naming conventions (YYYY-MM-DD), templates, and automated backups.'
+      title: 'Projector Presentation & Slide Show Demo',
+      description: 'Students build a 5-slide interactive presentation with custom theme, media, transitions, and deliver a live projector demo.'
     },
     classes: [
       {
-        id: 'p2-cls-1',
-        classNum: 1,
-        topic: 'Professional File & Folder Architecture',
-        simpleConcept: 'Organizing files like a professional software engineer or media producer.',
-        objective: 'Establish industry-standard folder hierarchies, versioning (v1, v2_FINAL), and naming conventions.',
+        id: 'cls-31',
+        classNum: 31,
+        topic: 'MS PowerPoint Interface, Slide Layouts & Creating Presentations',
+        simpleConcept: 'Opening PowerPoint, understanding slide layouts (Title Slide, Content Slide), and adding text.',
+        objective: 'Navigate PowerPoint interface, insert new slides, select layouts, and save `.pptx` presentations.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Why "final_final2.docx" is bad. Teach ISO Date naming (YYYY-MM-DD_Project_v01) and project root structures.',
-          demonstrate: 'Building a clean `2026_Media_Projects` directory tree with Assets, Exports, Drafts, and Documentation subfolders.',
-          practice: 'Re-organize a cluttered downloads folder into structured project sub-folders.',
-          realWorldExample: 'Media production houses managing 500GB+ of film assets and corporate client files.',
-          practicalTask: 'Create a root folder `PlusTwo_Digital_Portfolio` with subfolders for Design, Video, Code, and Certificates.',
-          expectedOutput: 'Standardized project directory tree verified by teacher.'
+          explain: 'Structure of a presentation: Title slide, agenda slide, content slides, conclusion slide.',
+          demonstrate: 'Opening PowerPoint, inserting 3 slides, choosing layouts, typing content, and saving.',
+          practice: 'Create a 3-slide presentation about "My Favorite Hobby".',
+          realWorldExample: 'Delivering school seminars, corporate pitch decks, and project reports.',
+          practicalTask: 'Create a 3-slide presentation titled "Computer Technology", add 2 content slides, save as `Class31.pptx`.',
+          expectedOutput: '3-slide saved PowerPoint presentation.'
         }
       },
       {
-        id: 'p2-cls-2',
-        classNum: 2,
-        topic: 'Google Workspace Ecosystem (Docs, Sheets, Slides)',
-        simpleConcept: 'Collaborating live with team members on online documents without emailing files back and forth.',
-        objective: 'Master real-time co-authoring, version history restoration, and cloud commenting in Google Workspace.',
+        id: 'cls-32',
+        classNum: 32,
+        topic: 'Slide Design, Background Themes & Color Schemes',
+        simpleConcept: 'Choosing professional slide themes, colors, and consistent typography.',
+        objective: 'Apply PowerPoint themes, customize background colors, and set font hierarchies.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Real-time multi-user editing. Share settings (Viewer, Commenter, Editor). Accessing Version History.',
-          demonstrate: 'Inviting 2 students to edit the same Google Doc simultaneously and restoring an older revision.',
-          practice: 'Create a shared Google Doc with 2 lab partners and co-author a project proposal.',
-          realWorldExample: 'Modern remote tech teams collaborating live across Dubai, India, and USA.',
-          practicalTask: 'Create a Google Doc, share with lab partner as Editor, resolve 2 inline comments.',
-          expectedOutput: 'Co-authored Google Doc with comment history.'
+          explain: 'Rule of presentation design: High contrast (Dark text on light background or vice versa). Limit text per slide!',
+          demonstrate: 'Applying a clean built-in Design Theme, customizing accent colors, and adjusting line spacing.',
+          practice: 'Transform a plain black-and-white presentation into a beautifully themed deck.',
+          realWorldExample: 'Professional keynote presentations at tech conferences and school seminars.',
+          practicalTask: 'Apply a professional Design Theme to your 3-slide presentation and adjust font colors.',
+          expectedOutput: 'Visually styled PowerPoint presentation deck.'
         }
       },
       {
-        id: 'p2-cls-3',
-        classNum: 3,
-        topic: 'Advanced PDF Handling, Merging & Compression',
-        simpleConcept: 'Combining 5 PDFs into 1 document, reducing file size for web uploads, and digital signing.',
-        objective: 'Manipulate PDF files: merge, split, compress, convert, and insert digital signatures.',
+        id: 'cls-33',
+        classNum: 33,
+        topic: 'Adding Media: Inserting Pictures, Audio, Video & Icons',
+        simpleConcept: 'Enhancing slides with visual images, illustrations, audio clips, and video embeds.',
+        objective: 'Insert images, icons, stock graphics, and embed video/audio into PowerPoint slides.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Why PDF is the universal business standard. PDF compression techniques without quality loss.',
-          demonstrate: 'Merging 3 separate assignment PDFs into 1 master PDF and compressing from 15MB to 2MB.',
-          practice: 'Take 3 sample PDFs, merge into single document, compress to under 2MB.',
-          realWorldExample: 'Submitting passport, marks card, and photo in a single compressed PDF on college admission portals.',
-          practicalTask: 'Merge 3 PDF pages into one file named `Full_Application_2026.pdf` compressed under 2MB.',
-          expectedOutput: 'Merged and compressed single PDF document under 2MB.'
+          explain: 'Why visuals communicate faster than plain text paragraphs. Inserting pictures and resizing proportionally.',
+          demonstrate: 'Inserting an image, applying Picture Format styles (borders, shadows), and inserting stock icons.',
+          practice: 'Insert 2 relevant images and 2 vector icons into your presentation slides.',
+          realWorldExample: 'Engaging classroom lectures and business sales presentations using visual infographics.',
+          practicalTask: 'Insert 1 picture and 2 icons onto Slide 2, format picture with rounded border.',
+          expectedOutput: 'Presentation slide enriched with formatted media assets.'
         }
       },
       {
-        id: 'p2-cls-4',
-        classNum: 4,
-        topic: 'Digital Troubleshooting & Cloud Backup Rules',
-        simpleConcept: 'Fixing common computer glitches and setting up automatic cloud backup folders.',
-        objective: 'Diagnose network connection issues, clear browser cache, and configure automated cloud folder sync.',
+        id: 'cls-34',
+        classNum: 34,
+        topic: 'Slide Transitions, Object Animations & Presenter View',
+        simpleConcept: 'Adding smooth page-turn transitions between slides and animating text points.',
+        objective: 'Apply slide transitions (Morph, Fade), object entry animations, and navigate Presenter View (F5).',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: '3-2-1 Backup Rule: 3 copies of data, 2 different storage types, 1 offsite cloud copy.',
-          demonstrate: 'Configuring Google Drive for Desktop auto-sync and clearing browser cookies/cache.',
-          practice: 'Configure cloud sync folder and clear browser cache on lab computer.',
-          realWorldExample: 'Preventing data loss when a computer hard drive crashes before exam submission.',
-          practicalTask: 'Set up an auto-sync portfolio folder in Google Drive and verify sync status icon.',
-          expectedOutput: 'Cloud-synced folder verified on lab computer.'
+          explain: 'Subtle transitions (Fade/Push) vs distracting wild animations. Using Presenter View with dual monitors/projector.',
+          demonstrate: 'Applying Fade transition across slides and adding "Appear on Click" bullet animation.',
+          practice: 'Add Fade transitions to all slides and animate bullet points on Slide 2.',
+          realWorldExample: 'Presenting smooth slideshows on projectors in auditoriums and classrooms.',
+          practicalTask: 'Apply Fade transition to all slides, animate bullet list on click, and run slideshow (F5).',
+          expectedOutput: 'Animated PowerPoint presentation tested in Slide Show mode.'
+        }
+      },
+      {
+        id: 'cls-35',
+        classNum: 35,
+        topic: 'Real-World Hands-on Project: 5-Slide Presentation & Show',
+        simpleConcept: 'Building and delivering a complete 5-slide presentation on a projector/screen.',
+        objective: 'Produce a complete 5-slide deck featuring theme, images, formatted text, transitions, and present it.',
+        teacherGuide: {
+          theoryDuration: '10 min',
+          practicalDuration: '45 min',
+          explain: 'Brief students on 5-slide topics (e.g. "Future of AI", "My Institution", "Environmental Protection").',
+          demonstrate: 'Delivering a model 2-minute presentation demo using projector view.',
+          practice: 'Students complete their 5-slide presentation and present Slide 1 to the class.',
+          realWorldExample: 'College seminar presentations, public speaking, and job interview deck presentations.',
+          practicalTask: 'Build a 5-slide deck on an assigned topic, include images, transitions, and present Slide 1.',
+          expectedOutput: 'Completed 5-slide `.pptx` presentation delivered to instructor.'
         }
       }
     ]
   },
   {
-    id: 'mod-p2-2',
-    number: 2,
-    title: 'Intermediate MS Word & Document Publishing',
-    purpose: 'Master multi-page document design, table of contents, cover pages, headers/footers, and professional CV writing.',
-    icon: 'fas fa-file-alt',
+    id: 'mod-8',
+    number: 8,
+    title: 'Canva Design Fundamentals',
+    purpose: 'Master quick graphic design, posters, social media graphics, and brand assets using Canva.',
+    icon: 'fas fa-palette',
+    color: '#8B5CF6',
+    realProject: {
+      title: 'School Event Poster & Social Media Graphics',
+      description: 'Students design an event promotional poster and Instagram post graphic using Canva templates, typography, and visual assets.'
+    },
+    classes: [
+      {
+        id: 'cls-36',
+        classNum: 36,
+        topic: 'Canva Overview, Template Selection & Canvas Workspace',
+        simpleConcept: 'Opening Canva, choosing custom dimensions (Poster, Instagram Post), and picking templates.',
+        objective: 'Navigate Canva UI, search templates, set custom dimensions, and understand design canvas layout.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Why Canva is popular for fast graphic design. Preset aspect ratios (1080x1080 Insta, A4 Poster).',
+          demonstrate: 'Logging into Canva, searching "Event Poster", opening canvas workspace, and browsing templates.',
+          practice: 'Create a blank 1080x1080 canvas and select an event poster template.',
+          realWorldExample: 'Social media managers, small shop owners, and student clubs designing fast graphics.',
+          practicalTask: 'Open Canva, select a poster template, and change the main headline text.',
+          expectedOutput: 'Customized Canva poster project canvas.'
+        }
+      },
+      {
+        id: 'cls-37',
+        classNum: 37,
+        topic: 'Working with Text Typography, Elements, Graphics & Stickers',
+        simpleConcept: 'Adding custom heading text, pairing fonts, inserting shapes, stickers, and illustration graphics.',
+        objective: 'Add text frames, customize font combinations, insert vector elements, lines, and stickers.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Font pairing rules (Bold Heading + Simple Subtitle). Searching Canva Elements library for icons.',
+          demonstrate: 'Adding text box, changing font to Montserrat/Outfit, searching "sparkles" in Elements, and positioning.',
+          practice: 'Design a graphic title with 2 font pairings and 3 vector illustration elements.',
+          realWorldExample: 'Designing eye-catching banners, quotes, and announcement posters.',
+          practicalTask: 'Add 1 heading, 1 subtitle, and 2 vector graphic elements to your poster layout.',
+          expectedOutput: 'Canva poster layout enriched with typography and vector graphics.'
+        }
+      },
+      {
+        id: 'cls-38',
+        classNum: 38,
+        topic: 'Customizing Colors, Photo Uploads & Background Removal',
+        simpleConcept: 'Changing background color palettes, uploading your own photos, and using background remover.',
+        objective: 'Upload custom images, adjust color palettes, apply transparency, and export PNG/PDF files.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Color harmony (using brand colors). Uploading personal photos and downloading high-res PNG/PDF.',
+          demonstrate: 'Uploading a lab photo, placing inside a grid frame, adjusting background color, and clicking Download.',
+          practice: 'Upload a sample photo, customize poster background colors, and download as PNG.',
+          realWorldExample: 'Designing personal logos, product promotional photos, and event flyers.',
+          practicalTask: 'Upload 1 image, customize background color scheme, and download design as high-resolution PNG.',
+          expectedOutput: 'Exported high-res PNG image downloaded to computer.'
+        }
+      },
+      {
+        id: 'cls-39',
+        classNum: 39,
+        topic: 'Real-World Hands-on Project: Designing Event Poster',
+        simpleConcept: 'Creating a complete event poster from scratch or customized template for a school fest.',
+        objective: 'Design a complete event poster with title, date, venue, images, graphics, and export print PDF.',
+        teacherGuide: {
+          theoryDuration: '10 min',
+          practicalDuration: '45 min',
+          explain: 'Project topic: "Sirajul Huda IT Fest 2026 Poster". Include Title, Date, Venue, Highlights, and Logo.',
+          demonstrate: 'Reviewing a print-ready poster design sample.',
+          practice: 'Students build their fest poster in Canva during lab session.',
+          realWorldExample: 'Real-world graphic design for institutional events, sports meets, and business promos.',
+          practicalTask: 'Design a complete A4 IT Fest Poster in Canva and export high-quality Print PDF.',
+          expectedOutput: 'Print-ready PDF event poster submitted to instructor.'
+        }
+      }
+    ]
+  },
+  {
+    id: 'mod-9',
+    number: 9,
+    title: 'Photoshop Fundamentals',
+    purpose: 'Master photo editing, layer concepts, selections, image retouching, and digital graphics in Photoshop.',
+    icon: 'fas fa-image',
     color: '#0284C7',
     realProject: {
-      title: 'Professional Multi-Page Report & Resume Package',
-      description: 'Students build a 1-page modern CV/Resume and a 3-page formal report featuring cover page, table of contents, and header/footers.'
+      title: 'Digital Banner & Photo Retouching Project',
+      description: 'Students edit portrait photos, crop/resize images, apply layer masks, and build a digital banner.'
     },
     classes: [
       {
-        id: 'p2-cls-5',
-        classNum: 5,
-        topic: 'Headers, Footers, Page Numbers & Cover Pages',
-        simpleConcept: 'Adding professional top/bottom margins with page numbers and custom cover pages.',
-        objective: 'Insert different Headers/Footers, page numbering (`Page X of Y`), and pre-designed Cover Pages.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Different First Page rule (hiding header/footer on title cover page). Page number formatting.',
-          demonstrate: 'Inserting a Cover Page template, setting `Page X of Y` in footer, and enabling "Different First Page".',
-          practice: 'Create a 3-page document with a title cover page and numbered headers/footers.',
-          realWorldExample: 'Publishing formal company annual reports and college project documentation.',
-          practicalTask: 'Add a Cover Page, Header with document title, and Footer with `Page X of Y` numbering.',
-          expectedOutput: '3-page document with cover page and page numbers.'
-        }
-      },
-      {
-        id: 'p2-cls-6',
-        classNum: 6,
-        topic: 'Automated Table of Contents & Headings Styles',
-        simpleConcept: 'Using Heading 1 and Heading 2 styles so Word generates an instant clickable Table of Contents.',
-        objective: 'Apply Heading Styles (Heading 1, 2, 3) and generate an automated Table of Contents.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Why manually typing dots for page numbers is bad! Styles tab allows instant 1-click Table of Contents.',
-          demonstrate: 'Applying Heading 1 to section titles and inserting Table of Contents from References tab.',
-          practice: 'Apply styles to a 4-section report and generate a dynamic Table of Contents.',
-          realWorldExample: 'Structuring long textbooks, research papers, and business proposals.',
-          practicalTask: 'Apply Heading 1 styles across 3 report sections and insert an automated Table of Contents.',
-          expectedOutput: 'Document with clickable dynamic Table of Contents.'
-        }
-      },
-      {
-        id: 'p2-cls-7',
-        classNum: 7,
-        topic: 'Section Breaks, Columns & Mail Merge',
-        simpleConcept: 'Creating multi-column newspaper layouts and generating personalized certificates automatically.',
-        objective: 'Insert Section Breaks, 2-column page layouts, and execute Mail Merge to generate multi-person letters.',
+        id: 'cls-40',
+        classNum: 40,
+        topic: 'Photoshop Workspace, Layers Concept & Selection Tools',
+        simpleConcept: 'Understanding layers like stacked transparent sheets, and using marquee/lasso selection tools.',
+        objective: 'Navigate Photoshop / Photopea interface, understand layer stacking order, and use selection tools.',
         teacherGuide: {
           theoryDuration: '20 min',
           practicalDuration: '35 min',
-          explain: 'Section Breaks vs Page Breaks. Mail Merge concept: Connecting Excel contact list to Word letter template.',
-          demonstrate: 'Creating a 2-column newsletter section and performing Mail Merge for 5 student certificates.',
-          practice: 'Format a 2-column article section and practice Mail Merge for 3 recipient letters.',
-          realWorldExample: 'Printing 500 personalized exam hall tickets or wedding invitations in 1 click.',
-          practicalTask: 'Perform Mail Merge using an Excel recipient list to generate 3 customized award letters.',
-          expectedOutput: '3 mail-merged customized letters saved as single document.'
+          explain: 'Core concept of Photoshop: LAYERS! How top layers cover bottom layers. Selection tools (Marquee, Lasso, Magic Wand).',
+          demonstrate: 'Opening Photoshop/Photopea, creating 2 layers, drawing shapes, and rearranging layer stack order.',
+          practice: 'Create a 3-layer document (Background, Shape, Text) and toggle layer visibility.',
+          realWorldExample: 'Professional photo studios and digital artists building composite artwork.',
+          practicalTask: 'Create a 3-layer document in Photoshop/Photopea with background, shape, and text layers.',
+          expectedOutput: 'Photoshop document displaying 3 distinct layers.'
         }
       },
       {
-        id: 'p2-cls-8',
-        classNum: 8,
-        topic: 'Real Project: Professional CV / Resume Creation',
-        simpleConcept: 'Designing a modern 1-page CV/Resume with clear section dividers, skills, and PDF export.',
-        objective: 'Combine multi-column layout, bullet points, font hierarchy, and export print-ready PDF.',
+        id: 'cls-41',
+        classNum: 41,
+        topic: 'Image Cropping, Resizing, Canvas Adjustments & Saving for Web',
+        simpleConcept: 'Cropping photo borders, resizing dimensions without distortion, and saving as JPG/PNG.',
+        objective: 'Use Crop Tool, adjust Image Size (pixels/resolution), Canvas Size, and Save for Web (JPG/PNG).',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Resume Structure: Header -> Career Objective -> Education -> Digital Skills -> Projects -> Languages.',
-          demonstrate: 'Designing a clean 1-page modern Resume template in Word and exporting PDF.',
-          practice: 'Students complete their personal professional Resume document.',
-          realWorldExample: 'Applying for job openings, internships, and higher education admissions.',
-          practicalTask: 'Complete your 1-page professional CV and export as `Student_Resume_2026.pdf`.',
-          expectedOutput: 'Finished professional PDF Resume file.'
+          explain: 'Aspect ratios (1:1, 16:9). Resolution for Print (300 DPI) vs Web (72 DPI). Keeping proportions locked.',
+          demonstrate: 'Cropping a photo to square aspect ratio, resizing width to 1920px, and exporting as web JPG.',
+          practice: 'Crop a sample photo and resize resolution to 1080x1080 pixels.',
+          realWorldExample: 'Preparing product photos for e-commerce stores and website sliders.',
+          practicalTask: 'Crop an image to square 1080x1080 pixels and export as optimized JPEG file.',
+          expectedOutput: 'Resized and cropped JPEG photo saved to desktop.'
+        }
+      },
+      {
+        id: 'cls-42',
+        classNum: 42,
+        topic: 'Basic Photo Touch-up, Spot Healing, Brightness & Contrast',
+        simpleConcept: 'Removing blemishes/spots from photos, adjusting lighting, brightness, and contrast curves.',
+        objective: 'Use Spot Healing Brush, Adjustment Layers (Brightness/Contrast, Saturation), and basic color correction.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Non-destructive editing using Adjustment Layers. Fixing dark or dull photos with Brightness/Contrast.',
+          demonstrate: 'Removing a spot using Spot Healing Brush and enhancing photo colors with Saturation boost.',
+          practice: 'Touch up a sample dark/blemished photo and enhance its brightness and contrast.',
+          realWorldExample: 'Studio portrait retouching, passport photo editing, and magazine photo enhancement.',
+          practicalTask: 'Apply Spot Healing to sample image and enhance brightness/contrast using adjustment layers.',
+          expectedOutput: 'Retouched and color-enhanced photo file.'
+        }
+      },
+      {
+        id: 'cls-43',
+        classNum: 43,
+        topic: 'Real-World Hands-on Project: Custom Digital Banner',
+        simpleConcept: 'Combining photos, text layers, and graphics to design a digital header banner.',
+        objective: 'Build a composite digital banner combining photo background, cutout graphics, text, and layer styles.',
+        teacherGuide: {
+          theoryDuration: '10 min',
+          practicalDuration: '45 min',
+          explain: 'Project topic: "Digital Portfolio Header Banner". Combine background image, text, logo, and photo.',
+          demonstrate: 'Showcasing a finished composite banner PSD project file.',
+          practice: 'Students build their composite digital banner during lab session.',
+          realWorldExample: 'Designing website hero banners, YouTube channel art, and digital ad graphics.',
+          practicalTask: 'Create a 1200x400 digital banner combining background photo, text title, and cutout logo.',
+          expectedOutput: 'Exported PNG digital banner file submitted to instructor.'
         }
       }
     ]
   },
   {
-    id: 'mod-p2-3',
-    number: 3,
-    title: 'Intermediate MS Excel & Data Analysis',
-    purpose: 'Master data management: IF logical functions, sorting, multi-level filtering, conditional formatting, and analytical dashboards.',
-    icon: 'fas fa-chart-line',
+    id: 'mod-10',
+    number: 10,
+    title: 'Video Editing — Practical Content Creation',
+    purpose: 'Master video trimming, cutting, transitions, audio editing, captions, and short-form video creation.',
+    icon: 'fas fa-video',
+    color: '#F59E0B',
+    realProject: {
+      title: '30-Second Promotional Video / Reel Project',
+      description: 'Students edit a 30-second promotional video reel featuring video cuts, background music, captions, and visual transitions.'
+    },
+    classes: [
+      {
+        id: 'cls-44',
+        classNum: 44,
+        topic: 'Video Editing Basics (Importing Footage, Aspect Ratios)',
+        simpleConcept: 'Understanding timeline editing, importing video clips, and selecting 16:9 vs 9:16 vertical ratio.',
+        objective: 'Navigate CapCut / Premiere interface, import media clips, and set canvas aspect ratios (9:16 Reel vs 16:9 YouTube).',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Aspect ratios: 9:16 (Vertical Reels/Shorts) vs 16:9 (Horizontal YouTube). Timeline tracks (Video & Audio).',
+          demonstrate: 'Opening CapCut / Video Editor, importing 3 video clips, and setting canvas to 9:16 ratio.',
+          practice: 'Import 3 video clips into video timeline and set aspect ratio to 9:16.',
+          realWorldExample: 'Content creators editing Instagram Reels, YouTube Shorts, and promo clips.',
+          practicalTask: 'Create a new video project, import 3 video clips, and set canvas ratio to 9:16.',
+          expectedOutput: 'Video editing workspace setup with imported footage clips.'
+        }
+      },
+      {
+        id: 'cls-45',
+        classNum: 45,
+        topic: 'Timeline Navigation, Trimming, Splitting & Cutting Clips',
+        simpleConcept: 'Cutting out unwanted video parts, trimming clip lengths, and arranging video sequence.',
+        objective: 'Master Split tool (Razor), trim clip handles, rearrange clip sequence on timeline, and speed control.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Cutting on the action. Removing awkward pauses or shaky footage. Adjusting clip speed (1.2x, Slow Motion).',
+          demonstrate: 'Splitting a clip at 0:05, deleting middle section, and speeding up clip 1.5x.',
+          practice: 'Trim 3 raw video clips into a tight 15-second sequential video montage.',
+          realWorldExample: 'Editing vlogs, sports highlights, and commercial video advertisements.',
+          practicalTask: 'Split and trim 3 raw video clips into a tight 15-second video sequence.',
+          expectedOutput: 'Cleanly cut 15-second video sequence on editing timeline.'
+        }
+      },
+      {
+        id: 'cls-46',
+        classNum: 46,
+        topic: 'Adding Transitions, Video Effects & Color Filters',
+        simpleConcept: 'Connecting video clips smoothly with transition effects and color filters.',
+        objective: 'Apply clip transition effects (Dissolve, Zoom, Whip), video filters, and color adjustment presets.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Transitions connect scenes. Using subtle transitions so viewer focus stays on the content story.',
+          demonstrate: 'Adding a Zoom-in transition between Clip 1 and 2, and applying a vibrant color filter.',
+          practice: 'Apply 2 transition effects and 1 color filter to your video timeline project.',
+          realWorldExample: 'Commercial video ads, music videos, and travel vlogs featuring visual pop effects.',
+          practicalTask: 'Add 2 transitions between video clips and apply a color filter adjustment.',
+          expectedOutput: 'Video timeline containing smooth transitions and color enhancements.'
+        }
+      },
+      {
+        id: 'cls-47',
+        classNum: 47,
+        topic: 'Audio Editing: Background Music, Voiceovers & Sound Effects',
+        simpleConcept: 'Adding background music tracks, adjusting audio volume levels, and adding sound effects (SFX).',
+        objective: 'Import audio tracks, adjust music volume (ducking behind voice), and add pop/whoosh sound effects.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'Audio is 50% of video quality! Lowering background music volume (20%) so voice/narrator is clear.',
+          demonstrate: 'Importing background MP3 track, lowering volume to -15dB, and adding a whoosh SFX on transition.',
+          practice: 'Add background music track to video timeline and adjust volume so audio does not overpower visuals.',
+          realWorldExample: 'Podcast editing, radio ads, and high-impact social media video posts.',
+          practicalTask: 'Import background music, set volume level to 20%, and sync 1 sound effect to transition.',
+          expectedOutput: 'Video project with balanced background audio track.'
+        }
+      },
+      {
+        id: 'cls-48',
+        classNum: 48,
+        topic: 'Animated Captions, Text Titles & Overlay Graphics',
+        simpleConcept: 'Adding kinetic text titles, auto-generated subtitles/captions, and sticker overlays.',
+        objective: 'Insert text titles, generate auto-captions, format subtitle styles, and export MP4 video.',
+        teacherGuide: {
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: '80%+ of mobile users watch videos on silent! Subtitles/captions are mandatory for social video reach.',
+          demonstrate: 'Using Auto-Captions tool, styling caption font with yellow highlight, and exporting 1080p MP4 video.',
+          practice: 'Generate auto-captions or add 2 animated text title overlays to your video timeline.',
+          realWorldExample: 'Instagram Reels, TikToks, and YouTube Shorts featuring kinetic highlighted subtitles.',
+          practicalTask: 'Add animated title text, generate captions, and export video as 1080p MP4 file.',
+          expectedOutput: 'Exported `.mp4` video file saved on computer desktop.'
+        }
+      },
+      {
+        id: 'cls-49',
+        classNum: 49,
+        topic: 'Real-World Hands-on Project: 30-Second Promo Video',
+        simpleConcept: 'Editing and exporting a complete 30-second promotional video reel deliverable.',
+        objective: 'Produce a complete 30-second promotional video featuring cuts, music, transitions, titles, and MP4 export.',
+        teacherGuide: {
+          theoryDuration: '10 min',
+          practicalDuration: '45 min',
+          explain: 'Project topic: "Sirajul Huda Campus Life / IT Lab 30-Sec Promo Reel". Include clips, music, captions, and export.',
+          demonstrate: 'Reviewing a high-scoring sample 30-second promo reel deliverable.',
+          practice: 'Students assemble and export their 30-second promo video during lab session.',
+          realWorldExample: 'Real-world digital content creation for institutional marketing and personal vlogging.',
+          practicalTask: 'Build a complete 30-second promo video reel with clips, music, captions, and export 1080p MP4.',
+          expectedOutput: 'Polished 30-second MP4 promo video deliverable submitted to instructor.'
+        }
+      }
+    ]
+  },
+  {
+    id: 'mod-11',
+    number: 11,
+    title: 'AI Awareness & Web Basics',
+    purpose: 'Understand how the internet works, artificial intelligence concepts, and basic HTML/CSS web page creation.',
+    icon: 'fas fa-code',
     color: '#10B981',
     realProject: {
-      title: 'Sales & Expense Analytics Dashboard Sheet',
-      description: 'Students build a dynamic business expense calculator sheet using IF formulas, conditional formatting, auto-filters, and combo charts.'
+      title: 'First Personal Profile Web Page Project',
+      description: 'Students write basic HTML/CSS code to build and preview their first personal profile web page in a browser.'
     },
     classes: [
       {
-        id: 'p2-cls-9',
-        classNum: 9,
-        topic: 'Logical Formulas: IF & Nested IF',
-        simpleConcept: 'Writing formulas that make decisions automatically (e.g. IF marks >= 50 show "PASS" else "FAIL").',
-        objective: 'Master `=IF(condition, value_if_true, value_if_false)` syntax and pass/fail evaluation.',
+        id: 'cls-50',
+        classNum: 50,
+        topic: 'Introduction to Artificial Intelligence & Modern Tech',
+        simpleConcept: 'What AI is, how computers learn from data (Machine Learning), and daily AI examples.',
+        objective: 'Understand Artificial Intelligence concepts, machine learning basics, and real-world AI applications.',
         teacherGuide: {
           theoryDuration: '20 min',
           practicalDuration: '35 min',
-          explain: 'Logic: `=IF(E2>=50, "PASS", "FAIL")`. If student score is 50 or higher, Excel outputs PASS automatically.',
-          demonstrate: 'Writing `=IF()` formula in Result column and extending down student list.',
-          practice: 'Write IF formulas for a list of 10 student test scores.',
-          realWorldExample: 'Automated grading systems, loan approvals, and discount eligibility calculators.',
-          practicalTask: 'Add a `Result` column in Excel and use `=IF()` formula to display "PASS" or "FAIL" for 5 students.',
-          expectedOutput: 'Excel sheet with dynamic IF formula results.'
+          explain: 'AI as pattern recognition. Examples: YouTube recommendation algorithms, face recognition, speech-to-text.',
+          demonstrate: 'Exploring Google Teachable Machine or AI demo to show real-time pattern recognition.',
+          practice: 'Interact with an AI recognition demo and identify 3 daily AI applications.',
+          realWorldExample: 'Self-driving cars, medical image diagnostics, and voice assistants (Siri, Alexa).',
+          practicalTask: 'Test an AI vision/audio demo and write down 3 real-world AI applications.',
+          expectedOutput: 'Student identifies 3 practical AI use cases.'
         }
       },
       {
-        id: 'p2-cls-10',
-        classNum: 10,
-        topic: 'Conditional Formulas: SUMIF & COUNTIF',
-        simpleConcept: 'Counting or adding numbers only when specific conditions are met.',
-        objective: 'Apply `=COUNTIF(range, criteria)` and `=SUMIF(range, criteria, sum_range)` functions.',
+        id: 'cls-51',
+        classNum: 51,
+        topic: 'Understanding How the Web Works (Websites, URLs, IP)',
+        simpleConcept: 'How websites load from servers across the internet when you type a URL domain address.',
+        objective: 'Understand client-server architecture, IP addresses, Domain Names (DNS), and HTTP web protocols.',
         teacherGuide: {
           theoryDuration: '20 min',
           practicalDuration: '35 min',
-          explain: '`=COUNTIF(F2:F10, "PASS")` counts total passing students. `=SUMIF(C2:C10, "Grocery", D2:D10)` sums grocery costs.',
-          demonstrate: 'Calculating total number of PASS vs FAIL students and summing expenses by category.',
-          practice: 'Calculate total PASS students and total FAIL students using COUNTIF.',
-          realWorldExample: 'Inventory stock alerts and sales revenue reporting by product category.',
-          practicalTask: 'Calculate total PASS count and total FAIL count using `=COUNTIF()` formulas.',
-          expectedOutput: 'Summary table with dynamic COUNTIF formula calculations.'
+          explain: 'Web server as a library, IP address as postal pincode, Domain Name (google.com) as nickname.',
+          demonstrate: 'Opening Browser Developer Tools (F12), viewing Network tab, and inspecting web page requests.',
+          practice: 'Use command prompt `ping google.com` to see real IP address of a website domain.',
+          realWorldExample: 'How web servers deliver web pages instantly across continents.',
+          practicalTask: 'Open Command Prompt/Terminal, ping a website domain, and record its IP address.',
+          expectedOutput: 'Student records website domain IP address from terminal output.'
         }
       },
       {
-        id: 'p2-cls-11',
-        classNum: 11,
-        topic: 'Conditional Formatting & Color Highlights',
-        simpleConcept: 'Automatically highlighting top scores in green and low scores or failures in red.',
-        objective: 'Apply Highlight Cell Rules (Greater Than, Less Than), Data Bars, and Color Scales.',
+        id: 'cls-52',
+        classNum: 52,
+        topic: 'Introduction to Web Pages & HTML Structure Basics',
+        simpleConcept: 'HTML tags (`<h1>`, `<p>`, `<img>`, `<a>`) build the skeleton structure of every website.',
+        objective: 'Understand HTML document structure, write basic tags (`<h1>`, `<p>`, `<ul>`, `<a>`), and preview in browser.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Conditional Formatting automatically changes cell color based on value! Red for < 40, Green for >= 80.',
-          demonstrate: 'Applying Light Red Fill for marks below 40 and Green Fill for marks above 80.',
-          practice: 'Apply Conditional Formatting rule to highlight failing marks in red automatically.',
-          realWorldExample: 'Highlighting overdue invoices, low inventory stock, and high-performance metrics.',
-          practicalTask: 'Apply Conditional Formatting to highlight marks below 40 in Red and above 80 in Green.',
-          expectedOutput: 'Excel sheet with dynamic Conditional Formatting rules applied.'
+          explain: 'HTML is the skeleton/structure of a building. Opening tags `<p>` and closing tags `</p>`.',
+          demonstrate: 'Writing a basic `index.html` file in Notepad/VS Code and opening it in Chrome browser.',
+          practice: 'Write HTML code with a Heading 1, 2 paragraphs, and a link to Google.',
+          realWorldExample: 'Every single website on the internet (Google, YouTube, Amazon) is built on HTML structure.',
+          practicalTask: 'Create `index.html`, add `<h1>My Name</h1>`, `<p>About Me</p>`, and open in browser.',
+          expectedOutput: 'Functional HTML web page previewed in Chrome browser.'
         }
       },
       {
-        id: 'p2-cls-12',
-        classNum: 12,
-        topic: 'Multi-Level Sorting, Filtering & Data Validation',
-        simpleConcept: 'Filtering data by categories and creating dropdown selection lists in cells.',
-        objective: 'Apply AutoFilters, multi-level sorting, and Data Validation dropdown lists.',
+        id: 'cls-53',
+        classNum: 53,
+        topic: 'Styling Web Content with Basic CSS Concepts',
+        simpleConcept: 'CSS adds colors, font styles, borders, and visual layout design to HTML web pages.',
+        objective: 'Understand CSS selectors, apply inline/internal CSS styles (color, font-family, background-color).',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Filter button (`Ctrl+Shift+L`). Data Validation: Restricting cell input to a dropdown list (e.g. Yes/No).',
-          demonstrate: 'Enabling AutoFilter, filtering table to show only "PASS" students, and creating a dropdown cell list.',
-          practice: 'Filter a dataset by subject and add a Data Validation dropdown list.',
-          realWorldExample: 'E-commerce product filter menus and corporate survey data entry.',
-          practicalTask: 'Enable AutoFilter on table and create a Data Validation dropdown list in Column G.',
-          expectedOutput: 'Filtered Excel dataset with a Data Validation dropdown selector.'
+          explain: 'CSS is paint, clothes, and interior design for the HTML building skeleton!',
+          demonstrate: 'Adding `<style>` tag, changing `h1` text color to blue, background color to light gray, and centering text.',
+          practice: 'Style your HTML page with background color, custom font family, and styled heading.',
+          realWorldExample: 'Designing visually stunning modern websites with custom color themes.',
+          practicalTask: 'Add CSS styles to your `index.html` page to set background color, heading color, and font.',
+          expectedOutput: 'Styled HTML/CSS web page displaying custom background and text colors.'
         }
       },
       {
-        id: 'p2-cls-13',
-        classNum: 13,
-        topic: 'Real Project: Business Expense & Revenue Dashboard Sheet',
-        simpleConcept: 'Creating a complete financial tracker spreadsheet with formulas, conditional formatting, and charts.',
-        objective: 'Combine data entry, IF, SUMIF, COUNTIF, AutoFilter, conditional formatting, and 2D charts.',
+        id: 'cls-54',
+        classNum: 54,
+        topic: 'Real-World Hands-on Project: First Personal Profile Web Page',
+        simpleConcept: 'Coding and launching a complete personal profile web page with HTML and CSS.',
+        objective: 'Build a personal profile HTML/CSS web page featuring heading, bio paragraph, skills list, and image.',
         teacherGuide: {
           theoryDuration: '10 min',
-          practicalDuration: '50 min',
-          explain: 'Dashboard project checklist: Data table -> Category totals -> Conditional alerts -> Pie/Bar charts.',
-          demonstrate: 'Reviewing complete business expense analytics spreadsheet project requirements.',
-          practice: 'Students build their complete Business Expense Tracker project.',
-          realWorldExample: 'Small business monthly bookkeeping and financial management.',
-          practicalTask: 'Complete and submit `Business_Expense_Tracker.xlsx` file.',
-          expectedOutput: 'Finished master Business Expense Tracker Excel file.'
+          practicalDuration: '45 min',
+          explain: 'Project specs: `index.html` file with Styled Heading, Bio paragraph, Skills bullet list, Profile photo, and Link.',
+          demonstrate: 'Previewing a completed student profile web page code deliverable.',
+          practice: 'Students write their HTML/CSS profile web page code independently.',
+          realWorldExample: 'Building the foundation for personal developer portfolio websites.',
+          practicalTask: 'Code a personal profile web page `profile.html` with HTML tags, CSS styling, and open in browser.',
+          expectedOutput: 'Completed HTML/CSS profile web page file saved and previewed in browser.'
         }
       }
     ]
   },
   {
-    id: 'mod-p2-4',
-    number: 4,
-    title: 'Professional PowerPoint & Visual Storytelling',
-    purpose: 'Master slide design: Slide Master, custom typography, infographics, SmartArt diagrams, Morph transitions, and pitch decks.',
-    icon: 'fas fa-desktop',
-    color: '#F59E0B',
-    realProject: {
-      title: 'Professional Business Pitch Deck',
-      description: 'Students build a 10-slide high-impact pitch presentation featuring Slide Master styling, SmartArt infographics, and Morph transitions.'
-    },
-    classes: [
-      {
-        id: 'p2-cls-14',
-        classNum: 14,
-        topic: 'Slide Master Customization & Color Palettes',
-        simpleConcept: 'Editing the Master Slide so every new slide automatically gets your logo and brand colors.',
-        objective: 'Customize Slide Master view, insert logo placeholders, and define custom presentation color palettes.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Why manually editing 50 slides is bad! Slide Master controls layout, fonts, and logo positions globally.',
-          demonstrate: 'Opening View -> Slide Master, placing school/brand logo at top right, and closing Master view.',
-          practice: 'Set up a custom Slide Master layout with logo and color theme.',
-          realWorldExample: 'Corporate slide templates created for company-wide sales presentations.',
-          practicalTask: 'Create a custom Slide Master layout with logo header and custom color scheme.',
-          expectedOutput: 'PowerPoint template file (`.potx` or `.pptx`) with Slide Master setup.'
-        }
-      },
-      {
-        id: 'p2-cls-15',
-        classNum: 15,
-        topic: 'Infographics, SmartArt & Data Visualization',
-        simpleConcept: 'Turning boring text bullet lists into clean visual diagrams and process flowcharts.',
-        objective: 'Convert bullet lists into SmartArt diagrams (Process, Cycle, Hierarchy) and format infographics.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Convert to SmartArt right-click shortcut! Turn 4 bullet points into a 4-step process timeline instantly.',
-          demonstrate: 'Converting a 4-step text list into a colorful SmartArt Process Diagram and styling 3D bevels.',
-          practice: 'Convert 2 text bullet lists into SmartArt diagrams.',
-          realWorldExample: 'Business strategy slides and organizational chart diagrams.',
-          practicalTask: 'Convert a 4-step text list into a formatted SmartArt Process Flowchart.',
-          expectedOutput: 'Slide featuring styled SmartArt graphic diagram.'
-        }
-      },
-      {
-        id: 'p2-cls-16',
-        classNum: 16,
-        topic: 'Morph Transitions & Advanced Motion Sequences',
-        simpleConcept: 'Creating cinema-quality smooth shape and text movement between slides using Morph transition.',
-        objective: 'Apply Morph Slide Transition and configure multi-object Animation Pane sequences.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Morph Magic: Duplicate slide -> Move/Resize object -> Apply Morph transition -> Instant 3D motion!',
-          demonstrate: 'Duplicating a slide, enlarging a product picture, applying Morph transition for smooth zoom.',
-          practice: 'Create a 3-slide Morph transition sequence demonstrating object movement.',
-          realWorldExample: 'Apple product launch keynotes and cinematic presentations.',
-          practicalTask: 'Build a 3-slide deck featuring Morph transition object zoom animation.',
-          expectedOutput: 'Presentation deck showcasing Morph transition effects.'
-        }
-      },
-      {
-        id: 'p2-cls-17',
-        classNum: 17,
-        topic: 'Real Project: 10-Slide Pitch Deck Presentation',
-        simpleConcept: 'Designing and presenting a professional 10-slide business pitch deck for a startup or product.',
-        objective: 'Combine Slide Master, visual typography, SmartArt diagrams, Morph transitions, and live presentation skills.',
-        teacherGuide: {
-          theoryDuration: '10 min',
-          practicalDuration: '50 min',
-          explain: 'Pitch Deck structure: Problem -> Solution -> Product Demo -> Market -> Business Model -> Team -> Contact.',
-          demonstrate: 'Delivering a sample 3-minute business pitch presentation deck.',
-          practice: 'Students build and practice delivering their 10-slide pitch presentation.',
-          realWorldExample: 'Startup founders pitching investors for business funding.',
-          practicalTask: 'Complete and present your 10-slide Business Pitch Deck in full screen presentation mode.',
-          expectedOutput: 'Finished 10-slide `.pptx` Pitch Deck presentation delivered live.'
-        }
-      }
-    ]
-  },
-  {
-    id: 'mod-p2-5',
-    number: 5,
-    title: 'Canva Creative Branding & Campaigns',
-    purpose: 'Master brand identity, social media graphics, flyers, thumbnails, and commercial visual designs.',
-    icon: 'fas fa-palette',
-    color: '#EC4899',
-    realProject: {
-      title: 'Full Brand Design Package',
-      description: 'Students design an event poster, Instagram post, YouTube thumbnail, business flyer, and certificate for a brand.'
-    },
-    classes: [
-      {
-        id: 'p2-cls-18',
-        classNum: 18,
-        topic: 'Visual Hierarchy & Brand Kit Creation',
-        simpleConcept: 'Guiding the viewer\'s eyes to the most important information first using scale, contrast, and color.',
-        objective: 'Establish a custom Brand Kit (Logo, 3 Brand Colors, 2 Font Pairings) and apply visual hierarchy.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Visual Hierarchy rule: Size = Importance. Primary Focal Point -> Secondary Subheading -> Supporting Text.',
-          demonstrate: 'Setting up a Canva Brand Kit with custom hex colors (#1E3A8A, #00F0FF, #F59E0B) and font hierarchy.',
-          practice: 'Create a Brand Kit for a fictional Tech Startup or Coffee Brand in Canva.',
-          realWorldExample: 'Apple, Nike, and Starbucks visual branding standards.',
-          practicalTask: 'Define a 3-color brand palette and font pairing for a local cafe in Canva.',
-          expectedOutput: 'Canva Brand Kit setup with 3 brand colors and 2 paired fonts.'
-        }
-      },
-      {
-        id: 'p2-cls-19',
-        classNum: 19,
-        topic: 'Real Project 1: College Event Announcement Poster',
-        simpleConcept: 'Designing an eye-catching A4 event poster for a Tech Fest or Cultural Event.',
-        objective: 'Combine headline typography, event badge, date/time layout, venue details, and QR code.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Poster formula: Event Title (Huge) -> Date/Venue Badge -> Highlight Images -> Registration QR code.',
-          demonstrate: 'Designing an A4 poster for "CYBERFEST 2026" featuring bold typography and clean spacing.',
-          practice: 'Design an A4 poster for a school Science Exhibition or Sports Meet.',
-          realWorldExample: 'College fest posters and music concert promotional banners.',
-          practicalTask: 'Export a print-ready PDF A4 event poster with title, date, venue, speaker photo, and QR code.',
-          expectedOutput: 'Print-ready A4 Event Poster PDF.'
-        }
-      },
-      {
-        id: 'p2-cls-20',
-        classNum: 20,
-        topic: 'Real Project 2: High-Converting Instagram Carousel Post',
-        simpleConcept: 'Designing a 5-slide educational/promotional carousel that keeps people swiping.',
-        objective: 'Create a seamless 1080x1080px multi-slide Instagram carousel with seamless arrows and CTA.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Carousel Hook Slide 1 -> Value Slides 2-4 -> Action Call Slide 5. Continuous graphic elements across slides.',
-          demonstrate: 'Designing a 5-slide carousel for "5 Secret AI Tools You Must Know".',
-          practice: 'Create a 5-slide carousel post on a study topic or gadget review.',
-          realWorldExample: 'Educational marketing carousels published by top Instagram creators.',
-          practicalTask: 'Design and export a 5-slide PNG Instagram carousel with consistent branding.',
-          expectedOutput: '5-slide PNG Instagram carousel package.'
-        }
-      },
-      {
-        id: 'p2-cls-21',
-        classNum: 21,
-        topic: 'Real Project 3: YouTube Thumbnail & Click-Through Optimization',
-        simpleConcept: 'Designing a 1280x720px thumbnail that gets high clicks on YouTube.',
-        objective: 'Apply high-contrast color pop, cutout subject image, and 3-word bold title.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'CTR (Click-Through Rate) rules: Max 3-4 words, huge readable font, high contrast background, expressive face cutout.',
-          demonstrate: 'Designing a YouTube thumbnail for "EDIT LIKE A PRO!" with yellow shadow text.',
-          practice: 'Design a thumbnail for a gaming video, vlog, or coding tutorial.',
-          realWorldExample: 'Thumbnails created by top YouTubers to drive millions of views.',
-          practicalTask: 'Design a 1280x720px PNG YouTube thumbnail featuring cutout photo and 3-word headline.',
-          expectedOutput: 'High-impact 1280x720px PNG YouTube Thumbnail.'
-        }
-      },
-      {
-        id: 'p2-cls-22',
-        classNum: 22,
-        topic: 'Real Project 4 & 5: Business Flyer & Award Certificate',
-        simpleConcept: 'Creating marketing flyers for local shops and formal appreciation certificates.',
-        objective: 'Produce a 2-sided business flyer and an elegant gold-accented award certificate.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Business Flyer (Offer details, contact numbers, social handles) vs Formal Certificate (Border, signature line).',
-          demonstrate: 'Designing a promotional flyer for a local Gym/Bakery and a formal Award Certificate.',
-          practice: 'Design a business promotional flyer and an award certificate.',
-          realWorldExample: 'Local business marketing distribution and corporate training certificates.',
-          practicalTask: 'Complete 1 Business Flyer and 1 Award Certificate in Canva.',
-          expectedOutput: 'Print-ready PDF Flyer and Certificate files.'
-        }
-      }
-    ]
-  },
-  {
-    id: 'mod-p2-6',
-    number: 6,
-    title: 'Photoshop Practical Design & Compositing',
-    purpose: 'Master layers, precision selection, background manipulation, color grading, photo retouching, and commercial poster composition.',
-    icon: 'fas fa-image',
-    color: '#3B82F6',
-    realProject: {
-      title: 'Commercial Product & Festival Poster Package',
-      description: 'Students edit raw photos, remove backgrounds, apply color correction, build light glows, and produce 2 professional posters.'
-    },
-    classes: [
-      {
-        id: 'p2-cls-23',
-        classNum: 23,
-        topic: 'Photoshop Layers, Masks & Non-Destructive Editing',
-        simpleConcept: 'Working with layers and masks so you never permanently destroy original photo pixels.',
-        objective: 'Master Layer Masks (black hides, white reveals), Adjustment Layers, and Smart Objects.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Golden Rule of Photoshop: Non-destructive editing! Never use Eraser tool on original photo layer; use Layer Mask instead.',
-          demonstrate: 'Masking out a background using brush on a Layer Mask and converting layer to Smart Object.',
-          practice: 'Apply a non-destructive Layer Mask to separate a subject from background.',
-          realWorldExample: 'Professional photo editing in advertising agencies.',
-          practicalTask: 'Isolate a subject photo using Layer Mask and apply 1 Adjustment Layer non-destructively.',
-          expectedOutput: 'Layered `.psd` file demonstrating Layer Mask usage.'
-        }
-      },
-      {
-        id: 'p2-cls-24',
-        classNum: 24,
-        topic: 'Real Project 1: Commercial Product Poster Design',
-        simpleConcept: 'Designing a high-end product advertisement poster (e.g. Perfume, Headphones, Sneakers).',
-        objective: 'Composite product photo, create ground contact shadow, light rim glow, and bold product title.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Product advertising layout: Product cutout in center -> Dark radial background -> Soft drop shadow under product -> Neon rim glow.',
-          demonstrate: 'Designing a premium Wireless Headphones poster with dark gradient and cyan rim light.',
-          practice: 'Create a product poster for a sneaker, phone, or drink bottle.',
-          realWorldExample: 'Nike, Samsung, and Apple product billboard ads.',
-          practicalTask: 'Export a commercial Product Poster `.jpg` with contact shadow and background light glow.',
-          expectedOutput: 'Commercial Product Poster design.'
-        }
-      },
-      {
-        id: 'p2-cls-25',
-        classNum: 25,
-        topic: 'Real Project 2 & 3: Photo Restoration & Background Replacement',
-        simpleConcept: 'Fixing damaged old family photos and placing people into brand new backgrounds.',
-        objective: 'Use Healing Brush, Clone Stamp, Content-Aware Fill, and Match Color for seamless compositing.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Photo restoration (removing scratches, tears, dust) and color matching subject to new background.',
-          demonstrate: 'Restoring a scratched old photo using Clone Stamp and placing a person cutout onto a Dubai skyline photo.',
-          practice: 'Restore 1 damaged photo and place 1 person cutout into a new background with matched lighting.',
-          realWorldExample: 'Studio photo restoration services and film visual effects compositing.',
-          practicalTask: 'Complete 1 Photo Restoration edit and 1 Background Replacement composite.',
-          expectedOutput: 'Restored photo `.jpg` and composite scene `.jpg`.'
-        }
-      },
-      {
-        id: 'p2-cls-26',
-        classNum: 26,
-        topic: 'Real Project 4 & 5: Social Ad & Festival Banner',
-        simpleConcept: 'Designing promotional banners for Eid, Diwali, New Year, or business flash sales.',
-        objective: 'Combine typography, decorative vector elements, color grading, and brand logos into 1 banner.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Festival & sale banner rules: Festive color scheme (Gold/Red/Navy), greeting text, promotional offer, business logo.',
-          demonstrate: 'Designing a "Festival Special Offer 50% Off" promotional social media banner.',
-          practice: 'Design a festival greeting/sale banner for a local business.',
-          realWorldExample: 'Social media festive marketing campaigns run by retail brands.',
-          practicalTask: 'Design a 1080x1080px Festival Special Sale Banner exported as PNG.',
-          expectedOutput: 'High-quality 1080x1080px Festival Sale Banner PNG.'
-        }
-      },
-      {
-        id: 'p2-cls-27',
-        classNum: 27,
-        topic: 'Advanced Color Correction & Camera Raw Filter',
-        simpleConcept: 'Enhancing photo lighting, shadow details, color vibrancy, and cinematic color grading.',
-        objective: 'Apply Camera Raw Filter, Color Balance, Curves, and Hue/Saturation controls.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Camera Raw Filter controls: Exposure, Contrast, Highlights, Shadows, Whites, Blacks, and Clarity.',
-          demonstrate: 'Color grading a flat outdoor photo to look like a cinematic movie scene.',
-          practice: 'Apply Camera Raw Filter color grading to 1 landscape/portrait photo.',
-          realWorldExample: 'Professional photography post-processing and fashion magazine editing.',
-          practicalTask: 'Apply Camera Raw Filter color grading to an image and save before/after comparison.',
-          expectedOutput: 'Color-graded image export with before/after comparison.'
-        }
-      }
-    ]
-  },
-  {
-    id: 'mod-p2-7',
-    number: 7,
-    title: 'Video Editing — Practical Content Creation',
-    purpose: 'CORE PRIORITY MODULE — Master professional timeline cutting, multi-track audio, transitions, kinetic subtitles, speed ramping, green screen keying, and commercial video creation.',
-    icon: 'fas fa-film',
-    color: '#8B5CF6',
-    realProjects: [
-      { title: 'Project 1: 30-Second Commercial Product Ad', description: 'Edit a fast-paced product promo with beat-synced cuts and text callouts.' },
-      { title: 'Project 2: Instagram Reel / Short with Kinetic Captions', description: 'Create a 9:16 vertical video with auto-animated subtitles and sound effects.' },
-      { title: 'Project 3: Event Promotional Video', description: 'Edit a 45-second high-energy trailer for a school/college event.' },
-      { title: 'Project 4: YouTube Short / Educational Video', description: 'Produce a 60-second educational short with screen recording and voice-over.' },
-      { title: 'Project 5: Cinematic Photo Slideshow', description: 'Create a smooth photo animation slideshow with light leaks and ambient audio.' },
-      { title: 'FINAL MODULE PROJECT: Local Business Promo Video', description: 'Produce a complete 30-60 second commercial promo video for a local cafe, gym, or shop.' }
-    ],
-    classes: [
-      {
-        id: 'p2-cls-28',
-        classNum: 28,
-        topic: 'Professional Timeline Editing & Assembly Cuts',
-        simpleConcept: 'Setting up video timeline, organizing video B-Roll and A-Roll footage, cutting to the beat.',
-        objective: 'Understand A-Roll (main speech) vs B-Roll (supporting footage), timeline tracks (V1-V4, A1-A4), and beat cutting.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'A-Roll (Primary speech/interview) + B-Roll (Overlaid action footage). Cutting on music beats for energy.',
-          demonstrate: 'Overlaying B-Roll footage on V2 track while speech audio plays continuously on A1 track.',
-          practice: 'Import speech video, add 3 B-Roll clips on V2 matching what speaker mentions.',
-          realWorldExample: 'TV documentaries, news reports, and commercial YouTube videos.',
-          practicalTask: 'Create an A-Roll / B-Roll edit with speech track on V1/A1 and 3 B-Roll overlays on V2.',
-          expectedOutput: 'Synchronized A-Roll / B-Roll timeline sequence.'
-        }
-      },
-      {
-        id: 'p2-cls-29',
-        classNum: 29,
-        topic: 'Kinetic Subtitles, Typography & Sound Effects (SFX)',
-        simpleConcept: 'Adding animated pop-up text and sound effects (whoosh, pop, ding) that make videos addictive.',
-        objective: 'Generate animated subtitles, apply word highlight colors, and pair text animations with sound effects (SFX).',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Why SFX matters: A Whoosh sound effect makes a title transition feel 10x more impactful! Subtitle styling.',
-          demonstrate: 'Adding pop-up yellow subtitle text paired with a "Swoosh" audio effect on A2 audio track.',
-          practice: 'Add 3 animated text pop-ups to a vertical video and pair each with a sound effect (pop, swoosh, bell).',
-          realWorldExample: 'Viral TikToks and Instagram Reels created by top content creators.',
-          practicalTask: 'Create a 15-second video clip with animated subtitles and 3 paired sound effects.',
-          expectedOutput: '15-second vertical video clip with text animations and sound effects.'
-        }
-      },
-      {
-        id: 'p2-cls-30',
-        classNum: 30,
-        topic: 'Speed Ramping, Motion Keyframing & Transitions',
-        simpleConcept: 'Creating smooth fast-to-slow speed ramps and moving objects across screen using keyframes.',
-        objective: 'Apply speed ramping curves (smooth fast-slow-fast transitions) and position/scale keyframe animations.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Speed Ramping (gradual speed change curve). Keyframes: Point A (Start position/scale) -> Point B (End position/scale).',
-          demonstrate: 'Creating a smooth Speed Ramp on a car driving footage and zoom-in keyframe on a product.',
-          practice: 'Apply speed ramp to 1 action clip and create a keyframe slow zoom on a photo.',
-          realWorldExample: 'Car commercials, sports highlight reels, and travel video edits.',
-          practicalTask: 'Apply a Speed Ramp to 1 clip and a keyframed Zoom-In animation to another clip.',
-          expectedOutput: 'Timeline sequence showcasing speed ramp and keyframe animation.'
-        }
-      },
-      {
-        id: 'p2-cls-31',
-        classNum: 31,
-        topic: 'Green Screen (Chroma Key) & Video Masking',
-        simpleConcept: 'Removing green backgrounds to place speakers inside virtual studios or custom graphics.',
-        objective: 'Apply Chroma Key / Color Keyer tool, clean edge spill, and composite video backgrounds.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Why Green color? Human skin tone contains no green pigment! Chroma Key removes green shade.',
-          demonstrate: 'Applying Chroma Key to a green screen actor clip, cleaning green spill, placing virtual newsroom background on V1.',
-          practice: 'Remove green background from a sample video clip and place actor over a new video background.',
-          realWorldExample: 'Weather forecasts, Hollywood sci-fi movies, and gaming live streams.',
-          practicalTask: 'Key out green screen background from a clip and composite actor over a custom background scene.',
-          expectedOutput: 'Clean Chroma Key composite video without green edge halos.'
-        }
-      },
-      {
-        id: 'p2-cls-32',
-        classNum: 32,
-        topic: 'Real Project 1 & 2: 30s Product Ad & Instagram Reel with Captions',
-        simpleConcept: 'Editing a 30-second fast-paced product commercial and a 9:16 vertical Reel.',
-        objective: 'Produce 1 horizontal product ad and 1 vertical 9:16 Reel featuring captions and beat cuts.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Product Ad formula: Hook -> Product features -> Offer -> Call to Action. Reel format: 1080x1920 vertical.',
-          demonstrate: 'Editing a 30-second Smartphone promo video and exporting 9:16 Reel MP4.',
-          practice: 'Students edit 1 product ad and 1 vertical Reel.',
-          realWorldExample: 'Commercial social media video ads for ecommerce brands.',
-          practicalTask: 'Export 1 horizontal 30s Product Ad MP4 and 1 vertical 9:16 Reel MP4.',
-          expectedOutput: '2 exported MP4 video files ready for social media.'
-        }
-      },
-      {
-        id: 'p2-cls-33',
-        classNum: 33,
-        topic: 'FINAL MODULE PROJECT: Local Business Commercial Promo Video',
-        simpleConcept: 'Creating a complete 30-60 second commercial promo video for a local business.',
-        objective: 'Assemble footage, voiceover, background music, captions, transitions, lower thirds, and logo call-to-action into 1 final video.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Final video project checklist: Hook -> Business showcase -> Service benefits -> Client review quote -> Contact info/map location -> Logo outro.',
-          demonstrate: 'Reviewing final business promo video submission criteria.',
-          practice: 'Students edit and produce their complete 30-60 second Local Business Promo Video.',
-          realWorldExample: 'Paid client video editing deliverable for local businesses.',
-          practicalTask: 'Export and submit your complete 30-60 second Local Business Commercial Promo Video MP4 file.',
-          expectedOutput: 'Finished 30-60 second High Definition 1080p Commercial Video MP4.'
-        }
-      }
-    ]
-  },
-  {
-    id: 'mod-p2-8',
-    number: 8,
+    id: 'mod-12',
+    number: 12,
     title: 'AI Tools & AI Productivity',
-    purpose: 'Master Generative AI, prompt engineering, AI-assisted content creation, AI image/video generation, and ethical AI productivity.',
+    purpose: 'Master generative AI tools (ChatGPT, Gemini, Claude), prompt engineering, AI study assistants, and workflow automation.',
     icon: 'fas fa-robot',
-    color: '#6366F1',
-    realProject: {
-      title: 'AI-Assisted Multi-Channel Content Campaign',
-      description: 'Students use AI to generate content ideas, poster prompts, social captions, presentation outlines, video scripts, and study guides while fact-checking all outputs.'
-    },
-    classes: [
-      {
-        id: 'p2-cls-34',
-        classNum: 34,
-        topic: 'Advanced Prompt Engineering & System Prompts',
-        simpleConcept: 'Writing master prompts using Persona, Task, Context, Constraints, and Output Format.',
-        objective: 'Construct advanced multi-step system prompts for complex research, coding, and creative tasks.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Master Prompt Structure: System Persona + Background Context + Explicit Task + Few-Shot Examples + Negative Constraints + Target Schema.',
-          demonstrate: 'Crafting a System Prompt to make AI act as an expert Digital Marketing Director auditing a business campaign.',
-          practice: 'Write an advanced prompt asking AI to generate 10 unique video hook ideas for a local gym.',
-          realWorldExample: 'Prompt Engineers creating automated AI workflows for companies.',
-          practicalTask: 'Write a master prompt for AI to generate a 5-day content calendar for a bakery.',
-          expectedOutput: 'Structured 5-day content plan generated via advanced prompt.'
-        }
-      },
-      {
-        id: 'p2-cls-35',
-        classNum: 35,
-        topic: 'AI Image & Graphic Generation (Midjourney/DALL-E/Canva AI)',
-        simpleConcept: 'Generating high-quality custom visuals, stock photos, and logos from text descriptions.',
-        objective: 'Write image prompts specifying Subject, Medium, Style, Lighting, Camera Angle, and Aspect Ratio.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Image Prompt formula: `[Subject] + [Environment/Setting] + [Art Style/Camera Lens] + [Lighting] + [Color Palette] --ar 16:9`.',
-          demonstrate: 'Generating a futuristic studio photo of a wireless earbud with cyan neon rim lighting.',
-          practice: 'Generate 2 custom AI images for a product poster and a blog banner.',
-          realWorldExample: 'Advertising agencies generating concept art and custom visual assets.',
-          practicalTask: 'Generate 2 custom AI images (1 Product Mockup, 1 Concept Art) using detailed text prompts.',
-          expectedOutput: '2 AI-generated high-resolution images.'
-        }
-      },
-      {
-        id: 'p2-cls-36',
-        classNum: 36,
-        topic: 'AI for Productivity, Research & Writing',
-        simpleConcept: 'Using AI to summarize research reports, proofread documents, and draft emails 10x faster.',
-        objective: 'Use AI tools for long text summarization, outline generation, and writing refinement.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'How to use AI as a study editor and research synthesizer without plagiarism.',
-          demonstrate: 'Summarizing a 5-page PDF research paper into a 5-bullet summary table using AI.',
-          practice: 'Summarize a long article using AI and refine the generated text.',
-          realWorldExample: 'Executive assistants and content managers summarizing daily industry news.',
-          practicalTask: 'Use AI to generate a 5-point executive summary of an article and paste into a Word report.',
-          expectedOutput: 'Executive summary document generated with AI assistance.'
-        }
-      },
-      {
-        id: 'p2-cls-37',
-        classNum: 37,
-        topic: 'Real Project: AI-Assisted Content Campaign Assembly',
-        simpleConcept: 'Using AI as a creative partner to draft a complete marketing asset package.',
-        objective: 'Generate video script, social captions, poster prompt, and blog outline using AI, then fact-check and edit.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Ethical Rule: AI generates draft -> Human verifies facts, edits tone, and polishes final result!',
-          demonstrate: 'Generating a 30-second video script and social caption for a product launch, then fact-checking references.',
-          practice: 'Students use AI to generate a complete content package for a brand, then edit to human perfection.',
-          realWorldExample: 'Modern content creators using AI to 10x their production speed.',
-          practicalTask: 'Submit an AI-Assisted Content Package containing Video Script, Social Captions, and Fact-Check Log.',
-          expectedOutput: 'Polished AI-assisted content package document with fact-check verification log.'
-        }
-      }
-    ]
-  },
-  {
-    id: 'mod-p2-9',
-    number: 9,
-    title: 'Digital Marketing & Local Business Growth',
-    purpose: 'Master practical small-business marketing, social media growth, Instagram/Facebook strategy, Google Maps setup, and lead funnels.',
-    icon: 'fas fa-bullhorn',
-    color: '#F59E0B',
-    realProject: {
-      title: '7-Day Digital Marketing Campaign for a Local Business',
-      description: 'Students create a complete 7-day marketing campaign including brand concept, 7 posts, 2 Reel concepts, captions, hashtags, target persona, and Google Maps setup.'
-    },
-    classes: [
-      {
-        id: 'p2-cls-38',
-        classNum: 38,
-        topic: 'Digital Marketing Fundamentals & Customer Persona',
-        simpleConcept: 'Understanding how businesses attract, engage, and convert online followers into paying customers.',
-        objective: 'Define Target Audience Persona, Marketing Funnel (Awareness -> Interest -> Decision -> Action), and Customer Journey.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Sales Funnel: Top of Funnel (Reels/Viral posts - Awareness) -> Middle (Carousels/Reviews - Trust) -> Bottom (Offer/WhatsApp link - Sales).',
-          demonstrate: 'Building a Customer Persona profile for a local Fitness Gym (Age 18-35, Goal: Weight loss, Pain point: No time).',
-          practice: 'Define Customer Persona for a local Bakery, Salon, or Mobile Shop.',
-          realWorldExample: 'How Instagram ads target specific age, location, and interest groups.',
-          practicalTask: 'Create a 1-page Customer Persona profile including Age, Location, Interests, Pain Points, and Buying Triggers.',
-          expectedOutput: 'Detailed Customer Persona profile sheet.'
-        }
-      },
-      {
-        id: 'p2-cls-39',
-        classNum: 39,
-        topic: 'Google Business Profile & Local SEO (Google Maps)',
-        simpleConcept: 'Getting local businesses to show up #1 when people search "best cafe near me" on Google Maps.',
-        objective: 'Set up Google Business Profile listing, optimize NAP (Name, Address, Phone), collect customer reviews, and post updates.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Local SEO secret: 80%+ of local purchases start with a Google Maps search! Keywords in business title & customer reviews.',
-          demonstrate: 'Setting up a Google Business Profile listing, adding photos, categories, opening hours, and review QR code link.',
-          practice: 'Create a mock Google Business Profile setup sheet for a local shop.',
-          realWorldExample: 'Local restaurants gaining 50+ walk-in customers daily from Google Maps reviews.',
-          practicalTask: 'Complete a Google Business Profile Optimization Datasheet for a local business.',
-          expectedOutput: 'Google Business Profile optimization datasheet.'
-        }
-      },
-      {
-        id: 'p2-cls-40',
-        classNum: 40,
-        topic: 'Social Media Strategy & Content Calendar Planning',
-        simpleConcept: 'Planning 7 days of social media posts, reels, stories, and captions in advance.',
-        objective: 'Design a 7-day Content Calendar matching marketing funnel objectives and optimal posting times.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: '7-Day Content Mix: Day 1 (Behind the scenes) -> Day 2 (Customer transformation story) -> Day 3 (Product Reel) -> Day 4 (Educational tip) -> Day 5 (Special Offer) -> Day 6 (User Review) -> Day 7 (Q&A/Call to Action).',
-          demonstrate: 'Building a 7-day content calendar spreadsheet with post captions and hashtag sets.',
-          practice: 'Draft a 7-day content calendar for a local business.',
-          realWorldExample: 'Social media management agencies handling client accounts.',
-          practicalTask: 'Create a 7-day Content Calendar sheet specifying Post Type, Caption, Hashtags, and Call to Action.',
-          expectedOutput: '7-day Content Calendar spreadsheet file.'
-        }
-      },
-      {
-        id: 'p2-cls-41',
-        classNum: 41,
-        topic: 'Real Project: 7-Day Digital Marketing Campaign',
-        simpleConcept: 'Assembling a 7-day social media marketing launch plan for a local business.',
-        objective: 'Produce a 7-day Content Calendar featuring 7 post concepts, 2 Reel scripts, captions, hashtags, and CTA strategy.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Reviewing complete 7-day marketing campaign plan for a local business.',
-          demonstrate: 'Reviewing final campaign deliverables and WhatsApp business lead automation.',
-          practice: 'Students build their 7-day Digital Marketing Campaign for their chosen local business.',
-          realWorldExample: 'Real agency marketing campaign proposal delivered to business clients.',
-          practicalTask: 'Submit complete 7-Day Digital Marketing Campaign Package (Strategy, Content Calendar, 7 Captions, Hashtag sets).',
-          expectedOutput: 'Finished 7-Day Digital Marketing Campaign document.'
-        }
-      }
-    ]
-  },
-  {
-    id: 'mod-p2-10',
-    number: 10,
-    title: 'Web Development — HTML5, CSS3 & Basic JS',
-    purpose: 'Master semantic HTML5 markup, CSS3 Flexbox layouts, responsive web design, and interactive JavaScript DOM manipulation.',
-    icon: 'fas fa-code',
     color: '#00F0FF',
     realProject: {
-      title: 'Responsive Portfolio Website & Interactive Web App',
-      description: 'Students build a multi-section responsive portfolio website in HTML5/CSS3 and an interactive JavaScript application.'
+      title: 'AI Study Assistant & Content Generation Showcase',
+      description: 'Students use AI assistants to generate study summaries, draft project outlines, engineer prompts, and generate AI visuals.'
     },
     classes: [
       {
-        id: 'p2-cls-42',
-        classNum: 42,
-        topic: 'Semantic HTML5 Markup & Responsive Viewport',
-        simpleConcept: 'Writing clean HTML5 semantic layout tags (`<header>`, `<main>`, `<section>`, `<footer>`) with responsive meta tags.',
-        objective: 'Write clean semantic HTML5 markup, viewport meta tag, and structured page sections.',
+        id: 'cls-55',
+        classNum: 55,
+        topic: 'Modern Generative AI Overview (ChatGPT, Gemini, Copilot)',
+        simpleConcept: 'Understanding Large Language Models (LLMs) and how AI generates human-like text responses.',
+        objective: 'Understand Generative AI, compare ChatGPT, Google Gemini, and Claude, and learn safe AI usage.',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Why Semantic HTML matters: Accessibility and Google SEO ranking! Head metadata & responsive viewport tag.',
-          demonstrate: 'Structuring a portfolio page with `<header>`, `<section id="about">`, `<section id="projects">`, and `<footer>`.',
-          practice: 'Build the semantic HTML structure for your personal portfolio page.',
-          realWorldExample: 'Modern web development standards for responsive web applications.',
-          practicalTask: 'Write a semantic HTML5 webpage structure containing 4 distinct sections.',
-          expectedOutput: 'Semantic HTML5 document file (`index.html`).'
+          explain: 'How Generative AI predicts next words. Fact-checking AI output (hallucination awareness).',
+          demonstrate: 'Opening ChatGPT / Gemini interface, asking a question, and analyzing response accuracy.',
+          practice: 'Ask an AI tool to explain a complex science topic in simple 5th-grade terms.',
+          realWorldExample: 'Engineers, writers, researchers, and students using AI daily to boost productivity.',
+          practicalTask: 'Ask ChatGPT / Gemini to explain "Photosynthesis" in simple 3-bullet points.',
+          expectedOutput: 'AI-generated summary response verified by student.'
         }
       },
       {
-        id: 'p2-cls-43',
-        classNum: 43,
-        topic: 'CSS3 Box Model & Flexbox Layouts',
-        simpleConcept: 'Styling webpage colors, typography, margins, padding, and aligning cards using CSS Flexbox.',
-        objective: 'Apply external CSS stylesheet, CSS variables, Box Model (`box-sizing`), and Flexbox alignment (`display: flex`).',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Flexbox superpower: `display: flex; justify-content: space-between; align-items: center;` lines up cards perfectly!',
-          demonstrate: 'Linking `style.css` to `index.html`, declaring CSS color variables, and styling project cards grid using Flexbox.',
-          practice: 'Style portfolio page with custom colors, Google Fonts, card padding, and Flexbox layouts.',
-          realWorldExample: 'Designing responsive web apps and modern SaaS dashboards.',
-          practicalTask: 'Code `style.css` to style your portfolio website with custom fonts, cards, and Flexbox navigation.',
-          expectedOutput: 'Styled responsive portfolio webpage rendered in browser.'
-        }
-      },
-      {
-        id: 'p2-cls-44',
-        classNum: 44,
-        topic: 'Responsive Media Queries (@media)',
-        simpleConcept: 'Making your webpage layout adapt smoothly between desktop screens and mobile phones.',
-        objective: 'Write CSS `@media (max-width: 768px)` rules to adjust flex directions and font sizes on mobile.',
+        id: 'cls-56',
+        classNum: 56,
+        topic: 'Effective Prompt Engineering for Writing & Summarizing',
+        simpleConcept: 'Writing clear AI instructions (Role, Context, Task, Format) to get perfect results.',
+        objective: 'Master prompt framework: Role + Context + Task + Constraints + Format (RCTCF).',
         teacherGuide: {
           theoryDuration: '15 min',
           practicalDuration: '40 min',
-          explain: 'Mobile-friendly web design: Changing 3-column desktop grid into 1-column mobile layout using media queries.',
-          demonstrate: 'Adding `@media (max-width: 768px) { .grid { flex-direction: column; } }` in CSS file.',
-          practice: 'Test mobile responsiveness using Chrome Dev Tools Device Mode (`Ctrl+Shift+M`).',
-          realWorldExample: 'Ensuring your website looks beautiful on iPhones, Android phones, and desktops.',
-          practicalTask: 'Add mobile media query rules in `style.css` to stack project cards vertically on mobile screens.',
-          expectedOutput: 'Responsive CSS file tested in browser device emulator.'
+          explain: 'Bad prompt ("Write an essay") vs Great prompt ("Act as an IT Teacher. Summarize benefits of Linux in 4 bullet points for beginners").',
+          demonstrate: 'Executing a structured RCTCF prompt and comparing output quality against vague prompts.',
+          practice: 'Craft a structured prompt to draft a project proposal outline.',
+          realWorldExample: 'Prompt engineering as a high-demand professional skill across tech companies.',
+          practicalTask: 'Write a structured prompt assigning AI a role (e.g. History Tutor) and get a 3-paragraph study summary.',
+          expectedOutput: 'High-quality AI response generated from structured prompt.'
         }
       },
       {
-        id: 'p2-cls-45',
-        classNum: 45,
-        topic: 'JavaScript DOM Event Handling & Interactive Web App',
-        simpleConcept: 'Writing JavaScript code that responds to user clicks and updates webpage text dynamically.',
-        objective: 'Declare JS variables (`let`, `const`), functions, event listeners (`addEventListener`), and DOM updates.',
+        id: 'cls-57',
+        classNum: 57,
+        topic: 'AI Creative Tools (AI Image Generation & Voice AI)',
+        simpleConcept: 'Generating images from text prompts (Midjourney, DALL-E, Canva AI) and using AI voice tools.',
+        objective: 'Use text-to-image AI tools, craft descriptive visual prompts, and explore AI voice/presentation tools.',
         teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'DOM (Document Object Model): JS finds elements (`document.getElementById`) and updates content/styles live!',
-          demonstrate: 'Coding a button that calculates student total marks dynamically on button click.',
-          practice: 'Build a calculator or interactive quiz app in JavaScript.',
-          realWorldExample: 'Interactive web features: shopping carts, calculators, and dynamic search filters.',
-          practicalTask: 'Write a JavaScript file (`script.js`) connected to HTML that performs a dynamic calculation on button click.',
-          expectedOutput: 'Interactive JavaScript web app file (`script.js`).'
+          theoryDuration: '15 min',
+          practicalDuration: '40 min',
+          explain: 'How text-to-image AI works. Descriptive prompts (Subject, Style, Lighting, Camera angle, Resolution).',
+          demonstrate: 'Generating a futuristic computer lab image in Canva Magic Media / Bing Image Creator.',
+          practice: 'Generate 2 custom AI images using detailed visual prompts.',
+          realWorldExample: 'Graphic designers and marketing teams creating custom stock images instantly with AI.',
+          practicalTask: 'Write a visual text prompt and generate 1 custom AI image for a futuristic technology topic.',
+          expectedOutput: 'AI-generated image file created and saved.'
+        }
+      },
+      {
+        id: 'cls-58',
+        classNum: 58,
+        topic: 'Real-World Hands-on Project: AI-Powered Study Kit',
+        simpleConcept: 'Using AI to build a complete 1-page revision study guide and quiz set for an exam topic.',
+        objective: 'Use AI assistants to generate a structured 1-page study guide, flashcard set, and 5-question quiz.',
+        teacherGuide: {
+          theoryDuration: '10 min',
+          practicalDuration: '45 min',
+          explain: 'Project task: Pick a subject topic (e.g. "Computer Networks"), use AI to generate Study Notes + Quiz.',
+          demonstrate: 'Reviewing a complete AI-generated study revision kit document.',
+          practice: 'Students build their AI study guide kit during lab session.',
+          realWorldExample: 'Personalized self-study, exam revision prep, and rapid research synthesis.',
+          practicalTask: 'Use AI to generate a 1-page revision guide + 5 MCQ quiz questions for an IT topic.',
+          expectedOutput: 'Completed AI-generated study kit document submitted to instructor.'
         }
       }
     ]
-  },
-  {
-    id: 'mod-p2-11',
-    number: 11,
-    title: 'Career, Freelancing & Capstone Project',
-    purpose: 'CAPSTONE ASSESSMENT — Master digital career paths, freelancing proposals, client communication, and final master capstone project presentation.',
-    icon: 'fas fa-rocket',
-    color: '#6366F1',
-    realProjects: [
-      { title: 'Option A: Local Business Marketing Package', description: 'Complete branding, poster, 30s video promo, 7-day social campaign, and Google Maps setup.' },
-      { title: 'Option B: YouTube Creator Starter Package', description: 'Channel branding, 2 video thumbnails, 30s Reel/Short with subtitles, and 60s tutorial video.' },
-      { title: 'Option C: Personal Developer Portfolio Website', description: 'Complete coded portfolio website featuring project showcase cards, resume download, and contact links.' },
-      { title: 'Option D: Small Business Branding Package', description: 'Logo concept, brand kit, business flyer, promotional banner, and appreciation certificate.' },
-      { title: 'Option E: Product Launch Campaign', description: 'Commercial product poster, 30s ad video, social ad graphics, and AI-assisted sales script.' }
-    ],
-    classes: [
-      {
-        id: 'p2-cls-46',
-        classNum: 46,
-        topic: 'Digital Skill Careers, Freelancing & Proposals',
-        simpleConcept: 'How to turn your digital skills into paid freelance gigs, jobs, or business services.',
-        objective: 'Understand digital career roles (Graphic Designer, Video Editor, Web Developer, Digital Marketer), pricing, and proposal writing.',
-        teacherGuide: {
-          theoryDuration: '20 min',
-          practicalDuration: '35 min',
-          explain: 'Freelance Basics: Finding clients (Local businesses, Upwork, Fiverr, Instagram DMs). Value-based pricing vs Hourly pricing.',
-          demonstrate: 'Writing a professional freelance client pitch proposal for a local shop promo video.',
-          practice: 'Draft a 1-page freelance proposal offering digital marketing/video editing services to a local client.',
-          realWorldExample: 'Freelance video editors and web developers earning independent income worldwide.',
-          practicalTask: 'Draft a 1-page Client Service Proposal (Services offered, Timeline, Deliverables, Price quote).',
-          expectedOutput: 'Professional Client Service Proposal document.'
-        }
-      },
-      {
-        id: 'p2-cls-47',
-        classNum: 47,
-        topic: 'Personal Digital Creator Profile & Portfolio Setup',
-        simpleConcept: 'Assembling all your best projects (posters, video promo, website, marketing plan) into a master portfolio.',
-        objective: 'Organize digital assets, document deliverables, and structure master portfolio showcase.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Master Portfolio Structure: Personal Bio -> Skill Badges -> Project Showcase (Design, Video, Code) -> Resume -> Contact.',
-          demonstrate: 'Organizing student digital project files into a master portfolio folder.',
-          practice: 'Assemble all 5 major practical project files into your master portfolio directory.',
-          realWorldExample: 'Showcasing work to employers, college interview panels, and freelance clients.',
-          practicalTask: 'Organize all your completed +2 project files into `Master_Portfolio_2026` folder.',
-          expectedOutput: 'Master Portfolio folder containing design, video, code, and document projects.'
-        }
-      },
-      {
-        id: 'p2-cls-48',
-        classNum: 48,
-        topic: 'Final Capstone Presentation & Classroom Pitch',
-        simpleConcept: 'Finalizing your capstone project package and delivering a 2-minute live classroom demonstration.',
-        objective: 'Assemble all project deliverables into a master portfolio submission and deliver a 2-minute project pitch.',
-        teacherGuide: {
-          theoryDuration: '15 min',
-          practicalDuration: '40 min',
-          explain: 'Presentation formula: Project Title -> Problem Solved -> Deliverables Showcased (Poster/Video/Site) -> Tools Used -> Conclusion.',
-          demonstrate: 'Conducting sample 2-minute student capstone project demonstration.',
-          practice: 'Students present their capstone project to teacher and peer class.',
-          realWorldExample: 'Professional project portfolio review and client presentation pitch.',
-          practicalTask: 'Deliver 2-minute live demonstration of your Final Capstone Project and submit master portfolio package.',
-          expectedOutput: 'Master Portfolio Package submission + 2-minute live demonstration.'
-        }
-      }
-    ]
-  }
-];
-
-export const BONUS_SPECIAL_TRACKS = [
-  {
-    id: 'track-python',
-    title: 'Python Basics & Scripting (Special Interest Track)',
-    icon: 'fab fa-python',
-    description: 'Optional track for students interested in software development & data: Python syntax, variables, conditions, loops, and mini-scripts.'
-  },
-  {
-    id: 'track-robotics',
-    title: 'Arduino / ESP32 & Robotics Coding (Special Interest Track)',
-    icon: 'fas fa-microchip',
-    description: 'Optional track for electronics/hardware enthusiasts: C++ micro-controller basics, sensor inputs, LED control, and IoT projects.'
   }
 ];
 
 export const PLUS_TWO_CAPSTONE_OPTIONS = [
-  { id: 'p2-opt-a', title: 'Option A: Local Business Marketing Package', icon: 'fas fa-store', description: 'Logo, flyer, 30s video promo, 7-day social campaign, and Google Maps setup.' },
-  { id: 'p2-opt-b', title: 'Option B: YouTube Creator Starter Package', icon: 'fab fa-youtube', description: 'Channel branding, 2 high-CTR thumbnails, 30s Reel with subtitles, and tutorial video.' },
-  { id: 'p2-opt-c', title: 'Option C: Personal Portfolio Website', icon: 'fas fa-code', description: 'Coded responsive website featuring projects, resume download, and contact links.' },
-  { id: 'p2-opt-d', title: 'Option D: Small Business Branding Package', icon: 'fas fa-palette', description: 'Logo concept, brand style guide, business flyer, festival poster, and certificate.' },
-  { id: 'p2-opt-e', title: 'Option E: Product Launch Campaign', icon: 'fas fa-rocket', description: 'Commercial product poster, 30s ad video, social ad graphics, and AI sales script.' }
+  { id: 'cap-1', name: 'Digital Media & Video Editing Specialist', desc: 'Build a 30-sec promo reel, YouTube graphics, and Canva brand kit.' },
+  { id: 'cap-2', name: 'AI & Web Technology Pioneer', desc: 'Develop a personal HTML/CSS web page and AI productivity study kit.' },
+  { id: 'cap-3', name: 'Digital Marketing & Growth Strategist', desc: 'Create a local business marketing campaign and Google Maps listing proposal.' }
 ];
 
-// Helper to compute progress metrics for +2 syllabus
+export const BONUS_SPECIAL_TRACKS = [
+  { title: 'Generative AI Prompt Master', hours: '6 Hours', badge: 'Bonus' },
+  { title: 'Local SEO & Business Growth', hours: '5 Hours', badge: 'Bonus' }
+];
+
 export const calculatePlus2Metrics = (savedProgress = {}) => {
-  let totalClassesCount = 0;
-  let completedClassesCount = 0;
-  let skippedClassesCount = 0;
-  let moduleProgressMap = {};
+  const safeProgress = savedProgress && typeof savedProgress === 'object' && !Array.isArray(savedProgress) ? savedProgress : {};
+  let totalClasses = 0;
+  let completedClasses = 0;
+  let inProgressClasses = 0;
+  let skippedClasses = 0;
+  const moduleProgress = {};
 
-  PLUS_TWO_MODULES.forEach((mod) => {
+  (PLUS_TWO_MODULES || []).forEach((mod) => {
+    if (!mod) return;
     let modCompleted = 0;
-    const modTotal = mod.classes.length;
+    let modTotal = (mod.classes || []).length;
 
-    mod.classes.forEach((cls) => {
-      totalClassesCount++;
-      const status = savedProgress[cls.id]?.status || 'NOT STARTED';
+    (mod.classes || []).forEach((cls) => {
+      if (!cls) return;
+      totalClasses++;
+      const status = safeProgress[cls.id]?.status || 'NOT STARTED';
       if (status === 'COMPLETED') {
-        completedClassesCount++;
+        completedClasses++;
         modCompleted++;
+      } else if (status === 'IN PROGRESS') {
+        inProgressClasses++;
       } else if (status === 'SKIPPED') {
-        skippedClassesCount++;
+        skippedClasses++;
       }
     });
 
-    const modPct = modTotal > 0 ? Math.round((modCompleted / modTotal) * 100) : 0;
-    moduleProgressMap[mod.id] = {
+    const percentage = modTotal > 0 ? Math.round((modCompleted / modTotal) * 100) : 0;
+    moduleProgress[mod.id] = {
+      percentage,
       completed: modCompleted,
-      total: modTotal,
-      percentage: modPct
+      total: modTotal
     };
   });
 
-  const overallPercentage = totalClassesCount > 0
-    ? Math.round((completedClassesCount / totalClassesCount) * 100)
-    : 0;
-
-  const remainingClassesCount = totalClassesCount - completedClassesCount;
+  const remainingClasses = Math.max(0, totalClasses - completedClasses);
+  const overallPercentage = totalClasses > 0 ? Math.round((completedClasses / totalClasses) * 100) : 0;
 
   return {
-    totalClasses: totalClassesCount,
-    completedClasses: completedClassesCount,
-    skippedClasses: skippedClassesCount,
-    remainingClasses: remainingClassesCount,
+    totalClasses,
+    completedClasses,
+    inProgressClasses,
+    skippedClasses,
+    remainingClasses,
     overallProgress: overallPercentage,
-    moduleProgress: moduleProgressMap
+    overallPercentage,
+    moduleProgress
   };
 };
+

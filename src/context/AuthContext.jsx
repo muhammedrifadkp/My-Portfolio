@@ -12,8 +12,8 @@ const DEMO_NAMES = ['muhammed rifad', 'ameen farhan', 'shibili k', 'fida jasmine
 // Default initial pre-seeded students list (Empty for clean production database)
 const DEFAULT_STUDENTS = [];
 
-// Helper to log real-time student activity / attendance event
-export const logStudentActivity = (studentId, studentName, batch, activityType = 'login') => {
+// Helper to log real-time student activity / attendance event to Local & Cloud Firestore
+export const logStudentActivity = async (studentId, studentName, batch, activityType = 'login') => {
   try {
     const todayStr = new Date().toISOString().split('T')[0];
     const logs = JSON.parse(localStorage.getItem('sh_attendance_logs') || '{}');
@@ -23,7 +23,7 @@ export const logStudentActivity = (studentId, studentName, batch, activityType =
     }
 
     const key = studentId || (studentName ? studentName.toLowerCase().trim() : 'unknown');
-    logs[todayStr][key] = {
+    const logEntry = {
       studentId: studentId || key,
       name: studentName,
       batch: batch || '+1',
@@ -32,9 +32,32 @@ export const logStudentActivity = (studentId, studentName, batch, activityType =
       activity: activityType === 'login' ? 'Account Login' : 'Class Progress Activity'
     };
 
+    logs[todayStr][key] = logEntry;
     localStorage.setItem('sh_attendance_logs', JSON.stringify(logs));
+
+    // Cloud Firestore Sync
+    if (isFirebaseConfigured && db) {
+      try {
+        await setDoc(doc(db, 'attendance_logs', todayStr), { [key]: logEntry }, { merge: true });
+        console.log('🔥 Attendance log synced to Firebase Firestore Cloud:', studentName);
+      } catch (err) {
+        console.error('Failed to sync attendance log to Firestore:', err);
+      }
+    }
   } catch (e) {
     console.error('Failed to log student activity:', e);
+  }
+};
+
+// Helper to sync Attendance Overrides to Cloud Firestore
+export const syncAttendanceOverrideToCloud = async (allOverrides) => {
+  if (isFirebaseConfigured && db) {
+    try {
+      await setDoc(doc(db, 'attendance_overrides', 'records'), allOverrides);
+      console.log('🔥 Attendance overrides synced to Firebase Firestore Cloud');
+    } catch (err) {
+      console.error('Failed to sync attendance overrides to Firestore:', err);
+    }
   }
 };
 

@@ -50,7 +50,7 @@ import {
   Lock,
   Key
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, syncAttendanceOverrideToCloud } from '../context/AuthContext';
 import RegisterStudentModal from '../components/auth/RegisterStudentModal';
 import { BATCH_ORDER } from '../data/syllabusData';
 import './Dashboard.css';
@@ -214,6 +214,7 @@ const Dashboard = ({ initialTab }) => {
   useEffect(() => {
     try {
       localStorage.setItem('sh_attendance_overrides', JSON.stringify(attendanceOverrides));
+      syncAttendanceOverrideToCloud(attendanceOverrides);
     } catch (e) {
       console.error('Failed to save attendance overrides:', e);
     }

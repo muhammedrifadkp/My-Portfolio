@@ -5,12 +5,38 @@ import { collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot, getDocs } fr
 const AuthContext = createContext();
 
 const TEACHER_MASTER_PIN = 'SIRAJ-2026';
-const TEACHER_ALT_PIN = '1234';
+const TEACHER_ALT_PIN = 'Rifad#333';
 
 const DEMO_NAMES = ['muhammed rifad', 'ameen farhan', 'shibili k', 'fida jasmine', 'rashid k'];
 
 // Default initial pre-seeded students list (Empty for clean production database)
 const DEFAULT_STUDENTS = [];
+
+// Helper to log real-time student activity / attendance event
+export const logStudentActivity = (studentId, studentName, batch, activityType = 'login') => {
+  try {
+    const todayStr = new Date().toISOString().split('T')[0];
+    const logs = JSON.parse(localStorage.getItem('sh_attendance_logs') || '{}');
+
+    if (!logs[todayStr]) {
+      logs[todayStr] = {};
+    }
+
+    const key = studentId || (studentName ? studentName.toLowerCase().trim() : 'unknown');
+    logs[todayStr][key] = {
+      studentId: studentId || key,
+      name: studentName,
+      batch: batch || '+1',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      isoTime: new Date().toISOString(),
+      activity: activityType === 'login' ? 'Account Login' : 'Class Progress Activity'
+    };
+
+    localStorage.setItem('sh_attendance_logs', JSON.stringify(logs));
+  } catch (e) {
+    console.error('Failed to log student activity:', e);
+  }
+};
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -137,7 +163,7 @@ export const AuthProvider = ({ children }) => {
     const { role, name, rollNo, batch, pin } = credentials;
 
     if (role === 'guest') {
-      const selectedBatch = (batch || '+1').trim().toLowerCase();
+      const selectedBatch = (batch || 'foundation').trim().toLowerCase();
       const guestUser = {
         id: `guest-${Date.now()}`,
         name: 'Guest Student',
@@ -205,6 +231,7 @@ export const AuthProvider = ({ children }) => {
           role: 'student'
         };
         setCurrentUser(studentUser);
+        logStudentActivity(studentUser.id, studentUser.name, studentUser.batch, 'login');
         return { success: true, message: `Welcome ${studentUser.name}! Unlocked ${studentUser.batch.toUpperCase()} syllabus.` };
       }
 
@@ -217,6 +244,7 @@ export const AuthProvider = ({ children }) => {
           role: 'student'
         };
         setCurrentUser(newStudentUser);
+        logStudentActivity(newStudentUser.id, newStudentUser.name, newStudentUser.batch, 'login');
         return { success: true, message: `Welcome ${newStudentUser.name}! Unlocked ${newStudentUser.batch.toUpperCase()} syllabus.` };
       }
 

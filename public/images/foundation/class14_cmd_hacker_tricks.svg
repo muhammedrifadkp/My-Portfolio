@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 720" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-hacker" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="50%" stop-color="#051f15" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="card-hacker" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+    <filter id="shadow-hacker" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#10b981" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1150" height="720" fill="url(#bg-hacker)" rx="16" />
+
+  <!-- Header Banner -->
+  <rect x="40" y="30" width="1070" height="75" rx="12" fill="url(#card-hacker)" stroke="#10b981" stroke-width="1.5" filter="url(#shadow-hacker)" />
+  <text x="70" y="62" font-family="'Segoe UI', system-ui, sans-serif" font-size="23" font-weight="bold" fill="#34d399">
+    🕵️‍♂️ Advanced Network &amp; Hacker-Style CMD Commands
+  </text>
+  <text x="70" y="88" font-family="'Segoe UI', sans-serif" font-size="14" fill="#a7f3d0">
+    WiFi Passwords, Network Diagnostics, Task Control &amp; Matrix Color Modes
+  </text>
+  <rect x="940" y="48" width="140" height="36" rx="18" fill="#10b981" />
+  <text x="1010" y="71" font-family="sans-serif" font-size="13" font-weight="bold" fill="#022c22" text-anchor="middle">🔥 Hacker Mode</text>
+
+  <!-- Left Column: Network & WiFi Secrets -->
+  <g transform="translate(40, 130)">
+    <!-- Box Title -->
+    <rect x="0" y="0" width="520" height="42" rx="8" fill="#065f46" />
+    <text x="18" y="27" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="bold" fill="#6ee7b7">📡 1. Wi-Fi &amp; Network Secrets</text>
+
+    <!-- Table Header -->
+    <rect x="0" y="48" width="520" height="32" fill="#022c22" />
+    <text x="18" y="70" font-family="monospace" font-size="13" font-weight="bold" fill="#a7f3d0">Command Syntax</text>
+    <text x="280" y="70" font-family="sans-serif" font-size="13" font-weight="bold" fill="#a7f3d0">Malayalam Explanation</text>
+
+    <!-- Row 1: Wi-Fi Password (Formatted neatly on 2 lines inside 55px box to prevent overlap) -->
+    <rect x="0" y="85" width="520" height="52" fill="#064e3b" opacity="0.6" stroke="#10b981" stroke-width="1" />
+    <text x="14" y="105" font-family="'Consolas', monospace" font-size="11" font-weight="bold" fill="#facc15">netsh wlan show profile name="WiFi" key=clear</text>
+    <text x="14" y="124" font-family="'Consolas', monospace" font-size="10.5" fill="#4ade80">↳ Output: Key Content : [WiFi_Password]</text>
+    <text x="280" y="112" font-family="sans-serif" font-size="12.5" font-weight="bold" fill="#6ee7b7">🔑 Wi-Fi Password കാണുന്നു!</text>
+
+    <!-- Row 2: Saved Profiles -->
+    <rect x="0" y="143" width="520" height="40" fill="#022c22" opacity="0.8" />
+    <text x="14" y="168" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#4ade80">netsh wlan show profiles</text>
+    <text x="280" y="168" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">📶 സേവ് ചെയ്ത Wi-Fi ലിസ്റ്റുകൾ</text>
+
+    <!-- Row 3: IP Config -->
+    <rect x="0" y="188" width="520" height="40" fill="#064e3b" opacity="0.6" />
+    <text x="14" y="213" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#4ade80">ipconfig /all</text>
+    <text x="280" y="213" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">🌐 Local IP &amp; MAC Address</text>
+
+    <!-- Row 4: Flush DNS -->
+    <rect x="0" y="233" width="520" height="40" fill="#022c22" opacity="0.8" />
+    <text x="14" y="258" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#4ade80">ipconfig /flushdns</text>
+    <text x="280" y="258" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">🧹 DNS Cache നീക്കി വേഗത കൂട്ടുന്നു</text>
+
+    <!-- Row 5: Ping -->
+    <rect x="0" y="278" width="520" height="40" fill="#064e3b" opacity="0.6" />
+    <text x="14" y="303" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#4ade80">ping google.com -t</text>
+    <text x="280" y="303" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">📡 continuous നെറ്റ്വർക്ക് സ്പീഡ് നോക്കാം</text>
+
+    <!-- Row 6: Tracert -->
+    <rect x="0" y="323" width="520" height="40" fill="#022c22" opacity="0.8" />
+    <text x="14" y="348" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#4ade80">tracert google.com</text>
+    <text x="280" y="348" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">🗺️ സെർവറിലേക്കുള്ള റൂട്ട് ട്രേസ് ചെയ്യുന്നു</text>
+  </g>
+
+  <!-- Right Column: System & Hacker Visual Tricks -->
+  <g transform="translate(590, 130)">
+    <!-- Box Title -->
+    <rect x="0" y="0" width="520" height="42" rx="8" fill="#1e3a8a" />
+    <text x="18" y="27" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="bold" fill="#93c5fd">⚙️ 2. System, Tasks &amp; Color Tricks</text>
+
+    <!-- Table Header -->
+    <rect x="0" y="48" width="520" height="32" fill="#0f172a" />
+    <text x="18" y="70" font-family="monospace" font-size="13" font-weight="bold" fill="#60a5fa">Command Syntax</text>
+    <text x="280" y="70" font-family="sans-serif" font-size="13" font-weight="bold" fill="#60a5fa">Malayalam Explanation</text>
+
+    <!-- Row 1: Hacker Green Color -->
+    <rect x="0" y="85" width="520" height="40" fill="#1e293b" opacity="0.8" stroke="#38bdf8" stroke-width="1" />
+    <text x="14" y="110" font-family="'Consolas', monospace" font-size="13" font-weight="bold" fill="#38bdf8">color 0a</text>
+    <text x="280" y="110" font-family="sans-serif" font-size="12.5" font-weight="bold" fill="#4ade80">🟢 Hacker Green Text Mode ആക്കുന്നു!</text>
+
+    <!-- Row 2: Tasklist -->
+    <rect x="0" y="130" width="520" height="40" fill="#0f172a" opacity="0.8" />
+    <text x="14" y="155" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#38bdf8">tasklist</text>
+    <text x="280" y="155" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">⚙️ റൺ ചെയ്യുന്ന ആപ്പുകൾ കാണിക്കുന്നു</text>
+
+    <!-- Row 3: Taskkill -->
+    <rect x="0" y="175" width="520" height="40" fill="#1e293b" opacity="0.8" />
+    <text x="14" y="200" font-family="'Consolas', monospace" font-size="11.5" font-weight="bold" fill="#ef4444">taskkill /IM chrome.exe /F</text>
+    <text x="280" y="200" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">🛑 റീസ്പോണ്ട് ചെയ്യാത്ത ആപ്പ് പൂട്ടിപ്പിക്കുന്നു</text>
+
+    <!-- Row 4: Systeminfo -->
+    <rect x="0" y="220" width="520" height="40" fill="#0f172a" opacity="0.8" />
+    <text x="14" y="245" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#38bdf8">systeminfo</text>
+    <text x="280" y="245" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">💻 കമ്പ്യൂട്ടറിന്റെ മുഴുവൻ Specs കാണിക്കുന്നു</text>
+
+    <!-- Row 5: Restart -->
+    <rect x="0" y="265" width="520" height="40" fill="#1e293b" opacity="0.8" />
+    <text x="14" y="290" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#38bdf8">shutdown /r /t 0</text>
+    <text x="280" y="290" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">🔄 കമ്പ്യൂട്ടർ ഉടൻ Restart ചെയ്യുന്നു</text>
+
+    <!-- Row 6: Title -->
+    <rect x="0" y="310" width="520" height="40" fill="#0f172a" opacity="0.8" />
+    <text x="14" y="335" font-family="'Consolas', monospace" font-size="12.5" font-weight="bold" fill="#38bdf8">title Sirajul Huda CLI</text>
+    <text x="280" y="335" font-family="sans-serif" font-size="12.5" fill="#e2e8f0">🏷️ CMD വിൻഡോ പേര് മാറ്റുന്നു</text>
+  </g>
+
+  <!-- Bottom Hacker Terminal Box -->
+  <g transform="translate(40, 545)">
+    <rect x="0" y="0" width="1070" height="135" rx="12" fill="#020617" stroke="#10b981" stroke-width="2" filter="url(#shadow-hacker)" />
+    <text x="25" y="32" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="bold" fill="#4ade80">💡 Hacker Wi-Fi Password Extraction Secret (Lab Demo):</text>
+    <text x="25" y="66" font-family="'Consolas', monospace" font-size="13" fill="#38bdf8">Step 1: netsh wlan show profiles</text>
+    <text x="420" y="66" font-family="sans-serif" font-size="13" fill="#94a3b8">(സേവ് ചെയ്ത Wi-Fi പേര് മനസ്സിലാക്കുന്നു)</text>
+    <text x="25" y="102" font-family="'Consolas', monospace" font-size="12.5" fill="#facc15">Step 2: netsh wlan show profile name="SirajulHuda_WiFi" key=clear</text>
+    <text x="610" y="102" font-family="sans-serif" font-size="13" fill="#34d399">(Key Content-ൽ Password തെളിയുന്നു!)</text>
+  </g>
+</svg>

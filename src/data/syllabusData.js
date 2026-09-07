@@ -44,8 +44,8 @@ export const batchesData = [
     portionPercentage: 100,
     pacingTag: 'Common Foundation',
     pacingBadgeColor: '#10B981',
-    targetModulesText: '6 Modules (Hardware, OS & Files, Essential Apps, Hotkeys, Cyber/AI Hygiene, Practical Lab)',
-    totalClassesCount: 14,
+    targetModulesText: '6 Modules (Hardware, OS & Files, Essential Apps, Hotkeys, Cyber/AI Hygiene, CLI & Touch Typing)',
+    totalClassesCount: 15,
     modules: [],
     classes: [],
     topics: [],
@@ -212,25 +212,27 @@ export const BATCH_ORDER = ['foundation', '+1', '+2', 'degree-1', 'degree-2', 'd
 
 /**
  * Checks if a user role and batch can access a given target batch syllabus.
- * - Universal Foundation Course is 100% accessible to ALL users!
+ * - Universal Foundation Course is 100% accessible to ALL logged-in users!
  * - Teachers have access to ALL batches.
- * - Guests have access to ONLY their selected batch.
+ * - Guests have access to ONLY the Foundation Course.
  * - Students have access to their registered batch AND all previous batches (prerequisites).
  */
 export const canAccessBatch = (userRole, userBatchId, targetBatchId) => {
   if (!targetBatchId) return false;
   const normTargetBatch = (targetBatchId || '').toString().toLowerCase().trim();
 
-  // Foundation Course is universal and accessible to everyone!
-  if (normTargetBatch === 'foundation') return true;
-
+  // Teachers have access to ALL batches
   if (userRole === 'teacher') return true;
 
-  const normUserBatch = (userBatchId || '').toString().toLowerCase().trim();
-
-  if (userRole === 'guest' && normUserBatch) {
-    return normUserBatch === normTargetBatch;
+  // Guest mode allows viewing ONLY the Foundation Course
+  if (userRole === 'guest') {
+    return normTargetBatch === 'foundation';
   }
+
+  // Foundation Course is universal and accessible to all users
+  if (normTargetBatch === 'foundation') return true;
+
+  const normUserBatch = (userBatchId || '').toString().toLowerCase().trim();
 
   if (userRole === 'student' && normUserBatch) {
     const userIndex = BATCH_ORDER.map(b => b.toLowerCase()).indexOf(normUserBatch);

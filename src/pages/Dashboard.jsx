@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   BarChart,
   Bar,
@@ -29,100 +29,334 @@ import {
   ArrowUpDown,
   CheckCircle2,
   AlertCircle,
-  ChevronLeft,
-  ChevronRight,
-  Code,
+  Calendar,
+  Clock,
+  UserCheck,
+  UserX,
+  Plus,
+  Edit3,
+  Trash2,
+  Check,
+  X,
+  Eye,
+  EyeOff,
   FileSpreadsheet,
   Download,
-  X
+  ShieldCheck,
+  TrendingUp,
+  Activity,
+  ChevronRight,
+  GraduationCap,
+  Lock,
+  Key
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import RegisterStudentModal from '../components/auth/RegisterStudentModal';
+import { BATCH_ORDER } from '../data/syllabusData';
 import './Dashboard.css';
 
 const SCRIPT_URL = import.meta.env.VITE_SURVEY_SCRIPT_URL || '';
 
-// Palette for charts
+// Color palette for charts
 const COLORS = ['#38bdf8', '#818cf8', '#34d399', '#f472b6', '#fbbf24', '#a78bfa', '#f87171', '#3861fb'];
-const SKILL_COLORS = {
-  'Beginner': '#ef4444',
-  'Basic': '#f97316',
-  'Intermediate': '#3b82f6',
-  'Good': '#10b981',
-  'Advanced': '#8b5cf6'
+const ATTENDANCE_COLORS = {
+  PRESENT: '#10B981',
+  ABSENT: '#EF4444',
+  LATE: '#F59E0B'
 };
 
-// Course ordering rank (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2)
-const getCourseRank = (courseStr) => {
-  if (!courseStr) return 999;
-  const str = String(courseStr).trim().toLowerCase();
-
-  if (str.includes('+1') || str.includes('plus one') || str === 'plus 1') return 1;
-  if (str.includes('+2') || str.includes('plus two') || str === 'plus 2') return 2;
-  if (str.includes('d1') || str.includes('degree 1') || str.includes('degree 1st') || str.includes('1st degree')) return 3;
-  if (str.includes('d2') || str.includes('degree 2') || str.includes('degree 2nd') || str.includes('2nd degree')) return 4;
-  if (str.includes('d3') || str.includes('degree 3') || str.includes('degree 3rd') || str.includes('3rd degree')) return 5;
-  if (str.includes('p1') || str.includes('pg 1') || str.includes('pg 1st') || str.includes('1st pg')) return 6;
-  if (str.includes('p2') || str.includes('pg 2') || str.includes('pg 2nd') || str.includes('2nd pg')) return 7;
-
-  return 100;
+const BATCH_DETAILS = {
+  '+1': { label: '+1 Batch (Plus One)', icon: 'fas fa-school', badgeColor: '#00F0FF', track: 'Higher Secondary Stream' },
+  '+2': { label: '+2 Batch (Plus Two)', icon: 'fas fa-school', badgeColor: '#FF007A', track: 'Higher Secondary Stream' },
+  'degree-1': { label: 'Degree 1st Year', icon: 'fas fa-graduation-cap', badgeColor: '#7000FF', track: 'Undergraduate Stream' },
+  'degree-2': { label: 'Degree 2nd Year', icon: 'fas fa-graduation-cap', badgeColor: '#3B82F6', track: 'Undergraduate Stream' },
+  'degree-3': { label: 'Degree 3rd Year', icon: 'fas fa-graduation-cap', badgeColor: '#10B981', track: 'Undergraduate Stream' },
+  'pg-1': { label: 'PG 1st Year', icon: 'fas fa-user-graduate', badgeColor: '#F59E0B', track: 'Postgraduate Stream' },
+  'pg-2': { label: 'PG 2nd Year', icon: 'fas fa-user-graduate', badgeColor: '#EC4899', track: 'Postgraduate Stream' }
 };
 
-const getShortCourseLabel = (course) => {
-  if (!course) return '';
-  const str = String(course).trim();
-  const lower = str.toLowerCase();
+const Dashboard = ({ initialTab }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { studentsList, updateStudent, deleteStudent, userRole, login, logout } = useAuth();
 
-  if (lower.includes('+1') || lower.includes('plus one')) return '+1';
-  if (lower.includes('+2') || lower.includes('plus two')) return '+2';
-  if (lower.includes('d1') || lower.includes('degree 1') || lower.includes('degree 1st')) return 'D1';
-  if (lower.includes('d2') || lower.includes('degree 2') || lower.includes('degree 2nd')) return 'D2';
-  if (lower.includes('d3') || lower.includes('degree 3') || lower.includes('degree 3rd')) return 'D3';
-  if (lower.includes('p1') || lower.includes('pg 1') || lower.includes('pg 1st')) return 'P1';
-  if (lower.includes('p2') || lower.includes('pg 2') || lower.includes('pg 2nd')) return 'P2';
+  // Teacher Lock Screen Input State
+  const [teacherPinInput, setTeacherPinInput] = useState('');
+  const [authErrorMsg, setAuthErrorMsg] = useState('');
 
-  return str;
-};
-
-const Dashboard = () => {
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [lastUpdated, setLastUpdated] = useState(null);
-
-  // Filters State
-  const [courseFilter, setCourseFilter] = useState('All');
-  const [divisionFilter, setDivisionFilter] = useState('All');
-  const [skillLevelFilter, setSkillLevelFilter] = useState('All');
-  const [interestedSkillFilter, setInterestedSkillFilter] = useState('All');
-  const [mainGoalFilter, setMainGoalFilter] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [tableNameSearch, setTableNameSearch] = useState('');
-
-  // Table State
-  const [sortField, setSortField] = useState('fullName');
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [viewMode, setViewMode] = useState('paginated'); // 'paginated' | 'full'
-  const itemsPerPage = 10;
-
-  // Key normalization helper
-  const extractVal = (obj, candidateKeys) => {
-    for (const key of candidateKeys) {
-      for (const k in obj) {
-        if (k.toLowerCase().replace(/[^a-z0-9]/g, '') === key.toLowerCase().replace(/[^a-z0-9]/g, '')) {
-          if (obj[k] !== undefined && obj[k] !== null) return String(obj[k]).trim();
-        }
-      }
+  const handleTeacherPinSubmit = (e) => {
+    e.preventDefault();
+    if (!teacherPinInput.trim()) {
+      setAuthErrorMsg('Please enter Teacher Master PIN.');
+      return;
     }
-    return '';
+    const res = login({ role: 'teacher', pin: teacherPinInput.trim() });
+    if (res.success) {
+      setAuthErrorMsg('');
+      setTeacherPinInput('');
+    } else {
+      setAuthErrorMsg(res.message || 'Invalid Teacher Master PIN.');
+    }
   };
 
-  // Fetch data function
-  const fetchDashboardData = async () => {
-    setLoading(true);
-    setError(null);
+  // Active Tab: 'overview' | 'students' | 'attendance' | 'survey' | 'progress'
+  const [activeTab, setActiveTab] = useState(() => {
+    if (initialTab) return initialTab;
+    const tabParam = searchParams.get('tab');
+    return tabParam || 'overview';
+  });
+
+  // Sync tab with URL search params
+  const handleTabChange = (newTab) => {
+    setActiveTab(newTab);
+    setSearchParams({ tab: newTab });
+  };
+
+  // Clock state
+  const [currentTime, setCurrentTime] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Toast message state
+  const [actionToast, setActionToast] = useState('');
+  const showToast = (msg) => {
+    setActionToast(msg);
+    setTimeout(() => setActionToast(''), 4000);
+  };
+
+  // ----------------------------------------------------
+  // 1. REGISTERED STUDENTS STATE & HANDLERS
+  // ----------------------------------------------------
+  const [selectedBatchFilter, setSelectedBatchFilter] = useState('all');
+  const [studentSearchQuery, setStudentSearchQuery] = useState('');
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [visiblePins, setVisiblePins] = useState({});
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [deletingStudent, setDeletingStudent] = useState(null);
+
+  const togglePinVisibility = (studentId) => {
+    setVisiblePins((prev) => ({ ...prev, [studentId]: !prev[studentId] }));
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    if (!editingStudent) return;
+    try {
+      await updateStudent(editingStudent.id, {
+        name: editingStudent.name.trim(),
+        batch: editingStudent.batch,
+        pin: editingStudent.pin.trim()
+      });
+      showToast(`Student "${editingStudent.name}" updated successfully!`);
+      setEditingStudent(null);
+    } catch (err) {
+      console.error('Failed to update student:', err);
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!deletingStudent) return;
+    try {
+      await deleteStudent(deletingStudent.id);
+      showToast(`Student "${deletingStudent.name}" deleted successfully.`);
+      setDeletingStudent(null);
+    } catch (err) {
+      console.error('Failed to delete student:', err);
+    }
+  };
+
+  const filteredStudents = useMemo(() => {
+    return studentsList.filter((student) => {
+      const matchBatch =
+        selectedBatchFilter === 'all' ||
+        (student.batch || '').toLowerCase() === selectedBatchFilter.toLowerCase();
+      const matchSearch =
+        studentSearchQuery.trim() === '' ||
+        student.name.toLowerCase().includes(studentSearchQuery.toLowerCase()) ||
+        (student.batch || '').toLowerCase().includes(studentSearchQuery.toLowerCase());
+      return matchBatch && matchSearch;
+    });
+  }, [studentsList, selectedBatchFilter, studentSearchQuery]);
+
+  const groupedStudentsByBatch = useMemo(() => {
+    const map = {};
+    BATCH_ORDER.forEach((bId) => {
+      map[bId] = [];
+    });
+    filteredStudents.forEach((student) => {
+      const bKey = (student.batch || '+1').toLowerCase();
+      if (!map[bKey]) map[bKey] = [];
+      map[bKey].push(student);
+    });
+    return map;
+  }, [filteredStudents]);
+
+  // ----------------------------------------------------
+  // 2. REAL-TIME ATTENDANCE TRACKER STATE & ENGINE
+  // ----------------------------------------------------
+  const todayStr = useMemo(() => new Date().toISOString().split('T')[0], []);
+  const [selectedAttendanceDate, setSelectedAttendanceDate] = useState(todayStr);
+  const [attendanceSearch, setAttendanceSearch] = useState('');
+  const [attendanceBatchFilter, setAttendanceBatchFilter] = useState('all');
+  const [attendanceStatusFilter, setAttendanceStatusFilter] = useState('all');
+
+  // Attendance Overrides state: { [dateYYYYMMDD]: { [studentId]: 'PRESENT' | 'ABSENT' | 'LATE' } }
+  const [attendanceOverrides, setAttendanceOverrides] = useState(() => {
+    try {
+      const saved = localStorage.getItem('sh_attendance_overrides');
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      return {};
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('sh_attendance_overrides', JSON.stringify(attendanceOverrides));
+    } catch (e) {
+      console.error('Failed to save attendance overrides:', e);
+    }
+  }, [attendanceOverrides]);
+
+  // Read auto-attendance logs: { [dateYYYYMMDD]: { [studentKey]: { timestamp, activity, batch, name } } }
+  const attendanceAutoLogs = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem('sh_attendance_logs') || '{}');
+    } catch (e) {
+      return {};
+    }
+  }, [currentTime]); // re-evaluates periodically
+
+  // Compute roster for selected date
+  const attendanceRoster = useMemo(() => {
+    const dateLogs = attendanceAutoLogs[selectedAttendanceDate] || {};
+    const dateOverrides = attendanceOverrides[selectedAttendanceDate] || {};
+
+    return studentsList.map((student) => {
+      const key = student.id || student.name.toLowerCase().trim();
+      const autoLog = dateLogs[key] || dateLogs[student.name.toLowerCase().trim()];
+      const override = dateOverrides[student.id] || dateOverrides[key];
+
+      let finalStatus = 'ABSENT';
+      let sourceLabel = 'Not Logged';
+
+      if (override) {
+        finalStatus = override;
+        sourceLabel = 'Teacher Manual';
+      } else if (autoLog) {
+        finalStatus = 'PRESENT';
+        sourceLabel = `Auto: ${autoLog.activity} (${autoLog.timestamp})`;
+      }
+
+      return {
+        id: student.id,
+        name: student.name,
+        batch: student.batch || '+1',
+        pin: student.pin,
+        status: finalStatus,
+        sourceLabel,
+        hasAutoLog: !!autoLog,
+        autoTime: autoLog?.timestamp || null
+      };
+    });
+  }, [studentsList, selectedAttendanceDate, attendanceAutoLogs, attendanceOverrides]);
+
+  // Filtered Attendance List
+  const filteredAttendanceRoster = useMemo(() => {
+    return attendanceRoster.filter((item) => {
+      const matchBatch =
+        attendanceBatchFilter === 'all' || item.batch.toLowerCase() === attendanceBatchFilter.toLowerCase();
+      const matchStatus =
+        attendanceStatusFilter === 'all' || item.status.toLowerCase() === attendanceStatusFilter.toLowerCase();
+      const matchSearch =
+        attendanceSearch.trim() === '' ||
+        item.name.toLowerCase().includes(attendanceSearch.toLowerCase()) ||
+        item.batch.toLowerCase().includes(attendanceSearch.toLowerCase());
+      return matchBatch && matchStatus && matchSearch;
+    });
+  }, [attendanceRoster, attendanceBatchFilter, attendanceStatusFilter, attendanceSearch]);
+
+  // Attendance Metrics for selected date
+  const attendanceMetrics = useMemo(() => {
+    const total = attendanceRoster.length;
+    let present = 0;
+    let absent = 0;
+    let late = 0;
+
+    attendanceRoster.forEach((r) => {
+      if (r.status === 'PRESENT') present++;
+      else if (r.status === 'LATE') late++;
+      else absent++;
+    });
+
+    const rate = total > 0 ? Math.round(((present + late) / total) * 100) : 0;
+
+    return { total, present, absent, late, rate };
+  }, [attendanceRoster]);
+
+  // Attendance Actions
+  const handleSetStudentAttendance = (studentId, status) => {
+    setAttendanceOverrides((prev) => ({
+      ...prev,
+      [selectedAttendanceDate]: {
+        ...(prev[selectedAttendanceDate] || {}),
+        [studentId]: status
+      }
+    }));
+    showToast(`Attendance updated for student.`);
+  };
+
+  const handleMarkAllPresent = () => {
+    const newDateOverrides = {};
+    studentsList.forEach((s) => {
+      newDateOverrides[s.id] = 'PRESENT';
+    });
+    setAttendanceOverrides((prev) => ({
+      ...prev,
+      [selectedAttendanceDate]: newDateOverrides
+    }));
+    showToast(`Marked all ${studentsList.length} students PRESENT for ${selectedAttendanceDate}!`);
+  };
+
+  const handleMarkAllAbsent = () => {
+    const newDateOverrides = {};
+    studentsList.forEach((s) => {
+      newDateOverrides[s.id] = 'ABSENT';
+    });
+    setAttendanceOverrides((prev) => ({
+      ...prev,
+      [selectedAttendanceDate]: newDateOverrides
+    }));
+    showToast(`Marked all students ABSENT for ${selectedAttendanceDate}.`);
+  };
+
+  const handleResetAttendanceOverrides = () => {
+    setAttendanceOverrides((prev) => {
+      const copy = { ...prev };
+      delete copy[selectedAttendanceDate];
+      return copy;
+    });
+    showToast(`Reset attendance to auto-logs for ${selectedAttendanceDate}.`);
+  };
+
+  // ----------------------------------------------------
+  // 3. SURVEY DATA STATE & FETCHING
+  // ----------------------------------------------------
+  const [surveyResponses, setSurveyResponses] = useState([]);
+  const [surveyLoading, setSurveyLoading] = useState(true);
+  const [surveyError, setSurveyError] = useState(null);
+
+  // Survey Filters
+  const [surveyCourseFilter, setSurveyCourseFilter] = useState('All');
+  const [surveySkillFilter, setSurveySkillFilter] = useState('All');
+  const [surveySearchQuery, setSurveySearchQuery] = useState('');
+
+  const fetchSurveyData = useCallback(async () => {
+    setSurveyLoading(true);
+    setSurveyError(null);
     try {
       let rawData = [];
-
       if (SCRIPT_URL && SCRIPT_URL.trim() !== '') {
         const response = await fetch(SCRIPT_URL.trim(), { method: 'GET' });
         if (response.ok) {
@@ -135,1076 +369,1046 @@ const Dashboard = () => {
         }
       }
 
-      // If live API returned no data or errored, fallback to localStorage backup submissions
       if (!rawData || rawData.length === 0) {
         const localData = JSON.parse(localStorage.getItem('student_surveys') || '[]');
-        if (localData.length > 0) {
-          rawData = localData;
-        }
+        if (localData.length > 0) rawData = localData;
       }
 
       if (!rawData || rawData.length === 0) {
-        setStudents([]);
-        setError('No student responses found in Google Sheet or local storage.');
+        setSurveyResponses([]);
+        setSurveyError('No survey responses recorded yet.');
       } else {
-        // Normalize each record
-        const parsed = rawData.map((row, index) => {
-          const fullName = extractVal(row, ['fullname', 'name', 'studentname']) || `Student ${index + 1}`;
-          const course = extractVal(row, ['course', 'courseclass', 'class']) || 'Unspecified';
-          const division = extractVal(row, ['division', 'batch', 'divisionbatch']) || 'Unspecified';
-          const currentSkill = extractVal(row, ['currentskill', 'skilllevel', 'currentcomputerlevel']) || 'Beginner';
-          const knownTools = extractVal(row, ['knowntools', 'toolsknown', 'softwaretoolsknown']);
-          const learningInterests = extractVal(row, ['learninginterests', 'skillstolearn', 'whatwouldyouliketolearn']);
-          const mostInterestedSkill = extractVal(row, ['mostinterestedskill', 'mostinterested']) || 'Unspecified';
-          const mainGoal = extractVal(row, ['maingoal', 'goal']) || 'Unspecified';
-          const specificLearning = extractVal(row, ['specificlearning', 'specifictopics', 'anythingspecific']);
-          const timestamp = extractVal(row, ['timestamp', 'time']);
-
-          return {
-            id: index + 1,
-            fullName,
-            course,
-            division,
-            currentSkill,
-            knownTools: knownTools ? knownTools.split(',').map(s => s.trim()).filter(Boolean) : [],
-            learningInterests: learningInterests ? learningInterests.split(',').map(s => s.trim()).filter(Boolean) : [],
-            mostInterestedSkill,
-            mainGoal,
-            specificLearning,
-            timestamp
-          };
-        });
-
-        setStudents(parsed);
-        setLastUpdated(new Date().toLocaleTimeString());
+        const normalized = rawData.map((item, index) => ({
+          id: item.id || `srv-${index + 1}`,
+          fullName: item.fullName || item.name || item.FullName || `Student ${index + 1}`,
+          course: item.course || item.Course || '+1',
+          division: item.division || item.Division || 'A',
+          skillLevel: item.skillLevel || item.SkillLevel || 'Beginner',
+          interestedSkill: item.interestedSkill || item.InterestedSkill || 'Coding',
+          mainGoal: item.mainGoal || item.MainGoal || 'IT Skills Mastery',
+          submittedAt: item.timestamp || item.submittedAt || new Date().toLocaleDateString()
+        }));
+        setSurveyResponses(normalized);
       }
     } catch (err) {
-      console.error('Fetch error:', err);
-      // Fallback check
-      const localData = JSON.parse(localStorage.getItem('student_surveys') || '[]');
-      if (localData.length > 0) {
-        const parsed = localData.map((row, index) => ({
-          id: index + 1,
-          fullName: row.fullName || `Student ${index + 1}`,
-          course: row.course || 'Unspecified',
-          division: row.division || 'Unspecified',
-          currentSkill: row.currentSkill || 'Beginner',
-          knownTools: row.knownTools ? row.knownTools.split(',').map(s => s.trim()).filter(Boolean) : [],
-          learningInterests: row.learningInterests ? row.learningInterests.split(',').map(s => s.trim()).filter(Boolean) : [],
-          mostInterestedSkill: row.mostInterestedSkill || 'Unspecified',
-          mainGoal: row.mainGoal || 'Unspecified',
-          specificLearning: row.specificLearning || '',
-          timestamp: row.timestamp || ''
-        }));
-        setStudents(parsed);
-        setLastUpdated(new Date().toLocaleTimeString());
-      } else {
-        setError('Unable to load Google Sheet data. Please check your Google Apps Script GET endpoint.');
-      }
+      console.error('Failed to fetch survey responses:', err);
+      setSurveyError('Error loading survey responses from Google Sheet.');
     } finally {
-      setLoading(false);
+      setSurveyLoading(false);
     }
-  };
-
-  useEffect(() => {
-    fetchDashboardData();
   }, []);
 
-  // Filter options lists extracted from data
-  const filterOptions = useMemo(() => {
-    const courses = Array.from(new Set(students.map(s => s.course).filter(Boolean)))
-      .sort((a, b) => {
-        const rankA = getCourseRank(a);
-        const rankB = getCourseRank(b);
-        if (rankA !== rankB) return rankA - rankB;
-        return a.localeCompare(b);
-      });
-    const divisions = Array.from(new Set(students.map(s => s.division).filter(Boolean))).sort();
-    const skills = ['Beginner', 'Basic', 'Intermediate', 'Good', 'Advanced'];
-    const interestedSkills = Array.from(new Set(students.map(s => s.mostInterestedSkill).filter(Boolean))).sort();
-    const goals = Array.from(new Set(students.map(s => s.mainGoal).filter(Boolean))).sort();
+  useEffect(() => {
+    fetchSurveyData();
+  }, [fetchSurveyData]);
 
-    return { courses, divisions, skills, interestedSkills, goals };
-  }, [students]);
-
-  // Filtered Students
-  const filteredStudents = useMemo(() => {
-    return students.filter(student => {
-      if (courseFilter !== 'All' && student.course !== courseFilter) return false;
-      if (divisionFilter !== 'All' && student.division !== divisionFilter) return false;
-      if (skillLevelFilter !== 'All' && student.currentSkill !== skillLevelFilter) return false;
-      if (interestedSkillFilter !== 'All' && student.mostInterestedSkill !== interestedSkillFilter) return false;
-      if (mainGoalFilter !== 'All' && student.mainGoal !== mainGoalFilter) return false;
-      if (tableNameSearch.trim() !== '') {
-        const nameQuery = tableNameSearch.toLowerCase().trim();
-        if (!student.fullName.toLowerCase().includes(nameQuery)) return false;
-      }
-      if (searchQuery.trim() !== '') {
-        const query = searchQuery.toLowerCase();
-        const matchesName = student.fullName.toLowerCase().includes(query);
-        const matchesRequest = student.specificLearning.toLowerCase().includes(query);
-        if (!matchesName && !matchesRequest) return false;
-      }
-      return true;
+  const filteredSurveyResponses = useMemo(() => {
+    return surveyResponses.filter((item) => {
+      const matchCourse = surveyCourseFilter === 'All' || item.course === surveyCourseFilter;
+      const matchSkill = surveySkillFilter === 'All' || item.skillLevel === surveySkillFilter;
+      const matchSearch =
+        surveySearchQuery.trim() === '' ||
+        item.fullName.toLowerCase().includes(surveySearchQuery.toLowerCase()) ||
+        item.course.toLowerCase().includes(surveySearchQuery.toLowerCase());
+      return matchCourse && matchSkill && matchSearch;
     });
-  }, [students, courseFilter, divisionFilter, skillLevelFilter, interestedSkillFilter, mainGoalFilter, tableNameSearch, searchQuery]);
+  }, [surveyResponses, surveyCourseFilter, surveySkillFilter, surveySearchQuery]);
 
-  // Reset Filters
-  const handleResetFilters = () => {
-    setCourseFilter('All');
-    setDivisionFilter('All');
-    setSkillLevelFilter('All');
-    setInterestedSkillFilter('All');
-    setMainGoalFilter('All');
-    setSearchQuery('');
-    setTableNameSearch('');
-    setCurrentPage(1);
-  };
-
-  // KPI Calculations
-  const kpis = useMemo(() => {
-    const totalStudents = filteredStudents.length;
-    const totalCourses = new Set(filteredStudents.map(s => s.course)).size;
-
-    // Helper for finding mode (most frequent value)
-    const getMode = (arr) => {
-      if (arr.length === 0) return 'N/A';
-      const counts = {};
-      arr.forEach(val => { if (val) counts[val] = (counts[val] || 0) + 1; });
-      let maxKey = 'N/A';
-      let maxCount = 0;
-      for (const key in counts) {
-        if (counts[key] > maxCount) {
-          maxCount = counts[key];
-          maxKey = key;
-        }
-      }
-      return maxKey;
-    };
-
-    const mostCommonSkill = getMode(filteredStudents.map(s => s.currentSkill));
-    const mostRequestedSkill = getMode(filteredStudents.map(s => s.mostInterestedSkill));
-    const mostCommonGoal = getMode(filteredStudents.map(s => s.mainGoal));
-
-    return { totalStudents, totalCourses, mostCommonSkill, mostRequestedSkill, mostCommonGoal };
-  }, [filteredStudents]);
-
-  // Chart 1: Students by Course
-  const courseChartData = useMemo(() => {
+  // Chart data for survey
+  const surveySkillChartData = useMemo(() => {
     const counts = {};
-    filteredStudents.forEach(s => {
-      counts[s.course] = (counts[s.course] || 0) + 1;
+    surveyResponses.forEach((r) => {
+      const level = r.skillLevel || 'Beginner';
+      counts[level] = (counts[level] || 0) + 1;
     });
-    return Object.keys(counts).map(course => ({
-      course,
-      count: counts[course]
-    })).sort((a, b) => b.count - a.count);
-  }, [filteredStudents]);
+    return Object.keys(counts).map((key) => ({ name: key, count: counts[key] }));
+  }, [surveyResponses]);
 
-  // Chart 2: Students by Skill Level
-  const skillChartData = useMemo(() => {
-    const counts = { 'Beginner': 0, 'Basic': 0, 'Intermediate': 0, 'Good': 0, 'Advanced': 0 };
-    filteredStudents.forEach(s => {
-      if (counts[s.currentSkill] !== undefined) {
-        counts[s.currentSkill]++;
-      } else {
-        counts[s.currentSkill] = 1;
-      }
-    });
-    return Object.keys(counts).map(level => ({
-      level,
-      count: counts[level]
-    })).filter(item => item.count > 0);
-  }, [filteredStudents]);
+  // PDF Export for Survey & Attendance
+  const exportAttendancePDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.setTextColor(15, 23, 42);
+    doc.text(`Sirajul Huda Student Attendance Report`, 14, 20);
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+    doc.text(`Date: ${selectedAttendanceDate} | Total Enrolled: ${attendanceMetrics.total} | Present: ${attendanceMetrics.present} | Absent: ${attendanceMetrics.absent} | Rate: ${attendanceMetrics.rate}%`, 14, 28);
 
-  // Chart 3: Most Interested Skills
-  const interestedSkillsChartData = useMemo(() => {
-    const counts = {};
-    filteredStudents.forEach(s => {
-      if (s.mostInterestedSkill) {
-        const cleanSkill = s.mostInterestedSkill.replace(/^Other:\s*/i, '');
-        counts[cleanSkill] = (counts[cleanSkill] || 0) + 1;
-      }
-    });
-    return Object.keys(counts).map(skill => ({
-      skill,
-      count: counts[skill]
-    })).sort((a, b) => b.count - a.count);
-  }, [filteredStudents]);
-
-  // Chart 4: Main Goals
-  const goalChartData = useMemo(() => {
-    const counts = {};
-    filteredStudents.forEach(s => {
-      if (s.mainGoal) {
-        counts[s.mainGoal] = (counts[s.mainGoal] || 0) + 1;
-      }
-    });
-    return Object.keys(counts).map(goal => ({
-      goal,
-      count: counts[goal]
-    })).sort((a, b) => b.count - a.count);
-  }, [filteredStudents]);
-
-  // Chart 5: Top Learning Topics (All selected learning interests)
-  const learningTopicsData = useMemo(() => {
-    const counts = {};
-    filteredStudents.forEach(s => {
-      s.learningInterests.forEach(topic => {
-        const cleanTopic = topic.replace(/^Other:\s*/i, '');
-        counts[cleanTopic] = (counts[cleanTopic] || 0) + 1;
-      });
-    });
-    return Object.keys(counts).map(topic => ({
-      topic,
-      count: counts[topic]
-    })).sort((a, b) => b.count - a.count).slice(0, 8);
-  }, [filteredStudents]);
-
-  // Software / Known Tools Breakdown
-  const knownToolsData = useMemo(() => {
-    const counts = {};
-    filteredStudents.forEach(s => {
-      s.knownTools.forEach(tool => {
-        const cleanTool = tool.replace(/^Other:\s*/i, '');
-        counts[cleanTool] = (counts[cleanTool] || 0) + 1;
-      });
-    });
-    return Object.keys(counts).map(tool => ({
-      tool,
-      count: counts[tool]
-    })).sort((a, b) => b.count - a.count);
-  }, [filteredStudents]);
-
-  // Specific Learning Requests List
-  const learningRequests = useMemo(() => {
-    return filteredStudents
-      .filter(s => s.specificLearning && s.specificLearning.trim() !== '')
-      .map(s => ({
-        fullName: s.fullName,
-        course: s.course,
-        division: s.division,
-        request: s.specificLearning
-      }));
-  }, [filteredStudents]);
-
-  // Cycle course filter sequence (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2 -> All)
-  const handleCycleCourseFilter = () => {
-    const orderedCourses = filterOptions.courses;
-    if (orderedCourses.length === 0) return;
-
-    if (courseFilter === 'All') {
-      setCourseFilter(orderedCourses[0]);
-    } else {
-      const currentIndex = orderedCourses.indexOf(courseFilter);
-      if (currentIndex === -1 || currentIndex === orderedCourses.length - 1) {
-        setCourseFilter('All');
-      } else {
-        setCourseFilter(orderedCourses[currentIndex + 1]);
-      }
-    }
-    setCurrentPage(1);
-  };
-
-  // Table Sorting & Display calculation
-  const sortedStudents = useMemo(() => {
-    const copy = [...filteredStudents];
-    copy.sort((a, b) => {
-      let valA = a[sortField] || '';
-      let valB = b[sortField] || '';
-
-      if (sortField === 'course') {
-        const rankA = getCourseRank(a.course);
-        const rankB = getCourseRank(b.course);
-        if (rankA !== rankB) {
-          return sortOrder === 'asc' ? rankA - rankB : rankB - rankA;
-        }
-      }
-
-      if (typeof valA === 'string') valA = valA.toLowerCase();
-      if (typeof valB === 'string') valB = valB.toLowerCase();
-      if (valA < valB) return sortOrder === 'asc' ? -1 : 1;
-      if (valA > valB) return sortOrder === 'asc' ? 1 : -1;
-      return 0;
-    });
-    return copy;
-  }, [filteredStudents, sortField, sortOrder]);
-
-  const totalPages = useMemo(() => {
-    if (viewMode === 'full') return 1;
-    return Math.ceil(sortedStudents.length / itemsPerPage) || 1;
-  }, [sortedStudents, viewMode, itemsPerPage]);
-
-  const displayedStudents = useMemo(() => {
-    if (viewMode === 'full') return sortedStudents;
-    const start = (currentPage - 1) * itemsPerPage;
-    return sortedStudents.slice(start, start + itemsPerPage);
-  }, [sortedStudents, viewMode, currentPage, itemsPerPage]);
-
-  const handleSort = (field) => {
-    if (sortField === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortOrder('asc');
-    }
-  };
-
-  // Export Filtered Students Data to PDF
-  const handleExportPDF = () => {
-    if (!sortedStudents || sortedStudents.length === 0) {
-      alert('No student records available to export.');
-      return;
-    }
-
-    const doc = new jsPDF({
-      orientation: 'landscape',
-      unit: 'mm',
-      format: 'a4'
-    });
-
-    const primaryColor = [15, 23, 42]; // slate-900
-
-    // Header Background Banner
-    doc.setFillColor(...primaryColor);
-    doc.rect(0, 0, 297, 24, 'F');
-
-    // Header Title
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(15);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Detailed Student Responses Report', 14, 15);
-
-    // Timestamp & Record Count
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    const timestampStr = new Date().toLocaleString();
-    doc.text(`Generated: ${timestampStr}  |  Total Records: ${sortedStudents.length}`, 283, 15, { align: 'right' });
-
-    // Active Filters Summary Line
-    const activeFilters = [];
-    if (courseFilter !== 'All') activeFilters.push(`Course: ${courseFilter}`);
-    if (divisionFilter !== 'All') activeFilters.push(`Div: ${divisionFilter}`);
-    if (skillLevelFilter !== 'All') activeFilters.push(`Skill: ${skillLevelFilter}`);
-    if (interestedSkillFilter !== 'All') activeFilters.push(`Interested: ${interestedSkillFilter}`);
-    if (mainGoalFilter !== 'All') activeFilters.push(`Goal: ${mainGoalFilter}`);
-    if (tableNameSearch.trim() !== '') activeFilters.push(`Name Filter: "${tableNameSearch.trim()}"`);
-    if (searchQuery.trim() !== '') activeFilters.push(`Global Search: "${searchQuery.trim()}"`);
-
-    const filterText = activeFilters.length > 0
-      ? `Applied Filters: ${activeFilters.join(' | ')}`
-      : 'Applied Filters: None (Showing All Students)';
-
-    doc.setTextColor(71, 85, 105);
-    doc.setFontSize(8.5);
-    doc.setFont('helvetica', 'italic');
-    doc.text(filterText, 14, 30);
-
-    // Table Column Definitions
-    const tableColumns = [
-      { header: '#', dataKey: 'no' },
-      { header: 'Student Name', dataKey: 'fullName' },
-      { header: 'Course', dataKey: 'course' },
-      { header: 'Div', dataKey: 'division' },
-      { header: 'Current Skill', dataKey: 'currentSkill' },
-      { header: 'Interested Skill', dataKey: 'mostInterestedSkill' },
-      { header: 'Main Goal', dataKey: 'mainGoal' },
-      { header: 'Learning Interests', dataKey: 'learningInterests' },
-      { header: 'Specific Request', dataKey: 'specificLearning' },
-    ];
-
-    const tableRows = sortedStudents.map((student, idx) => ({
-      no: idx + 1,
-      fullName: student.fullName || '-',
-      course: student.course || '-',
-      division: student.division || '-',
-      currentSkill: student.currentSkill || '-',
-      mostInterestedSkill: student.mostInterestedSkill || '-',
-      mainGoal: student.mainGoal || '-',
-      learningInterests: Array.isArray(student.learningInterests) ? student.learningInterests.join(', ') : '-',
-      specificLearning: student.specificLearning || '-'
-    }));
+    const tableData = filteredAttendanceRoster.map((r, i) => [
+      i + 1,
+      r.name,
+      r.batch.toUpperCase(),
+      r.status,
+      r.sourceLabel
+    ]);
 
     autoTable(doc, {
-      columns: tableColumns,
-      body: tableRows,
-      startY: 34,
-      styles: {
-        fontSize: 8,
-        cellPadding: 2.5,
-        overflow: 'linebreak',
-        valign: 'middle'
-      },
-      headStyles: {
-        fillColor: [30, 41, 59],
-        textColor: [248, 250, 252],
-        fontStyle: 'bold',
-        fontSize: 8.5
-      },
-      alternateRowStyles: {
-        fillColor: [248, 250, 252]
-      },
-      columnStyles: {
-        no: { cellWidth: 10, halign: 'center' },
-        fullName: { cellWidth: 35, fontStyle: 'bold' },
-        course: { cellWidth: 18 },
-        division: { cellWidth: 14 },
-        currentSkill: { cellWidth: 24 },
-        mostInterestedSkill: { cellWidth: 32 },
-        mainGoal: { cellWidth: 34 },
-        learningInterests: { cellWidth: 48 },
-        specificLearning: { cellWidth: 48 }
-      },
-      didDrawPage: (data) => {
-        const pageCount = doc.internal.getNumberOfPages();
-        doc.setFontSize(8);
-        doc.setTextColor(148, 163, 184);
-        doc.text(
-          `Page ${data.pageNumber} of ${pageCount}`,
-          283,
-          203,
-          { align: 'right' }
-        );
-        doc.text(
-          'Sirajul Huda Student IT & Digital Skills Interest Survey',
-          14,
-          203
-        );
-      }
+      startY: 35,
+      head: [['#', 'Student Name', 'Batch', 'Status', 'Log Source']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [16, 185, 129] }
     });
 
-    const dateStr = new Date().toISOString().slice(0, 10);
-    doc.save(`Student_Responses_Report_${dateStr}.pdf`);
+    doc.save(`Attendance_Report_${selectedAttendanceDate}.pdf`);
   };
 
-  return (
-    <div className="dashboard-page">
-      <div className="dashboard-container">
+  const exportSurveyCSV = () => {
+    const headers = ['Full Name', 'Course/Batch', 'Division', 'Current Skill Level', 'Interested Skill', 'Main Goal'];
+    const rows = filteredSurveyResponses.map((r) => [
+      `"${r.fullName}"`,
+      `"${r.course}"`,
+      `"${r.division}"`,
+      `"${r.skillLevel}"`,
+      `"${r.interestedSkill}"`,
+      `"${r.mainGoal}"`
+    ]);
 
-        {/* Dashboard Header */}
-        <div className="dashboard-header">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="dashboard-title flex items-center gap-3">
-                <Sparkles className="text-sky-400 w-8 h-8" />
-                Student IT & Digital Skills Analytics
-              </h1>
-              <p className="dashboard-subtitle">
-                Real-time insights and survey analytics from Sirajul Huda Student IT & Digital Skills Interest Survey
-              </p>
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `Student_Survey_Responses.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Enrolled Students Chart Data
+  const streamEnrolledChartData = useMemo(() => {
+    const map = { '+1': 0, '+2': 0, 'Degree 1st': 0, 'Degree 2nd': 0, 'Degree 3rd': 0, 'PG': 0 };
+    studentsList.forEach((s) => {
+      const b = (s.batch || '+1').toLowerCase();
+      if (b === '+1') map['+1']++;
+      else if (b === '+2') map['+2']++;
+      else if (b === 'degree-1') map['Degree 1st']++;
+      else if (b === 'degree-2') map['Degree 2nd']++;
+      else if (b === 'degree-3') map['Degree 3rd']++;
+      else map['PG']++;
+    });
+    return Object.keys(map).map((k) => ({ name: k, Students: map[k] }));
+  }, [studentsList]);
+
+  const attendancePieChartData = useMemo(() => {
+    return [
+      { name: 'Present', value: attendanceMetrics.present, color: ATTENDANCE_COLORS.PRESENT },
+      { name: 'Absent', value: attendanceMetrics.absent, color: ATTENDANCE_COLORS.ABSENT },
+      { name: 'Late', value: attendanceMetrics.late, color: ATTENDANCE_COLORS.LATE }
+    ].filter((d) => d.value > 0);
+  }, [attendanceMetrics]);
+
+  if (userRole !== 'teacher') {
+    return (
+      <div className="master-dashboard-container flex items-center justify-center min-h-screen">
+        <div className="teacher-auth-lock-card">
+          <div className="auth-lock-icon-box">
+            <ShieldCheck className="w-10 h-10 text-emerald-400" />
+          </div>
+
+          <span className="auth-lock-badge">
+            👨‍🏫 TEACHER ADMIN AUTHORIZATION REQUIRED
+          </span>
+
+          <h2 className="auth-lock-title">Protected Master Dashboard</h2>
+          <p className="auth-lock-desc">
+            Access to student directory, automated attendance tracking, and survey analytics is restricted to IT Instructors.
+          </p>
+
+          {authErrorMsg && (
+            <div className="auth-error-banner">
+              <AlertCircle className="w-4 h-4" />
+              <span>{authErrorMsg}</span>
             </div>
-            <div className="dashboard-actions">
-              <Link
-                to="/registered-students"
-                className="view-students-portal-btn inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg transition-all hover:scale-105 text-sm"
-              >
-                <Users className="w-4 h-4" />
-                <span>Registered Students Database (Batch-wise)</span>
-              </Link>
-              {lastUpdated && (
-                <div className="last-updated-badge">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Updated: {lastUpdated}</span>
-                </div>
-              )}
-              <button onClick={fetchDashboardData} disabled={loading} className="refresh-btn">
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                {loading ? 'Refreshing...' : 'Refresh Data'}
-              </button>
+          )}
+
+          <form onSubmit={handleTeacherPinSubmit} className="teacher-pin-form">
+            <div className="pin-input-box">
+              <Key className="pin-icon w-5 h-5 text-cyan-400" />
+              <input
+                type="password"
+                placeholder="Enter PIN"
+                value={teacherPinInput}
+                onChange={(e) => setTeacherPinInput(e.target.value)}
+                autoFocus
+              />
             </div>
+
+            <button type="submit" className="unlock-dashboard-btn">
+              <span>Unlock Master Dashboard</span>
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </form>
+
+          <div className="auth-lock-footer-info">
+            <span>Sirajul Huda Security Protocol</span>
+            <Link to="/syllabus" className="back-to-site-link">
+              ← Return to Syllabus Portal
+            </Link>
           </div>
         </div>
-
-        {/* Loading State */}
-        {loading && (
-          <div className="state-container">
-            <div className="spinner"></div>
-            <p className="text-sky-400 font-semibold text-lg">Fetching live survey data...</p>
-          </div>
-        )}
-
-        {/* Error State with Setup Help */}
-        {!loading && error && students.length === 0 && (
-          <div className="state-container">
-            <AlertCircle className="w-16 h-16 text-rose-500 mb-4" />
-            <h2 className="text-xl font-bold text-slate-100 mb-2">Google Sheet Data Unavailable</h2>
-            <p className="text-slate-400 max-w-lg mb-4">{error}</p>
-
-            <div className="script-instructions-box">
-              <h3 className="text-sky-400 font-bold flex items-center gap-2 mb-2">
-                <Code className="w-5 h-5" /> How to enable GET API in Google Apps Script:
-              </h3>
-              <p className="text-sm text-slate-300">
-                Open your Google Sheet &gt; <strong>Extensions</strong> &gt; <strong>Apps Script</strong>, then add/replace your script with this <code>doGet</code> handler:
-              </p>
-              <pre className="script-code">
-{`function doGet(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = sheet.getDataRange().getValues();
-  var headers = data[0];
-  var result = [];
-  for (var i = 1; i < data.length; i++) {
-    var obj = {};
-    for (var j = 0; j < headers.length; j++) obj[headers[j]] = data[i][j];
-    result.push(obj);
+      </div>
+    );
   }
-  return ContentService.createTextOutput(JSON.stringify({ status: "success", data: result }))
-    .setMimeType(ContentService.MimeType.JSON);
-}`}
-              </pre>
-              <p className="text-xs text-slate-400 mt-2">
-                Click <strong>Deploy &gt; New deployment &gt; Anyone</strong> to publish.
-              </p>
+
+  return (
+    <div className="master-dashboard-container">
+      <div className="master-dashboard-wrapper">
+        
+        {/* TOP HEADER & INSTITUTIONAL BRANDING */}
+        <header className="dashboard-top-header">
+          <div className="header-left-box">
+            <span className="inst-tag-pill">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              Sirajul Huda Educational Complex • IT Portal
+            </span>
+            <h1 className="dashboard-title">Institutional Management Dashboard</h1>
+            <p className="dashboard-sub-title">
+              Real-time student directory, automated attendance engine, survey analytics &amp; syllabus monitoring.
+            </p>
+          </div>
+
+          <div className="header-right-box">
+            <div className="live-clock-card">
+              <Clock className="w-5 h-5 text-cyan-400" />
+              <div>
+                <span className="time-digit">
+                  {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                </span>
+                <span className="time-date">{currentTime.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              </div>
             </div>
 
-            <button onClick={fetchDashboardData} className="refresh-btn mt-6">
-              <RefreshCw className="w-4 h-4" /> Retry Fetching Data
+            <button className="primary-action-btn" onClick={() => setIsRegisterModalOpen(true)}>
+              <Plus className="w-4 h-4" />
+              <span>Register Student</span>
+            </button>
+
+            <button className="secondary-action-btn lock-btn" onClick={logout} title="Lock Teacher Session">
+              <Lock className="w-4 h-4 text-amber-400" />
+              <span>Lock Session</span>
             </button>
           </div>
+        </header>
+
+        {/* Action Success Toast */}
+        {actionToast && (
+          <div className="dashboard-toast-banner">
+            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <span>{actionToast}</span>
+          </div>
         )}
 
-        {/* Main Content Dashboard */}
-        {!loading && students.length > 0 && (
-          <>
-            {/* Top KPI Cards */}
+        {/* MASTER NAVIGATION TABS BAR */}
+        <nav className="dashboard-tabs-nav">
+          <button
+            className={`tab-nav-btn ${activeTab === 'overview' ? 'active' : ''}`}
+            onClick={() => handleTabChange('overview')}
+          >
+            <Activity className="w-4 h-4" />
+            <span>Master Overview</span>
+          </button>
+
+          <button
+            className={`tab-nav-btn ${activeTab === 'students' ? 'active' : ''}`}
+            onClick={() => handleTabChange('students')}
+          >
+            <GraduationCap className="w-4 h-4" />
+            <span>Registered Students ({studentsList.length})</span>
+          </button>
+
+          <button
+            className={`tab-nav-btn ${activeTab === 'attendance' ? 'active' : ''}`}
+            onClick={() => handleTabChange('attendance')}
+          >
+            <UserCheck className="w-4 h-4" />
+            <span>Attendance Tracker ({attendanceMetrics.rate}%)</span>
+          </button>
+
+          <button
+            className={`tab-nav-btn ${activeTab === 'survey' ? 'active' : ''}`}
+            onClick={() => handleTabChange('survey')}
+          >
+            <FileSpreadsheet className="w-4 h-4" />
+            <span>Survey Details ({surveyResponses.length})</span>
+          </button>
+
+          <button
+            className={`tab-nav-btn ${activeTab === 'progress' ? 'active' : ''}`}
+            onClick={() => handleTabChange('progress')}
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Course Progress</span>
+          </button>
+        </nav>
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB 1: MASTER OVERVIEW & SYSTEM ANALYTICS            */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'overview' && (
+          <div className="dashboard-tab-content animate-fade-in">
+            {/* KPI STATS CARDS GRID */}
             <div className="kpi-grid">
-              <div className="kpi-card">
-                <div className="kpi-icon-wrapper bg-sky-500/20 text-sky-400">
-                  <Users className="w-5 h-5" />
+              <div className="kpi-card blue-kpi">
+                <div className="kpi-icon-box">
+                  <Users className="w-6 h-6" />
                 </div>
-                <div className="kpi-label">Total Students</div>
-                <div className="kpi-value text-sky-400">{kpis.totalStudents}</div>
+                <div className="kpi-info">
+                  <span className="kpi-label">Total Enrolled Students</span>
+                  <span className="kpi-value">{studentsList.length}</span>
+                  <span className="kpi-hint">Across 7 Academic Streams</span>
+                </div>
               </div>
 
-              <div className="kpi-card">
-                <div className="kpi-icon-wrapper bg-indigo-500/20 text-indigo-400">
-                  <BookOpen className="w-5 h-5" />
+              <div className="kpi-card green-kpi">
+                <div className="kpi-icon-box">
+                  <UserCheck className="w-6 h-6" />
                 </div>
-                <div className="kpi-label">Courses / Batches</div>
-                <div className="kpi-value text-indigo-400">{kpis.totalCourses}</div>
+                <div className="kpi-info">
+                  <span className="kpi-label">Today's Attendance</span>
+                  <span className="kpi-value">{attendanceMetrics.rate}%</span>
+                  <span className="kpi-hint">{attendanceMetrics.present} Present • {attendanceMetrics.absent} Absent</span>
+                </div>
               </div>
 
-              <div className="kpi-card">
-                <div className="kpi-icon-wrapper bg-emerald-500/20 text-emerald-400">
-                  <Award className="w-5 h-5" />
+              <div className="kpi-card purple-kpi">
+                <div className="kpi-icon-box">
+                  <FileSpreadsheet className="w-6 h-6" />
                 </div>
-                <div className="kpi-label">Top Skill Level</div>
-                <div className="kpi-value text-emerald-400">{kpis.mostCommonSkill}</div>
+                <div className="kpi-info">
+                  <span className="kpi-label">Survey Submissions</span>
+                  <span className="kpi-value">{surveyResponses.length}</span>
+                  <span className="kpi-hint">Google Sheet Live Responses</span>
+                </div>
               </div>
 
-              <div className="kpi-card">
-                <div className="kpi-icon-wrapper bg-pink-500/20 text-pink-400">
-                  <Sparkles className="w-5 h-5" />
+              <div className="kpi-card amber-kpi">
+                <div className="kpi-icon-box">
+                  <BookOpen className="w-6 h-6" />
                 </div>
-                <div className="kpi-label">Most Requested Skill</div>
-                <div className="kpi-value text-pink-400">{kpis.mostRequestedSkill}</div>
-              </div>
-
-              <div className="kpi-card">
-                <div className="kpi-icon-wrapper bg-amber-500/20 text-amber-400">
-                  <Target className="w-5 h-5" />
-                </div>
-                <div className="kpi-label">Top Main Goal</div>
-                <div className="kpi-value text-amber-400">{kpis.mostCommonGoal}</div>
-              </div>
-            </div>
-
-            {/* Filter Panel */}
-            <div className="filter-panel">
-              <div className="filter-title">
-                <span className="flex items-center gap-2">
-                  <SlidersHorizontal className="w-5 h-5 text-sky-400" /> Filter Analytics Panel
-                </span>
-                {(courseFilter !== 'All' || divisionFilter !== 'All' || skillLevelFilter !== 'All' || interestedSkillFilter !== 'All' || mainGoalFilter !== 'All' || searchQuery !== '') && (
-                  <button onClick={handleResetFilters} className="reset-filter-btn">
-                    <RotateCcw className="w-3.5 h-3.5" /> Reset All Filters
-                  </button>
-                )}
-              </div>
-
-              <div className="filter-grid">
-                {/* Search */}
-                <div className="filter-item">
-                  <label>Search Student Name or Request</label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      className="filter-input pl-9"
-                      placeholder="Type student name..."
-                      value={searchQuery}
-                      onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                    />
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                  </div>
-                </div>
-
-                {/* Course Filter */}
-                <div className="filter-item">
-                  <label>Course / Class</label>
-                  <select
-                    className="filter-select"
-                    value={courseFilter}
-                    onChange={(e) => { setCourseFilter(e.target.value); setCurrentPage(1); }}
-                  >
-                    <option value="All">All Courses</option>
-                    {filterOptions.courses.map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Division Filter */}
-                <div className="filter-item">
-                  <label>Division / Batch</label>
-                  <select
-                    className="filter-select"
-                    value={divisionFilter}
-                    onChange={(e) => { setDivisionFilter(e.target.value); setCurrentPage(1); }}
-                  >
-                    <option value="All">All Divisions</option>
-                    {filterOptions.divisions.map(d => (
-                      <option key={d} value={d}>Division {d}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Skill Level Filter */}
-                <div className="filter-item">
-                  <label>Current Skill Level</label>
-                  <select
-                    className="filter-select"
-                    value={skillLevelFilter}
-                    onChange={(e) => { setSkillLevelFilter(e.target.value); setCurrentPage(1); }}
-                  >
-                    <option value="All">All Skill Levels</option>
-                    {filterOptions.skills.map(s => (
-                      <option key={s} value={s}>{s}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Most Interested Skill Filter */}
-                <div className="filter-item">
-                  <label>Most Interested Skill</label>
-                  <select
-                    className="filter-select"
-                    value={interestedSkillFilter}
-                    onChange={(e) => { setInterestedSkillFilter(e.target.value); setCurrentPage(1); }}
-                  >
-                    <option value="All">All Interested Skills</option>
-                    {filterOptions.interestedSkills.map(s => (
-                      <option key={s} value={s}>{s}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Main Goal Filter */}
-                <div className="filter-item">
-                  <label>Main Goal</label>
-                  <select
-                    className="filter-select"
-                    value={mainGoalFilter}
-                    onChange={(e) => { setMainGoalFilter(e.target.value); setCurrentPage(1); }}
-                  >
-                    <option value="All">All Goals</option>
-                    {filterOptions.goals.map(g => (
-                      <option key={g} value={g}>{g}</option>
-                    ))}
-                  </select>
+                <div className="kpi-info">
+                  <span className="kpi-label">Foundation Course</span>
+                  <span className="kpi-value">15 Classes</span>
+                  <span className="kpi-hint">100% Practical IT Modules</span>
                 </div>
               </div>
             </div>
 
-            {/* Charts Visual Analytics Grid */}
-            <div className="charts-grid">
-              {/* Chart 1: Students by Course */}
+            {/* CHARTS SECTION */}
+            <div className="charts-two-col-grid">
               <div className="chart-card">
-                <div className="chart-header">
-                  <div>
-                    <h2 className="chart-title">Students by Course</h2>
-                    <span className="chart-subtitle">Distribution across classes</span>
-                  </div>
+                <div className="chart-card-header">
+                  <h3><Users className="w-5 h-5 text-cyan-400" /> Student Enrollment Distribution by Stream</h3>
+                  <span className="chart-badge">Batch Registry</span>
                 </div>
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={courseChartData} onClick={(data) => { if (data && data.activePayload) setCourseFilter(data.activePayload[0].payload.course); }}>
+                <div className="chart-body">
+                  <ResponsiveContainer width="100%" height={260}>
+                    <BarChart data={streamEnrolledChartData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                      <XAxis dataKey="course" stroke="#94a3b8" fontSize={11} interval={0} angle={-15} textAnchor="end" />
-                      <YAxis stroke="#94a3b8" allowDecimals={false} />
-                      <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }} />
-                      <Bar dataKey="count" fill="#38bdf8" radius={[4, 4, 0, 0]} cursor="pointer" />
+                      <XAxis dataKey="name" stroke="#94A3B8" />
+                      <YAxis stroke="#94A3B8" />
+                      <Tooltip contentStyle={{ background: '#0F172A', borderColor: '#38BDF8', borderRadius: '12px', color: '#FFF' }} />
+                      <Bar dataKey="Students" fill="#38BDF8" radius={[8, 8, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
-              {/* Chart 2: Students by Current Skill Level */}
               <div className="chart-card">
-                <div className="chart-header">
-                  <div>
-                    <h2 className="chart-title">Students by Current Skill Level</h2>
-                    <span className="chart-subtitle">Self-assessed proficiency</span>
-                  </div>
+                <div className="chart-card-header">
+                  <h3><UserCheck className="w-5 h-5 text-emerald-400" /> Today's Attendance Status</h3>
+                  <span className="chart-badge">{selectedAttendanceDate}</span>
                 </div>
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="chart-body flex items-center justify-center">
+                  <ResponsiveContainer width="100%" height={260}>
                     <PieChart>
                       <Pie
-                        data={skillChartData}
-                        dataKey="count"
-                        nameKey="level"
+                        data={attendancePieChartData}
                         cx="50%"
                         cy="50%"
                         innerRadius={60}
-                        outerRadius={95}
-                        paddingAngle={4}
-                        label={({ level, count }) => `${level}: ${count}`}
-                        onClick={(data) => { if (data && data.level) setSkillLevelFilter(data.level); }}
-                        cursor="pointer"
+                        outerRadius={90}
+                        paddingAngle={5}
+                        dataKey="value"
+                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                       >
-                        {skillChartData.map((entry) => (
-                          <Cell key={entry.level} fill={SKILL_COLORS[entry.level] || '#38bdf8'} />
+                        {attendancePieChartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }} />
-                      <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: '10px' }} />
+                      <Tooltip contentStyle={{ background: '#0F172A', borderColor: '#334155', borderRadius: '12px', color: '#FFF' }} />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
               </div>
-
-              {/* Chart 3: Most Interested Skills */}
-              <div className="chart-card">
-                <div className="chart-header">
-                  <div>
-                    <h2 className="chart-title">Most Interested Skills</h2>
-                    <span className="chart-subtitle">Top choice by students</span>
-                  </div>
-                </div>
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart layout="vertical" data={interestedSkillsChartData} onClick={(data) => { if (data && data.activePayload) setInterestedSkillFilter(data.activePayload[0].payload.skill); }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                      <XAxis type="number" stroke="#94a3b8" allowDecimals={false} />
-                      <YAxis dataKey="skill" type="category" stroke="#94a3b8" width={110} fontSize={11} />
-                      <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }} />
-                      <Bar dataKey="count" fill="#818cf8" radius={[0, 4, 4, 0]} cursor="pointer" />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Chart 4: Main Goals */}
-              <div className="chart-card">
-                <div className="chart-header">
-                  <div>
-                    <h2 className="chart-title">Main Student Goals</h2>
-                    <span className="chart-subtitle">Primary motivation</span>
-                  </div>
-                </div>
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={goalChartData}
-                        dataKey="count"
-                        nameKey="goal"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={95}
-                        onClick={(data) => { if (data && data.goal) setMainGoalFilter(data.goal); }}
-                        cursor="pointer"
-                      >
-                        {goalChartData.map((entry, index) => (
-                          <Cell key={entry.goal} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }} />
-                      <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: '10px' }} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Chart 5: Top Requested Learning Topics */}
-              <div className="chart-card chart-card-full">
-                <div className="chart-header">
-                  <div>
-                    <h2 className="chart-title">Top Requested Learning Topics</h2>
-                    <span className="chart-subtitle">Individual topic interest count</span>
-                  </div>
-                </div>
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={learningTopicsData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                      <XAxis dataKey="topic" stroke="#94a3b8" fontSize={11} interval={0} angle={-15} textAnchor="end" />
-                      <YAxis stroke="#94a3b8" allowDecimals={false} />
-                      <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }} />
-                      <Bar dataKey="count" fill="#34d399" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
             </div>
 
-            {/* Software / Tools Known Section */}
-            <div className="chart-card mb-8">
-              <div className="chart-header">
-                <div>
-                  <h2 className="chart-title flex items-center gap-2">
-                    <FileSpreadsheet className="w-5 h-5 text-sky-400" /> Currently Known Tools Analysis
-                  </h2>
-                  <span className="chart-subtitle">Number of students who already know each tool</span>
-                </div>
+            {/* QUICK DASHBOARD ACTIONS ROW */}
+            <div className="quick-actions-banner">
+              <div className="banner-left">
+                <h3><Sparkles className="w-5 h-5 text-amber-400" /> Quick Administrative Actions</h3>
+                <p>Manage student roster, mark today's attendance, or inspect student survey data.</p>
               </div>
-              <div className="tools-grid">
-                {knownToolsData.length > 0 ? (
-                  knownToolsData.map(item => (
-                    <div key={item.tool} className="tool-badge-card">
-                      <span className="tool-name">{item.tool}</span>
-                      <span className="tool-count-badge">{item.count}</span>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-slate-400 text-sm">No tool data available.</p>
+
+              <div className="banner-buttons">
+                <button className="action-pill-btn green" onClick={() => handleTabChange('attendance')}>
+                  <UserCheck className="w-4 h-4" /> Go to Attendance Tracker
+                </button>
+                <button className="action-pill-btn blue" onClick={() => handleTabChange('students')}>
+                  <GraduationCap className="w-4 h-4" /> Manage Registered Students
+                </button>
+                <button className="action-pill-btn purple" onClick={() => handleTabChange('survey')}>
+                  <FileSpreadsheet className="w-4 h-4" /> Open Survey Responses
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB 2: REGISTERED STUDENTS DIRECTORY                 */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'students' && (
+          <div className="dashboard-tab-content animate-fade-in">
+            <div className="tab-section-header">
+              <div>
+                <h2><GraduationCap className="w-6 h-6 text-cyan-400" /> Registered Students Directory</h2>
+                <p>Complete institutional accounts list grouped by academic stream with PIN management.</p>
+              </div>
+
+              {userRole === 'teacher' && (
+                <button className="primary-action-btn" onClick={() => setIsRegisterModalOpen(true)}>
+                  <Plus className="w-4 h-4" /> Register New Student
+                </button>
+              )}
+            </div>
+
+            {/* FILTER & SEARCH BAR */}
+            <div className="filter-controls-card">
+              <div className="search-input-box">
+                <Search className="search-icon w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search by student name or batch..."
+                  value={studentSearchQuery}
+                  onChange={(e) => setStudentSearchQuery(e.target.value)}
+                />
+                {studentSearchQuery && (
+                  <button className="clear-search-btn" onClick={() => setStudentSearchQuery('')}>
+                    <X className="w-4 h-4" />
+                  </button>
                 )}
               </div>
+
+              <div className="batch-tabs-pills">
+                <button
+                  className={`batch-pill ${selectedBatchFilter === 'all' ? 'active' : ''}`}
+                  onClick={() => setSelectedBatchFilter('all')}
+                >
+                  All ({studentsList.length})
+                </button>
+                {BATCH_ORDER.map((bId) => {
+                  const bInfo = BATCH_DETAILS[bId] || { label: bId.toUpperCase() };
+                  const count = studentsList.filter((s) => (s.batch || '+1').toLowerCase() === bId.toLowerCase()).length;
+                  return (
+                    <button
+                      key={bId}
+                      className={`batch-pill ${selectedBatchFilter === bId ? 'active' : ''}`}
+                      onClick={() => setSelectedBatchFilter(bId)}
+                    >
+                      {bId.toUpperCase()} ({count})
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Student Learning Requests Section */}
-            <div className="chart-card mb-8">
-              <div className="chart-header">
-                <div>
-                  <h2 className="chart-title">Student Specific Learning Requests</h2>
-                  <span className="chart-subtitle">Free-text requests submitted by students</span>
-                </div>
-                <span className="text-xs font-semibold px-2.5 py-1 bg-indigo-500/20 text-indigo-300 rounded-full">
-                  {learningRequests.length} Requests
-                </span>
+            {/* BATCH GROUPED STUDENTS DISPLAY */}
+            {filteredStudents.length === 0 ? (
+              <div className="empty-state-box">
+                <Users className="w-12 h-12 text-slate-500" />
+                <h3>No Students Found</h3>
+                <p>No registered student accounts match your filter criteria.</p>
               </div>
-              <div className="requests-list">
-                {learningRequests.length > 0 ? (
-                  learningRequests.map((req, idx) => (
-                    <div key={idx} className="request-card">
-                      <div className="request-student">{req.fullName}</div>
-                      <div className="request-meta">{req.course} — Division {req.division}</div>
-                      <div className="request-text">"{req.request}"</div>
+            ) : (
+              <div className="batch-sections-list">
+                {BATCH_ORDER.map((bId) => {
+                  const bStudents = groupedStudentsByBatch[bId] || [];
+                  if (selectedBatchFilter !== 'all' && selectedBatchFilter !== bId) return null;
+                  if (bStudents.length === 0) return null;
+
+                  const bInfo = BATCH_DETAILS[bId] || { label: `${bId.toUpperCase()} Stream`, badgeColor: '#38BDF8' };
+
+                  return (
+                    <div key={bId} className="batch-group-card">
+                      <div className="batch-group-header">
+                        <div className="batch-title-wrapper">
+                          <span className="batch-stream-badge" style={{ backgroundColor: bInfo.badgeColor }}>
+                            {bId.toUpperCase()}
+                          </span>
+                          <h3>{bInfo.label}</h3>
+                        </div>
+                        <span className="batch-count-tag">{bStudents.length} Enrolled</span>
+                      </div>
+
+                      <div className="students-cards-grid">
+                        {bStudents.map((student) => {
+                          const isPinVisible = visiblePins[student.id];
+                          const todayAttendance = attendanceRoster.find((r) => r.id === student.id)?.status || 'ABSENT';
+
+                          return (
+                            <div key={student.id} className="student-profile-card">
+                              <div className="card-top-row">
+                                <div className="avatar-circle">
+                                  {student.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div className="student-main-meta">
+                                  <h4>{student.name}</h4>
+                                  <span className="batch-sub-tag">{bInfo.label}</span>
+                                </div>
+                              </div>
+
+                              <div className="card-info-rows">
+                                <div className="info-item">
+                                  <span className="info-label">Access PIN:</span>
+                                  <div className="pin-val-box">
+                                    <span className="pin-code">
+                                      {isPinVisible ? student.pin : '••••'}
+                                    </span>
+                                    <button
+                                      className="icon-eye-btn"
+                                      onClick={() => togglePinVisibility(student.id)}
+                                      title={isPinVisible ? 'Hide PIN' : 'View PIN'}
+                                    >
+                                      {isPinVisible ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                    </button>
+                                  </div>
+                                </div>
+
+                                <div className="info-item">
+                                  <span className="info-label">Today Status:</span>
+                                  <span className={`status-pill ${todayAttendance.toLowerCase()}`}>
+                                    {todayAttendance === 'PRESENT' ? '🟢 Present' : todayAttendance === 'LATE' ? '🟡 Late' : '🔴 Absent'}
+                                  </span>
+                                </div>
+                              </div>
+
+                              {userRole === 'teacher' && (
+                                <div className="card-actions-row">
+                                  <button
+                                    className="card-act-btn edit"
+                                    onClick={() => setEditingStudent({ ...student })}
+                                    title="Edit Student"
+                                  >
+                                    <Edit3 className="w-4 h-4" /> Edit
+                                  </button>
+                                  <button
+                                    className="card-act-btn delete"
+                                    onClick={() => setDeletingStudent(student)}
+                                    title="Delete Student"
+                                  >
+                                    <Trash2 className="w-4 h-4" /> Delete
+                                  </button>
+                                  <button
+                                    className={`card-act-btn quick-att ${todayAttendance === 'PRESENT' ? 'is-present' : ''}`}
+                                    onClick={() => handleSetStudentAttendance(student.id, todayAttendance === 'PRESENT' ? 'ABSENT' : 'PRESENT')}
+                                  >
+                                    <Check className="w-4 h-4" />
+                                    {todayAttendance === 'PRESENT' ? 'Mark Absent' : 'Mark Present'}
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  ))
-                ) : (
-                  <p className="text-slate-400 text-sm p-4">No specific text requests match current filter.</p>
-                )}
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB 3: REAL-TIME ATTENDANCE TRACKER                  */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'attendance' && (
+          <div className="dashboard-tab-content animate-fade-in">
+            <div className="tab-section-header">
+              <div>
+                <h2><UserCheck className="w-6 h-6 text-emerald-400" /> Real-Time Attendance Tracker Engine</h2>
+                <p>Automated activity tracking on student login &amp; class completion with teacher manual override controls.</p>
+              </div>
+
+              <div className="export-actions-group">
+                <button className="secondary-action-btn" onClick={exportAttendancePDF}>
+                  <Download className="w-4 h-4" /> Export Roster PDF
+                </button>
               </div>
             </div>
 
-            {/* Detailed Student Data Table */}
-            <div className="table-card" id="detailed-responses-table">
-              <div className="table-header flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <h2 className="chart-title flex items-center gap-2">
-                    Detailed Student Responses
-                  </h2>
-                  <span className="chart-subtitle block">
-                    {viewMode === 'full'
-                      ? `Showing all ${sortedStudents.length} student records`
-                      : `Showing ${displayedStudents.length} of ${sortedStudents.length} student records`}
-                  </span>
+            {/* ATTENDANCE METRICS CARDS */}
+            <div className="attendance-kpi-row">
+              <div className="att-stat-card total">
+                <span className="stat-num">{attendanceMetrics.total}</span>
+                <span className="stat-name">Total Enrolled</span>
+              </div>
+              <div className="att-stat-card present">
+                <span className="stat-num">{attendanceMetrics.present}</span>
+                <span className="stat-name">Present Today</span>
+              </div>
+              <div className="att-stat-card absent">
+                <span className="stat-num">{attendanceMetrics.absent}</span>
+                <span className="stat-name">Absent</span>
+              </div>
+              <div className="att-stat-card late">
+                <span className="stat-num">{attendanceMetrics.late}</span>
+                <span className="stat-name">Late</span>
+              </div>
+              <div className="att-stat-card rate">
+                <span className="stat-num">{attendanceMetrics.rate}%</span>
+                <span className="stat-name">Attendance Rate</span>
+              </div>
+            </div>
 
-                  {/* Course Filter Quick Pills in Header (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2) */}
-                  <div className="flex flex-wrap items-center gap-1.5 mt-3">
-                    <span className="text-xs font-semibold text-slate-400 mr-1 flex items-center gap-1">
-                      <Filter className="w-3 h-3 text-sky-400" /> Course Filter:
-                    </span>
-                    <button
-                      onClick={() => { setCourseFilter('All'); setCurrentPage(1); }}
-                      className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
-                        courseFilter === 'All'
-                          ? 'bg-sky-500 text-slate-950 font-bold shadow-sm'
-                          : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/80'
-                      }`}
-                    >
-                      All
-                    </button>
-                    {filterOptions.courses.map(c => (
-                      <button
-                        key={c}
-                        onClick={() => { setCourseFilter(c); setCurrentPage(1); }}
-                        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
-                          courseFilter === c
-                            ? 'bg-sky-500 text-slate-950 font-bold shadow-sm'
-                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/80'
-                        }`}
-                        title={`Filter by ${c}`}
-                      >
-                        {getShortCourseLabel(c)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* View Mode, Name Search & PDF Export Controls */}
-                <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
-                  {/* Dedicated Name Search Filter */}
-                  <div className="relative min-w-[200px] sm:min-w-[230px]">
-                    <input
-                      type="text"
-                      className="w-full bg-slate-900/90 text-slate-100 text-xs placeholder:text-slate-400 pl-8 pr-7 py-2 rounded-lg border border-slate-700/80 focus:border-sky-500 focus:outline-none transition-all shadow-inner"
-                      placeholder="Search student name..."
-                      value={tableNameSearch}
-                      onChange={(e) => {
-                        setTableNameSearch(e.target.value);
-                        setCurrentPage(1);
-                      }}
-                    />
-                    <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
-                    {tableNameSearch && (
-                      <button
-                        onClick={() => { setTableNameSearch(''); setCurrentPage(1); }}
-                        className="absolute right-2 top-2.5 text-slate-400 hover:text-slate-200 transition-colors"
-                        title="Clear name filter"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Export PDF Button */}
-                  <button
-                    onClick={handleExportPDF}
-                    className="px-3.5 py-2 text-xs font-bold bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white rounded-lg shadow-md hover:shadow-sky-500/25 transition-all flex items-center gap-1.5 border border-sky-400/30 active:scale-95 cursor-pointer"
-                    title="Export filtered student responses report to PDF"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Export PDF</span>
-                  </button>
-
-                  {/* Cycle Course Filter */}
-                  <button
-                    onClick={handleCycleCourseFilter}
-                    className="px-3 py-2 text-xs font-bold bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 rounded-lg border border-sky-500/30 transition-all flex items-center gap-1 cursor-pointer"
-                    title="Cycle through course filter (+1 -> +2 -> d1 -> d2 -> d3 -> p1 -> p2)"
-                  >
-                    <span>Next Course</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-
-                  {/* View Mode Toggle */}
-                  <div className="flex items-center gap-1 bg-slate-900/90 p-1 rounded-lg border border-slate-700/80">
-                    <button
-                      onClick={() => { setViewMode('paginated'); setCurrentPage(1); }}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
-                        viewMode === 'paginated'
-                          ? 'bg-sky-500 text-slate-950 shadow-md'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                      }`}
-                    >
-                      Paginated
-                    </button>
-                    <button
-                      onClick={() => { setViewMode('full'); setCurrentPage(1); }}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
-                        viewMode === 'full'
-                          ? 'bg-sky-500 text-slate-950 shadow-md'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                      }`}
-                    >
-                      Full List
-                    </button>
-                  </div>
-                </div>
+            {/* ATTENDANCE CONTROLS BAR */}
+            <div className="attendance-controls-bar">
+              <div className="date-picker-box">
+                <Calendar className="w-4 h-4 text-cyan-400" />
+                <label>Select Date:</label>
+                <input
+                  type="date"
+                  value={selectedAttendanceDate}
+                  onChange={(e) => setSelectedAttendanceDate(e.target.value)}
+                />
               </div>
 
-              <div className="table-wrapper">
-                <table className="student-table">
+              <div className="search-input-box text-sm">
+                <Search className="search-icon w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Filter student..."
+                  value={attendanceSearch}
+                  onChange={(e) => setAttendanceSearch(e.target.value)}
+                />
+              </div>
+
+              <div className="filter-selects-row">
+                <select
+                  value={attendanceBatchFilter}
+                  onChange={(e) => setAttendanceBatchFilter(e.target.value)}
+                >
+                  <option value="all">All Batches</option>
+                  {BATCH_ORDER.map((b) => (
+                    <option key={b} value={b}>{b.toUpperCase()}</option>
+                  ))}
+                </select>
+
+                <select
+                  value={attendanceStatusFilter}
+                  onChange={(e) => setAttendanceStatusFilter(e.target.value)}
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="present">Present 🟢</option>
+                  <option value="absent">Absent 🔴</option>
+                  <option value="late">Late 🟡</option>
+                </select>
+              </div>
+
+              {userRole === 'teacher' && (
+                <div className="teacher-att-bulk-btns">
+                  <button className="att-bulk-btn green" onClick={handleMarkAllPresent}>
+                    <UserCheck className="w-4 h-4" /> Mark All Present
+                  </button>
+                  <button className="att-bulk-btn red" onClick={handleMarkAllAbsent}>
+                    <UserX className="w-4 h-4" /> Mark All Absent
+                  </button>
+                  <button className="att-bulk-btn reset" onClick={handleResetAttendanceOverrides}>
+                    <RotateCcw className="w-4 h-4" /> Reset to Auto
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* ATTENDANCE ROSTER TABLE */}
+            <div className="table-responsive-card">
+              <table className="master-data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Batch</th>
+                    <th>Attendance Status</th>
+                    <th>Tracking Log Source</th>
+                    {userRole === 'teacher' && <th>Teacher Controls</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredAttendanceRoster.length === 0 ? (
+                    <tr>
+                      <td colSpan={userRole === 'teacher' ? 6 : 5} className="empty-td">
+                        No students match the attendance filter criteria.
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredAttendanceRoster.map((item, idx) => (
+                      <tr key={item.id || idx}>
+                        <td>{idx + 1}</td>
+                        <td className="font-semibold text-white">{item.name}</td>
+                        <td>
+                          <span className="batch-sub-pill">{item.batch.toUpperCase()}</span>
+                        </td>
+                        <td>
+                          <span className={`status-badge-pill ${item.status.toLowerCase()}`}>
+                            {item.status === 'PRESENT' ? '🟢 Present' : item.status === 'LATE' ? '🟡 Late' : '🔴 Absent'}
+                          </span>
+                        </td>
+                        <td className="text-sm text-slate-400">{item.sourceLabel}</td>
+                        {userRole === 'teacher' && (
+                          <td>
+                            <div className="att-toggle-btn-group">
+                              <button
+                                className={`att-tgl-btn green ${item.status === 'PRESENT' ? 'active' : ''}`}
+                                onClick={() => handleSetStudentAttendance(item.id, 'PRESENT')}
+                                title="Set Present"
+                              >
+                                Present
+                              </button>
+                              <button
+                                className={`att-tgl-btn yellow ${item.status === 'LATE' ? 'active' : ''}`}
+                                onClick={() => handleSetStudentAttendance(item.id, 'LATE')}
+                                title="Set Late"
+                              >
+                                Late
+                              </button>
+                              <button
+                                className={`att-tgl-btn red ${item.status === 'ABSENT' ? 'active' : ''}`}
+                                onClick={() => handleSetStudentAttendance(item.id, 'ABSENT')}
+                                title="Set Absent"
+                              >
+                                Absent
+                              </button>
+                            </div>
+                          </td>
+                        )}
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB 4: SURVEY DATA & RESPONSES                       */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'survey' && (
+          <div className="dashboard-tab-content animate-fade-in">
+            <div className="tab-section-header">
+              <div>
+                <h2><FileSpreadsheet className="w-6 h-6 text-purple-400" /> Student Survey Submissions Analytics</h2>
+                <p>Live responses synced from Google Sheets database with skill level insights.</p>
+              </div>
+
+              <div className="export-actions-group">
+                <button className="secondary-action-btn" onClick={fetchSurveyData}>
+                  <RefreshCw className="w-4 h-4" /> Refresh Survey Data
+                </button>
+                <button className="secondary-action-btn" onClick={exportSurveyCSV}>
+                  <Download className="w-4 h-4" /> Export CSV
+                </button>
+              </div>
+            </div>
+
+            {/* FILTERS & SEARCH */}
+            <div className="survey-filter-card">
+              <div className="search-input-box">
+                <Search className="search-icon w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search response by student name or course..."
+                  value={surveySearchQuery}
+                  onChange={(e) => setSurveySearchQuery(e.target.value)}
+                />
+              </div>
+
+              <div className="survey-selects-row">
+                <select value={surveyCourseFilter} onChange={(e) => setSurveyCourseFilter(e.target.value)}>
+                  <option value="All">All Courses</option>
+                  <option value="+1">+1 (Plus One)</option>
+                  <option value="+2">+2 (Plus Two)</option>
+                  <option value="Degree 1st">Degree 1st Year</option>
+                  <option value="Degree 2nd">Degree 2nd Year</option>
+                  <option value="Degree 3rd">Degree 3rd Year</option>
+                  <option value="PG 1st">PG 1st Year</option>
+                  <option value="PG 2nd">PG 2nd Year</option>
+                </select>
+
+                <select value={surveySkillFilter} onChange={(e) => setSurveySkillFilter(e.target.value)}>
+                  <option value="All">All Skill Levels</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Good">Good</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+            </div>
+
+            {/* SURVEY RESPONSES TABLE */}
+            {surveyLoading ? (
+              <div className="loading-box">
+                <RefreshCw className="w-8 h-8 animate-spin text-cyan-400" />
+                <p>Loading Survey Submissions from Google Sheets...</p>
+              </div>
+            ) : surveyError ? (
+              <div className="empty-state-box">
+                <AlertCircle className="w-12 h-12 text-amber-400" />
+                <h3>{surveyError}</h3>
+              </div>
+            ) : (
+              <div className="table-responsive-card">
+                <table className="master-data-table">
                   <thead>
                     <tr>
-                      <th className="w-12 text-center">No.</th>
-                      <th onClick={() => handleSort('fullName')}>
-                        Student Name <ArrowUpDown className="inline w-3 h-3 ml-1" />
-                      </th>
-                      <th onClick={() => handleSort('course')}>
-                        Course <ArrowUpDown className="inline w-3 h-3 ml-1" />
-                      </th>
-                      <th onClick={() => handleSort('division')}>
-                        Div <ArrowUpDown className="inline w-3 h-3 ml-1" />
-                      </th>
-                      <th onClick={() => handleSort('currentSkill')}>
-                        Current Skill <ArrowUpDown className="inline w-3 h-3 ml-1" />
-                      </th>
-                      <th onClick={() => handleSort('mostInterestedSkill')}>
-                        Interested Skill <ArrowUpDown className="inline w-3 h-3 ml-1" />
-                      </th>
-                      <th onClick={() => handleSort('mainGoal')}>
-                        Main Goal <ArrowUpDown className="inline w-3 h-3 ml-1" />
-                      </th>
-                      <th>Learning Interests</th>
-                      <th>Specific Request</th>
+                      <th>#</th>
+                      <th>Student Full Name</th>
+                      <th>Course / Stream</th>
+                      <th>Division</th>
+                      <th>Current Skill Level</th>
+                      <th>Target Skill</th>
+                      <th>Main Goal</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {displayedStudents.length > 0 ? (
-                      displayedStudents.map((student, idx) => (
-                        <tr key={student.id}>
-                          <td className="text-center font-mono text-slate-400 text-xs font-semibold">
-                            {(currentPage - 1) * itemsPerPage + idx + 1}
-                          </td>
-                          <td className="font-semibold text-slate-100 whitespace-nowrap">{student.fullName}</td>
-                          <td className="whitespace-nowrap">{student.course}</td>
-                          <td className="whitespace-nowrap">{student.division}</td>
-                          <td className="whitespace-nowrap">
-                            <span className={`badge badge-${student.currentSkill.toLowerCase()}`}>
-                              {student.currentSkill}
-                            </span>
-                          </td>
-                          <td className="text-sky-300 font-medium whitespace-nowrap">{student.mostInterestedSkill}</td>
-                          <td className="whitespace-nowrap">{student.mainGoal}</td>
-                          <td className="text-xs text-slate-300">
-                            {student.learningInterests.join(', ')}
-                          </td>
-                          <td className="text-xs italic text-slate-300">
-                            {student.specificLearning || '-'}
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
+                    {filteredSurveyResponses.length === 0 ? (
                       <tr>
-                        <td colSpan="9" className="text-center py-6 text-slate-400">
-                          No student records match the selected filters.
+                        <td colSpan="7" className="empty-td">
+                          No survey responses match your filters.
                         </td>
                       </tr>
+                    ) : (
+                      filteredSurveyResponses.map((r, i) => (
+                        <tr key={r.id || i}>
+                          <td>{i + 1}</td>
+                          <td className="font-semibold text-white">{r.fullName}</td>
+                          <td><span className="batch-sub-pill">{r.course}</span></td>
+                          <td>{r.division}</td>
+                          <td>
+                            <span className={`skill-level-tag ${r.skillLevel.toLowerCase()}`}>
+                              {r.skillLevel}
+                            </span>
+                          </td>
+                          <td>{r.interestedSkill}</td>
+                          <td className="text-sm text-slate-300">{r.mainGoal}</td>
+                        </tr>
+                      ))
                     )}
                   </tbody>
                 </table>
               </div>
-
-              {/* Pagination Controls */}
-              {viewMode === 'paginated' && totalPages > 1 && (
-                <div className="pagination">
-                  <div>Page {currentPage} of {totalPages}</div>
-                  <div className="pagination-controls">
-                    <button
-                      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                      disabled={currentPage === 1}
-                      className="page-btn"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                      disabled={currentPage === totalPages}
-                      className="page-btn"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-          </>
+            )}
+          </div>
         )}
 
+        {/* ---------------------------------------------------- */}
+        {/* TAB 5: SYLLABUS & COURSE PROGRESS                     */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'progress' && (
+          <div className="dashboard-tab-content animate-fade-in">
+            <div className="tab-section-header">
+              <div>
+                <h2><BookOpen className="w-6 h-6 text-amber-400" /> Course Progress &amp; Syllabus Tracker</h2>
+                <p>Monitor completed practical classes, IT topics, and module milestones across streams.</p>
+              </div>
+
+              <Link to="/syllabus" className="primary-action-btn">
+                <BookOpen className="w-4 h-4" /> Open Full Syllabus Portal
+              </Link>
+            </div>
+
+            <div className="progress-courses-grid">
+              <div className="course-progress-card">
+                <div className="course-card-top">
+                  <span className="badge-tag green">FOUNDATION COURSE</span>
+                  <h3>IT &amp; PC Essentials (15 Classes)</h3>
+                </div>
+                <p>PC Hardware, Snap Assist, File Management, Google Drive, Cyber Safety, AI Tools &amp; Touch Typing.</p>
+                <div className="progress-bar-box">
+                  <div className="bar-label-row">
+                    <span>Active Status</span>
+                    <span className="font-bold text-emerald-400">100% Ready</span>
+                  </div>
+                  <div className="bar-track">
+                    <div className="bar-fill green" style={{ width: '100%' }}></div>
+                  </div>
+                </div>
+                <Link to="/syllabus" className="course-link-btn">
+                  Launch Foundation Syllabus →
+                </Link>
+              </div>
+
+              <div className="course-progress-card">
+                <div className="course-card-top">
+                  <span className="badge-tag cyan">+1 STREAM</span>
+                  <h3>Plus One Computer Science</h3>
+                </div>
+                <p>Computer Fundamentals, Data Representation, Python Programming, Flowcharts &amp; Algorithms.</p>
+                <div className="progress-bar-box">
+                  <div className="bar-label-row">
+                    <span>Active Status</span>
+                    <span className="font-bold text-cyan-400">Active</span>
+                  </div>
+                  <div className="bar-track">
+                    <div className="bar-fill cyan" style={{ width: '85%' }}></div>
+                  </div>
+                </div>
+                <Link to="/syllabus/+1" className="course-link-btn">
+                  Open +1 Syllabus →
+                </Link>
+              </div>
+
+              <div className="course-progress-card">
+                <div className="course-card-top">
+                  <span className="badge-tag pink">+2 STREAM</span>
+                  <h3>Plus Two Computer Applications</h3>
+                </div>
+                <p>Web Development, HTML/CSS, JavaScript, PHP, MySQL Database &amp; Web Hosting.</p>
+                <div className="progress-bar-box">
+                  <div className="bar-label-row">
+                    <span>Active Status</span>
+                    <span className="font-bold text-pink-400">Active</span>
+                  </div>
+                  <div className="bar-track">
+                    <div className="bar-fill pink" style={{ width: '90%' }}></div>
+                  </div>
+                </div>
+                <Link to="/syllabus/+2" className="course-link-btn">
+                  Open +2 Syllabus →
+                </Link>
+              </div>
+
+              <div className="course-progress-card">
+                <div className="course-card-top">
+                  <span className="badge-tag purple">DEGREE STREAM</span>
+                  <h3>BSc Computer Science &amp; BCA</h3>
+                </div>
+                <p>Data Structures, C++, OOP, Java, Operating Systems, Computer Networks &amp; Web Stack.</p>
+                <div className="progress-bar-box">
+                  <div className="bar-label-row">
+                    <span>Active Status</span>
+                    <span className="font-bold text-purple-400">Active</span>
+                  </div>
+                  <div className="bar-track">
+                    <div className="bar-fill purple" style={{ width: '80%' }}></div>
+                  </div>
+                </div>
+                <Link to="/syllabus/degree-1" className="course-link-btn">
+                  Open Degree Syllabus →
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* EDIT STUDENT MODAL                                   */}
+        {/* ---------------------------------------------------- */}
+        {editingStudent && (
+          <div className="dashboard-modal-overlay">
+            <div className="dashboard-modal-content">
+              <div className="modal-header">
+                <h3><Edit3 className="w-5 h-5 text-cyan-400" /> Edit Student Account</h3>
+                <button className="modal-close-btn" onClick={() => setEditingStudent(null)}>
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleEditSubmit} className="modal-form">
+                <div className="form-field">
+                  <label>Student Full Name</label>
+                  <input
+                    type="text"
+                    value={editingStudent.name}
+                    onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="form-field">
+                  <label>Assigned Batch</label>
+                  <select
+                    value={editingStudent.batch}
+                    onChange={(e) => setEditingStudent({ ...editingStudent, batch: e.target.value })}
+                  >
+                    <option value="+1">+1 (Plus One)</option>
+                    <option value="+2">+2 (Plus Two)</option>
+                    <option value="degree-1">Degree 1st Year</option>
+                    <option value="degree-2">Degree 2nd Year</option>
+                    <option value="degree-3">Degree 3rd Year</option>
+                    <option value="pg-1">PG 1st Year</option>
+                    <option value="pg-2">PG 2nd Year</option>
+                  </select>
+                </div>
+
+                <div className="form-field">
+                  <label>Access Password / PIN</label>
+                  <input
+                    type="text"
+                    value={editingStudent.pin}
+                    onChange={(e) => setEditingStudent({ ...editingStudent, pin: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="modal-actions-row">
+                  <button type="button" className="btn-cancel" onClick={() => setEditingStudent(null)}>
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn-save">
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* DELETE CONFIRM MODAL                                 */}
+        {/* ---------------------------------------------------- */}
+        {deletingStudent && (
+          <div className="dashboard-modal-overlay">
+            <div className="dashboard-modal-content delete-modal">
+              <div className="modal-header">
+                <h3 className="text-red-400"><Trash2 className="w-5 h-5" /> Confirm Delete Student</h3>
+                <button className="modal-close-btn" onClick={() => setDeletingStudent(null)}>
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="modal-body">
+                <p>Are you sure you want to delete student <strong>"{deletingStudent.name}"</strong>?</p>
+                <p className="text-sm text-slate-400 mt-2">This action cannot be undone and will remove access PIN details.</p>
+              </div>
+
+              <div className="modal-actions-row mt-6">
+                <button className="btn-cancel" onClick={() => setDeletingStudent(null)}>
+                  Cancel
+                </button>
+                <button className="btn-delete-confirm" onClick={handleDeleteConfirm}>
+                  Delete Account
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* REGISTER NEW STUDENT MODAL */}
+        <RegisterStudentModal
+          isOpen={isRegisterModalOpen}
+          onClose={() => setIsRegisterModalOpen(false)}
+        />
       </div>
     </div>
   );

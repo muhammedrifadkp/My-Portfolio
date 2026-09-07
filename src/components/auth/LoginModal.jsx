@@ -53,7 +53,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             <label>Teacher Master Passcode / PIN</label>
             <input
               type="password"
-              placeholder="Enter Master PIN (Default: 1234 or SIRAJ-2026)"
+              placeholder="Enter Master PIN"
               value={teacherPin}
               onChange={(e) => setTeacherPin(e.target.value)}
               required

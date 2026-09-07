@@ -393,6 +393,8 @@ const FoundationSyllabus = () => {
         classData={selectedPPTClass}
         moduleTitle={selectedPPTClass?.moduleTitle || 'Foundation Course'}
         batchName="Foundation Course"
+        allClasses={allFlattenedClasses}
+        onSelectClass={(cls) => setSelectedPPTClass(cls)}
       />
     </div>
   );

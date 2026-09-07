@@ -62,7 +62,7 @@ const Syllabus = () => {
   const handleGuestAccess = () => {
     login({
       role: 'guest',
-      batch: selectedBatchId
+      batch: 'foundation'
     });
   };
 
@@ -76,14 +76,13 @@ const Syllabus = () => {
       return;
     }
 
-    // Guest -> Access allowed only for guest-selected batch
+    // Guest -> Access allowed only for Foundation Course
     if (userRole === 'guest') {
       if (canAccessBatch(userRole, currentUser?.batch, batch.id)) {
         navigate(`/syllabus/${encodeURIComponent(batch.slug)}`);
         return;
       }
-      const selectedBatchName = batchesData.find(b => b.id === currentUser?.batch)?.name || currentUser?.batch?.toUpperCase();
-      setAccessAlert(`Access Protected: You are viewing in Guest Mode for ${selectedBatchName} only. Please log in with your Student Name & Password to unlock ${batch.name}.`);
+      setAccessAlert(`Access Protected: Guest Mode allows viewing the Foundation Course only. Please log in with your Student Name & Password to unlock ${batch.name}.`);
       return;
     }
 
@@ -196,7 +195,7 @@ const Syllabus = () => {
                       onClick={handleGuestAccess}
                     >
                       <i className="fas fa-eye"></i>
-                      <span>View {batchesData.find(b => b.id === selectedBatchId)?.name || 'Selected Batch'} Syllabus Without Login</span>
+                      <span>Foundation Course Without Login</span>
                     </button>
                   </>
                 ) : (
@@ -205,7 +204,7 @@ const Syllabus = () => {
                       <label><i className="fas fa-key"></i> IT Sir Master PIN</label>
                       <input
                         type="password"
-                        placeholder="Enter Master PIN (SIRAJ-2026 or 1234)"
+                        placeholder="Enter Master PIN"
                         value={pin}
                         onChange={(e) => setPin(e.target.value)}
                         required
@@ -238,7 +237,7 @@ const Syllabus = () => {
                     {userRole === 'teacher'
                       ? 'IT Sir (Projector Presentation Mode - All Batches Unlocked)'
                       : userRole === 'guest'
-                      ? `Guest Mode • ${batchesData.find(b => b.id === currentUser?.batch)?.name || currentUser?.batch?.toUpperCase()} Syllabus Only (Login Required for Other Batches)`
+                      ? 'Guest Mode • Foundation Course Only (Login Required for Stream Batches)'
                       : `Student • ${currentUser.batch?.toUpperCase()} Batch (Tab Session Active)`}
                   </span>
                 </div>

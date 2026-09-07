@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-typing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bg-grad-typing)" rx="16" />
+
+  <!-- Header Card -->
+  <rect x="50" y="30" width="700" height="80" rx="12" fill="url(#card-grad)" stroke="#3b82f6" stroke-width="1.5" />
+  <text x="400" y="60" font-family="'Segoe UI', system-ui, sans-serif" font-size="22" font-weight="bold" fill="#38bdf8" text-anchor="middle">
+    ⌨️ Touch Typing &amp; Keyboard Speed Mastery
+  </text>
+  <text x="400" y="88" font-family="'Segoe UI', sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">
+    Home Row Alignment (F &amp; J Bumps) • Eyes on Screen • Goal: 40+ WPM
+  </text>
+
+  <!-- Keyboard Diagram Box -->
+  <rect x="50" y="130" width="700" height="230" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Keyboard QWERTY Keys Rows Representation -->
+  <!-- Top Row -->
+  <g fill="#1e293b" stroke="#475569" stroke-width="1.5" rx="4">
+    <rect x="80" y="150" width="40" height="35" rx="5" />
+    <text x="100" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">Q</text>
+
+    <rect x="128" y="150" width="40" height="35" rx="5" />
+    <text x="148" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">W</text>
+
+    <rect x="176" y="150" width="40" height="35" rx="5" />
+    <text x="196" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">E</text>
+
+    <rect x="224" y="150" width="40" height="35" rx="5" />
+    <text x="244" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">R</text>
+
+    <rect x="272" y="150" width="40" height="35" rx="5" />
+    <text x="292" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">T</text>
+
+    <rect x="320" y="150" width="40" height="35" rx="5" />
+    <text x="340" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">Y</text>
+
+    <rect x="368" y="150" width="40" height="35" rx="5" />
+    <text x="388" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">U</text>
+
+    <rect x="416" y="150" width="40" height="35" rx="5" />
+    <text x="436" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">I</text>
+
+    <rect x="464" y="150" width="40" height="35" rx="5" />
+    <text x="484" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">O</text>
+
+    <rect x="512" y="150" width="40" height="35" rx="5" />
+    <text x="532" y="173" font-family="sans-serif" font-size="14" fill="#cbd5e1" text-anchor="middle">P</text>
+  </g>
+
+  <!-- HOME ROW (Highlighted in Emerald/Cyan) -->
+  <!-- Left Hand Home Keys A S D F -->
+  <g stroke="#10b981" stroke-width="2">
+    <rect x="90" y="195" width="42" height="40" rx="6" fill="#065f46" />
+    <text x="111" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ecfdf5" text-anchor="middle">A</text>
+
+    <rect x="140" y="195" width="42" height="40" rx="6" fill="#065f46" />
+    <text x="161" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ecfdf5" text-anchor="middle">S</text>
+
+    <rect x="190" y="195" width="42" height="40" rx="6" fill="#065f46" />
+    <text x="211" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ecfdf5" text-anchor="middle">D</text>
+
+    <!-- Key F with Tactile Bump -->
+    <rect x="240" y="195" width="42" height="40" rx="6" fill="#047857" stroke="#34d399" stroke-width="2.5" />
+    <text x="261" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">F</text>
+    <rect x="254" y="226" width="14" height="3" rx="1.5" fill="#facc15" /> <!-- Bump -->
+  </g>
+
+  <!-- Middle G H -->
+  <g fill="#1e293b" stroke="#475569" stroke-width="1.5">
+    <rect x="290" y="195" width="42" height="40" rx="6" />
+    <text x="311" y="221" font-family="sans-serif" font-size="15" fill="#cbd5e1" text-anchor="middle">G</text>
+
+    <rect x="340" y="195" width="42" height="40" rx="6" />
+    <text x="361" y="221" font-family="sans-serif" font-size="15" fill="#cbd5e1" text-anchor="middle">H</text>
+  </g>
+
+  <!-- Right Hand Home Keys J K L ; -->
+  <g stroke="#3b82f6" stroke-width="2">
+    <!-- Key J with Tactile Bump -->
+    <rect x="390" y="195" width="42" height="40" rx="6" fill="#1e40af" stroke="#60a5fa" stroke-width="2.5" />
+    <text x="411" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">J</text>
+    <rect x="404" y="226" width="14" height="3" rx="1.5" fill="#facc15" /> <!-- Bump -->
+
+    <rect x="440" y="195" width="42" height="40" rx="6" fill="#1e3a8a" />
+    <text x="461" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#eff6ff" text-anchor="middle">K</text>
+
+    <rect x="490" y="195" width="42" height="40" rx="6" fill="#1e3a8a" />
+    <text x="511" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#eff6ff" text-anchor="middle">L</text>
+
+    <rect x="540" y="195" width="42" height="40" rx="6" fill="#1e3a8a" />
+    <text x="561" y="221" font-family="sans-serif" font-size="16" font-weight="bold" fill="#eff6ff" text-anchor="middle">;</text>
+  </g>
+
+  <!-- Spacebar -->
+  <rect x="220" y="250" width="280" height="32" rx="6" fill="#334155" stroke="#64748b" stroke-width="1.5" />
+  <text x="360" y="271" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">Spacebar (Thumbs)</text>
+
+  <!-- Speed Metric Chips -->
+  <g transform="translate(605, 145)">
+    <rect x="0" y="0" width="130" height="65" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5" />
+    <text x="65" y="28" font-family="sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">SPEED GOAL</text>
+    <text x="65" y="52" font-family="sans-serif" font-size="20" font-weight="bold" fill="#10b981" text-anchor="middle">45 WPM</text>
+
+    <rect x="0" y="75" width="130" height="65" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" />
+    <text x="65" y="103" font-family="sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">ACCURACY</text>
+    <text x="65" y="127" font-family="sans-serif" font-size="20" font-weight="bold" fill="#f59e0b" text-anchor="middle">98%</text>
+  </g>
+
+  <!-- Bottom Badge -->
+  <rect x="250" y="380" width="300" height="40" rx="20" fill="#2563eb" />
+  <text x="400" y="405" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">🚀 Practice on Monkeytype &amp; TypingClub</text>
+</svg>

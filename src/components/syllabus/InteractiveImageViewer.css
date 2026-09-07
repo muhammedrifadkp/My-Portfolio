@@ -1,0 +1,54 @@
+/* InteractiveImageViewer.css - Clean Minimalist Viewer */
+
+.interactive-image-viewer.clean-mode {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  max-height: 60vh;
+  background: #020617;
+  border: 1px solid #334155;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+/* Stage Canvas */
+.interactive-image-viewer .viewer-stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+  outline: none;
+}
+
+.interactive-image-viewer .viewer-stage.is-dragging {
+  cursor: grabbing !important;
+}
+
+.interactive-image-viewer .image-transform-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.interactive-image-viewer .interactive-img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 56vh;
+  object-fit: contain;
+  border-radius: 8px;
+  pointer-events: none; /* Prevents default browser ghost drag */
+}

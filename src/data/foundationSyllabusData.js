@@ -492,41 +492,172 @@ export const FOUNDATION_MODULES = [
   {
     id: 'mod-6',
     number: 6,
-    title: 'Practical Real-World Lab & Hands-On Assessment',
-    icon: 'fas fa-vial',
-    description: 'Comprehensive practical synthesis: Putting all hardware, OS, application, shortcut, and cloud skills together in a final practical evaluation.',
-    purpose: 'To verify 100% practical competency before students transition into their batch-specific advanced track.',
+    title: 'CLI Automation & Touch Typing Mastery',
+    icon: 'fas fa-terminal',
+    description: 'Advanced CLI terminal skills and touch typing speed mastery: Operating Windows via Command Line (CMD/PowerShell) scripts, batch automation, and achieving 40+ WPM typing speed.',
+    purpose: 'To equip students with hacker-style command line proficiency for instant file/folder automation and professional touch-typing speed without looking at the keyboard.',
     targetAudience: 'All Streams (Higher Secondary, Degree & PG)',
-    totalClasses: 1,
-    estimatedHours: '2 Hours (1 Comprehensive Lab Session)',
+    totalClasses: 2,
+    estimatedHours: '3 Hours (2 Lab Classes)',
     learningObjectives: [
-      'Synthesize all foundational computer skills into a single 45-minute lab test.',
-      'Demonstrate independent system startup, file creation, hotkey editing, screenshotting, and PDF export.',
-      'Receive official Sirajul Huda Digital Literacy Foundation Readiness Verification.'
+      'Master Windows Command Prompt (CMD) & PowerShell commands (dir, cd, mkdir, cls, tree, systeminfo).',
+      'Create and execute batch scripts for automated folder generation and bulk file renaming.',
+      'Learn Home-Row touch typing finger alignment (F & J homing bumps) to type without looking at the keyboard.',
+      'Achieve 40+ WPM (Words Per Minute) typing speed through interactive typing speed challenges (Monkeytype / TypingClub).'
     ],
     classes: [
       {
         id: 'fnd-cls-14',
         classNum: 14,
-        topic: 'Comprehensive Digital Skills Practical Lab Exam',
-        visualImage: '/images/foundation/class14_lab_practical_exam.svg',
-        simpleConcept: 'A hands-on practical task incorporating file organization, document formatting, shortcut speed, screenshot capture, and cloud backup.',
-        objective: 'Complete a timed, end-to-end computer practical task independently.',
+        topic: 'Terminal & Command Prompt (CMD) Automation (Hacker-style Skills)',
+        visualImage: '/images/foundation/class14_terminal_cmd_automation.svg',
+        extraVisuals: [
+          { id: 'vector', title: 'Hacker CLI Automation Guide', src: '/images/foundation/class14_terminal_cmd_automation.svg', badge: 'Vector Guide' },
+          { id: 'basic_cmds', title: 'Basic Directory & File Commands Cheatsheet', src: '/images/foundation/class14_cmd_basic_commands.svg', badge: 'Basic Commands' },
+          { id: 'hacker_tricks', title: 'Wi-Fi & Hacker Secrets Cheatsheet', src: '/images/foundation/class14_cmd_hacker_tricks.svg', badge: 'Hacker Commands' }
+        ],
+        cmdCategories: [
+          {
+            title: '1. Basic File & Directory Commands (ഫയൽ & ഫോൾഡർ കമാൻഡുകൾ)',
+            icon: 'fas fa-folder-open',
+            commands: [
+              { command: 'mkdir MyFolder', meaning: '📁 പുതിയ folder ഉണ്ടാക്കുന്നു', example: 'mkdir Assignments Notes Projects' },
+              { command: 'cd MyFolder', meaning: '📂 ആ folder-ലേക്ക് പോകുന്നു', example: 'cd Documents\\Digital_Skills' },
+              { command: 'cd ..', meaning: '⬅️ ഒരു folder പിന്നിലേക്ക് പോകുന്നു', example: 'cd ..' },
+              { command: 'cd \\', meaning: '🏠 Root Drive (C:\\)-ലേക്ക് മടങ്ങുന്നു', example: 'cd \\' },
+              { command: 'dir', meaning: '📋 folder-ലെ files & folders കാണിക്കുന്നു', example: 'dir /w' },
+              { command: 'tree /F', meaning: '🌳 folders-ന്റെ structure tree പോലെ കാണിക്കുന്നു', example: 'tree /F' },
+              { command: 'cls', meaning: '🧹 CMD screen clear ചെയ്യുന്നു', example: 'cls' },
+              { command: 'copy file.txt backup.txt', meaning: '📄 ഒരു file copy ചെയ്യുന്നു', example: 'copy assignment.txt backup.txt' },
+              { command: 'del file.txt', meaning: '🗑️ ഒരു file delete ചെയ്യുന്നു', example: 'del temp.txt' },
+              { command: 'ren old.txt new.txt', meaning: '✏️ file-ന്റെ പേര് മാറ്റുന്നു', example: 'ren draft.txt final.txt' },
+              { command: 'type file.txt', meaning: '📖 Notepad തുറക്കാതെ ഫയലിലെ ടെക്സ്റ്റ് സ്ക്രീനിൽ കാണുന്നു', example: 'type notes.txt' },
+              { command: 'echo Hello > note.txt', meaning: '✍️ ഒരൊറ്റ വരി ടെക്സ്റ്റ് ഇട്ട് പുതിയ ഫയൽ ഉണ്ടാക്കുന്നു', example: 'echo Sirajul Huda > welcome.txt' },
+              { command: 'move file.txt SubFolder', meaning: '📦 ഫയൽ മറ്റൊരു ഫോൾഡറിലേക്ക് മാറ്റുന്നു (Cut-Paste)', example: 'move doc.pdf Projects\\' },
+              { command: 'rmdir /s /q Folder', meaning: '💥 ഫോൾഡറും അതിലെ സകല ഫയലുകളും മായ്ക്കുന്നു', example: 'rmdir /s /q TempFolder' }
+            ]
+          },
+          {
+            title: '2. Network, IP & Hacker-Style Commands (നെറ്റ്‌വർക്ക് & ഹാക്കർ ട്രിക്കുകൾ 🕵️‍♂️)',
+            icon: 'fas fa-user-secret',
+            commands: [
+              { command: 'netsh wlan show profile name="Wi-Fi" key=clear', meaning: '🔑 സേവ് ചെയ്ത Wi-Fi Password ടെക്സ്റ്റായി കാണുന്നു (Hacker Secret!)', example: 'netsh wlan show profile name="Wi-Fi" key=clear', isHacker: true },
+              { command: 'netsh wlan show profiles', meaning: '📡 ഈ PC-യിൽ സേവ് ചെയ്ത എല്ലാ Wi-Fi നെറ്റ്വർക്കുകളും കാണുന്നു', example: 'netsh wlan show profiles', isHacker: true },
+              { command: 'ipconfig', meaning: '📡 കമ്പ്യൂട്ടറിന്റെ Local IP address & Subnet Mask കാണിക്കുന്നു', example: 'ipconfig' },
+              { command: 'ipconfig /all', meaning: '🌐 MAC Address, DNS Servers ഉൾപ്പെടെയുള്ള വിവരങ്ങൾ കാണുന്നു', example: 'ipconfig /all' },
+              { command: 'ipconfig /flushdns', meaning: '🧹 നെറ്റ്വർക്ക് സ്പീഡ് കൂട്ടാനും എററുകൾ മാറ്റാനും DNS Cache നീക്കം ചെയ്യുന്നു', example: 'ipconfig /flushdns' },
+              { command: 'ping google.com', meaning: '🌐 internet/network connection test ചെയ്യുന്നു (Latency in ms)', example: 'ping google.com -t' },
+              { command: 'tracert google.com', meaning: '🗺️ സെർവറിലേക്കുള്ള റൂട്ടറുകളുടെ പാത ട്രേസ് ചെയ്യുന്നു', example: 'tracert google.com' },
+              { command: 'nslookup google.com', meaning: '🔎 വെബ്സൈറ്റിന്റെ IP address കണ്ടെത്തി തരുന്നു', example: 'nslookup google.com' }
+            ]
+          },
+          {
+            title: '3. System Information, Tasks & Color Tricks (സിസ്റ്റം & വിഷ്വൽ കമാൻഡുകൾ ⚙️)',
+            icon: 'fas fa-cogs',
+            commands: [
+              { command: 'color 0a', meaning: '🟢 സിനിമകളിലെ പോലെ കമാൻഡ് സ്ക്രീൻ പച്ച നിറമുള്ള (Hacker Green) ആക്കുന്നു!', example: 'color 0a (Green) / color 0f (White)', isHacker: true },
+              { command: 'tasklist', meaning: '⚙️ ഇപ്പോൾ running ആയ programs/processes കാണിക്കുന്നു', example: 'tasklist' },
+              { command: 'taskkill /IM chrome.exe /F', meaning: '🛑 റീസ്പോണ്ട് ചെയ്യാത്ത ആപ്പ് ഫോഴ്സ് ക്ലോസ് ചെയ്യുന്നു', example: 'taskkill /IM notepad.exe /F' },
+              { command: 'systeminfo', meaning: '💻 കമ്പ്യൂട്ടറിന്റെ മുഴുവൻ RAM, CPU, OS Build വിവരങ്ങൾ കാണിക്കുന്നു', example: 'systeminfo' },
+              { command: 'driverquery', meaning: '🔌 ഇൻസ്റ്റാൾ ചെയ്ത Hardware Drivers കാണിക്കുന്നു', example: 'driverquery' },
+              { command: 'title My Custom CLI', meaning: '🏷️ CMD വിൻഡോയുടെ Title Bar പേര് മാറ്റുന്നു', example: 'title IT Sir Lab Terminal' },
+              { command: 'shutdown /r /t 0', meaning: '🔄 computer ഉടൻ restart ചെയ്യുന്നു (/s -> Shutdown)', example: 'shutdown /r /t 0' },
+              { command: 'help', meaning: '❓ ഉപയോഗിക്കാവുന്ന മുഴുവൻ CMD കമാൻഡുകളുടെയും പട്ടിക നൽകുന്നു', example: 'help' }
+            ]
+          }
+        ],
+        simpleConcept: 'Operating Windows without a mouse using Command Prompt (CMD) & PowerShell! Learn directory navigation, file manipulation, network diagnostic commands, Wi-Fi password extraction (netsh wlan), and hacker matrix color modes (color 0a).',
+        objective: 'Execute CLI commands from basic navigation to advanced network diagnostics and batch script automation.',
         teacherGuide: {
-          theoryDuration: '5 min',
-          practicalDuration: '55 min',
-          explain: 'Explain the rules of the Foundation Readiness Practical Test. Every student works independently on their assigned lab PC.',
-          demonstrate: 'Briefly review the task checklist on the lab projector screen.',
-          practice: 'Students execute the multi-step practical task within the 50-minute lab window.',
-          practicalTask: '1. Create folder structure. 2. Write a 1-page specs summary document using hotkeys. 3. Capture annotated screenshot of system specs. 4. Convert to PDF. 5. Zip folder & clean up session.',
-          realWorldExample: 'Workplace onboarding test: Proving computer competency to an employer.',
-          expectedOutput: 'Student successfully submits completed practical lab package adhering to all guidelines.'
+          theoryDuration: '15 min',
+          practicalDuration: '30 min',
+          explain: 'Explain why developers, system admins, and IT pros use the Command Line (CLI). Demonstrate basic file ops, network ping, retrieving saved Wi-Fi passwords, and switching terminal text colors.',
+          demonstrate: 'Demonstrate opening CMD (Win+R -> cmd), running dir, mkdir Student_Projects, cd Student_Projects, color 0a, netsh wlan show profiles, ping google.com, and tree /F.',
+          practice: 'Students open CMD, change color to green (color 0a), create a folder tree using mkdir, test pinging a server, and inspect their network IP config.',
+          practicalTask: '1. Open CMD (Win+R -> cmd). 2. Type "color 0a" for hacker matrix mode. 3. Navigate to Documents using cd. 4. Create folder tree using "mkdir Class_Notes\\Module_1 Class_Notes\\Module_2". 5. Type "ipconfig" to find your Local IP. 6. Type "tree /F" to view folder tree.',
+          realWorldExample: 'Automating daily IT tasks: Creating subject folder structures, fixing DNS network connection errors, or retrieving Wi-Fi passwords.',
+          expectedOutput: 'Student confidently operates Command Prompt (CMD), executes CLI commands, and uses basic to advanced network diagnostic tools.'
+        }
+      },
+      {
+        id: 'fnd-cls-15',
+        classNum: 15,
+        topic: 'Touch Typing & Speed Mastery (Fast Typing Training)',
+        visualImage: '/images/foundation/class15_hands_on_keyboard_mapping.png',
+        extraVisuals: [
+          { id: 'hands_map', title: 'Hands on Keyboard Finger Mapping', src: '/images/foundation/class15_hands_on_keyboard_mapping.png', badge: 'Finger Alignment' },
+          { id: 'color_zones', title: 'Color-Coded QWERTY Key Zones', src: '/images/foundation/class15_color_coded_finger_zones.png', badge: 'Key Zones' },
+          { id: 'blind_vs_looking', title: 'Blind Typing vs Keyboard Looking', src: '/images/foundation/class15_blind_typing_vs_looking.png', badge: 'Posture Comparison' },
+          { id: 'wrist_posture', title: 'Wrist & Hand Ergonomic Alignment', src: '/images/foundation/class15_wrist_and_hand_posture.png', badge: 'Ergonomics' },
+          { id: 'sitting_posture', title: 'Sitting Ergonomics & Back Posture', src: '/images/foundation/class15_sitting_ergonomics_guide.png', badge: 'Sitting Rules' },
+          { id: 'typing_tools', title: 'Top 5 Free Typing Speed Sites', src: '/images/foundation/class15_hands_on_keyboard_mapping.png', badge: 'Top 5 Tools' },
+          { id: 'vector', title: 'Vector Touch Typing Cheatsheet', src: '/images/foundation/class15_touch_typing_speed.svg', badge: 'Vector Guide' }
+        ],
+        recommendedTool: {
+          name: 'Monkeytype & TypingClub (Free Touch Typing Mastery)',
+          url: 'https://monkeytype.com',
+          badge: 'Top Free Typing Apps',
+          description: 'Free interactive web tools for touch typing posture, home row lessons, WPM speed benchmarks, and accuracy tracking.'
+        },
+        typingToolsMatrix: [
+          {
+            name: 'Monkeytype',
+            icon: '🐒',
+            use: 'Minimalist & Fast WPM Speed Benchmark',
+            description: '“ക്ലീൻ ഇൻറർഫേസിൽ ടൈപ്പിംഗ് സ്പീഡ് വേഗത്തിൽ നോക്കാൻ”',
+            link: 'https://monkeytype.com',
+            badge: 'WPM Benchmark'
+          },
+          {
+            name: 'TypingClub',
+            icon: '🎓',
+            use: 'Step-by-Step Touch Typing Course',
+            description: '“ഫിംഗർ പൊസിഷൻ പഠിച്ചു തുടങ്ങുന്നവർക്ക് മികച്ച പാഠങ്ങൾ”',
+            link: 'https://www.typingclub.com',
+            badge: 'Guided Course'
+          },
+          {
+            name: 'Keybr',
+            icon: '🧠',
+            use: 'AI-Powered Practice for Weak Keys',
+            description: '“നമ്മുടെ തെറ്റുന്ന വിരലുകളെ കണ്ടുപിടിച്ച് AI ട്രെയിനിങ് തരുന്നു”',
+            link: 'https://www.keybr.com',
+            badge: 'AI Smart Practice'
+          },
+          {
+            name: 'TypeRacer',
+            icon: '🏎️',
+            use: 'Multiplayer Real-Time Typing Race',
+            description: '“മറ്റുള്ളവരുമായി മത്സരിച്ച് റെയ്സ് അടിച്ചു ടൈപ്പ് ചെയ്യാൻ”',
+            link: 'https://play.typeracer.com',
+            badge: 'Speed Race Game'
+          },
+          {
+            name: 'Nitro Type',
+            icon: '⚡',
+            use: 'Competitive Car Racing Typing Game',
+            description: '“കാർ റെയ്സിംഗ് ഗെയിമിലൂടെ രസകരമായി ടൈപ്പിംഗ് പഠിക്കാൻ”',
+            link: 'https://www.nitrotype.com',
+            badge: 'Gamified Typing'
+          }
+        ],
+        simpleConcept: 'Mastering Touch Typing: Typing at high speeds (40+ WPM) without ever looking down at the keyboard! Learn home-row finger placement (F & J tactile bumps), correct posture, and accuracy training.',
+        objective: 'Align fingers correctly on home row keys and complete a 60-second typing speed test aiming for 30+ WPM with >90% accuracy.',
+        teacherGuide: {
+          theoryDuration: '10 min',
+          practicalDuration: '35 min',
+          explain: 'Explain tactile index finger bumps on F and J keys. Demonstrate proper posture (back straight, wrists elevated, eyes on screen, never on keys).',
+          demonstrate: 'Demonstrate home row placement (ASDF for left hand, JKL; for right hand, thumbs for Spacebar). Show live speed test on Monkeytype or TypingClub.',
+          practice: 'Students open Monkeytype.com or TypingClub.com, align fingers on home-row keys, and practice 5 rounds of 60-second typing tests.',
+          practicalTask: '1. Place index fingers on F and J bumps. 2. Complete a 60-second test on Monkeytype/TypingClub without looking at keys. 3. Record your WPM (Words Per Minute) and Accuracy %.',
+          realWorldExample: 'Professional productivity: Typing essays, emails, and code 3x faster without fatigue.',
+          expectedOutput: 'Student demonstrates correct touch typing finger placement and achieves improved WPM typing speed.'
         }
       }
     ],
     realProject: {
-      title: 'Foundation Track Graduation Portfolio Package',
-      description: 'Final submission package containing folder structure, system specs PDF, annotated screenshots, and readiness certificate.'
+      title: 'CLI Automation & Typing Speed Showcase',
+      description: 'Students execute a CMD folder automation script, take an annotated screenshot of their folder tree, and complete a live 60-second typing test recording their WPM score.'
     }
   }
 ];

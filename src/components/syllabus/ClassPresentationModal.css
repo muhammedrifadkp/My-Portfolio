@@ -777,3 +777,290 @@
   line-height: 1.35;
   word-break: break-word;
 }
+
+/* CMD Tools Matrix Presentation Styling */
+.cmd-tools-matrix-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.cmd-matrix-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #020617;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #10B981;
+}
+
+.cmd-matrix-header h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #34D399;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cmd-categories-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cmd-category-box {
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.cmd-cat-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #38BDF8;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cmd-table-wrapper {
+  overflow-x: auto;
+}
+
+.cmd-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.cmd-matrix-table th {
+  background: #1E293B;
+  color: #94A3B8;
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 700;
+  border-bottom: 2px solid #334155;
+}
+
+.cmd-matrix-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #1E293B;
+  color: #E2E8F0;
+}
+
+.cmd-syntax-code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-weight: 700;
+  color: #4ADE80;
+  background: #020617;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #065F46;
+}
+
+.cmd-example-code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #FBBF24;
+  background: #1E293B;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.hacker-row td {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.hacker-row .cmd-syntax-code {
+  color: #FACC15;
+  border-color: #CA8A04;
+}
+
+/* Transition Toast Banner */
+.ppt-transition-toast {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1E1B4B, #312E81);
+  border: 1px solid #6366F1;
+  color: #EEF2FF;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastSlideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ppt-transition-toast i {
+  color: #A5B4FC;
+  font-size: 1.1rem;
+}
+
+@keyframes toastSlideDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Finish Class Action Cards on Slide 5 */
+.ppt-finish-class-card {
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.ppt-finish-class-card.next-module {
+  background: linear-gradient(135deg, #0F172A, #1E1B4B);
+  border: 2px solid #6366F1;
+}
+
+.ppt-finish-class-card.next-class {
+  background: linear-gradient(135deg, #0F172A, #064E3B);
+  border: 2px solid #10B981;
+}
+
+.ppt-finish-class-card.course-complete {
+  background: linear-gradient(135deg, #0F172A, #78350F);
+  border: 2px solid #F59E0B;
+}
+
+.finish-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.finish-card-header i {
+  font-size: 1.6rem;
+}
+
+.next-module .finish-card-header i {
+  color: #818CF8;
+}
+
+.next-class .finish-card-header i {
+  color: #34D399;
+}
+
+.course-complete .finish-card-header i {
+  color: #FBBF24;
+}
+
+.finish-card-header h4 {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.finish-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.finish-card-body p {
+  font-size: 0.95rem;
+  color: #CBD5E1;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.next-target-preview {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.target-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #38BDF8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.target-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #F8FAFC;
+}
+
+.ppt-next-step-btn {
+  border: none;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.ppt-next-step-btn.next-module {
+  background: #6366F1;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.ppt-next-step-btn.next-module:hover {
+  background: #4F46E5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+}
+
+.ppt-next-step-btn.next-class {
+  background: #10B981;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+}
+
+.ppt-next-step-btn.next-class:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+}
+
+.ppt-next-step-btn.course-complete {
+  background: #F59E0B;
+  color: #0F172A;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+}
+
+.ppt-next-step-btn.course-complete:hover {
+  background: #D97706;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+}
+

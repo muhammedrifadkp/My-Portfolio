@@ -1,28 +1,93 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import InteractiveImageViewer from './InteractiveImageViewer';
 import './ClassPresentationModal.css';
 
-const ClassPresentationModal = ({ isOpen, onClose, classData, moduleTitle, batchName }) => {
+const ClassPresentationModal = ({
+  isOpen,
+  onClose,
+  classData,
+  moduleTitle,
+  batchName,
+  allClasses = [],
+  onSelectClass
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [activeVisualTab, setActiveVisualTab] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
-
-  // Reset slide index & visual tab when modal opens with new class
-  useEffect(() => {
-    if (isOpen) {
-      setCurrentSlide(0);
-      setActiveVisualTab(0);
-    }
-  }, [isOpen, classData]);
+  const [toastMsg, setToastMsg] = useState('');
 
   const totalSlides = 5;
 
+  // Compute current class index in allClasses list
+  const currentIndex = Array.isArray(allClasses) && classData
+    ? allClasses.findIndex(c => c.id === classData.id || c.classNum === classData.classNum)
+    : -1;
+
+  const nextClassObj = (currentIndex !== -1 && currentIndex < allClasses.length - 1)
+    ? allClasses[currentIndex + 1]
+    : null;
+
+  const prevClassObj = (currentIndex > 0)
+    ? allClasses[currentIndex - 1]
+    : null;
+
+  const isModuleChangeNext = nextClassObj && (
+    nextClassObj.moduleNumber !== (classData?.moduleNumber || 1) ||
+    nextClassObj.moduleTitle !== (classData?.moduleTitle || moduleTitle)
+  );
+
+  // Reset slide index & visual tab when modal opens or class changes
+  useEffect(() => {
+    if (isOpen && classData) {
+      setCurrentSlide(0);
+      setActiveVisualTab(0);
+    }
+  }, [isOpen, classData?.id, classData?.classNum]);
+
+  const goToNextClass = useCallback(() => {
+    if (nextClassObj && onSelectClass) {
+      onSelectClass(nextClassObj);
+      setCurrentSlide(0);
+      setActiveVisualTab(0);
+      const isNewMod = nextClassObj.moduleNumber !== (classData?.moduleNumber || 1);
+      const msg = isNewMod
+        ? `🚀 Entering Module 0${nextClassObj.moduleNumber}: ${nextClassObj.moduleTitle}`
+        : `📖 Class 0${nextClassObj.classNum}: ${nextClassObj.topic}`;
+      setToastMsg(msg);
+      setTimeout(() => setToastMsg(''), 3500);
+    } else {
+      setCurrentSlide(0);
+      setActiveVisualTab(0);
+    }
+  }, [nextClassObj, onSelectClass, classData]);
+
+  const goToPrevClass = useCallback(() => {
+    if (prevClassObj && onSelectClass) {
+      onSelectClass(prevClassObj);
+      setCurrentSlide(totalSlides - 1); // Go to final slide of previous class
+      setActiveVisualTab(0);
+    } else {
+      setCurrentSlide(totalSlides - 1);
+    }
+  }, [prevClassObj, onSelectClass, totalSlides]);
+
   const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev < totalSlides - 1 ? prev + 1 : 0));
-  }, [totalSlides]);
+    if (currentSlide < totalSlides - 1) {
+      setCurrentSlide((prev) => prev + 1);
+    } else {
+      // On Slide 5 (Last slide): Proceed to Next Class or Next Module!
+      goToNextClass();
+    }
+  }, [currentSlide, totalSlides, goToNextClass]);
 
   const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev > 0 ? prev - 1 : totalSlides - 1));
-  }, [totalSlides]);
+    if (currentSlide > 0) {
+      setCurrentSlide((prev) => prev - 1);
+    } else {
+      // On Slide 1: Go back to previous class's last slide!
+      goToPrevClass();
+    }
+  }, [currentSlide, goToPrevClass]);
 
   // Keyboard Navigation (Arrow Right/Left, Spacebar, ESC, F)
   useEffect(() => {
@@ -164,7 +229,70 @@ const ClassPresentationModal = ({ isOpen, onClose, classData, moduleTitle, batch
                 )}
               </div>
 
-              {classData.aiToolsMatrix && (hasExtraVisuals && classData.extraVisuals[activeVisualTab]?.id === 'matrix' || !hasExtraVisuals) ? (
+              {classData.typingToolsMatrix && (hasExtraVisuals && classData.extraVisuals[activeVisualTab]?.id === 'typing_tools') ? (
+                <div className="ai-tools-matrix-container">
+                  <div className="ai-matrix-header">
+                    <h3><i className="fas fa-keyboard"></i> Top 5 Free Typing Speed Increasing Websites &amp; Apps</h3>
+                    <span className="matrix-badge">Top 5 Typing Tools</span>
+                  </div>
+                  <div className="ai-tools-cards-grid">
+                    {classData.typingToolsMatrix.map((tool, idx) => (
+                      <div key={idx} className="ai-tool-card">
+                        <div className="ai-tool-card-top">
+                          <span className="ai-tool-icon">{tool.icon}</span>
+                          <div className="ai-tool-title-box">
+                            <h4>{tool.name}</h4>
+                            <span className="ai-tool-badge">{tool.badge}</span>
+                          </div>
+                        </div>
+                        <div className="ai-tool-use-row">
+                          <i className="fas fa-bullseye"></i> <strong>Best Use:</strong> {tool.use}
+                        </div>
+                        <div className="ai-tool-quote-box">
+                          <span>{tool.description}</span>
+                        </div>
+                        <a href={tool.link} target="_blank" rel="noopener noreferrer" className="ai-tool-try-btn">
+                          Practice Free on {tool.name} <i className="fas fa-external-link-alt"></i>
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : classData.cmdCategories && (hasExtraVisuals && classData.extraVisuals[activeVisualTab]?.id === 'cmd_matrix') ? (
+                <div className="cmd-tools-matrix-container">
+                  <div className="cmd-matrix-header">
+                    <h3><i className="fas fa-terminal"></i> Command Prompt (CMD) Complete Reference &amp; Hacker Commands</h3>
+                    <span className="matrix-badge">Basic to Advanced CLI Cheatsheet</span>
+                  </div>
+                  <div className="cmd-categories-grid">
+                    {classData.cmdCategories.map((cat, cIdx) => (
+                      <div key={cIdx} className="cmd-category-box">
+                        <h4 className="cmd-cat-title"><i className={cat.icon || 'fas fa-terminal'}></i> {cat.title}</h4>
+                        <div className="cmd-table-wrapper">
+                          <table className="cmd-matrix-table">
+                            <thead>
+                              <tr>
+                                <th>Command Syntax</th>
+                                <th>Malayalam / Simple Explanation</th>
+                                <th>Example Usage</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {cat.commands.map((cmd, rIdx) => (
+                                <tr key={rIdx} className={cmd.isHacker ? 'hacker-row' : ''}>
+                                  <td><code className="cmd-syntax-code">{cmd.command}</code></td>
+                                  <td><span className="cmd-meaning-text">{cmd.meaning}</span></td>
+                                  <td><code className="cmd-example-code">{cmd.example}</code></td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : classData.aiToolsMatrix && (hasExtraVisuals && classData.extraVisuals[activeVisualTab]?.id === 'matrix' || !hasExtraVisuals) ? (
                 <div className="ai-tools-matrix-container">
                   <div className="ai-matrix-header">
                     <h3><i className="fas fa-robot"></i> Essential AI Tools &amp; Student Use Cases</h3>
@@ -203,7 +331,7 @@ const ClassPresentationModal = ({ isOpen, onClose, classData, moduleTitle, batch
                 </div>
               ) : (
                 <div className="visual-full-container">
-                  <img src={currentVisualSrc} alt={classData.topic} className="full-visual-img" />
+                  <InteractiveImageViewer src={currentVisualSrc} alt={classData.topic} title={classData.topic} />
                 </div>
               )}
             </div>
@@ -314,14 +442,64 @@ const ClassPresentationModal = ({ isOpen, onClose, classData, moduleTitle, batch
                 </div>
               )}
 
-              <div className="complete-class-box">
-                <i className="fas fa-trophy"></i>
-                <span>Class 0{classData.classNum} Complete! Ready for Hands-on Verification.</span>
-              </div>
+              {/* Slide 5 Interactive Class / Module Completion Card */}
+              {nextClassObj ? (
+                isModuleChangeNext ? (
+                  <div className="ppt-finish-class-card next-module">
+                    <div className="finish-icon-wrap">
+                      <i className="fas fa-rocket"></i>
+                    </div>
+                    <div className="finish-text-wrap">
+                      <h3>🚀 Module 0{classData.moduleNumber || 1} Complete!</h3>
+                      <p>You have completed all classes in <strong>{classData.moduleTitle || moduleTitle}</strong>. Ready to enter <strong>Module 0{nextClassObj.moduleNumber}: {nextClassObj.moduleTitle}</strong>!</p>
+                    </div>
+                    <button className="ppt-next-step-btn module-btn" onClick={goToNextClass}>
+                      <span>Launch Module 0{nextClassObj.moduleNumber} (Class 0{nextClassObj.classNum})</span>
+                      <i className="fas fa-arrow-right"></i>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="ppt-finish-class-card next-class">
+                    <div className="finish-icon-wrap">
+                      <i className="fas fa-check-circle"></i>
+                    </div>
+                    <div className="finish-text-wrap">
+                      <h3>Class 0{classData.classNum} Complete!</h3>
+                      <p>Great job! Proceed to the next topic: <strong>Class 0{nextClassObj.classNum}: {nextClassObj.topic}</strong></p>
+                    </div>
+                    <button className="ppt-next-step-btn class-btn" onClick={goToNextClass}>
+                      <span>Proceed to Class 0{nextClassObj.classNum}</span>
+                      <i className="fas fa-arrow-right"></i>
+                    </button>
+                  </div>
+                )
+              ) : (
+                <div className="ppt-finish-class-card course-complete">
+                  <div className="finish-icon-wrap">
+                    <i className="fas fa-trophy"></i>
+                  </div>
+                  <div className="finish-text-wrap">
+                    <h3>🏆 Entire Foundation Course Completed!</h3>
+                    <p>Congratulations! You have completed all classes across all modules of the Foundation Course.</p>
+                  </div>
+                  <button className="ppt-next-step-btn finish-btn" onClick={onClose}>
+                    <span>Return to Dashboard</span>
+                    <i className="fas fa-award"></i>
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
         </main>
+
+        {/* Toast Notification Banner for Module / Class Transitions */}
+        {toastMsg && (
+          <div className="ppt-transition-toast animate-slide">
+            <i className="fas fa-magic"></i>
+            <span>{toastMsg}</span>
+          </div>
+        )}
 
         {/* BOTTOM NAVIGATION BAR */}
         <footer className="ppt-bottom-bar">
@@ -350,8 +528,16 @@ const ClassPresentationModal = ({ isOpen, onClose, classData, moduleTitle, batch
           </div>
 
           {/* Next Button */}
-          <button className="nav-arrow-btn next" onClick={nextSlide} title="Next Slide (Arrow Right or Space)">
-            <span>{currentSlide === totalSlides - 1 ? 'Finish Class' : 'Next Slide'}</span>
+          <button className="nav-arrow-btn next" onClick={nextSlide} title="Next Slide / Proceed (Space or Arrow Right)">
+            <span>
+              {currentSlide === totalSlides - 1
+                ? nextClassObj
+                  ? isModuleChangeNext
+                    ? `Next Module (Class 0${nextClassObj.classNum})`
+                    : `Next Class (Class 0${nextClassObj.classNum})`
+                  : 'Finish Course'
+                : 'Next Slide'}
+            </span>
             <i className="fas fa-chevron-right"></i>
           </button>
         </footer>

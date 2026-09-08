@@ -48,7 +48,8 @@ import {
   ChevronRight,
   GraduationCap,
   Lock,
-  Key
+  Key,
+  Monitor
 } from 'lucide-react';
 import { useAuth, syncAttendanceOverrideToCloud } from '../context/AuthContext';
 import RegisterStudentModal from '../components/auth/RegisterStudentModal';
@@ -73,6 +74,49 @@ const BATCH_DETAILS = {
   'degree-3': { label: 'Degree 3rd Year', icon: 'fas fa-graduation-cap', badgeColor: '#10B981', track: 'Undergraduate Stream' },
   'pg-1': { label: 'PG 1st Year', icon: 'fas fa-user-graduate', badgeColor: '#F59E0B', track: 'Postgraduate Stream' },
   'pg-2': { label: 'PG 2nd Year', icon: 'fas fa-user-graduate', badgeColor: '#EC4899', track: 'Postgraduate Stream' }
+};
+
+// ----------------------------------------------------
+// IT LAB TIMETABLE CONSTANTS & PRESETS
+// ----------------------------------------------------
+const LAB_DAYS = ['SAT', 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI'];
+
+const LAB_TIME_SLOTS = [
+  '6:30 - 7:00',
+  '7:00 - 7:50',
+  '7:50 - 8:40',
+  '8:40 - 9:30',
+  '9:30 - 10:20',
+  '10:20 - 11:10',
+  '11:10 - 12:00',
+  '1:30 - 2:10',
+  '3:00 - 3:50'
+];
+
+const LAB_BATCHES_LIST = [
+  { id: 'HS-1 A', label: 'HS-1 A', title: 'Plus One A', colorClass: 'badge-hs1a' },
+  { id: 'HS-1 B', label: 'HS-1 B', title: 'Plus One B', colorClass: 'badge-hs1b' },
+  { id: 'HS-2 A', label: 'HS-2 A', title: 'Plus Two A', colorClass: 'badge-hs2a' },
+  { id: 'HS-2 B', label: 'HS-2 B', title: 'Plus Two B', colorClass: 'badge-hs2b' },
+  { id: 'DG-1 A', label: 'DG-1 A', title: 'Degree 1st Yr A', colorClass: 'badge-dg1a' },
+  { id: 'DG-1 B', label: 'DG-1 B', title: 'Degree 1st Yr B', colorClass: 'badge-dg1b' },
+  { id: 'DG-2 A', label: 'DG-2 A', title: 'Degree 2nd Yr A', colorClass: 'badge-dg2a' },
+  { id: 'DG-2 B', label: 'DG-2 B', title: 'Degree 2nd Yr B', colorClass: 'badge-dg2b' },
+  { id: 'DG-3 A', label: 'DG-3 A', title: 'Degree 3rd Yr A', colorClass: 'badge-dg3a' },
+  { id: 'DG-3 B', label: 'DG-3 B', title: 'Degree 3rd Yr B', colorClass: 'badge-dg3b' },
+  { id: 'PG-1 A', label: 'PG-1 A', title: 'PG 1st Yr A', colorClass: 'badge-pg1a' },
+  { id: 'PG-1 B', label: 'PG-1 B', title: 'PG 1st Yr B', colorClass: 'badge-pg1b' },
+  { id: 'PG-2 A', label: 'PG-2 A', title: 'PG 2nd Yr A', colorClass: 'badge-pg2a' },
+  { id: 'PG-2 B', label: 'PG-2 B', title: 'PG 2nd Yr B', colorClass: 'badge-pg2b' }
+];
+
+const SAMPLE_TIMETABLE_PRESET = {
+  'SAT-1': 'HS-1 A', 'SAT-3': 'HS-1 A', 'SAT-4': 'DG-1 A', 'SAT-6': 'HS-2 A', 'SAT-7': 'DG-2 A',
+  'SUN-1': 'HS-1 A', 'SUN-3': 'HS-2 A', 'SUN-4': 'DG-1 A', 'SUN-6': 'HS-2 A', 'SUN-7': 'DG-2 A',
+  'MON-1': 'HS-1 A', 'MON-3': 'HS-1 A', 'MON-4': 'DG-1 A', 'MON-6': 'HS-2 A',
+  'TUE-3': 'DG-1 B', 'TUE-4': 'HS-1 B', 'TUE-5': 'HS-2 B', 'TUE-6': 'PG-2 A',
+  'WED-3': 'DG-1 B', 'WED-4': 'HS-1 B', 'WED-5': 'HS-2 B', 'WED-6': 'PG-2 A',
+  'THU-3': 'DG-1 B', 'THU-4': 'HS-1 B', 'THU-5': 'HS-2 B', 'THU-6': 'PG-2 B'
 };
 
 const Dashboard = ({ initialTab }) => {
@@ -498,6 +542,119 @@ const Dashboard = ({ initialTab }) => {
     ].filter((d) => d.value > 0);
   }, [attendanceMetrics]);
 
+  // ----------------------------------------------------
+  // 4. IT LAB PERIOD TIMETABLE STATE & ENGINE
+  // ----------------------------------------------------
+  const [timetableSchedule, setTimetableSchedule] = useState(() => {
+    try {
+      const saved = localStorage.getItem('sh_lab_timetable_schedule');
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      return {};
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('sh_lab_timetable_schedule', JSON.stringify(timetableSchedule));
+    } catch (e) {
+      console.error('Failed to save timetable schedule:', e);
+    }
+  }, [timetableSchedule]);
+
+  const [activeDragBatch, setActiveDragBatch] = useState(null);
+  const [clickSelectedBatch, setClickSelectedBatch] = useState(null);
+  const [dragOverSlotKey, setDragOverSlotKey] = useState(null);
+
+  const handleSlotDrop = (day, slotIdx) => {
+    if (day === 'FRI') {
+      showToast('Friday is Holiday! Period allocation disabled.');
+      setDragOverSlotKey(null);
+      return;
+    }
+    const batchToAssign = activeDragBatch || clickSelectedBatch;
+    if (!batchToAssign) return;
+
+    const slotKey = `${day}-${slotIdx}`;
+    setTimetableSchedule((prev) => ({
+      ...prev,
+      [slotKey]: batchToAssign
+    }));
+    showToast(`Assigned ${batchToAssign} to ${day} (${LAB_TIME_SLOTS[slotIdx]})`);
+    setDragOverSlotKey(null);
+  };
+
+  const handleSlotClick = (day, slotIdx) => {
+    if (day === 'FRI') {
+      showToast('Friday is Holiday! Period allocation disabled.');
+      return;
+    }
+    const slotKey = `${day}-${slotIdx}`;
+    if (clickSelectedBatch) {
+      setTimetableSchedule((prev) => ({
+        ...prev,
+        [slotKey]: clickSelectedBatch
+      }));
+      showToast(`Assigned ${clickSelectedBatch} to ${day} (${LAB_TIME_SLOTS[slotIdx]})`);
+    } else if (timetableSchedule[slotKey]) {
+      const copy = { ...timetableSchedule };
+      delete copy[slotKey];
+      setTimetableSchedule(copy);
+      showToast(`Cleared period at ${day} (${LAB_TIME_SLOTS[slotIdx]})`);
+    }
+  };
+
+  const handleClearSlot = (e, slotKey) => {
+    e.stopPropagation();
+    setTimetableSchedule((prev) => {
+      const copy = { ...prev };
+      delete copy[slotKey];
+      return copy;
+    });
+    showToast('Period slot cleared.');
+  };
+
+  const handleResetTimetable = () => {
+    setTimetableSchedule({});
+    setClickSelectedBatch(null);
+    showToast('All timetable slots reset to free.');
+  };
+
+  const handleLoadSampleTimetable = () => {
+    setTimetableSchedule(SAMPLE_TIMETABLE_PRESET);
+    showToast('Sample IT Lab timetable loaded successfully!');
+  };
+
+  const exportTimetablePDF = () => {
+    const doc = new jsPDF('landscape');
+    doc.setFontSize(18);
+    doc.setTextColor(15, 23, 42);
+    doc.text('IT LAB - Batch Schedule (Timetable 2024 - 2025)', 14, 18);
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text('Sirajul Huda Educational Complex • IT Infrastructure Management', 14, 25);
+
+    const headers = ['DAYS', ...LAB_TIME_SLOTS];
+    const rows = LAB_DAYS.map((day) => {
+      if (day === 'FRI') return [day, ...LAB_TIME_SLOTS.map(() => 'FRIDAY OFF')];
+      return [
+        day,
+        ...LAB_TIME_SLOTS.map((_, sIdx) => timetableSchedule[`${day}-${sIdx}`] || '-')
+      ];
+    });
+
+    autoTable(doc, {
+      startY: 30,
+      head: [headers],
+      body: rows,
+      theme: 'grid',
+      headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] },
+      styles: { fontSize: 8, halign: 'center' }
+    });
+
+    doc.save(`IT_Lab_Timetable_Schedule.pdf`);
+  };
+
   if (userRole !== 'teacher') {
     return (
       <div className="master-dashboard-container flex items-center justify-center min-h-screen">
@@ -639,6 +796,14 @@ const Dashboard = ({ initialTab }) => {
           >
             <BookOpen className="w-4 h-4" />
             <span>Course Progress</span>
+          </button>
+
+          <button
+            className={`tab-nav-btn ${activeTab === 'timetable' ? 'active' : ''}`}
+            onClick={() => handleTabChange('timetable')}
+          >
+            <Calendar className="w-4 h-4" />
+            <span>Lab Timetable</span>
           </button>
         </nav>
 
@@ -1307,6 +1472,172 @@ const Dashboard = ({ initialTab }) => {
                 <Link to="/syllabus/degree-1" className="course-link-btn">
                   Open Degree Syllabus →
                 </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB 6: IT LAB PERIOD TIMETABLE SCHEDULE              */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === 'timetable' && (
+          <div className="dashboard-tab-content animate-fade-in">
+            {/* TIMETABLE TOP HEADER & CONTROLS */}
+            <div className="tab-section-header">
+              <div>
+                <h2><Calendar className="w-6 h-6 text-cyan-400" /> IT LAB - Batch Schedule Manager</h2>
+                <p>Drag and drop batch badges or click slots to assign periods. All slots start free.</p>
+              </div>
+
+              <div className="export-actions-group">
+                <button className="secondary-action-btn" onClick={handleLoadSampleTimetable}>
+                  <Sparkles className="w-4 h-4 text-amber-400" /> Load Model Schedule
+                </button>
+                <button className="secondary-action-btn" onClick={handleResetTimetable}>
+                  <RotateCcw className="w-4 h-4 text-rose-400" /> Clear All Slots
+                </button>
+                <button className="primary-action-btn" onClick={exportTimetablePDF}>
+                  <Download className="w-4 h-4" /> Export Schedule PDF
+                </button>
+              </div>
+            </div>
+
+            {/* BRANDING CARD MATCHING MODEL SCREENSHOT */}
+            <div className="it-lab-timetable-card">
+              <div className="lab-card-top-header">
+                <div className="lab-logo-title-group">
+                  <div className="lab-monitor-icon-box">
+                    <Monitor className="w-8 h-8 text-cyan-400" />
+                  </div>
+                  <div>
+                    <h2 className="lab-main-title">IT LAB</h2>
+                    <span className="lab-sub-title">Batch Schedule</span>
+                  </div>
+                </div>
+
+                <div className="lab-motto-pills">
+                  <span className="motto-item">Learn</span>
+                  <span className="motto-divider">|</span>
+                  <span className="motto-item">Practice</span>
+                  <span className="motto-divider">|</span>
+                  <span className="motto-item">Build</span>
+                  <span className="motto-divider">|</span>
+                  <span className="motto-item">Grow</span>
+                </div>
+
+                <div className="lab-year-badge">
+                  <Users className="w-4 h-4 text-cyan-500" />
+                  <div>
+                    <span className="badge-title">Lab Timetable</span>
+                    <span className="badge-year">2024 - 2025</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* TIMETABLE MATRIX TABLE */}
+              <div className="timetable-matrix-wrapper">
+                <table className="timetable-matrix-table">
+                  <thead>
+                    <tr>
+                      <th className="days-col-header">DAYS</th>
+                      {LAB_TIME_SLOTS.map((slot, sIdx) => (
+                        <th key={sIdx} className="slot-col-header">{slot}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {LAB_DAYS.map((day) => {
+                      const isFriday = day === 'FRI';
+
+                      return (
+                        <tr key={day} className={isFriday ? 'friday-row-holiday' : ''}>
+                          <td className="day-cell-label">{day}</td>
+                          {LAB_TIME_SLOTS.map((_, sIdx) => {
+                            const slotKey = `${day}-${sIdx}`;
+                            const assignedBatchId = timetableSchedule[slotKey];
+                            const batchMeta = LAB_BATCHES_LIST.find((b) => b.id === assignedBatchId);
+                            const isDragOver = dragOverSlotKey === slotKey;
+
+                            if (isFriday) {
+                              return (
+                                <td key={sIdx} className="timetable-slot-cell friday-disabled">
+                                  <span className="holiday-text">FRIDAY OFF</span>
+                                </td>
+                              );
+                            }
+
+                            return (
+                              <td
+                                key={sIdx}
+                                className={`timetable-slot-cell ${assignedBatchId ? 'has-assigned' : 'is-free'} ${isDragOver ? 'drag-over-active' : ''}`}
+                                onDragOver={(e) => {
+                                  e.preventDefault();
+                                  setDragOverSlotKey(slotKey);
+                                }}
+                                onDragLeave={() => setDragOverSlotKey(null)}
+                                onDrop={() => handleSlotDrop(day, sIdx)}
+                                onClick={() => handleSlotClick(day, sIdx)}
+                              >
+                                {assignedBatchId ? (
+                                  <div className={`assigned-batch-pill ${batchMeta?.colorClass || 'badge-default'}`}>
+                                    <span className="batch-pill-code">{assignedBatchId}</span>
+                                    <button
+                                      className="clear-slot-x"
+                                      onClick={(e) => handleClearSlot(e, slotKey)}
+                                      title="Clear Period"
+                                    >
+                                      <X className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <span className="free-slot-dash">-</span>
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* BOTTOM BATCH COLORS PALETTE & DRAG SOURCES */}
+              <div className="batch-colors-palette-section">
+                <div className="palette-header">
+                  <Activity className="w-4 h-4 text-indigo-500" />
+                  <span>Batch Colors</span>
+                  <span className="drag-hint">💡 Drag any batch below and drop onto a timetable slot, or click to select!</span>
+                  {clickSelectedBatch && (
+                    <button className="clear-selected-batch-btn" onClick={() => setClickSelectedBatch(null)}>
+                      Clear Selected ({clickSelectedBatch}) ✕
+                    </button>
+                  )}
+                </div>
+
+                <div className="batches-chips-row">
+                  {LAB_BATCHES_LIST.map((batch) => {
+                    const isSelected = clickSelectedBatch === batch.id;
+
+                    return (
+                      <div
+                        key={batch.id}
+                        draggable
+                        onDragStart={() => setActiveDragBatch(batch.id)}
+                        onDragEnd={() => setActiveDragBatch(null)}
+                        onClick={() => {
+                          setClickSelectedBatch(isSelected ? null : batch.id);
+                          showToast(isSelected ? 'Deselected batch.' : `Selected ${batch.id}. Now click any free slot!`);
+                        }}
+                        className={`batch-drag-chip ${batch.colorClass} ${isSelected ? 'click-selected' : ''}`}
+                        title={`Click or Drag ${batch.title}`}
+                      >
+                        <span className="chip-code">{batch.label}</span>
+                        <span className="chip-sub">{batch.title}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

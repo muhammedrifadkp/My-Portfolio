@@ -102,12 +102,15 @@
   font-size: 0.9rem;
   font-weight: 800;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
   transition: all 0.2s ease;
   text-decoration: none;
+  white-space: nowrap;
+  width: fit-content;
 }
 
 .primary-action-btn:hover {
@@ -126,10 +129,13 @@
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: all 0.2s ease;
+  white-space: nowrap;
+  width: fit-content;
 }
 
 .secondary-action-btn:hover {
@@ -371,6 +377,148 @@
 
 .action-pill-btn.purple { background: #8B5CF6; color: #FFF; }
 .action-pill-btn.purple:hover { background: #7C3AED; }
+
+/* Section Header Bar & Action Groups */
+.tab-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 20px 24px;
+  flex-wrap: wrap;
+}
+
+.tab-section-header > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tab-section-header h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #F8FAFC;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tab-section-header h2 svg {
+  flex-shrink: 0;
+}
+
+.tab-section-header p {
+  font-size: 0.88rem;
+  color: #94A3B8;
+  margin: 0;
+}
+
+.export-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.course-card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.course-card-top h3 {
+  margin: 0;
+}
+
+.chart-body {
+  width: 100%;
+  min-height: 260px;
+}
+
+.empty-state-box {
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.empty-state-box h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #F8FAFC;
+  margin: 0;
+}
+
+.empty-state-box p {
+  font-size: 0.9rem;
+  color: #94A3B8;
+  margin: 0;
+}
+
+.loading-box {
+  background: #0F172A;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  color: #94A3B8;
+}
+
+.empty-td {
+  text-align: center !important;
+  padding: 32px !important;
+  color: #64748B !important;
+  font-style: italic;
+}
+
+.skill-level-tag {
+  display: inline-flex;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.skill-level-tag.beginner {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.skill-level-tag.intermediate {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.skill-level-tag.good {
+  background: rgba(167, 139, 250, 0.15);
+  color: #C084FC;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.skill-level-tag.advanced {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
 
 /* Filter & Search Bar */
 .filter-controls-card,
@@ -1201,4 +1349,367 @@
 .lock-btn:hover {
   background: rgba(245, 158, 11, 0.15);
 }
+
+/* ---------------------------------------------------- */
+/* IT LAB PERIOD TIMETABLE BRANDING & MATRIX STYLES     */
+/* ---------------------------------------------------- */
+.it-lab-timetable-card {
+  background: #F4F7FC;
+  border: 1px solid #CBD5E1;
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  color: #1E293B;
+}
+
+.lab-card-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: linear-gradient(135deg, #1B2A4A, #0F172A);
+  color: #FFFFFF;
+  padding: 16px 24px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+}
+
+.lab-logo-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lab-monitor-icon-box {
+  width: 52px;
+  height: 52px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lab-main-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.lab-sub-title {
+  font-size: 0.88rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.lab-motto-pills {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #94A3B8;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.motto-item {
+  color: #CBD5E1;
+}
+
+.motto-divider {
+  color: #475569;
+}
+
+.lab-year-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #EEF2F6;
+  color: #1E293B;
+  padding: 8px 16px;
+  border-radius: 14px;
+  border: 1px solid #CBD5E1;
+}
+
+.badge-title {
+  font-size: 0.8rem;
+  font-weight: 900;
+  display: block;
+  color: #0F172A;
+}
+
+.badge-year {
+  font-size: 0.72rem;
+  color: #64748B;
+  font-weight: 700;
+}
+
+/* Timetable Matrix Table */
+.timetable-matrix-wrapper {
+  overflow-x: auto;
+  background: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid #CBD5E1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.timetable-matrix-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+  padding: 12px;
+  min-width: 1050px;
+  table-layout: fixed;
+}
+
+.timetable-matrix-table th {
+  padding: 12px 6px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 900;
+  border-radius: 10px;
+}
+
+.days-col-header {
+  background: #DCE6F2;
+  color: #1E293B;
+  width: 85px;
+  min-width: 85px;
+  font-size: 0.9rem !important;
+}
+
+.slot-col-header {
+  background: #EAF1F8;
+  color: #1E293B;
+  font-family: 'Fira Code', monospace;
+  width: calc((100% - 85px) / 9);
+}
+
+.day-cell-label {
+  background: #DCE6F2;
+  color: #1E293B;
+  font-weight: 900;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  width: 85px;
+  min-width: 85px;
+}
+
+.timetable-slot-cell {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 12px;
+  height: 54px;
+  text-align: center;
+  vertical-align: middle;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  padding: 4px;
+  width: calc((100% - 85px) / 9);
+}
+
+.timetable-slot-cell.is-free:hover {
+  background: #EFF6FF;
+  border-color: #38BDF8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.timetable-slot-cell.drag-over-active {
+  background: #DBEAFE !important;
+  border: 2px dashed #2563EB !important;
+}
+
+.free-slot-dash {
+  color: #94A3B8;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+/* Friday Holiday Disabled Cell */
+.friday-row-holiday .day-cell-label {
+  background: #E2E8F0;
+  color: #64748B;
+}
+
+.timetable-slot-cell.friday-disabled {
+  background: #F1F5F9;
+  border: 1px dashed #CBD5E1;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.holiday-text {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #94A3B8;
+  letter-spacing: 0.5px;
+}
+
+/* Assigned Batch Pill */
+.assigned-batch-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 0.82rem;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  position: relative;
+  transition: transform 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.assigned-batch-pill:hover {
+  transform: scale(1.03);
+}
+
+.clear-slot-x {
+  background: rgba(0, 0, 0, 0.15);
+  border: none;
+  color: inherit;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.assigned-batch-pill:hover .clear-slot-x {
+  opacity: 1;
+}
+
+.clear-slot-x:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Bottom Batch Colors Palette Section */
+.batch-colors-palette-section {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 18px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.palette-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  font-weight: 900;
+  color: #1E293B;
+  border-bottom: 1px solid #E2E8F0;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.drag-hint {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+  margin-left: auto;
+}
+
+.clear-selected-batch-btn {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FCA5A5;
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.batches-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.batch-drag-chip {
+  padding: 8px 14px;
+  border-radius: 12px;
+  cursor: grab;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  transition: all 0.2s ease;
+  user-select: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.batch-drag-chip:active {
+  cursor: grabbing;
+}
+
+.batch-drag-chip:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.batch-drag-chip.click-selected {
+  outline: 3px solid #3B82F6;
+  outline-offset: 2px;
+  transform: translateY(-2px);
+}
+
+.chip-code {
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.chip-sub {
+  font-size: 0.68rem;
+  opacity: 0.85;
+  font-weight: 700;
+}
+
+/* Badge Color Classes: Green (Plus One / Plus Two), Orange (Degree), Red (PG) */
+/* Plus One & Plus Two - Green Variants */
+.badge-hs1a { background: #D1FAE5; color: #065F46; border: 1px solid #A7F3D0; }
+.badge-hs1b { background: #CCFBF1; color: #115E59; border: 1px solid #99F6E4; }
+.badge-hs2a { background: #DCFCE7; color: #14532D; border: 1px solid #86EFAC; }
+.badge-hs2b { background: #ECFCCB; color: #365314; border: 1px solid #BEF264; }
+
+/* Degree Stream - Orange Variants */
+.badge-dg1a { background: #FFEDD5; color: #9A3412; border: 1px solid #FDBA74; }
+.badge-dg1b { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; }
+.badge-dg2a { background: #FED7AA; color: #7C2D12; border: 1px solid #FB923C; }
+.badge-dg2b { background: #FFE8D6; color: #84300C; border: 1px solid #FFB088; }
+.badge-dg3a { background: #FFD8BE; color: #7A2600; border: 1px solid #FF9F1C; }
+.badge-dg3b { background: #FFE5D9; color: #9E2A2B; border: 1px solid #F4A261; }
+
+/* PG Stream - Red Variants */
+.badge-pg1a { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; }
+.badge-pg1b { background: #FFE4E6; color: #9F1239; border: 1px solid #FECDD3; }
+.badge-pg2a { background: #FECDD3; color: #881337; border: 1px solid #FB7185; }
+.badge-pg2b { background: #FCA5A5; color: #4C0519; border: 1px solid #F87171; }
+
+.badge-default { background: #E2E8F0; color: #1E293B; border: 1px solid #CBD5E1; }
 

@@ -578,6 +578,46 @@ const Home = () => {
           </div>
 
           <div className="project-cards">
+            <div className="project-card" onClick={() => window.open('https://www.pixelconversions.com/', '_blank')}>
+              <div className="project-image">
+                <img src="/screenshots/pixelconversions.png" alt="Pixel Conversions" />
+                <div className="project-overlay">
+                  <span>Visit Live App <i className="fas fa-external-link-alt"></i></span>
+                </div>
+              </div>
+              <div className="project-info">
+                <span className="project-category">Digital Agency & Full Stack</span>
+                <h4>Pixel Conversions — Web & Growth Agency</h4>
+                <p>Digital agency platform engineering custom Next.js web applications, Shopify e-commerce platforms, and performance marketing campaigns.</p>
+                <div className="project-tags">
+                  <span>Next.js</span>
+                  <span>React</span>
+                  <span>Shopify</span>
+                  <span>Tailwind CSS</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="project-card" onClick={() => window.open('https://www.fixerland.com/', '_blank')}>
+              <div className="project-image">
+                <img src="/screenshots/fixerland.png" alt="Fixerland Mobile Repair" />
+                <div className="project-overlay">
+                  <span>Visit Live App <i className="fas fa-external-link-alt"></i></span>
+                </div>
+              </div>
+              <div className="project-info">
+                <span className="project-category">Service Booking & Showcase</span>
+                <h4>Fixerland — Mobile Repair Platform</h4>
+                <p>Smartphone repair service booking platform offering online repair scheduling, direct WhatsApp instant booking, and localized device service showcases.</p>
+                <div className="project-tags">
+                  <span>JavaScript</span>
+                  <span>HTML5/CSS3</span>
+                  <span>WhatsApp API</span>
+                  <span>Lead Gen</span>
+                </div>
+              </div>
+            </div>
+
             <div className="project-card" onClick={() => window.open('https://ztoiq.com/', '_blank')}>
               <div className="project-image">
                 <img src="/screenshots/ztoiq.png" alt="Ztoiq E-Commerce" />

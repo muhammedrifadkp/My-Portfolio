@@ -95,13 +95,11 @@ const Contact = () => {
     setSubmitStatus(null);
 
     const isValidName = validateName(formData.name);
-    const isValidEmail = validateEmail(formData.email);
     const isValidPhone = validatePhone(formData.phone);
     const isValidMessage = validateMessage(formData.message);
 
-    const isFormValid = isValidName && isValidEmail && isValidPhone && isValidMessage;
-
-    if (!isFormValid) {
+    // Basic required check
+    if (!formData.name.trim() || !formData.message.trim()) {
       setSubmitStatus('error');
       setIsSubmitting(false);
       setTimeout(() => {
@@ -110,39 +108,26 @@ const Contact = () => {
       return;
     }
 
-    // Process form submission
-    const handleSuccess = () => {
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-      handleTakeOff(); // Trigger 3D plane takeoff animation
-      setIsTyping(false);
-      setSubmitStatus('success');
-      setIsSubmitting(false);
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 6000);
-    };
+    // Format pre-filled WhatsApp message
+    const whatsappMessage = `Hi Rifad! I saw your portfolio and would like to get in touch.%0A%0A*Name:* ${encodeURIComponent(formData.name)}${formData.email ? `%0A*Email:* ${encodeURIComponent(formData.email)}` : ''}${formData.phone ? `%0A*Phone:* ${encodeURIComponent(formData.phone)}` : ''}%0A*Message:* ${encodeURIComponent(formData.message)}`;
 
-    // Process form submission with Resend / Web3Forms / EmailJS
-    sendContactEmail(formData).then(() => {
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-      handleTakeOff(); // Trigger 3D plane takeoff animation
-      setIsTyping(false);
-      setSubmitStatus('success');
-      setIsSubmitting(false);
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 6000);
+    // Open WhatsApp directly with phone number 917356852496
+    const whatsappUrl = `https://wa.me/917356852496?text=${whatsappMessage}`;
+    window.open(whatsappUrl, '_blank');
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
     });
+    handleTakeOff(); // Trigger 3D plane takeoff animation
+    setIsTyping(false);
+    setSubmitStatus('success');
+    setIsSubmitting(false);
+    setTimeout(() => {
+      setSubmitStatus(null);
+    }, 6000);
   };
 
   const handleTakeOff = () => {
@@ -215,13 +200,13 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="contact-info-item">
-          <div className="info-icon">
-            <i className="fas fa-phone-alt"></i>
+        <div className="contact-info-item" onClick={() => window.open('https://wa.me/917356852496?text=Hi%20Rifad%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20inquire.', '_blank')} style={{ cursor: 'pointer' }}>
+          <div className="info-icon" style={{ background: 'rgba(37, 211, 102, 0.15)', borderColor: '#25D366', color: '#25D366' }}>
+            <i className="fab fa-whatsapp"></i>
           </div>
           <div className="info-details">
-            <h3>Phone</h3>
-            <p>{import.meta.env.VITE_CONTACT_PHONE || "+91 7356852496"}</p>
+            <h3>WhatsApp & Direct Call</h3>
+            <p>+91 7356852496</p>
           </div>
         </div>
       </div>
@@ -234,14 +219,14 @@ const Contact = () => {
           {submitStatus === 'success' && (
             <div className="submit-message success">
               <i className="fas fa-check-circle"></i>
-              <p>✅ Message received! Thank you for contacting me.</p>
+              <p>✅ Opening WhatsApp chat with pre-filled message!</p>
             </div>
           )}
 
           {submitStatus === 'error' && (
             <div className="submit-message error">
               <i className="fas fa-exclamation-circle"></i>
-              <p>❌ Please check all fields and try again.</p>
+              <p>❌ Please fill in your name and message before sending.</p>
             </div>
           )}
 
@@ -306,19 +291,19 @@ const Contact = () => {
             </div>
             <button
               type="submit"
-              className={`submit-button ${isSubmitting ? 'submitting' : ''}`}
+              className={`submit-button whatsapp-submit ${isSubmitting ? 'submitting' : ''}`}
               disabled={isSubmitting}
               onClick={() => handleInputFocus(inputRefs.message)}
             >
               {isSubmitting ? (
                 <>
                   <span className="spinner"></span>
-                  <span className="button-text">Sending...</span>
+                  <span className="button-text">Connecting WhatsApp...</span>
                 </>
               ) : (
                 <>
-                  <i className="fas fa-paper-plane"></i>
-                  <span className="button-text">Send Message</span>
+                  <i className="fab fa-whatsapp" style={{ fontSize: '1.2rem' }}></i>
+                  <span className="button-text">Send via WhatsApp (+91 7356852496)</span>
                 </>
               )}
             </button>

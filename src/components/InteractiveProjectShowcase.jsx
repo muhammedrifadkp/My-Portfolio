@@ -84,6 +84,62 @@ const PhoneModel = ({ project, onClick }) => {
 // Project data with enhanced information - Updated from GitHub
 const projectsData = [
   {
+    id: 6,
+    name: 'Pixel Conversions',
+    type: 'Digital Web & Growth Agency',
+    description: 'Custom Next.js agency platform engineering high-converting web applications, Shopify e-commerce stores, and growth marketing campaigns.',
+    technologies: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Shopify', 'SEO'],
+    primaryColor: '#E63946',
+    secondaryColor: '#1D3557',
+    icon: '⚡',
+    liveUrl: 'https://www.pixelconversions.com/',
+    githubUrl: 'https://github.com/muhammedrifadkp/pixel-conversions',
+    features: [
+      'Custom Next.js & React Frontend Architecture',
+      'Shopify E-Commerce Store Integration',
+      'Performance Marketing & Lead Funnels',
+      'Global Client Portfolio & Services Engine',
+      'SEO Optimization & Fast Server Rendering'
+    ],
+    metrics: {
+      delivery: '7-14 Days',
+      quality: 'Premium',
+      conversions: '+45%',
+      rating: 5.0
+    },
+    screenshots: [
+      '/screenshots/pixelconversions.png'
+    ]
+  },
+  {
+    id: 7,
+    name: 'Fixerland Mobile Repair',
+    type: 'Service Showcase & Booking',
+    description: 'Smartphone repair service booking platform offering online repair scheduling, direct WhatsApp instant booking, and device service showcases.',
+    technologies: ['JavaScript', 'HTML5', 'CSS3', 'WhatsApp API', 'REST API'],
+    primaryColor: '#D90429',
+    secondaryColor: '#2B2D42',
+    icon: '📱',
+    liveUrl: 'https://www.fixerland.com/',
+    githubUrl: 'https://github.com/muhammedrifadkp/fixerland',
+    features: [
+      'Smartphone Repair Online Booking Engine',
+      'Instant WhatsApp Consultation & Booking',
+      'Screen, Battery & Component Repair Catalog',
+      'Localized Customer Testimonials & Reviews',
+      'Responsive Mobile-First UI Design'
+    ],
+    metrics: {
+      repairs: '1K+',
+      satisfaction: '99%',
+      turnaround: 'Same Day',
+      rating: 5.0
+    },
+    screenshots: [
+      '/screenshots/fixerland.png'
+    ]
+  },
+  {
     id: 1,
     name: 'CDC Attendance',
     type: 'Full Stack Management System',

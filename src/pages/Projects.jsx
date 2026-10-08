@@ -17,6 +17,32 @@ const Projects = () => {
 
   const projects = [
     {
+      id: 16,
+      title: 'Pixel Conversions — Web & Growth Agency',
+      category: 'client',
+      type: 'Digital Agency & Full Stack',
+      featured: true,
+      image: '/screenshots/pixelconversions.png',
+      description: 'Full-featured digital agency platform engineering custom Next.js web applications, Shopify e-commerce platforms, and growth performance marketing campaigns.',
+      technologies: ['TypeScript', 'Next.js', 'React', 'Tailwind CSS', 'Shopify API', 'SEO'],
+      demoLink: 'https://www.pixelconversions.com/',
+      codeLink: 'https://github.com/muhammedrifadkp/pixel-conversions',
+      highlights: ['Custom Next.js & React digital agency platform', 'Performance-driven web design & Shopify integration', 'High-converting client acquisition funnels']
+    },
+    {
+      id: 17,
+      title: 'Fixerland — Mobile Repair & Service Platform',
+      category: 'client',
+      type: 'Service Showcase & Booking',
+      featured: true,
+      image: '/screenshots/fixerland.png',
+      description: 'Smartphone repair service booking platform offering online repair scheduling, direct WhatsApp instant booking, and localized device service showcases.',
+      technologies: ['JavaScript', 'HTML5', 'CSS3', 'WhatsApp API', 'Responsive UI'],
+      demoLink: 'https://www.fixerland.com/',
+      codeLink: 'https://github.com/muhammedrifadkp/fixerland',
+      highlights: ['Instant smartphone repair booking workflow', 'Direct WhatsApp client consultation integration', 'Localized device service showcase & pricing layout']
+    },
+    {
       id: 15,
       title: 'Ztoiq — Modern E-Commerce Platform',
       category: 'client',
@@ -214,7 +240,7 @@ const Projects = () => {
   ];
 
   const categories = [
-    { id: 'all', name: 'All Projects (15)' },
+    { id: 'all', name: 'All Projects (17)' },
     { id: 'client', name: 'Client Apps (UAE & India)' },
     { id: 'fullstack', name: 'Full Stack & MERN' },
     { id: 'frontend', name: 'Frontend & 3D' }
@@ -310,7 +336,7 @@ const Projects = () => {
           <span className="section-badge">💻 GitHub & Live Production Portfolio</span>
           <h1 className="projects-title">Featured Engineering Work</h1>
           <p className="projects-subtitle">
-            Explore 15 live production web platforms, client applications, and full-stack solutions built for businesses across the UAE & India.
+            Explore 17 live production web platforms, client applications, and full-stack solutions built for businesses across the UAE & India.
           </p>
         </div>
 
@@ -369,6 +395,15 @@ const Projects = () => {
                       <span>Live Demo</span> <i className="fas fa-external-link-alt"></i>
                     </a>
                   )}
+                  <a
+                    href={`https://wa.me/917356852496?text=${encodeURIComponent(`Hi Rifad! I saw your project "${project.title}" on your portfolio and I would like to inquire about building a similar platform.`)}`}
+                    className="project-link whatsapp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Enquire on WhatsApp"
+                  >
+                    <i className="fab fa-whatsapp"></i> Enquire
+                  </a>
                   {project.codeLink && (
                     <a
                       href={project.codeLink}
@@ -376,7 +411,7 @@ const Projects = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <i className="fab fa-github"></i> GitHub
+                      <i className="fab fa-github"></i>
                     </a>
                   )}
                 </div>
@@ -432,8 +467,16 @@ const Projects = () => {
                       <span>Visit Live Application</span> <i className="fas fa-external-link-alt"></i>
                     </a>
                   )}
+                  <a
+                    href={`https://wa.me/917356852496?text=${encodeURIComponent(`Hi Rifad! I saw your project "${selectedProject.title}" on your portfolio and I would like to inquire about building a similar platform.`)}`}
+                    className="demo-link whatsapp-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fab fa-whatsapp"></i> Enquire on WhatsApp (+91 7356852496)
+                  </a>
                   <a href={selectedProject.codeLink} className="code-link" target="_blank" rel="noopener noreferrer">
-                    <i className="fab fa-github"></i> View GitHub Repository
+                    <i className="fab fa-github"></i> View GitHub
                   </a>
                 </div>
               </div>

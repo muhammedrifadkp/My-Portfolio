@@ -260,6 +260,16 @@
   box-shadow: 0 8px 25px rgba(0, 240, 255, 0.3);
 }
 
+.submit-button.whatsapp-submit {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+.submit-button.whatsapp-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(37, 211, 102, 0.65);
+}
+
 .submit-button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 12px 35px rgba(0, 240, 255, 0.5);

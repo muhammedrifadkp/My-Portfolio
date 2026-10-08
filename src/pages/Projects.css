@@ -269,10 +269,26 @@
   box-shadow: 0 6px 20px rgba(0, 240, 255, 0.5);
 }
 
+.project-link.whatsapp,
+.whatsapp-link {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+}
+
+.project-link.whatsapp:hover,
+.whatsapp-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  color: #ffffff;
+}
+
 .project-link.secondary {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #cbd5e1;
+  flex: 0 0 42px;
+  padding: 10px 0;
 }
 
 .project-link.secondary:hover {

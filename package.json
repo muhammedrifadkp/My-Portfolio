@@ -1,5 +1,5 @@
 {
-  "name": "mansi-portfolio-3d",
+  "name": "muhammed-rifad-portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,7 +13,6 @@
     "security-check": "node scripts/verify-security.js"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.11.0",
     "@preact/signals-react": "^3.2.1",
     "@react-spring/three": "^9.7.5",
     "@react-three/drei": "^9.122.0",

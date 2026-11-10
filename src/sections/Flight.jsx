@@ -1,21 +1,22 @@
 import { lazy, Suspense, useEffect, useRef } from 'react'
-import { Canvas } from '@react-three/fiber'
+import ClientOnly from '../components/ClientOnly'
 import useInView from '../hooks/useInView'
+import { projects } from '../data/site'
 import './Flight.css'
 
-const Journey = lazy(() => import('../three/Journey'))
+const FlightScene = lazy(() => import('../three/Journey'))
 
 const facts = [
-  { n: '16', t: 'sites and apps on this page, most of them live for real businesses' },
+  { n: String(projects.length), t: 'sites and apps on this site, most of them live for real businesses' },
   { n: '2', t: 'countries of clients: the UAE and India' },
-  { n: '1', t: 'person from the first sketch to the last deploy' },
+  { n: '1', t: 'person, from the first sketch to the last deploy' },
 ]
 
 /* Kerala to the Gulf: the plane crosses the sky as the section scrolls. */
 export default function Flight() {
   const wrap = useRef(null)
   const state = useRef({ progress: 0 })
-  const near = useInView(wrap, '600px', true)
+  const near = useInView(wrap, '700px', true)
   const visible = useInView(wrap, '100px')
 
   useEffect(() => {
@@ -37,13 +38,11 @@ export default function Flight() {
       <div className="flight-pin">
         <div className="flight-canvas" aria-hidden="true">
           {near && (
-            <Canvas frameloop={visible ? 'always' : 'never'} dpr={[1, 1.6]} camera={{ fov: 40, position: [0, 0, 11], near: 0.1, far: 300 }}>
-              <hemisphereLight args={['#ffffff', '#b8cde0', 1.4]} />
-              <directionalLight position={[5, 8, 6]} intensity={2.2} />
+            <ClientOnly>
               <Suspense fallback={null}>
-                <Journey state={state} />
+                <FlightScene state={state} active={visible} />
               </Suspense>
-            </Canvas>
+            </ClientOnly>
           )}
         </div>
         <div className="flight-copy wrap">
@@ -55,7 +54,7 @@ export default function Flight() {
           </div>
           <ul className="flight-facts glass" data-reveal>
             {facts.map((f) => (
-              <li key={f.n + f.t}>
+              <li key={f.t}>
                 <span className="flight-n tabular">{f.n}</span>
                 <span>{f.t}</span>
               </li>

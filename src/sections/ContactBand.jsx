@@ -1,14 +1,16 @@
 import { lazy, Suspense, useRef } from 'react'
+import ClientOnly from '../components/ClientOnly'
+import LocalTime from '../components/LocalTime'
 import { profile, waLink } from '../data/site'
 import { WhatsAppIcon } from '../components/Icons'
 import useInView from '../hooks/useInView'
 import './ContactBand.css'
 
-const Logo3D = lazy(() => import('../three/Logo3D'))
+const GlassLogo = lazy(() => import('../three/GlassLogo'))
 
 export default function ContactBand({ as = 'h2', title = 'Have a website in mind?' }) {
   const ref = useRef(null)
-  const near = useInView(ref, '400px', true)
+  const near = useInView(ref, '500px', true)
   const visible = useInView(ref, '0px')
   const Title = as
   const [user, host] = profile.email.split('@')
@@ -23,14 +25,16 @@ export default function ContactBand({ as = 'h2', title = 'Have a website in mind
               <a className="btn btn-primary" href={waLink('Hi Rifad, I have a website in mind.')} target="_blank" rel="noreferrer">
                 <WhatsAppIcon /> Message on WhatsApp
               </a>
-              <a className="btn btn-quiet" href={profile.phoneHref}>Call {profile.phone}</a>
+              <a className="btn" href={profile.phoneHref}>Call {profile.phone}</a>
             </div>
           </div>
-          <div className="cband-logo">
+          <div className="cband-logo" aria-hidden="true">
             {near && (
-              <Suspense fallback={null}>
-                <Logo3D className="cband-canvas" active={visible} />
-              </Suspense>
+              <ClientOnly>
+                <Suspense fallback={null}>
+                  <GlassLogo active={visible} />
+                </Suspense>
+              </ClientOnly>
             )}
           </div>
         </div>
@@ -38,7 +42,7 @@ export default function ContactBand({ as = 'h2', title = 'Have a website in mind
           <span>{user}</span><span className="cband-at">@{host}</span>
         </a>
         <div className="cband-foot t-small">
-          <span>{profile.city}, India</span>
+          <LocalTime />
           <span className="cband-socials">
             {profile.socials.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noreferrer">{s.label}</a>

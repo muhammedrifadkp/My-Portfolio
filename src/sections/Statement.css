@@ -1,0 +1,18 @@
+.statement-text {
+  --p: 1;
+  max-width: 19em;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.7vw, 76px);
+  font-weight: 620;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+.js .statement-text { --p: 0; }
+.statement-w {
+  /* a soft edge three words wide travels through the paragraph */
+  opacity: calc(0.14 + clamp(0, (var(--p) * (var(--n) + 3) - var(--i)) / 3, 1) * 0.86);
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .statement-text { --p: 1 !important; }
+  .statement-w { opacity: 1; }
+}

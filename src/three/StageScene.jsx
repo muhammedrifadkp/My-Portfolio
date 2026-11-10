@@ -24,6 +24,7 @@ const screenShader = {
     }`,
 }
 
+const STILL = typeof document !== 'undefined' && document.documentElement.classList.contains('shot')
 const ease = (t) => 1 - Math.pow(1 - t, 3)
 const damp = THREE.MathUtils.damp
 
@@ -62,8 +63,10 @@ function Workstation({ images, state, compact, onReady }) {
     const center = box.getCenter(new THREE.Vector3())
     const k = 4 / Math.max(sizeV.x, sizeV.y, sizeV.z)
     let screenMesh = null
+    const glow = []
     scene.traverse((o) => {
       if (!o.isMesh) return
+      if (o.material && o.material.emissiveMap) glow.push(o.material)
       if (o.material && 'envMapIntensity' in o.material) o.material.envMapIntensity = 1.1
       if (/^MY.?SCREEN/i.test(o.name) && !screenMesh) screenMesh = o
     })
@@ -77,7 +80,7 @@ function Workstation({ images, state, compact, onReady }) {
       yaw = -Math.atan2(n.x, n.z)
       screenMesh.material = material
     }
-    return { center, k, screenMesh, yaw }
+    return { center, k, screenMesh, yaw, glow }
   }, [scene, material])
 
   const screenPose = useRef(null)
@@ -95,7 +98,7 @@ function Workstation({ images, state, compact, onReady }) {
   const cur = useRef({ idx: 0, next: 0, t: 1 })
   const look = useRef(new THREE.Vector3())
 
-  useFrame((_, dt) => {
+  useFrame((s, dt) => {
     const st = state.current
     const p = ease(Math.min(Math.max(st.progress, 0), 1))
 
@@ -112,15 +115,21 @@ function Workstation({ images, state, compact, onReady }) {
 
     /* the visitor's drag turns the desk; it settles back when let go */
     st.yaw = damp(st.yaw || 0, st.dragging ? st.drag : 0, st.dragging ? 12 : 2.5, dt)
-    if (spin.current) spin.current.rotation.y = -0.42 * (1 - p) + st.yaw + Math.sin(performance.now() / 2600) * 0.03 * (1 - p)
+    if (spin.current) spin.current.rotation.y = -0.42 * (1 - p) + st.yaw + (STILL ? 0 : Math.sin(performance.now() / 2600) * 0.03 * (1 - p))
 
     /* camera: whole desk -> monitor close-up */
     const sp = screenPose.current
     if (!sp) return
     const aspect = size.width / size.height
     const wide = new THREE.Vector3(0, compact ? -0.25 : -0.3, 0)
-    const deskDist = compact ? (aspect < 0.7 ? 15.5 : 12.5) : aspect < 1.2 ? 11 : 9.4
+    const deskDist = compact ? (aspect < 0.7 ? 18.5 : 12.5) : aspect < 1.2 ? 11 : 9.4
     const posA = new THREE.Vector3(0, deskDist * 0.3, deskDist)
+    if (!STILL) {
+      /* the camera leans a little toward the pointer, and the RGB lights breathe */
+      posA.x += s.pointer.x * 0.55 * (1 - p)
+      posA.y += s.pointer.y * 0.3 * (1 - p)
+      info.glow.forEach((m, i) => { m.emissiveIntensity = 1 + Math.sin(s.clock.elapsedTime * 1.4 + i * 0.9) * 0.3 })
+    }
     const fitW = sp.width / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * aspect)
     const closeDist = fitW * (compact ? 1.25 : 2.7)
     const shift = compact ? 0 : sp.width * 0.42
@@ -149,7 +158,7 @@ export default function StageScene({ state, images, compact, active, onReady }) 
   return (
     <Canvas
       frameloop={active ? 'always' : 'never'}
-      dpr={[1, compact ? 1.5 : 1.75]}
+      dpr={STILL ? 2 : [1, compact ? 1.5 : 1.75]}
       camera={{ fov: 30, position: [0, 2.8, 9.4], near: 0.05, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >

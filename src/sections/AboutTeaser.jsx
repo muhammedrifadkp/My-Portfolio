@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
+import TLink from '../components/TLink'
 import './AboutTeaser.css'
 
 export default function AboutTeaser() {
@@ -17,9 +17,9 @@ export default function AboutTeaser() {
           Teaching keeps me clear. I explain what I build in plain words, I write code someone else can pick up, and I ship on the date we agree.
         </p>
         <div data-reveal>
-          <Link to="/about" className="btn btn-quiet">
+          <TLink to="/about" className="btn">
             More about me <ArrowRight aria-hidden="true" />
-          </Link>
+          </TLink>
         </div>
       </div>
     </section>

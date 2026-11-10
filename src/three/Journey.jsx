@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
+import { Suspense, useEffect, useMemo, useRef } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import * as THREE from 'three'
@@ -152,18 +152,18 @@ function Fox() {
 
 function Rig({ state }) {
   const { camera, size } = useThree()
-  useFrame((_, dt) => {
+  useFrame((s, dt) => {
     const narrow = size.width / size.height < 1
     const p = state.current.progress
-    camera.position.x = damp(camera.position.x, (narrow ? 0.4 : 0) + p * 1.2, 3, dt)
-    camera.position.y = damp(camera.position.y, (narrow ? 0.2 : 0) + p * 0.8, 3, dt)
+    camera.position.x = damp(camera.position.x, (narrow ? 0.4 : 0) + p * 1.2 + s.pointer.x * 0.6, 3, dt)
+    camera.position.y = damp(camera.position.y, (narrow ? 0.2 : 0) + p * 0.8 + s.pointer.y * 0.35, 3, dt)
     camera.position.z = narrow ? 15 : 11
     camera.lookAt(p * 1.6, p * 0.6, 0)
   })
   return null
 }
 
-export default function Journey({ state }) {
+function Scene({ state }) {
   return (
     <>
       <Rig state={state} />
@@ -173,6 +173,19 @@ export default function Journey({ state }) {
       <Bird position={[3.2, 2.2, -3]} phase={0} />
       <Bird position={[5.4, 3.1, -6]} phase={1.7} scale={0.8} speed={0.85} />
     </>
+  )
+}
+
+/* The sky, the island and everything that flies: loaded only when the section is near. */
+export default function FlightScene({ state, active }) {
+  return (
+    <Canvas frameloop={active ? 'always' : 'never'} dpr={[1, 1.6]} camera={{ fov: 40, position: [0, 0, 11], near: 0.1, far: 300 }}>
+      <hemisphereLight args={['#ffffff', '#b8cde0', 1.4]} />
+      <directionalLight position={[5, 8, 6]} intensity={2.2} />
+      <Suspense fallback={null}>
+        <Scene state={state} />
+      </Suspense>
+    </Canvas>
   )
 }
 

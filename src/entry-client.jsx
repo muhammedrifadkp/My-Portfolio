@@ -6,6 +6,8 @@ import { lazyPages, preloadPath } from './routes'
 import './utils/security'
 import './index.css'
 
+if (new URLSearchParams(window.location.search).has('shot')) document.documentElement.classList.add('shot')
+
 const root = document.getElementById('root')
 const app = (
   <StrictMode>

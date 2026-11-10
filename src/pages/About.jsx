@@ -24,7 +24,7 @@ export default function About() {
             <a className="btn btn-primary" href={profile.resume} download>
               <Download aria-hidden="true" /> Download CV
             </a>
-            <a className="btn btn-quiet" href={waLink('Hi Rifad, I read your About page.')} target="_blank" rel="noreferrer">
+            <a className="btn" href={waLink('Hi Rifad, I read your About page.')} target="_blank" rel="noreferrer">
               <WhatsAppIcon /> Say hello
             </a>
           </div>

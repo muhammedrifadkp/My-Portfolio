@@ -6,10 +6,11 @@ const positions = new Map()
 
 /* New page: top (or the #hash). Back and Forward: where you were. */
 export default function ScrollManager() {
-  const { key, hash } = useLocation()
+  const { key, hash, pathname } = useLocation()
   const type = useNavigationType()
   const first = useRef(true)
   const current = useRef(key)
+  const path = useRef(pathname)
 
   useEffect(() => {
     let raf = 0
@@ -23,9 +24,12 @@ export default function ScrollManager() {
 
   useIsoLayoutEffect(() => {
     current.current = key
+    const samePage = path.current === pathname
+    path.current = pathname
     if (first.current) { first.current = false; return } // the browser restores a reload itself
     window.history.scrollRestoration = 'manual'
     if (type === 'POP') { window.scrollTo(0, positions.get(key) || 0); return }
+    if (samePage && !hash) return
     const target = hash && document.getElementById(hash.slice(1))
     if (target) target.scrollIntoView()
     else window.scrollTo(0, 0)

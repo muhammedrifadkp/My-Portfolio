@@ -14,7 +14,7 @@
 .services-list { display: grid; gap: clamp(40px, 5vw, 72px); padding-top: 8px; }
 .services-list li { display: grid; gap: 12px; max-width: 34em; }
 .services-list li:nth-child(even) { margin-left: clamp(0px, 8vw, 140px); }
-.services-name { font-size: var(--t-h3); letter-spacing: -0.04em; line-height: 1.05; }
+.services-name { font-size: var(--t-h3); }
 .services-list p { font-size: 19px; line-height: 1.45; }
 @media (max-width: 960px) {
   .services { grid-template-columns: 1fr; }

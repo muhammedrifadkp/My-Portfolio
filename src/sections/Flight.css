@@ -1,5 +1,6 @@
 .flight {
   position: relative;
+  margin-top: var(--section);
   height: 240svh;
   background: var(--sky);
 }
@@ -26,18 +27,18 @@
   display: grid;
   gap: 18px;
   max-width: 620px;
-  background: rgba(255, 255, 255, 0.62);
+  background: rgb(255 255 255 / 0.56);
 }
 .flight-lede { font-size: 19px; line-height: 1.45; }
 .flight-facts {
-  display: grid;
-  gap: 10px;
   align-self: start;
-  margin-top: calc(var(--nav-h) + clamp(24px, 6svh, 64px));
   justify-self: end;
+  margin-top: calc(var(--nav-h) + clamp(24px, 6svh, 64px));
   width: min(420px, 100%);
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  background: rgb(255 255 255 / 0.5);
 }
-.flight-facts { padding: 12px 24px; border-radius: var(--radius); background: rgba(255, 255, 255, 0.55); }
 .flight-facts li {
   display: grid;
   grid-template-columns: 64px 1fr;
@@ -47,15 +48,14 @@
   font-size: 16px;
   line-height: 1.35;
 }
-.flight-n { font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+.flight-n { font-family: var(--font-display); font-size: var(--t-h3); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
 
 @media (max-width: 820px) {
   .flight { height: 200svh; }
-  .flight-copy { grid-template-columns: 1fr; align-content: end; gap: 10px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .flight-copy { grid-template-columns: 1fr; align-content: end; gap: 10px; padding-bottom: calc(20px + var(--tabbar) + env(safe-area-inset-bottom)); }
+  .flight-card { padding: 20px; gap: 10px; }
   .flight-lede { font-size: 16px; }
-  .flight-facts { justify-self: stretch; width: 100%; align-self: end; margin-top: 0; order: 2; }
-  .flight-facts { padding: 6px 16px; }
+  .flight-facts { justify-self: stretch; width: 100%; align-self: end; margin-top: 0; order: 2; padding: 4px 18px; }
   .flight-facts li { padding-block: 8px; grid-template-columns: 44px 1fr; font-size: 15px; }
-  .flight-n { font-size: 28px; }
   .flight-facts li:nth-child(3) { display: none; }
 }

@@ -4,11 +4,12 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 40px;
   align-items: center;
+  padding-bottom: var(--tabbar);
 }
 .nf-copy { display: grid; gap: 28px; }
 .nf-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.nf-stage { aspect-ratio: 1; width: 100%; border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+.nf-stage { aspect-ratio: 1; width: 100%; border-radius: var(--radius); background: var(--sea); overflow: hidden; }
 @media (max-width: 820px) {
-  .notfound { grid-template-columns: 1fr; padding-block: 32px; }
+  .notfound { grid-template-columns: 1fr; padding-block: 32px calc(32px + var(--tabbar)); }
   .nf-stage { order: -1; aspect-ratio: 4 / 3; }
 }

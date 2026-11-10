@@ -1,6 +1,7 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, ArrowRight, Move3d } from 'lucide-react'
 import ClientOnly from '../components/ClientOnly'
+import TLink from '../components/TLink'
 import { bySlug, onScreen, profile, waLink } from '../data/site'
 import { WhatsAppIcon } from '../components/Icons'
 import useInView from '../hooks/useInView'
@@ -21,9 +22,11 @@ export default function WorkStage() {
   const state = useRef({ progress: 0, step: 0, drag: 0, dragging: false, yaw: 0 })
   const [step, setStep] = useState(-1) // -1 = hero
   const [heroOut, setHeroOut] = useState(0)
+  const [ready, setReady] = useState(false)
   const inView = useInView(wrap, '200px')
   const compact = useMedia('(max-width: 820px)')
   const reduced = useMedia('(prefers-reduced-motion: reduce)')
+  const onReady = useCallback(() => setReady(true), [])
 
   useEffect(() => {
     let raf = 0
@@ -56,8 +59,7 @@ export default function WorkStage() {
     startX.current = e.clientX
   }
   const onUp = () => { state.current.dragging = false }
-
-  const turn = (dir) => { state.current.yaw += dir * 0.5 }
+  const turn = () => { state.current.yaw += 0.6 }
 
   const jumpTo = (i) => {
     const el = wrap.current
@@ -66,11 +68,18 @@ export default function WorkStage() {
     window.scrollTo({ top: el.offsetTop + run * t, behavior: reduced ? 'auto' : 'smooth' })
   }
 
+  const heroTab = step >= 0 ? -1 : 0
+
   return (
     <section ref={wrap} className="stage" aria-labelledby="hero-title">
       <div className="stage-pin">
+        {/* a still of the desk, on screen at once; the live 3D scene takes over when it has loaded */}
+        <picture className={`stage-poster ${ready ? 'is-gone' : ''}`} aria-hidden="true">
+          <source media="(max-aspect-ratio: 7/10)" srcSet="/poster-desk-tall.webp" width="780" height="1688" />
+          <img src="/poster-desk.webp" alt="" width="1600" height="1000" fetchpriority="high" decoding="async" />
+        </picture>
         <div
-          className="stage-canvas"
+          className={`stage-canvas ${ready ? 'is-ready' : ''}`}
           onPointerDown={onDown}
           onPointerMove={onMove}
           onPointerUp={onUp}
@@ -80,7 +89,7 @@ export default function WorkStage() {
         >
           <ClientOnly>
             <Suspense fallback={null}>
-              <StageScene state={state} images={screens} compact={compact} active={inView} />
+              <StageScene state={state} images={screens} compact={compact} active={inView} onReady={onReady} />
             </Suspense>
           </ClientOnly>
         </div>
@@ -96,16 +105,16 @@ export default function WorkStage() {
               Full-stack developer in {profile.city}. Websites, online stores and web apps for businesses in the UAE and India.
             </p>
             <div className="hero-actions">
-              <a href="#work" className="btn btn-primary" tabIndex={step >= 0 ? -1 : 0}>
+              <a href="#work" className="btn btn-primary" tabIndex={heroTab}>
                 See the work <ArrowRight aria-hidden="true" />
               </a>
-              <a href={waLink('Hi Rifad, I saw your portfolio and would like to talk about a website.')} className="btn btn-quiet" target="_blank" rel="noreferrer" tabIndex={step >= 0 ? -1 : 0}>
+              <a href={waLink('Hi Rifad, I saw your portfolio and would like to talk about a website.')} className="btn" target="_blank" rel="noreferrer" tabIndex={heroTab}>
                 <WhatsAppIcon /> WhatsApp
               </a>
             </div>
           </div>
           <div className="hero-hint t-small">
-            <button type="button" onClick={() => turn(-1)} tabIndex={step >= 0 ? -1 : 0} aria-label="Turn the desk left">
+            <button type="button" className="btn btn-round" onClick={turn} tabIndex={heroTab} aria-label="Turn the desk">
               <Move3d aria-hidden="true" />
             </button>
             Drag to turn the desk. Scroll to switch it on.
@@ -119,20 +128,20 @@ export default function WorkStage() {
               <p className="t-small muted">{p.kind}</p>
               <h2 className="screen-name">{p.name}</h2>
               <p className="screen-pitch">{p.pitch}</p>
-              <ul className="screen-stack t-small" aria-label="Built with">
-                {p.stack.map((s) => <li key={s}>{s}</li>)}
+              <ul className="screen-stack" aria-label="Built with">
+                {p.stack.map((s) => <li key={s} className="chip">{s}</li>)}
               </ul>
               <div className="screen-links">
                 <a className="btn btn-primary" href={p.url} target="_blank" rel="noreferrer" tabIndex={step === i ? 0 : -1}>
                   Visit the site <ArrowUpRight aria-hidden="true" />
                 </a>
-                <a className="link" href={waLink(`Hi Rifad, I saw ${p.name} on your portfolio. Can you build something like it for me?`)} target="_blank" rel="noreferrer" tabIndex={step === i ? 0 : -1}>
-                  Build me one like this
-                </a>
+                <TLink className="link" to={`/projects/${p.slug}`} tabIndex={step === i ? 0 : -1}>
+                  About this project <ArrowRight aria-hidden="true" />
+                </TLink>
               </div>
             </article>
           ))}
-          <nav className={`screen-dots ${step >= 0 ? 'is-active' : ''}`} aria-label="Sites on the screen">
+          <nav className={`screen-dots glass ${step >= 0 ? 'is-active' : ''}`} aria-label="Sites on the screen">
             {shows.map((p, i) => (
               <button key={p.slug} type="button" aria-label={`Show ${p.name}`} aria-current={step === i ? 'true' : undefined} onClick={() => jumpTo(i)} tabIndex={step >= 0 ? 0 : -1} />
             ))}

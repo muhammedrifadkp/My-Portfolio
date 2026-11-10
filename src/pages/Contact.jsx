@@ -1,15 +1,14 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { Mail, Phone, Plus } from 'lucide-react'
-import { faqs, profile, waLink } from '../data/site'
+import { useEffect, useRef, useState } from 'react'
+import { Mail, Phone } from 'lucide-react'
+import LocalTime from '../components/LocalTime'
 import { WhatsAppIcon } from '../components/Icons'
+import Faq from '../sections/Faq'
+import { profile, waLink } from '../data/site'
 import './Contact.css'
-
-const Logo3D = lazy(() => import('../three/Logo3D'))
 
 const empty = { name: '', reach: '', message: '' }
 
 export default function Contact() {
-  useEffect(() => { document.title = 'Contact | Muhammed Rifad KP' }, [])
   const [form, setForm] = useState(empty)
   const [errors, setErrors] = useState({})
   const [sent, setSent] = useState(null)
@@ -70,30 +69,31 @@ export default function Contact() {
           <p className="t-statement" data-reveal>
             Tell me about the business and what the website should do. I’ll come back with a plan and a price.
           </p>
-          <ul className="contact-ways" data-reveal>
-            <li>
-              <a href={waLink('Hi Rifad, I would like to talk about a website.')} target="_blank" rel="noreferrer">
-                <WhatsAppIcon /> WhatsApp {profile.phone}
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${profile.email}`}><Mail aria-hidden="true" /> {profile.email}</a>
-            </li>
-            <li>
-              <a href={profile.phoneHref}><Phone aria-hidden="true" /> Call {profile.phone}</a>
-            </li>
-          </ul>
+          <div className="contact-ways" data-reveal>
+            <a className="btn btn-primary" href={waLink('Hi Rifad, I would like to talk about a website.')} target="_blank" rel="noreferrer">
+              <WhatsAppIcon /> WhatsApp {profile.phone}
+            </a>
+            <a className="btn" href={`mailto:${profile.email}`}><Mail aria-hidden="true" /> {profile.email}</a>
+            <a className="btn" href={profile.phoneHref}><Phone aria-hidden="true" /> Call</a>
+          </div>
         </div>
-        <div className="contact-logo">
-          <Suspense fallback={null}>
-            <Logo3D className="contact-canvas" />
-          </Suspense>
-        </div>
+        <figure className="contact-photo" data-reveal>
+          <img src="/portrait.webp" alt="Muhammed Rifad KP, the developer you will be talking to" width="630" height="787" />
+          <figcaption className="contact-chip glass">
+            <span className="contact-chip-name">Rifad, in Calicut</span>
+            <LocalTime />
+          </figcaption>
+        </figure>
       </section>
 
-      <section className="contact-form-wrap wrap" aria-labelledby="form-title">
-        <form className="contact-form" noValidate onSubmit={submit('wa')}>
-          <h2 id="form-title" className="t-h2">Write to me.</h2>
+      <section className="contact-write wrap section" aria-labelledby="form-title">
+        <div className="contact-write-head" data-stagger="80">
+          <h2 id="form-title" className="t-h2" data-reveal>Write to me.</h2>
+          <p className="contact-note" data-reveal>
+            Fill this in and it opens WhatsApp, or your email app, with the message written out. You press send there, so you keep a copy.
+          </p>
+        </div>
+        <form className="contact-form" noValidate onSubmit={submit('wa')} data-reveal>
           <div className="field">
             <label htmlFor="f-name">Your name</label>
             <input
@@ -124,24 +124,16 @@ export default function Contact() {
           </div>
           <div className="form-actions">
             <button type="submit" className="btn btn-primary"><WhatsAppIcon /> Send on WhatsApp</button>
-            <button type="button" className="btn btn-quiet" onClick={submit('mail')}><Mail aria-hidden="true" /> Send by email</button>
+            <button type="button" className="btn" onClick={submit('mail')}><Mail aria-hidden="true" /> Send by email</button>
           </div>
           <p className="form-status t-small" aria-live="polite">
             {sent === 'wa' && 'WhatsApp opened with your message. Press send there and I’ll reply.'}
             {sent === 'mail' && 'Your email app opened with the message. Press send there and I’ll reply.'}
           </p>
         </form>
-
-        <div className="faq">
-          <h2 className="faq-title">Questions people ask</h2>
-          {faqs.map((f) => (
-            <details key={f.q} className="faq-item">
-              <summary>{f.q}<Plus aria-hidden="true" /></summary>
-              <p>{f.a}</p>
-            </details>
-          ))}
-        </div>
       </section>
+
+      <Faq />
     </div>
   )
 }

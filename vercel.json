@@ -5,7 +5,7 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/((?!googlef3bbc4990ec622bd\.html).*)",
+      "source": "/((?!googlef3bbc4990ec622bd\\.html).*)",
       "has": [{ "type": "host", "value": "muhammedrifad.vercel.app" }],
       "destination": "https://rifad.site/$1",
       "permanent": true

@@ -1,4 +1,22 @@
+# rifad.site: everything public may be crawled, indexed and quoted.
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://muhammedrifad.vercel.app/sitemap.xml
+# AI search and assistants are welcome too (see /llms.txt for a summary).
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Bingbot
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+
+Sitemap: https://rifad.site/sitemap.xml

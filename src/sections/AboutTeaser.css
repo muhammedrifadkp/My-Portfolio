@@ -1,0 +1,13 @@
+.teaser {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(32px, 6vw, 112px);
+  align-items: center;
+}
+.teaser-photo { border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.teaser-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 1.2s var(--ease-out); }
+.teaser-photo:hover img { transform: scale(1.03); }
+.teaser-copy { display: grid; gap: 28px; max-width: 640px; }
+@media (max-width: 640px) {
+  .teaser { grid-template-columns: 1fr; }
+}

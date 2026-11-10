@@ -1,82 +1,61 @@
-import React, { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import gsap from 'gsap';
-import './NotFound.css';
+import { Suspense, useEffect, useMemo, useRef } from 'react'
+import { Link } from 'react-router-dom'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useAnimations, useGLTF } from '@react-three/drei'
+import * as THREE from 'three'
+import './NotFound.css'
 
-const NotFound = () => {
-  const location = useLocation();
-  const containerRef = useRef(null);
-  const titleRef = useRef(null);
-  const descRef = useRef(null);
-  const btnsRef = useRef(null);
+function Fox() {
+  const { scene, animations } = useGLTF('/models/fox.glb', '/draco/')
+  const fit = useMemo(() => {
+    const b = new THREE.Box3().setFromObject(scene)
+    const s = b.getSize(new THREE.Vector3())
+    const c = b.getCenter(new THREE.Vector3())
+    const k = 2.2 / Math.max(s.x, s.y, s.z)
+    return { k, offset: [-c.x * k, -b.min.y * k, -c.z * k] }
+  }, [scene])
+  const inner = useRef()
+  const outer = useRef()
+  const { actions } = useAnimations(animations, inner)
+  useEffect(() => { (actions.walk || Object.values(actions)[0])?.reset().play() }, [actions])
 
-  // GSAP Entrance Animations
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-
-      tl.fromTo(
-        titleRef.current,
-        { opacity: 0, scale: 0.8, y: 30 },
-        { opacity: 1, scale: 1, y: 0, duration: 1, ease: 'back.out(1.7)' }
-      )
-      .fromTo(
-        descRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
-        '-=0.4'
-      )
-      .fromTo(
-        btnsRef.current.children,
-        { opacity: 0, y: 20, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.15, ease: 'power3.out' },
-        '-=0.4'
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
+  /* walks a slow circle, sniffing for the page */
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime * 0.45
+    if (!outer.current) return
+    outer.current.position.set(Math.sin(t) * 1.1, -1, Math.cos(t) * 0.7 - 0.6)
+    outer.current.rotation.y = Math.atan2(Math.cos(t) * 1.1, -Math.sin(t) * 0.7)
+  })
   return (
-    <div className="not-found-page" ref={containerRef}>
-      {/* Ambient background glows */}
-      <div className="bg-glow-orb orb-1"></div>
-      <div className="bg-glow-orb orb-2"></div>
-      <div className="bg-grid-pattern"></div>
+    <group ref={outer}>
+      <group ref={inner} scale={fit.k} position={fit.offset}>
+        <primitive object={scene} />
+      </group>
+    </group>
+  )
+}
 
-      <div className="not-found-wrapper">
-        {/* Content Glass Card */}
-        <div className="not-found-card">
-          <div className="error-badge-glitch">
-            <span className="dot-pink"></span> ERROR 404 — SPACE DRIFT
-          </div>
-
-          <h1 className="not-found-code" ref={titleRef}>
-            404
-          </h1>
-
-          <div className="not-found-text" ref={descRef}>
-            <h2>Coordinates Lost in Hyperspace</h2>
-            <p>
-              The path <code className="url-code">{location.pathname}</code> has drifted into black hole coordinates or does not exist.
-            </p>
-          </div>
-
-          <div className="not-found-actions" ref={btnsRef}>
-            <Link to="/" className="action-btn primary">
-              <i className="fas fa-rocket"></i> Warp Back Home
-            </Link>
-            <Link to="/projects" className="action-btn secondary">
-              <i className="fas fa-laptop-code"></i> Explore Projects
-            </Link>
-            <Link to="/contact" className="action-btn outline">
-              <i className="fas fa-paper-plane"></i> Contact Rifad
-            </Link>
-          </div>
+export default function NotFound() {
+  useEffect(() => { document.title = 'Page not found | Muhammed Rifad KP' }, [])
+  return (
+    <div className="page notfound wrap">
+      <div className="nf-copy" data-stagger="90">
+        <h1 className="t-display" data-reveal>Lost the trail.</h1>
+        <p className="t-statement" data-reveal>This page isn’t here. The fox is still looking, but the work is one click away.</p>
+        <div className="nf-actions" data-reveal>
+          <Link className="btn btn-primary" to="/">Go home</Link>
+          <Link className="btn btn-quiet" to="/projects">See the work</Link>
         </div>
       </div>
+      <div className="nf-stage" aria-hidden="true">
+        <Canvas dpr={[1, 1.75]} camera={{ fov: 35, position: [0, 1.4, 7] }}>
+          <hemisphereLight args={['#ffffff', '#cdd9e4', 1.6]} />
+          <directionalLight position={[3, 5, 4]} intensity={2} />
+          <Suspense fallback={null}>
+            <Fox />
+          </Suspense>
+        </Canvas>
+      </div>
     </div>
-  );
-};
-
-export default NotFound;
+  )
+}

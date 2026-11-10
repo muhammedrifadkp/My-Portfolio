@@ -21,7 +21,7 @@ const projectUrls = [
   { id: 'portfolio-3d', url: 'https://muhammedrifad.vercel.app/' }
 ];
 
-const screenshotsDir = path.join(process.cwd(), 'public', 'screenshots');
+const screenshotsDir = path.join(process.cwd(), 'assets-src', 'screenshots');
 if (!fs.existsSync(screenshotsDir)) {
   fs.mkdirSync(screenshotsDir, { recursive: true });
 }

@@ -1,27 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
-export default defineConfig({
+// The site is built twice: once for the browser (dist) and once for Node
+// (dist-ssr), which scripts/prerender.mjs uses to write a real HTML file per page.
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
-  assetsInclude: ['**/*.glb'],
   build: {
-    outDir: 'dist',
+    target: 'es2020',
     sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          three: ['three', '@react-three/fiber', '@react-three/drei']
-        }
-      }
-    }
+    cssCodeSplit: false, // one small stylesheet, so prerendered pages are styled before any JS runs
+    manifest: !isSsrBuild,
+    chunkSizeWarningLimit: 900,
   },
-  server: {
-    historyApiFallback: true
-  },
-  preview: {
-    port: 3000,
-    strictPort: true
-  }
-})
+  preview: { port: 3000, strictPort: true },
+}))

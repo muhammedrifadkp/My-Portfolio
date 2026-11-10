@@ -1,0 +1,17 @@
+.proj { padding-bottom: 40px; }
+.proj-back { margin-top: clamp(24px, 5svh, 56px); min-height: 44px; }
+.proj-head { display: grid; gap: 28px; padding-block: clamp(24px, 5svh, 56px) clamp(40px, 7svh, 80px); }
+.proj-pitch { max-width: 30em; }
+.proj-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.proj-shot { border-radius: var(--radius); overflow: hidden; background: var(--tint, var(--surface)); padding: clamp(16px, 4vw, 64px); }
+.proj-shot img { width: 100%; border-radius: var(--radius-sm); }
+.proj-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 64px); padding-block: clamp(56px, 8vw, 112px); }
+.proj-facts section { display: grid; gap: 16px; align-content: start; }
+.proj-list { display: grid; gap: 8px; padding-left: 1.1em; list-style: disc; }
+.proj-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+.proj-next { display: grid; gap: 8px; padding-block: 40px; transition: color 0.25s ease; }
+.proj-next:hover { color: var(--accent); }
+@media (max-width: 820px) {
+  .proj-facts { grid-template-columns: 1fr; }
+  .proj-actions .btn { flex: 1 1 100%; }
+}

@@ -1,59 +1,66 @@
-import React from 'react'
-import { Route, Routes, BrowserRouter } from "react-router-dom"
-import Home from './pages/Home'
-import About from './pages/About'
-import Projects from './pages/Projects'
-import Syllabus from './pages/Syllabus'
-import BatchSyllabus from './pages/BatchSyllabus'
-import Contact from './pages/Contact'
-import AI from './pages/AI'
-import Survey from './pages/Survey'
-import Dashboard from './pages/Dashboard'
-import RegisteredStudents from './pages/RegisteredStudents'
-import NotFound from './pages/NotFound'
-import Navbar from './components/Navbar.jsx'
-import ScrollToTop from './components/ScrollToTop.jsx'
+import { lazy, Suspense, useEffect, useState } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import Nav from './components/Nav.jsx'
+import Footer from './components/Footer.jsx'
+import ScrollManager from './components/ScrollManager.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
-import { ThemeProvider } from './components/ThemeSystem'
-import ModuleDetail from './pages/ModuleDetail'
-import { AuthProvider } from './context/AuthContext'
+import useReveal from './hooks/useReveal'
+import useGlassPointer from './hooks/useGlassPointer'
+import { routeTable } from './routes'
+import { applyMeta } from './seo'
 
-// Security: Initialize security measures
-import './utils/security'
+const CommandPalette = lazy(() => import('./components/CommandPalette'))
 
-const App = () => {
+function Shell({ pages }) {
+  useReveal()
+  useGlassPointer()
+  const { pathname } = useLocation()
+  const [search, setSearch] = useState(false)
+
+  useEffect(() => { applyMeta(pathname) }, [pathname])
+  useEffect(() => { setSearch(false) }, [pathname])
+
+  useEffect(() => {
+    const onKey = (e) => {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable
+      if ((e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey)) || (e.key === '/' && !typing)) {
+        e.preventDefault()
+        setSearch((s) => !s)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   return (
-    <ErrorBoundary>
-      <AuthProvider>
-        <ThemeProvider>
-          <main className='bg-slate-300/20 h-full relative'>
-            <BrowserRouter>
-              <ScrollToTop />
-              <Navbar />
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/about' element={<About />} />
-                <Route path='/projects' element={<Projects />} />
-                <Route path='/syllabus' element={<Syllabus />} />
-                <Route path='/syllabus/:batchId' element={<BatchSyllabus />} />
-                <Route path='/syllabus/:batchId/module/:moduleId' element={<ModuleDetail />} />
-                <Route path='/syllabus/:batchId/:moduleId' element={<ModuleDetail />} />
-                <Route path='/contact' element={<Contact />} />
-                <Route path='/ai' element={<AI />} />
-                <Route path='/survey' element={<Survey />} />
-                <Route path='/dashboard' element={<Dashboard />} />
-                <Route path='/registered-students' element={<RegisteredStudents />} />
-                <Route path='*' element={<NotFound />} />
-              </Routes>
-
-              {/* Advanced Features - Temporarily Disabled */}
-              {/* <AIAssistant /> */}
-            </BrowserRouter>
-          </main>
-        </ThemeProvider>
-      </AuthProvider>
-    </ErrorBoundary>
+    <>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <ScrollManager />
+      <Nav onSearch={() => setSearch(true)} />
+      <main id="main">
+        <Suspense fallback={<div className="page" style={{ minHeight: '100svh' }} />}>
+          <Routes>
+            {routeTable.map((r) => {
+              const Page = pages[r.key]
+              return <Route key={r.key} path={r.path} element={<Page />} />
+            })}
+          </Routes>
+        </Suspense>
+      </main>
+      <Footer />
+      {search && (
+        <Suspense fallback={null}>
+          <CommandPalette onClose={() => setSearch(false)} />
+        </Suspense>
+      )}
+    </>
   )
 }
 
-export default App
+export default function App({ pages }) {
+  return (
+    <ErrorBoundary>
+      <Shell pages={pages} />
+    </ErrorBoundary>
+  )
+}

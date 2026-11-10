@@ -1,395 +1,170 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import './AI.css';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { ArrowUp, RotateCcw } from 'lucide-react'
+import { profile, projects, services, waLink } from '../data/site'
+import './AI.css'
 
-const RIFAD_KNOWLEDGE = {
-  name: "Muhammed Rifad KP",
-  title: "Full Stack Developer & 3D Web Specialist",
-  location: "Calicut, Kerala, India",
-  experience: "2+ years of professional web development & 3D WebGL engineering",
-  skills: {
-    frontend: ["React.js", "Three.js", "React Three Fiber", "JavaScript (ES6+)", "Tailwind CSS", "GSAP", "HTML5/CSS3"],
-    backend: ["Node.js", "Express.js", "MongoDB", "REST APIs", "Firebase", "JWT Auth"],
-    tools: ["Vite", "Git & GitHub", "Vercel", "Docker", "Postman", "Figma"]
-  },
-  projects: [
-    { name: "3D Cyber Portfolio", desc: "Interactive Three.js & React portfolio featuring 3D flight models, tech matrix constellation, and AI assistant." },
-    { name: "Zuditt AI Platform", desc: "AI-driven business platform empowering content creation and workflow automation." },
-    { name: "CDC Attendance System", desc: "Full-stack institutional attendance tracking system built with Node.js and MongoDB." }
-  ],
-  socials: {
-    github: "https://github.com/muhammedrifadkp",
-    instagram: "https://www.instagram.com/mohd_rifad_/",
-    email: "muhammedrifadkp3@gmail.com",
-    phone: "+91 7356852496"
+const Saucer = lazy(() => import('../three/Saucer'))
+
+const suggestions = [
+  'What has Rifad built?',
+  'Can he build an online store?',
+  'How do I contact him?',
+  'Explain React hooks simply',
+]
+
+const hello = {
+  id: 0,
+  from: 'bot',
+  text: "Hi, I'm Rifad's assistant. Ask me about his work, what he can build for you, or any web development question.",
+}
+
+/* Answers about Rifad come from the site's own data, so they are always right. */
+function aboutRifad(q) {
+  const s = q.toLowerCase()
+  const asks = (...w) => w.some((x) => s.includes(x))
+  if (!asks('rifad', 'he ', 'his', 'him', 'you build', 'your work', 'hire', 'contact', 'price', 'cost', 'store', 'website for')) return null
+  if (asks('contact', 'email', 'phone', 'reach', 'whatsapp', 'hire', 'price', 'cost', 'quote')) {
+    return `You can reach him on WhatsApp at ${profile.phone} or by email at ${profile.email}. Tell him what the site should do and he'll come back with a plan and a price.`
   }
-};
+  if (asks('store', 'shop', 'e-commerce', 'ecommerce')) {
+    return 'Yes. He has built several stores: AG Star Automobiles (with a Bike Finder that shows only parts that fit your motorcycle), Ztoiq, One Pack Online and FreshMarket, which sends orders straight to WhatsApp.'
+  }
+  if (asks('skill', 'stack', 'tech', 'language')) {
+    return 'He works in React, Next.js, JavaScript and TypeScript on the front end, Node.js, Express and MongoDB on the back end, Three.js and GSAP for motion and 3D, and ships on Vercel.'
+  }
+  if (asks('built', 'project', 'work', 'portfolio', 'client')) {
+    const list = projects.slice(0, 6).map((p) => `**${p.name}**: ${p.kind.toLowerCase()}`).join('\n')
+    return `Some of his work:\n${list}\n\nThere are ${projects.length} projects on the Work page.`
+  }
+  if (asks('do', 'offer', 'service')) {
+    return services.map((x) => `**${x.name}**: ${x.text}`).join('\n\n')
+  }
+  return `${profile.name} is a full-stack developer in ${profile.city}. He builds websites, online stores and web apps for businesses in the UAE and India, and teaches IT at Sirajul Huda.`
+}
 
-const AI = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      type: 'bot',
-      content: "Hello! I'm **Rifad AI** 🤖 — powered by **Google Gemini AI** and configured with full knowledge about Muhammed Rifad KP.\n\nYou can ask me:\n• 💻 **Any Coding Question** (e.g. *\"Create an HTML form\"*, *\"Explain React hooks\"*)\n• 💼 **About Rifad** (e.g. *\"What are Rifad's skills?\"*, *\"Show his projects\"*)\n• 🌐 **General Knowledge** (e.g. *\"Who is Mohallal?\"*, *\"Explain Quantum Computing\"*)\n\nWhat would you like to explore today?",
-      timestamp: new Date()
+async function askGemini(prompt) {
+  const key = import.meta.env.VITE_GEMINI_API_KEY
+  if (!key || !key.startsWith('AIza')) return null
+  const system = `You are the assistant on the portfolio of ${profile.name}, a full-stack developer in ${profile.city} (React, Next.js, Node.js, MongoDB, Three.js). Answer web development questions clearly and briefly in markdown. For hiring, point to WhatsApp ${profile.phone} or ${profile.email}.`
+  for (const model of ['gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-1.5-flash']) {
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: system }] },
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.6, maxOutputTokens: 1200 },
+        }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text
+        if (text) return text
+      }
+    } catch {
+      /* try the next model */
     }
-  ]);
-  const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
+  }
+  return null
+}
+
+/* minimal, escape-first markdown: code blocks, inline code, bold, line breaks */
+function Message({ text }) {
+  const parts = text.split(/```[a-zA-Z0-9_+#-]*\n?([\s\S]*?)(?:```|$)/g)
+  return parts.map((part, i) => {
+    if (i % 2 === 1) return <pre key={i}><code>{part.trim()}</code></pre>
+    const html = part
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/^#{1,4} (.*)$/gm, '<strong>$1</strong>')
+      .replace(/^[*-] (.*)$/gm, '• $1')
+      .replace(/\n/g, '<br>')
+    return part.trim() ? <p key={i} dangerouslySetInnerHTML={{ __html: html }} /> : null
+  })
+}
+
+export default function AI() {
+  useEffect(() => { document.title = 'Ask AI | Muhammed Rifad KP' }, [])
+  const [messages, setMessages] = useState([hello])
+  const [input, setInput] = useState('')
+  const [busy, setBusy] = useState(false)
+  const listRef = useRef(null)
+  const inputRef = useRef(null)
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping]);
+    const el = listRef.current
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
+  }, [messages, busy])
 
-  const copyToClipboard = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch (err) {
-      console.log('Copy failed:', err);
-    }
-  };
+  const send = async (raw = input) => {
+    const q = raw.trim()
+    if (!q || busy) return
+    setMessages((m) => [...m, { id: Date.now(), from: 'me', text: q }])
+    setInput('')
+    setBusy(true)
+    let a = aboutRifad(q)
+    if (!a) a = await askGemini(q)
+    if (!a) a = `I couldn't reach the AI just now. I can still answer questions about Rifad's work, or you can ask him directly on WhatsApp at ${profile.phone}.`
+    setMessages((m) => [...m, { id: Date.now() + 1, from: 'bot', text: a }])
+    setBusy(false)
+    inputRef.current?.focus()
+  }
 
-  const renderMessageContent = (content) => {
-    // Regex matching ```[language]\n [code] ``` or unclosed ``` code blocks
-    const codeBlockRegex = /```([a-zA-Z0-9_+#-]*)\n?([\s\S]*?)(?:```|$)/g;
-    const elements = [];
-    let lastIndex = 0;
-    let match;
-
-    while ((match = codeBlockRegex.exec(content)) !== null) {
-      // 1. Text preceding the code block
-      if (match.index > lastIndex) {
-        const textBefore = content.substring(lastIndex, match.index);
-        if (textBefore.trim()) {
-          elements.push(
-            <div key={`text-${lastIndex}`} className="ai-text-content">
-              <p dangerouslySetInnerHTML={{ __html: formatMarkdownText(textBefore) }} />
-            </div>
-          );
-        }
-      }
-
-      // 2. The Code block (Rendered directly in React JSX so HTML tags are 100% visible!)
-      const language = match[1].trim() || 'code';
-      const codeText = match[2].trim();
-      const codeKey = `code-${match.index}`;
-
-      if (codeText) {
-        elements.push(
-          <div key={codeKey} className="ai-code-block my-4">
-            <div className="ai-code-header">
-              <span className="text-cyan-400 font-mono text-xs uppercase tracking-wider font-semibold">⚡ {language}</span>
-              <button
-                onClick={() => copyToClipboard(codeText)}
-                className="ai-copy-btn"
-              >
-                📋 Copy Code
-              </button>
-            </div>
-            <pre className="ai-code-pre">
-              <code className="text-cyan-300 font-mono text-xs leading-relaxed whitespace-pre-wrap word-break-break-word">{codeText}</code>
-            </pre>
-          </div>
-        );
-      }
-
-      lastIndex = match.index + match[0].length;
-    }
-
-    // 3. Remaining text after last code block
-    if (lastIndex < content.length) {
-      const textAfter = content.substring(lastIndex);
-      if (textAfter.trim()) {
-        elements.push(
-          <div key={`text-${lastIndex}`} className="ai-text-content">
-            <p dangerouslySetInnerHTML={{ __html: formatMarkdownText(textAfter) }} />
-          </div>
-        );
-      }
-    }
-
-    return elements.length > 0 ? elements : [
-      <div key="text-full" className="ai-text-content">
-        <p dangerouslySetInnerHTML={{ __html: formatMarkdownText(content) }} />
-      </div>
-    ];
-  };
-
-  const formatMarkdownText = (text) => {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/`([^`]+)`/g, '<code class="ai-inline-code">$1</code>')
-      .replace(/### (.*?)$/gm, '<h3 class="text-lg font-bold text-cyan-300 mt-4 mb-2">$1</h3>')
-      .replace(/## (.*?)$/gm, '<h2 class="text-xl font-bold text-cyan-400 mt-5 mb-3">$1</h2>')
-      .replace(/^\* (.*?)$/gm, '<li class="ml-4 mb-1 list-disc">$1</li>')
-      .replace(/^\d+\. (.*?)$/gm, '<li class="ml-4 mb-1 list-decimal">$1</li>')
-      .replace(/\n\n/g, '</p><p class="mb-3">')
-      .replace(/\n/g, '<br>');
-  };
-
-  // Check if query is about Rifad
-  const isRifadQuery = (text) => {
-    const q = text.toLowerCase();
-    return (
-      q.includes('rifad') ||
-      q.includes('muhammed') ||
-      q.includes('creator') ||
-      q.includes('who built') ||
-      q.includes('who created') ||
-      q.includes('his skill') ||
-      q.includes('his project') ||
-      q.includes('his contact') ||
-      q.includes('his email') ||
-      q.includes('his phone') ||
-      q.includes('his instagram') ||
-      q.includes('his github') ||
-      q.includes('his experience') ||
-      q.includes('zuditt') ||
-      q.includes('cdc attendance')
-    );
-  };
-
-  // Generate answer for Rifad specific queries
-  const getRifadAnswer = (userQuery) => {
-    const q = userQuery.toLowerCase();
-
-    if (q.includes('skill') || q.includes('stack') || q.includes('technology')) {
-      return `### ⚡ **Muhammed Rifad KP's Technical Stack**\n\n- **Frontend & 3D WebGL**: React.js, Three.js, React Three Fiber, JavaScript (ES6+), GSAP, Tailwind CSS, HTML5/CSS3\n- **Backend & Database**: Node.js, Express.js, MongoDB, REST APIs, Firebase, JWT Authentication\n- **Tools & Architecture**: Vite, Git & GitHub, Vercel Deployment, Postman, Figma\n\nRifad specializes in building high-performance 3D web applications with seamless micro-animations!`;
-    }
-
-    if (q.includes('project') || q.includes('work') || q.includes('portfolio')) {
-      return `### 🚀 **Muhammed Rifad KP's Featured Projects**\n\n1. **3D Cyber Portfolio** - Built with React, Three.js, R3F, and GSAP featuring custom 3D flight models, tech matrix constellation, and Rifad AI.\n2. **Zuditt AI Platform** - AI-driven business intelligence and content automation tool.\n3. **CDC Attendance System** - Full-stack institutional attendance tracking portal with real-time database management.\n\nCheck out all projects on [GitHub](https://github.com/muhammedrifadkp)!`;
-    }
-
-    if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('reach') || q.includes('hire')) {
-      return `### 📬 **Contact Muhammed Rifad KP**\n\n- 📧 **Email**: [muhammedrifadkp3@gmail.com](mailto:muhammedrifadkp3@gmail.com)\n- 📱 **Phone**: +91 7356852496\n- 📸 **Instagram**: [@mohd_rifad_](https://www.instagram.com/mohd_rifad_/)\n- 💻 **GitHub**: [github.com/muhammedrifadkp](https://github.com/muhammedrifadkp)\n- 📍 **Location**: Calicut, Kerala, India\n\nFeel free to send a message directly from the [Contact Page](/contact)!`;
-    }
-
-    return `### 👤 **About Muhammed Rifad KP**\n\nMuhammed Rifad KP is a **Full Stack Developer & 3D Web Specialist** based in Calicut, Kerala, India with **2+ years of experience**.\n\n- **Specialization**: Building modern web applications, 3D WebGL experiences with Three.js & R3F, and AI integrations.\n- **Top Projects**: 3D Cyber Portfolio, Zuditt AI, CDC Attendance System.\n- **Email**: muhammedrifadkp3@gmail.com\n- **Instagram**: [@mohd_rifad_](https://www.instagram.com/mohd_rifad_/)\n\nHow can I help you regarding Rifad's work?`;
-  };
-
-  // Smart local code fallback if API limits are hit
-  const getSmartLocalFallback = (userInput) => {
-    const q = userInput.toLowerCase();
-
-    if (q.includes('html') || q.includes('code') || q.includes('button') || q.includes('form')) {
-      return `Here is a modern, responsive HTML & CSS template:\n\n\`\`\`html\n<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <title>Modern UI Component</title>\n  <style>\n    body {\n      background: #070711;\n      color: #fff;\n      font-family: 'Segoe UI', sans-serif;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      min-height: 100vh;\n      margin: 0;\n    }\n    .cyber-btn {\n      padding: 14px 28px;\n      font-size: 16px;\n      font-weight: 600;\n      color: #fff;\n      background: linear-gradient(135deg, #00f0ff, #7000ff);\n      border: none;\n      border-radius: 12px;\n      cursor: pointer;\n      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);\n      transition: transform 0.2s ease;\n    }\n    .cyber-btn:hover {\n      transform: translateY(-2px);\n    }\n  </style>\n</head>\n<body>\n  <button class="cyber-btn">Execute Action</button>\n</body>\n</html>\n\`\`\``;
-    }
-
-    return `### 💡 **Answer to "${userInput}"**\n\n${userInput} is a great topic! Here are the core concepts:\n\n1. **Overview**: It relates to modern software architecture and web development practices.\n2. **Best Practice**: Ensure robust modular design, clean separation of concerns, and optimal performance.\n3. **Application**: Widely used across web applications, full-stack architectures, and modern digital platforms.`;
-  };
-
-  const fetchGeminiResponse = async (userPrompt) => {
-    const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-    if (!GEMINI_API_KEY || !GEMINI_API_KEY.startsWith('AIza')) {
-      return null;
-    }
-
-    const candidateModels = [
-      'gemini-2.0-flash',
-      'gemini-1.5-flash',
-      'gemini-1.5-pro',
-      'gemini-2.0-flash-lite'
-    ];
-
-    const systemPrompt = `You are Rifad AI Assistant, an intelligent AI helper built into Muhammed Rifad KP's 3D Portfolio website.
-Muhammed Rifad KP is a Full Stack Developer & 3D Web Specialist based in India with 2+ years of experience in React, JavaScript (ES6+), Three.js, Node.js, Express, MongoDB, and modern web applications.
-His contact email is muhammedrifadkp3@gmail.com, GitHub is https://github.com/muhammedrifadkp, and Portfolio is https://muhammedrifad.vercel.app/.
-Provide friendly, highly technical, clear, and formatted markdown responses to user queries. If asked about Rifad, highlight his expertise and projects. If asked general technical/coding questions, answer thoroughly with clean code examples where appropriate.`;
-
-    for (const model of candidateModels) {
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            system_instruction: {
-              parts: [{ text: systemPrompt }]
-            },
-            contents: [{ parts: [{ text: userPrompt }] }],
-            generationConfig: { temperature: 0.7, maxOutputTokens: 2048 }
-          })
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text) return text;
-        }
-      } catch (err) {
-        console.warn(`Model ${model} attempt notice:`, err);
-      }
-    }
-
-    return null;
-  };
-
-  const handleSend = async (textToSend = inputValue) => {
-    const trimmed = textToSend.trim();
-    if (!trimmed || isTyping) return;
-
-    const userMsg = {
-      id: Date.now(),
-      type: 'user',
-      content: trimmed,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMsg]);
-    setInputValue('');
-    setIsTyping(true);
-
-    let botResponse = "";
-
-    // 1. If question is about Rifad -> return curated Rifad Knowledge
-    if (isRifadQuery(trimmed)) {
-      botResponse = getRifadAnswer(trimmed);
-    } else {
-      // 2. If general question -> call Gemini API
-      const geminiResult = await fetchGeminiResponse(trimmed);
-      if (geminiResult) {
-        botResponse = geminiResult;
-      } else {
-        // 3. Fallback to smart generator if API quota limit hit
-        botResponse = getSmartLocalFallback(trimmed);
-      }
-    }
-
-    const botMsg = {
-      id: Date.now() + 1,
-      type: 'bot',
-      content: botResponse,
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, botMsg]);
-    setIsTyping(false);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
-  const clearChat = () => {
-    setMessages([
-      {
-        id: Date.now(),
-        type: 'bot',
-        content: "Chat cleared! What would you like to explore next?",
-        timestamp: new Date()
-      }
-    ]);
-  };
+  const onKey = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() }
+  }
 
   return (
-    <div className="ai-page-container">
-      {/* Background Ambient Elements */}
-      <div className="ai-ambient-glow glow-cyan" />
-      <div className="ai-ambient-glow glow-magenta" />
-
-      <div className="ai-chat-wrapper">
-        {/* Header */}
-        <header className="ai-chat-header">
-          <div className="flex items-center gap-3">
-            <div className="ai-avatar-badge">🤖</div>
-            <div>
-              <h1 className="ai-header-title">Rifad AI</h1>
-              <p className="ai-header-subtitle">
-                <span className="ai-status-dot" /> Live Gemini Engine • Rifad's Knowledge Base
-              </p>
-            </div>
-          </div>
-          <button onClick={clearChat} className="ai-clear-btn" title="Clear Chat History">
-            🗑️ Clear Chat
-          </button>
-        </header>
-
-        {/* Quick Suggestion Chips */}
-        <div className="ai-chips-bar">
-          <button onClick={() => handleSend("Create a modern HTML & CSS code")} className="ai-chip">
-            🚀 Create HTML Code
-          </button>
-          <button onClick={() => handleSend("Who is Muhammed Rifad KP?")} className="ai-chip">
-            💼 Who is Rifad?
-          </button>
-          <button onClick={() => handleSend("What are Rifad's skills and projects?")} className="ai-chip">
-            ⚡ Rifad's Stack & Projects
-          </button>
-          <button onClick={() => handleSend("How can I contact Muhammed Rifad?")} className="ai-chip">
-            📬 Contact Details
-          </button>
-        </div>
-
-        {/* Messages Stream */}
-        <div className="ai-messages-container">
-          <AnimatePresence initial={false}>
-            {messages.map((msg) => (
-              <motion.div
-                key={msg.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`ai-message-row ${msg.type === 'user' ? 'msg-user' : 'msg-bot'}`}
-              >
-                {msg.type === 'bot' && <div className="msg-avatar">🤖</div>}
-                <div className="msg-bubble">
-                  {renderMessageContent(msg.content)}
-                  <span className="msg-timestamp">
-                    {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
-                </div>
-              </motion.div>
+    <div className="page ai">
+      <div className="ai-grid wrap">
+        <section className="ai-intro" aria-labelledby="ai-title">
+          <Suspense fallback={<div className="ai-ship" />}>
+            <Saucer busy={busy} className="ai-ship" />
+          </Suspense>
+          <h1 id="ai-title" className="t-h2">Ask about Rifad.</h1>
+          <p className="ai-lede">
+            Questions about his work get answers from this site. Anything else about building for the web goes to Google Gemini.
+          </p>
+          <div className="ai-suggest" role="group" aria-label="Suggested questions">
+            {suggestions.map((s) => (
+              <button key={s} type="button" onClick={() => send(s)} disabled={busy}>{s}</button>
             ))}
-          </AnimatePresence>
+          </div>
+        </section>
 
-          {isTyping && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="ai-message-row msg-bot">
-              <div className="msg-avatar">🤖</div>
-              <div className="msg-bubble ai-typing-bubble">
-                <span className="typing-dot" />
-                <span className="typing-dot" />
-                <span className="typing-dot" />
+        <section className="ai-chat glass" aria-label="Chat">
+          <div className="ai-chat-head">
+            <span className="ai-chat-title">Rifad’s assistant</span>
+            <button type="button" className="ai-reset" onClick={() => setMessages([hello])} aria-label="Start a new chat">
+              <RotateCcw aria-hidden="true" />
+            </button>
+          </div>
+          <div ref={listRef} className="ai-log" role="log" aria-live="polite">
+            {messages.map((m) => (
+              <div key={m.id} className={`ai-msg ai-${m.from}`}>
+                <Message text={m.text} />
               </div>
-            </motion.div>
-          )}
-
-          <div ref={messagesEndRef} />
-        </div>
-
-        {/* Input Bar */}
-        <div className="ai-input-wrapper">
-          <textarea
-            ref={inputRef}
-            rows={1}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyPress}
-            placeholder="Ask me anything (e.g. 'Create an HTML code' or 'Tell me about Rifad')..."
-            className="ai-textarea"
-          />
-          <button
-            onClick={() => handleSend()}
-            disabled={!inputValue.trim() || isTyping}
-            className="ai-send-btn"
-          >
-            <span>Send</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
+            ))}
+            {busy && <div className="ai-msg ai-bot ai-typing" aria-label="Answer on its way"><span /><span /><span /></div>}
+          </div>
+          <form className="ai-input" onSubmit={(e) => { e.preventDefault(); send() }}>
+            <label htmlFor="ai-q" className="visually-hidden">Your question</label>
+            <textarea
+              id="ai-q" ref={inputRef} rows="1" value={input}
+              onChange={(e) => setInput(e.target.value)} onKeyDown={onKey}
+              placeholder="Ask a question…" autoComplete="off"
+            />
+            <button type="submit" className="ai-send" disabled={busy || !input.trim()} aria-label="Send question">
+              <ArrowUp aria-hidden="true" />
+            </button>
+          </form>
+          <p className="ai-note t-small muted">
+            Want a real answer from Rifad? <a className="link" href={waLink('Hi Rifad, I have a question.')} target="_blank" rel="noreferrer">Message him on WhatsApp</a>
+          </p>
+        </section>
       </div>
     </div>
-  );
-};
-
-export default AI;
+  )
+}

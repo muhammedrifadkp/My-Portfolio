@@ -6,7 +6,7 @@
  */
 
 // Security: Disable console in production
-if (import.meta.env.PROD) {
+if (import.meta.env.PROD && typeof window !== 'undefined' && !/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) {
   console.log = () => {};
   console.warn = () => {};
   console.error = () => {};
@@ -129,7 +129,7 @@ export const getCSPHeaders = () => {
 // Security: Initialize all security measures
 export const initSecurity = () => {
   // Security measures are automatically initialized when this module is imported
-  console.log('🛡️ Security measures initialized');
+  console.log('Security measures initialized');
 };
 
 export default {

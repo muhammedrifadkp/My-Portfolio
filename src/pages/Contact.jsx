@@ -1,387 +1,147 @@
-import { useState, Suspense, useRef, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import Loader from "../components/Loader";
-import emailjs from "emailjs-com";
-import { sendContactEmail } from "../utils/sendEmail";
-import PlaneOnly from "../models/PlaneOnly";
-import { getEmailJSConfig, getBackupEmailJSConfig } from "../utils/envValidator";
-import {
-  sanitizeInput,
-  validateEmail,
-  validatePhone,
-  validateName,
-  validateMessage,
-  checkRateLimit,
-  validateHuman,
-  initFormSecurity
-} from "../utils/security";
-import './Contact.css';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { Mail, Phone, Plus } from 'lucide-react'
+import { faqs, profile, waLink } from '../data/site'
+import { WhatsAppIcon } from '../components/Icons'
+import './Contact.css'
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [isTyping, setIsTyping] = useState(false);
-  const [isInputClicked, setIsInputClicked] = useState(false);
-  const [isTakingOff, setIsTakingOff] = useState(false);
-  const [onlyRotateFan, setOnlyRotateFan] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+const Logo3D = lazy(() => import('../three/Logo3D'))
 
-  // Security: Initialize form security on component mount
+const empty = { name: '', reach: '', message: '' }
+
+export default function Contact() {
+  useEffect(() => { document.title = 'Contact | Muhammed Rifad KP' }, [])
+  const [form, setForm] = useState(empty)
+  const [errors, setErrors] = useState({})
+  const [sent, setSent] = useState(null)
+  const nameRef = useRef(null)
+  const reachRef = useRef(null)
+  const msgRef = useRef(null)
+  const refs = { name: nameRef, reach: reachRef, message: msgRef }
+
+  /* warn before leaving with an unsent message */
   useEffect(() => {
-    initFormSecurity();
-  }, []);
+    const dirty = Object.values(form).some((v) => v.trim())
+    if (!dirty) return
+    const warn = (e) => { e.preventDefault(); e.returnValue = '' }
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [form])
 
-  const inputRefs = {
-    name: useRef(),
-    email: useRef(),
-    phone: useRef(),
-    message: useRef(),
-  };
+  const set = (k) => (e) => {
+    const value = e.target.value
+    setForm((f) => ({ ...f, [k]: value }))
+    if (errors[k]) setErrors((x) => ({ ...x, [k]: undefined }))
+  }
 
-  const handleInputFocus = (ref) => {
-    setIsTyping(true);
-    setIsInputClicked(true);
-    ref.current.classList.add("input-focused");
-    ref.current.classList.remove("input-blur");
-  };
+  const validate = () => {
+    const v = { name: form.name.trim(), reach: form.reach.trim(), message: form.message.trim() }
+    const e = {}
+    if (!v.name) e.name = 'Add your name so I know who’s writing.'
+    if (!v.reach) e.reach = 'Add an email or a phone number so I can reply.'
+    else if (!/@/.test(v.reach) && v.reach.replace(/\D/g, '').length < 7) e.reach = 'That doesn’t look like an email or a phone number.'
+    if (v.message.length < 10) e.message = 'Tell me a little more: what should the site do?'
+    setErrors(e)
+    const first = Object.keys(e)[0]
+    if (first) refs[first].current?.focus()
+    return first ? null : v
+  }
 
-  const handleInputBlur = (ref) => {
-    // Only stop the fan if no other inputs are focused
-    const anyInputFocused = Object.values(inputRefs).some(
-      inputRef => document.activeElement === inputRef.current
-    );
+  const body = (v) => `Hi Rifad,\n\n${v.message}\n\nName: ${v.name}\nReach me at: ${v.reach}`
 
-    if (!anyInputFocused) {
-      setIsTyping(false);
-    }
+  const submit = (via) => (ev) => {
+    if (ev) ev.preventDefault()
+    const v = validate()
+    if (!v) return
+    if (via === 'wa') window.open(waLink(body(v)), '_blank', 'noopener')
+    else window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(`Website enquiry from ${v.name}`)}&body=${encodeURIComponent(body(v))}`
+    setSent(via)
+    setForm(empty)
+  }
 
-    ref.current.classList.add("input-blur");
-    ref.current.classList.remove("input-focused");
-  };
-
-  // Security: Using centralized security utilities
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    // Security: Sanitize all inputs using security utilities
-    const sanitizedValue = sanitizeInput(value);
-
-    // Allow typing without strict validation - only validate on submission
-    // Just apply basic length limits during typing
-    if (name === 'message' && sanitizedValue.length > 2000) {
-      return; // Don't update if message is too long
-    }
-
-    if (sanitizedValue.length > 500 && name !== 'message') {
-      return; // Don't update if other fields are too long
-    }
-
-    setFormData({
-      ...formData,
-      [name]: sanitizedValue,
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    const isValidName = validateName(formData.name);
-    const isValidPhone = validatePhone(formData.phone);
-    const isValidMessage = validateMessage(formData.message);
-
-    // Basic required check
-    if (!formData.name.trim() || !formData.message.trim()) {
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-      return;
-    }
-
-    // Format pre-filled WhatsApp message
-    const whatsappMessage = `Hi Rifad! I saw your portfolio and would like to get in touch.%0A%0A*Name:* ${encodeURIComponent(formData.name)}${formData.email ? `%0A*Email:* ${encodeURIComponent(formData.email)}` : ''}${formData.phone ? `%0A*Phone:* ${encodeURIComponent(formData.phone)}` : ''}%0A*Message:* ${encodeURIComponent(formData.message)}`;
-
-    // Open WhatsApp directly with phone number 917356852496
-    const whatsappUrl = `https://wa.me/917356852496?text=${whatsappMessage}`;
-    window.open(whatsappUrl, '_blank');
-
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-    });
-    handleTakeOff(); // Trigger 3D plane takeoff animation
-    setIsTyping(false);
-    setSubmitStatus('success');
-    setIsSubmitting(false);
-    setTimeout(() => {
-      setSubmitStatus(null);
-    }, 6000);
-  };
-
-  const handleTakeOff = () => {
-    console.log("Form submitted, starting plane animation");
-
-    // First set isTyping to true to ensure the fan rotates during flight
-    setIsTyping(true);
-
-    // For successful submission, we want the plane to take off (not just fan rotation)
-    setOnlyRotateFan(false);
-
-    // Start the takeoff animation
-    setIsTakingOff(true);
-
-    // Calculate the total animation duration based on the updated timing in PlaneOnly.jsx
-    // takeOffDuration (3s) + turnDuration (6s) + returnDuration (4s) = 13s
-    // Add a small buffer to ensure animation completes
-    const totalAnimationDuration = 14000; // 14 seconds in milliseconds
-
-    // After the full animation cycle, reset all states
-    setTimeout(() => {
-      console.log("Animation cycle complete, resetting states");
-
-      // Reset the takeoff state
-      setIsTakingOff(false);
-
-      // Keep the fan rotating for a moment after landing
-      setTimeout(() => {
-        console.log("Final cleanup, resetting all states");
-
-        // Reset all other states to initial values
-        setIsTyping(false);
-        setIsInputClicked(false);
-        setOnlyRotateFan(false);
-      }, 1000);
-    }, totalAnimationDuration);
-  };
+  const onKey = (e) => {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submit('wa')(e)
+  }
 
   return (
-    <div className="contact-page-wrapper">
-      {/* Header Section */}
-      <div className="contact-header">
-        <h1 className="contact-title">Get In Touch</h1>
-        <div className="title-underline"></div>
-        <p className="contact-description">
-          Have a project in mind or want to discuss a potential collaboration?
-          Feel free to reach out using the form below or through my contact details.
-        </p>
-      </div>
-
-      {/* Contact Information Section */}
-      <div className="contact-info-section">
-        <div className="contact-info-item">
-          <div className="info-icon">
-            <i className="fas fa-map-marker-alt"></i>
-          </div>
-          <div className="info-details">
-            <h3>Location</h3>
-            <p>{import.meta.env.VITE_CONTACT_LOCATION || "Calicut, Kerala, India"}</p>
-          </div>
+    <div className="page contact">
+      <section className="contact-hero wrap" aria-labelledby="contact-title">
+        <div className="contact-copy" data-stagger="90">
+          <h1 id="contact-title" className="t-display" data-reveal>Let’s talk.</h1>
+          <p className="t-statement" data-reveal>
+            Tell me about the business and what the website should do. I’ll come back with a plan and a price.
+          </p>
+          <ul className="contact-ways" data-reveal>
+            <li>
+              <a href={waLink('Hi Rifad, I would like to talk about a website.')} target="_blank" rel="noreferrer">
+                <WhatsAppIcon /> WhatsApp {profile.phone}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${profile.email}`}><Mail aria-hidden="true" /> {profile.email}</a>
+            </li>
+            <li>
+              <a href={profile.phoneHref}><Phone aria-hidden="true" /> Call {profile.phone}</a>
+            </li>
+          </ul>
         </div>
-
-        <div className="contact-info-item">
-          <div className="info-icon">
-            <i className="fas fa-envelope"></i>
-          </div>
-          <div className="info-details">
-            <h3>Email</h3>
-            <p>{import.meta.env.VITE_CONTACT_EMAIL || "muhammedrifadkp3@gmail.com"}</p>
-          </div>
-        </div>
-
-        <div className="contact-info-item" onClick={() => window.open('https://wa.me/917356852496?text=Hi%20Rifad%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20inquire.', '_blank')} style={{ cursor: 'pointer' }}>
-          <div className="info-icon" style={{ background: 'rgba(37, 211, 102, 0.15)', borderColor: '#25D366', color: '#25D366' }}>
-            <i className="fab fa-whatsapp"></i>
-          </div>
-          <div className="info-details">
-            <h3>WhatsApp & Direct Call</h3>
-            <p>+91 7356852496</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Contact Container - Preserving Original Structure */}
-      <section className="contact-container">
-        <div className="form-container">
-          <h2>Send Me a Message</h2>
-
-          {submitStatus === 'success' && (
-            <div className="submit-message success">
-              <i className="fas fa-check-circle"></i>
-              <p>✅ Opening WhatsApp chat with pre-filled message!</p>
-            </div>
-          )}
-
-          {submitStatus === 'error' && (
-            <div className="submit-message error">
-              <i className="fas fa-exclamation-circle"></i>
-              <p>❌ Please fill in your name and message before sending.</p>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                ref={inputRefs.name}
-                onFocus={() => handleInputFocus(inputRefs.name)}
-                onBlur={() => handleInputBlur(inputRefs.name)}
-                onChange={handleInputChange}
-                placeholder=" "
-              />
-              <label htmlFor="name"><i className="fas fa-user"></i> Your Name</label>
-            </div>
-
-            <div className="form-group">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                ref={inputRefs.email}
-                onFocus={() => handleInputFocus(inputRefs.email)}
-                onBlur={() => handleInputBlur(inputRefs.email)}
-                onChange={handleInputChange}
-                placeholder=" "
-              />
-              <label htmlFor="email"><i className="fas fa-envelope"></i> Your Email</label>
-            </div>
-
-            <div className="form-group">
-              <input
-                type="text"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                ref={inputRefs.phone}
-                onFocus={() => handleInputFocus(inputRefs.phone)}
-                onBlur={() => handleInputBlur(inputRefs.phone)}
-                onChange={handleInputChange}
-                placeholder=" "
-              />
-              <label htmlFor="phone"><i className="fas fa-phone"></i> Phone Number</label>
-            </div>
-
-            <div className="form-group">
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                ref={inputRefs.message}
-                onFocus={() => handleInputFocus(inputRefs.message)}
-                onBlur={() => handleInputBlur(inputRefs.message)}
-                onChange={handleInputChange}
-                placeholder=" "
-              />
-              <label htmlFor="message"><i className="fas fa-comment-alt"></i> Your Message</label>
-            </div>
-            <button
-              type="submit"
-              className={`submit-button whatsapp-submit ${isSubmitting ? 'submitting' : ''}`}
-              disabled={isSubmitting}
-              onClick={() => handleInputFocus(inputRefs.message)}
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="spinner"></span>
-                  <span className="button-text">Connecting WhatsApp...</span>
-                </>
-              ) : (
-                <>
-                  <i className="fab fa-whatsapp" style={{ fontSize: '1.2rem' }}></i>
-                  <span className="button-text">Send via WhatsApp (+91 7356852496)</span>
-                </>
-              )}
-            </button>
-          </form>
-        </div>
-
-        <div className="canvas-container">
-          <Canvas
-            className="w-full h-full"
-            camera={{ position: [0, 0, 10] }}
-            gl={{ antialias: true, alpha: true }}
-          >
-            <Suspense fallback={<Loader />}>
-              <ambientLight intensity={0.7} />
-              <directionalLight position={[1, 1, 1]} intensity={2} />
-              <spotLight position={[0, 10, 0]} angle={0.5} penumbra={1} intensity={1.5} castShadow />
-              <PlaneOnly
-                isRotating={isTyping}
-                isSwinging={isInputClicked}
-                isTakingOff={isTakingOff}
-                onlyRotateFan={onlyRotateFan}
-                color="#FFFFFF" // White color to contrast with the gradient background
-                scale={[7, 7, 7]}
-                position={[0, -1, 0]} // Adjusted position for "margin-top"
-                rotation={[.3, -.8, -.1]} // Rotate 10 degrees along the x-axis
-              />
-              <OrbitControls enableZoom={false} />
-            </Suspense>
-          </Canvas>
+        <div className="contact-logo">
+          <Suspense fallback={null}>
+            <Logo3D className="contact-canvas" />
+          </Suspense>
         </div>
       </section>
 
-      {/* Social Media Section */}
-      <div className="social-connect-section">
-        <h3>Connect With Me</h3>
-        <div className="social-icons">
-          <a href="https://github.com/muhammedrifadkp" target="_blank" rel="noopener noreferrer" className="social-icon">
-            <i className="fab fa-github"></i>
-          </a>
-          <a href="https://linkedin.com/in/muhammed-rifad-64a7172b9" target="_blank" rel="noopener noreferrer" className="social-icon">
-            <i className="fab fa-linkedin-in"></i>
-          </a>
-          <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="social-icon">
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a href="https://www.instagram.com/mohd_rifad_/" target="_blank" rel="noopener noreferrer" className="social-icon">
-            <i className="fab fa-instagram"></i>
-          </a>
-          <a href="https://dribbble.com/" target="_blank" rel="noopener noreferrer" className="social-icon">
-            <i className="fab fa-dribbble"></i>
-          </a>
-        </div>
-      </div>
+      <section className="contact-form-wrap wrap" aria-labelledby="form-title">
+        <form className="contact-form" noValidate onSubmit={submit('wa')}>
+          <h2 id="form-title" className="t-h2">Write to me.</h2>
+          <div className="field">
+            <label htmlFor="f-name">Your name</label>
+            <input
+              id="f-name" ref={nameRef} name="name" autoComplete="name"
+              value={form.name} onChange={set('name')} placeholder="Aisha Rahman…"
+              aria-invalid={!!errors.name} aria-describedby={errors.name ? 'e-name' : undefined}
+            />
+            {errors.name && <p id="e-name" className="field-error">{errors.name}</p>}
+          </div>
+          <div className="field">
+            <label htmlFor="f-reach">Email or phone</label>
+            <input
+              id="f-reach" ref={reachRef} name="contact" autoComplete="email" inputMode="email" spellCheck="false"
+              value={form.reach} onChange={set('reach')} placeholder="you@company.com or +971…"
+              aria-invalid={!!errors.reach} aria-describedby={errors.reach ? 'e-reach' : undefined}
+            />
+            {errors.reach && <p id="e-reach" className="field-error">{errors.reach}</p>}
+          </div>
+          <div className="field">
+            <label htmlFor="f-msg">What do you need?</label>
+            <textarea
+              id="f-msg" ref={msgRef} name="message" rows="6"
+              value={form.message} onChange={set('message')} onKeyDown={onKey}
+              placeholder="A site for my clinic with online booking…"
+              aria-invalid={!!errors.message} aria-describedby={errors.message ? 'e-msg' : undefined}
+            />
+            {errors.message && <p id="e-msg" className="field-error">{errors.message}</p>}
+          </div>
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary"><WhatsAppIcon /> Send on WhatsApp</button>
+            <button type="button" className="btn btn-quiet" onClick={submit('mail')}><Mail aria-hidden="true" /> Send by email</button>
+          </div>
+          <p className="form-status t-small" aria-live="polite">
+            {sent === 'wa' && 'WhatsApp opened with your message. Press send there and I’ll reply.'}
+            {sent === 'mail' && 'Your email app opened with the message. Press send there and I’ll reply.'}
+          </p>
+        </form>
 
-      {/* FAQ Section */}
-      <div className="faq-section">
-        <h3>Frequently Asked Questions</h3>
-        <div className="faq-grid">
-          <div className="faq-item">
-            <h4><i className="fas fa-question-circle"></i> What services do you offer?</h4>
-            <p>I offer a range of services including web development, mobile app development, UI/UX design, and consulting services for digital products.</p>
-          </div>
-          <div className="faq-item">
-            <h4><i className="fas fa-question-circle"></i> What is your typical project timeline?</h4>
-            <p>Project timelines vary based on complexity, but most websites take 2-4 weeks, while larger applications may take 1-3 months.</p>
-          </div>
-          <div className="faq-item">
-            <h4><i className="fas fa-question-circle"></i> Do you offer maintenance services?</h4>
-            <p>Yes, I provide ongoing maintenance and support services to ensure your website or application continues to run smoothly after launch.</p>
-          </div>
-          <div className="faq-item">
-            <h4><i className="fas fa-question-circle"></i> How do we get started on a project?</h4>
-            <p>Simply reach out through the contact form above, and I'll schedule a consultation to discuss your project requirements and goals.</p>
-          </div>
+        <div className="faq">
+          <h2 className="faq-title">Questions people ask</h2>
+          {faqs.map((f) => (
+            <details key={f.q} className="faq-item">
+              <summary>{f.q}<Plus aria-hidden="true" /></summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
         </div>
-      </div>
+      </section>
     </div>
-  );
-};
-
-export default Contact;
+  )
+}

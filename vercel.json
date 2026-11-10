@@ -1,6 +1,32 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/((?!googlef3bbc4990ec622bd\.html).*)",
+      "has": [{ "type": "host", "value": "muhammedrifad.vercel.app" }],
+      "destination": "https://rifad.site/$1",
+      "permanent": true
+    },
+    { "source": "/syllabus", "destination": "https://sirajul-huda-it-lab.vercel.app/", "permanent": true },
+    { "source": "/syllabus/:path*", "destination": "https://sirajul-huda-it-lab.vercel.app/syllabus/:path*", "permanent": true },
+    { "source": "/:old(survey|dashboard|registered-students)", "destination": "https://sirajul-huda-it-lab.vercel.app/", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/(models|draco|work)/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=2592000" }] },
+    { "source": "/(llms.txt|llms-full.txt)", "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }] }
   ]
 }

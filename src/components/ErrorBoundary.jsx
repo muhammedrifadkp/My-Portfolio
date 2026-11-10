@@ -27,8 +27,8 @@ class ErrorBoundary extends React.Component {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#0f172a',
-          color: '#f8fafc',
+          backgroundColor: '#fbfbfd',
+          color: '#1d1d1f',
           padding: '2rem',
           textAlign: 'center',
           fontFamily: 'system-ui, sans-serif'
@@ -36,14 +36,14 @@ class ErrorBoundary extends React.Component {
           <h2 style={{
             fontSize: '2rem',
             fontWeight: '800',
-            background: 'linear-gradient(135deg, #00F0FF, #7000FF)',
+            background: '#0066cc',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             marginBottom: '1rem'
           }}>
             Something went wrong
           </h2>
-          <p style={{ color: '#94a3b8', marginBottom: '1rem', maxWidth: '600px' }}>
+          <p style={{ color: '#5f5f66', marginBottom: '1rem', maxWidth: '600px' }}>
             A rendering issue occurred. Details below:
           </p>
           {this.state.error && (
@@ -70,7 +70,7 @@ class ErrorBoundary extends React.Component {
             style={{
               padding: '12px 30px',
               borderRadius: '30px',
-              background: 'linear-gradient(135deg, #00F0FF, #7000FF)',
+              background: '#0066cc',
               color: '#ffffff',
               border: 'none',
               fontWeight: '700',

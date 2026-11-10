@@ -3,81 +3,49 @@
 
 <head>
   <meta charset="UTF-8" />
-  <!-- Favicon & Multi-Platform Icons (Google Search & Mobile compliant) -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-
-  <!-- Web App Manifest Theme -->
-  <meta name="theme-color" content="#667eea" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Google Search Console Verification -->
-  <meta name="google-site-verification" content="xsPMRJJqNyDSVEyy1k_RyIjlWk2-awunVzQDaFpheVs" />
-
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://muhammedrifad.vercel.app/" />
-
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Muhammed Rifad KP - Full Stack Developer & 3D Web Specialist. Expert in React, Node.js, Three.js, and modern web development." />
-  <meta name="keywords" content="Muhammed Rifad, Muhammed Rifad KP, Muhammed Rifad Portfolio, Full Stack Developer, React Developer, Three.js, 3D Web Specialist, Kerala Web Developer, Muhammed Rifad Vercel" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <!-- reveal-on-scroll styles only switch on when scripts run; they switch off again if the app never arrives -->
+  <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__app)document.documentElement.classList.remove('js')},8000)</script>
+  <link rel="preload" href="/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <!--seo-->
+  <title>Muhammed Rifad KP | Full-Stack Web Developer in Kerala</title>
+  <meta name="description" content="Muhammed Rifad KP builds fast websites, online stores and web apps for businesses in the UAE and India." />
+  <!--/seo-->
   <meta name="author" content="Muhammed Rifad KP" />
-  <meta name="robots" content="index, follow" />
-
-  <!-- Open Graph Meta Tags (Site Name for Google Search Results) -->
-  <meta property="og:site_name" content="Rifad" />
-  <meta property="og:title" content="Muhammed Rifad KP | Full Stack Developer & 3D Web Specialist" />
-  <meta property="og:description" content="Official portfolio of Muhammed Rifad KP - Full Stack Developer specializing in React, Three.js, and modern web development." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://muhammedrifad.vercel.app/" />
-  <meta property="og:image" content="https://muhammedrifad.vercel.app/profile.png" />
-
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Muhammed Rifad KP | Full Stack Developer" />
-  <meta name="twitter:description" content="Official portfolio of Muhammed Rifad KP - Full Stack Developer specializing in React, Three.js, and modern web development." />
-  <meta name="twitter:image" content="https://muhammedrifad.vercel.app/profile.png" />
-
-  <!-- Structured Data (JSON-LD) for Google Search Site Name & Person Rich Results -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Rifad",
-    "alternateName": ["Muhammed Rifad", "Rifad KP", "Muhammed Rifad KP"],
-    "url": "https://muhammedrifad.vercel.app/"
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Muhammed Rifad KP",
-    "alternateName": ["Muhammed Rifad", "Rifad KP"],
-    "url": "https://muhammedrifad.vercel.app/",
-    "image": "https://muhammedrifad.vercel.app/profile.png",
-    "jobTitle": "Full Stack Developer & 3D Web Specialist",
-    "sameAs": [
-      "https://github.com/muhammedrifadkp",
-      "https://linkedin.com/in/muhammedrifadkp"
-    ],
-    "knowsAbout": ["Full Stack Development", "React", "Node.js", "Three.js", "JavaScript", "Web Development"]
-  }
-  </script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2&family=Audiowide&family=Rajdhani:wght@500&family=Orbitron:wght@400;700&family=Major+Mono+Display&display=swap" rel="stylesheet">
-  <title>Muhammed Rifad KP | Full Stack Developer & 3D Web Specialist</title>
+  <meta name="theme-color" content="#f4f6f5" />
+  <meta name="color-scheme" content="light" />
+  <meta name="google-site-verification" content="xsPMRJJqNyDSVEyy1k_RyIjlWk2-awunVzQDaFpheVs" />
+  <meta name="geo.region" content="IN-KL" />
+  <meta name="geo.placename" content="Kozhikode, Kerala" />
+  <meta name="geo.position" content="11.2588;75.7804" />
+  <meta name="ICBM" content="11.2588, 75.7804" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="Summary of this site for AI assistants" />
+  <!--preload-->
 </head>
 
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <div id="root"><!--app-html--></div>
+  <script>
+    /* Reveal what is already on screen without waiting for the app's code. */
+    (function () {
+      var d = document
+      if (!('IntersectionObserver' in window)) { d.documentElement.classList.remove('js'); return }
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.setAttribute('data-in', ''); io.unobserve(e.target) } })
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 })
+      d.querySelectorAll('[data-stagger]').forEach(function (g) {
+        var step = +g.getAttribute('data-stagger') || 80, i = 0
+        ;[].forEach.call(g.children, function (el) { if (el.hasAttribute('data-reveal')) el.style.setProperty('--d', i++ * step + 'ms') })
+      })
+      d.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el) })
+    })()
+  </script>
+  <script type="module" src="/src/entry-client.jsx"></script>
 </body>
 
 </html>

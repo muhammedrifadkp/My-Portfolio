@@ -33,6 +33,7 @@ def generate_favicons():
         "--headless",
         "--disable-gpu",
         "--hide-scrollbars",
+        "--default-background-color=00000000",
         "--window-size=512,512",
         f"--screenshot={temp_screenshot}",
         f"file:///{temp_html}"

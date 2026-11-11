@@ -1,4 +1,4 @@
-# rifad.site: everything public may be crawled, indexed and quoted.
+# www.rifad.site: everything public may be crawled, indexed and quoted.
 User-agent: *
 Allow: /
 Disallow: /api/
@@ -19,4 +19,4 @@ User-agent: CCBot
 Allow: /
 Disallow: /api/
 
-Sitemap: https://rifad.site/sitemap.xml
+Sitemap: https://www.rifad.site/sitemap.xml

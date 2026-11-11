@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ArrowUpRight, Download } from 'lucide-react'
 import { education, experience, profile, skills, waLink } from '../data/site'
 import { WhatsAppIcon } from '../components/Icons'
@@ -6,7 +5,6 @@ import ContactBand from '../sections/ContactBand'
 import './About.css'
 
 export default function About() {
-  useEffect(() => { document.title = 'About | Muhammed Rifad KP' }, [])
   return (
     <div className="page about">
       <header className="about-hero wrap">

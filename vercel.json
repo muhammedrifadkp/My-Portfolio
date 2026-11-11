@@ -7,7 +7,7 @@
     {
       "source": "/((?!googlef3bbc4990ec622bd\\.html).*)",
       "has": [{ "type": "host", "value": "muhammedrifad.vercel.app" }],
-      "destination": "https://rifad.site/$1",
+      "destination": "https://www.rifad.site/$1",
       "permanent": true
     },
     { "source": "/syllabus", "destination": "https://sirajul-huda-it-lab.vercel.app/", "permanent": true },

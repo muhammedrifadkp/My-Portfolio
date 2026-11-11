@@ -1,5 +1,5 @@
 export const site = {
-  url: 'https://rifad.site',
+  url: 'https://www.rifad.site',
   name: 'Rifad',
   geo: { lat: 11.2588, lng: 75.7804, region: 'IN-KL', place: 'Kozhikode' },
 }
@@ -26,7 +26,12 @@ export const profile = {
 
 export const waLink = (text) => `${profile.whatsapp}?text=${encodeURIComponent(text)}`
 
-const img = (n) => ({ src: `/work/${n}-1600.webp`, small: `/work/${n}-800.webp` })
+const noPhone = ['cdc-attendance', 'my-ecommerce', 'rain-forest']
+const img = (n) => ({
+  src: `/work/${n}-1600.webp`,
+  small: `/work/${n}-800.webp`,
+  phone: noPhone.includes(n) ? null : `/work/${n}-phone.webp`,
+})
 
 export const hostOf = (url) => new URL(url).hostname.replace(/^www\./, '')
 
@@ -87,7 +92,7 @@ export const projects = [
   {
     slug: 'fixerland',
     name: 'Fixerland',
-    kind: 'Phone repair booking',
+    kind: 'Phone repair shop, Kasaragod',
     category: 'client',
     pitch: 'A repair shop that takes bookings online: choose the device, see the fix, book it on WhatsApp.',
     stack: ['JavaScript', 'HTML', 'CSS', 'WhatsApp'],
@@ -139,11 +144,11 @@ export const projects = [
   {
     slug: 'one-pack',
     name: 'One Pack Online',
-    kind: 'Packaging supplier',
+    kind: 'Bio-disposable packaging supplier',
     category: 'client',
-    pitch: 'Industrial packaging with a catalogue and bulk quote requests.',
+    pitch: 'Bio-disposable packaging for restaurants, hotels, cafés and bakeries, with a product catalogue and ordering on WhatsApp.',
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-    points: ['Packaging catalogue', 'Bulk quote requests', 'Lean bundle'],
+    points: ['Product catalogue', 'Ordering on WhatsApp', 'Lean bundle'],
     url: 'https://www.onepackonline.com/',
     code: 'https://github.com/muhammedrifadkp/one-pack',
     tint: '#ebedf0',
@@ -178,11 +183,11 @@ export const projects = [
   {
     slug: 'chillera',
     name: 'Chillera',
-    kind: 'HVAC and cooling services',
+    kind: 'Frozen food delivery',
     category: 'client',
-    pitch: 'Commercial air conditioning and refrigeration: service bookings and maintenance plans.',
+    pitch: 'Frozen and ready-to-cook foods, stored cold and delivered to the door.',
     stack: ['HTML', 'CSS', 'JavaScript', 'Bootstrap'],
-    points: ['Service booking forms', 'Plan comparison'],
+    points: ['Frozen, fresh and fast ranges', 'Ordering on WhatsApp'],
     url: 'https://www.chillera.co.in',
     code: 'https://github.com/muhammedrifadkp/Chillera',
     tint: '#e6eef4',
@@ -216,12 +221,12 @@ export const projects = [
   },
   {
     slug: 'nasiha',
-    name: 'Nasiha',
-    kind: 'Web platform',
+    name: 'Nasiha Sara',
+    kind: 'Portfolio for an architectural designer',
     category: 'lab',
-    pitch: 'A responsive React platform deployed on Vercel.',
+    pitch: 'A portfolio for an architectural designer and 3D visualiser, with her projects and a CV to download.',
     stack: ['React', 'Tailwind CSS', 'Vercel'],
-    points: ['Responsive interface'],
+    points: ['Project gallery', 'CV download', 'Responsive layout'],
     url: 'https://nasiha-arc.vercel.app',
     code: 'https://github.com/muhammedrifadkp/nasiha',
     tint: '#eeeef0',

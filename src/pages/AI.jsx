@@ -116,7 +116,7 @@ export default function AI() {
       <div className="ai-grid wrap">
         <section className="ai-intro" aria-labelledby="ai-title">
           <div className="ai-ship" aria-hidden="true">
-            <ClientOnly>
+            <ClientOnly lite>
               <Suspense fallback={null}>
                 <Saucer busy={busy} className="ai-ship-canvas" />
               </Suspense>

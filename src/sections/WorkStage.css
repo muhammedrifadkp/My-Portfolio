@@ -31,7 +31,11 @@
   max-width: none;
   translate: -50% 0;
 }
-.stage-poster.is-gone { opacity: 0; }
+.stage-poster.is-gone {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 
 /* ---- first screen ---- */
 .hero-copy {
@@ -109,6 +113,19 @@
   transform: translate3d(0, -50%, 0);
   transition: opacity 0.45s ease 0.12s, transform 0.9s var(--spring) 0.12s, visibility 0s;
 }
+.screen-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.screen-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-wash);
+  color: var(--accent);
+}
 .screen-name { font-size: var(--t-h3); }
 .screen-stack { display: flex; flex-wrap: wrap; gap: 6px; }
 .screen-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 6px; }
@@ -139,30 +156,88 @@
 @media (max-width: 820px) {
   .stage { height: 320svh; }
   .hero-title {
-    inset: calc(var(--nav-h) + 16px) var(--margin) auto;
+    position: absolute;
+    top: calc(var(--nav-h) + 10px);
+    left: var(--margin);
+    right: var(--margin);
+    bottom: auto;
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
-    font-size: clamp(38px, 11.2vw, 64px);
+    align-items: flex-start;
+    gap: 2px;
+    font-size: clamp(28px, 8.2vw, 42px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
   }
-  .hero-half { max-width: none; }
-  .hero-foot { right: var(--margin); max-width: none; bottom: calc(20px + var(--tabbar) + env(safe-area-inset-bottom)); gap: 14px; }
-  .hero-lede { font-size: 17px; }
-  .hero-actions .btn { flex: 1; }
-  .hero-hint { display: none; }
+  .hero-half { max-width: none; white-space: nowrap; }
+  .hero-half-b { text-align: left; color: var(--ink); }
+  .hero-foot {
+    position: absolute;
+    left: var(--margin);
+    right: var(--margin);
+    max-width: none;
+    bottom: calc(44px + var(--tabbar) + env(safe-area-inset-bottom));
+    display: grid;
+    gap: 10px;
+  }
+  .hero-lede { font-size: 15px; line-height: 1.38; color: var(--ink-soft); }
+  .hero-actions { display: flex; gap: 8px; width: 100%; }
+  .hero-actions .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 10px;
+    font-size: 13.5px;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  .hero-hint {
+    position: absolute;
+    left: var(--margin);
+    right: var(--margin);
+    bottom: calc(10px + var(--tabbar) + env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .hero-hint .btn {
+    width: 28px;
+    min-height: 28px;
+    height: 28px;
+    flex: none;
+    padding: 0;
+  }
+  .hero-hint .btn svg { width: 15px; height: 15px; }
+
   .screen-panel {
     left: var(--margin);
     right: var(--margin);
     top: auto;
-    bottom: calc(56px + var(--tabbar) + env(safe-area-inset-bottom));
+    bottom: calc(46px + var(--tabbar) + env(safe-area-inset-bottom));
     width: auto;
-    padding: 20px;
-    gap: 10px;
-    transform: translate3d(0, 36px, 0);
+    padding: 16px 18px;
+    gap: 8px;
+    border-radius: 22px;
+    background: rgb(255 255 255 / 0.88);
+    -webkit-backdrop-filter: blur(20px) saturate(190%);
+    backdrop-filter: blur(20px) saturate(190%);
+    box-shadow: var(--glass-rim), 0 20px 40px -15px rgb(6 40 33 / 0.35);
+    transform: translate3d(0, 24px, 0);
   }
   .screen-panel.is-active { transform: none; }
-  .screen-pitch { font-size: 16px; }
+  .screen-name { font-size: 23px; }
+  .screen-pitch { font-size: 14px; line-height: 1.38; }
   .screen-stack { display: none; }
+  .screen-links { margin-top: 4px; gap: 8px 14px; }
+  .screen-links .btn { font-size: 14px; padding: 9px 16px; }
   .screen-dots { bottom: calc(10px + var(--tabbar) + env(safe-area-inset-bottom)); }
+}
+
+@media (max-width: 360px) {
+  .hero-actions { flex-direction: column; }
+  .hero-title { font-size: 26px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -174,3 +249,24 @@
 .shot .nav, .shot .tabbar, .shot .hero-copy, .shot .screen-panels, .shot .stage-poster, .shot .skip-link { display: none !important; }
 .shot, .shot body, .shot .stage { background: transparent !important; }
 .shot .stage-canvas { opacity: 1 !important; transition: none; }
+
+/* ---- small phones ---- */
+.screen-badge { white-space: nowrap; font-size: 13px; }
+
+@media (max-width: 360px) {
+  /* two buttons side by side still fit at 320px; stacked they pushed the text onto the desk */
+  .hero-actions { flex-direction: row; }
+  .hero-title { font-size: clamp(26px, 8.6vw, 30px); }
+}
+@media (max-width: 820px) and (max-height: 700px) {
+  .hero-hint { display: none; }
+  .hero-foot { bottom: calc(24px + var(--tabbar) + env(safe-area-inset-bottom)); gap: 8px; }
+  .hero-lede { font-size: 14px; }
+  .screen-pitch { display: none; }
+}
+@media (pointer: coarse), (max-width: 820px) {
+  /* the whole desk is draggable with a finger, so the little turn button is not needed */
+  .hero-hint .btn { display: none; }
+  .hero-hint { font-size: 13px; }
+  .screen-dots button { width: 44px; height: 44px; }
+}

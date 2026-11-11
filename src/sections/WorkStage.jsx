@@ -6,6 +6,7 @@ import { bySlug, onScreen, profile, waLink } from '../data/site'
 import { WhatsAppIcon } from '../components/Icons'
 import useInView from '../hooks/useInView'
 import useMedia from '../hooks/useMedia'
+import { triggerHaptic } from '../utils/haptics'
 import './WorkStage.css'
 
 const StageScene = lazy(() => import('../three/StageScene'))
@@ -40,8 +41,11 @@ export default function WorkStage() {
       state.current.progress = t / ZOOM_END
       const s = t < ZOOM_END * 0.8 ? -1 : Math.min(shows.length - 1, Math.floor(((t - ZOOM_END) / (1 - ZOOM_END)) * shows.length))
       state.current.step = Math.max(0, s)
-      setStep((prev) => (prev === s ? prev : s))
-      setHeroOut(Math.min(t / (ZOOM_END * 0.55), 1))
+      setStep((prev) => {
+        if (prev !== s && s >= 0) triggerHaptic('selection')
+        return s
+      })
+      setHeroOut(Math.min(t / (ZOOM_END * 0.75), 1))
     }
     const on = () => { if (!raf) raf = requestAnimationFrame(read) }
     read()
@@ -50,22 +54,51 @@ export default function WorkStage() {
     return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); cancelAnimationFrame(raf) }
   }, [])
 
-  /* drag to turn the desk (horizontal only, so touch scrolling still works) */
+  /* drag to turn the desk with smooth touch and pointer tracking */
   const startX = useRef(0)
-  const onDown = (e) => { startX.current = e.clientX; state.current.dragging = true; state.current.drag = state.current.yaw }
+  const onDown = (e) => {
+    startX.current = e.clientX
+    state.current.dragging = true
+    state.current.drag = state.current.yaw || 0
+  }
   const onMove = (e) => {
     if (!state.current.dragging) return
-    state.current.drag = state.current.yaw + ((e.clientX - startX.current) / window.innerWidth) * 3
+    const dx = e.clientX - startX.current
+    state.current.drag = (state.current.drag || 0) + (dx / (compact ? window.innerWidth * 0.7 : window.innerWidth)) * 3.2
     startX.current = e.clientX
   }
-  const onUp = () => { state.current.dragging = false }
-  const turn = () => { state.current.yaw += 0.6 }
+  const onUp = () => {
+    state.current.dragging = false
+  }
+
+  const turn = () => {
+    triggerHaptic('light')
+    state.current.drag = (state.current.drag || state.current.yaw || 0) + 0.65
+  }
 
   const jumpTo = (i) => {
+    triggerHaptic('medium')
+    const targetIdx = Math.max(0, Math.min(shows.length - 1, i))
     const el = wrap.current
     const run = el.offsetHeight - window.innerHeight
-    const t = ZOOM_END + ((i + 0.5) / shows.length) * (1 - ZOOM_END)
+    const t = ZOOM_END + ((targetIdx + 0.5) / shows.length) * (1 - ZOOM_END)
     window.scrollTo({ top: el.offsetTop + run * t, behavior: reduced ? 'auto' : 'smooth' })
+  }
+
+  /* mobile touch swipe gestures on screen-panels */
+  const touchStart = useRef(0)
+  const onTouchStart = (e) => {
+    touchStart.current = e.touches[0].clientX
+  }
+  const onTouchEnd = (e) => {
+    const diff = touchStart.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 45) {
+      if (diff > 0 && step < shows.length - 1) {
+        jumpTo(step + 1)
+      } else if (diff < 0 && step > 0) {
+        jumpTo(step - 1)
+      }
+    }
   }
 
   const heroTab = step >= 0 ? -1 : 0
@@ -87,7 +120,7 @@ export default function WorkStage() {
           onPointerLeave={onUp}
           aria-hidden="true"
         >
-          <ClientOnly>
+          <ClientOnly idle>
             <Suspense fallback={null}>
               <StageScene state={state} images={screens} compact={compact} active={inView} onReady={onReady} />
             </Suspense>
@@ -105,7 +138,7 @@ export default function WorkStage() {
               Full-stack developer in {profile.city}. Websites, online stores and web apps for businesses in the UAE and India.
             </p>
             <div className="hero-actions">
-              <a href="#work" className="btn btn-primary" tabIndex={heroTab}>
+              <a href="#work" className="btn btn-primary" tabIndex={heroTab} onClick={() => triggerHaptic('light')}>
                 See the work <ArrowRight aria-hidden="true" />
               </a>
               <a href={waLink('Hi Rifad, I saw your portfolio and would like to talk about a website.')} className="btn" target="_blank" rel="noreferrer" tabIndex={heroTab}>
@@ -117,22 +150,29 @@ export default function WorkStage() {
             <button type="button" className="btn btn-round" onClick={turn} tabIndex={heroTab} aria-label="Turn the desk">
               <Move3d aria-hidden="true" />
             </button>
-            Drag to turn the desk. Scroll to switch it on.
+            <span>Drag to turn the desk. Scroll to switch it on.</span>
           </div>
         </div>
 
         {/* one panel per site on the monitor */}
-        <div className="screen-panels wrap">
+        <div
+          className="screen-panels wrap"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
           {shows.map((p, i) => (
             <article key={p.slug} className={`screen-panel glass ${step === i ? 'is-active' : ''}`} aria-hidden={step === i ? undefined : 'true'}>
-              <p className="t-small muted">{p.kind}</p>
+              <div className="screen-meta">
+                <span className="screen-badge tabular">0{i + 1} / 0{shows.length}</span>
+                <p className="t-small muted">{p.kind}</p>
+              </div>
               <h2 className="screen-name">{p.name}</h2>
               <p className="screen-pitch">{p.pitch}</p>
               <ul className="screen-stack" aria-label="Built with">
                 {p.stack.map((s) => <li key={s} className="chip">{s}</li>)}
               </ul>
               <div className="screen-links">
-                <a className="btn btn-primary" href={p.url} target="_blank" rel="noreferrer" tabIndex={step === i ? 0 : -1}>
+                <a className="btn btn-primary" href={p.url} target="_blank" rel="noreferrer" tabIndex={step === i ? 0 : -1} onClick={() => triggerHaptic('light')}>
                   Visit the site <ArrowUpRight aria-hidden="true" />
                 </a>
                 <TLink className="link" to={`/projects/${p.slug}`} tabIndex={step === i ? 0 : -1}>

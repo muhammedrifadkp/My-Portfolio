@@ -215,8 +215,8 @@ h2, h3, [id] { scroll-margin-top: calc(var(--nav-h) + 24px); }
   pointer-events: none;
 }
 .btn:hover { transform: translateY(-1px) scale(1.025); background: rgb(255 255 255 / 0.78); }
-.btn:hover::before, .btn:focus-visible::before { opacity: 1; }
-.btn:active { transform: scale(0.96); transition-duration: 0.14s; }
+.btn:hover::before, .btn:focus-visible::before, .btn[style*="--touch-active"]::before { opacity: 1; }
+.btn:active { transform: scale(0.96); transition-duration: 0.12s; }
 .btn svg { width: 18px; height: 18px; flex: none; }
 
 .btn-primary {
@@ -290,6 +290,36 @@ main { display: block; }
 .page { padding-top: var(--nav-h); }
 .section { padding-block: var(--section) 0; }
 
+/* scroll progress bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(31, 214, 169, 0.45);
+  will-change: transform;
+}
+
 @media (max-width: 820px) {
-  :root { --nav-h: 56px; --tabbar: 84px; }
+  :root { --nav-h: 56px; --tabbar: 84px; --margin: 16px; }
+  .btn { min-height: 48px; }
+  .chip { min-height: 36px; padding: 0 14px; }
+}
+
+/* ---- touch: every control is at least 44px tall on a touch screen ---- */
+@media (pointer: coarse), (max-width: 820px) {
+  .btn-small { min-height: 44px; }
+  .link { min-height: 44px; }
+  .proj-bar { min-height: 44px; }
+}
+
+/* glass over a moving canvas is the costly part on a phone: a smaller blur radius keeps the look and saves the GPU */
+@media (max-width: 820px) {
+  :root { --glass-blur: blur(14px) saturate(175%); --blur: blur(14px) saturate(175%); }
 }

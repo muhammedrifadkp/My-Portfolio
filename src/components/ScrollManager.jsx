@@ -4,23 +4,43 @@ import useIsoLayoutEffect from '../hooks/useIsoLayoutEffect'
 
 const positions = new Map()
 
-/* New page: top (or the #hash). Back and Forward: where you were. */
+/**
+ * Manages scroll restoration across route changes
+ * and provides a responsive, performant scroll-progress indicator for mobile and desktop.
+ */
 export default function ScrollManager() {
   const { key, hash, pathname } = useLocation()
   const type = useNavigationType()
   const first = useRef(true)
   const current = useRef(key)
   const path = useRef(pathname)
+  const barRef = useRef(null)
 
   useEffect(() => {
     let raf = 0
-    const save = () => {
+    const onScroll = () => {
       if (raf) return
-      raf = requestAnimationFrame(() => { raf = 0; positions.set(current.current, window.scrollY) })
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const y = window.scrollY
+        positions.set(current.current, y)
+        if (barRef.current) {
+          const max = document.documentElement.scrollHeight - window.innerHeight
+          const p = max > 0 ? Math.min(Math.max(y / max, 0), 1) : 0
+          barRef.current.style.transform = `scaleX(${p})`
+        }
+      })
     }
-    window.addEventListener('scroll', save, { passive: true })
-    return () => window.removeEventListener('scroll', save)
-  }, [])
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [pathname])
 
   useIsoLayoutEffect(() => {
     current.current = key
@@ -35,5 +55,11 @@ export default function ScrollManager() {
     else window.scrollTo(0, 0)
   }, [key])
 
-  return null
+  return (
+    <div
+      ref={barRef}
+      className="scroll-progress"
+      aria-hidden="true"
+    />
+  )
 }

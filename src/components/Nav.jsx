@@ -4,6 +4,7 @@ import { Search } from 'lucide-react'
 import TLink from './TLink'
 import { ChatIcon, HomeIcon, Mark, PersonIcon, SparkIcon, WorkIcon } from './Icons'
 import { profile, waLink } from '../data/site'
+import { triggerHaptic } from '../utils/haptics'
 import './Nav.css'
 
 const top = [
@@ -81,13 +82,30 @@ export default function Nav({ onSearch }) {
         <nav aria-label="Main, phone" className="tabbar-pill glass" style={{ '--n': tabs.length, '--i': tabIndex }}>
           <span className={`seg-lens ${tabIndex < 0 ? 'is-off' : ''}`} aria-hidden="true" />
           {tabs.map(({ to, label, Icon }, i) => (
-            <TLink key={to} to={to} className="tab" aria-current={i === tabIndex ? 'page' : undefined}>
+            <TLink
+              key={to}
+              to={to}
+              className="tab"
+              aria-current={i === tabIndex ? 'page' : undefined}
+              onClick={() => {
+                triggerHaptic('light')
+                if (to === '/' && pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }
+              }}
+            >
               <Icon filled={i === tabIndex} />
               <span>{label}</span>
             </TLink>
           ))}
         </nav>
-        <TLink to="/ai" className="tabbar-ask glass" aria-label="Ask AI" aria-current={isAt(pathname, '/ai') ? 'page' : undefined}>
+        <TLink
+          to="/ai"
+          className="tabbar-ask glass"
+          aria-label="Ask AI"
+          aria-current={isAt(pathname, '/ai') ? 'page' : undefined}
+          onClick={() => triggerHaptic('light')}
+        >
           <SparkIcon filled={isAt(pathname, '/ai')} />
         </TLink>
       </div>

@@ -15,18 +15,22 @@ export default function Project() {
   const next = projects[(projects.indexOf(p) + 1) % projects.length]
   const ask = `Hi Rifad, I saw ${p.name} on your portfolio. Can you build something like it for me?`
 
-  /* the window leans toward the pointer, with a soft light that follows it */
+  /* the window leans toward the pointer or touch, with a soft light that follows it */
   const tilt = (e) => {
-    if (e.pointerType !== 'mouse') return
+    if (!shot.current) return
     const r = shot.current.getBoundingClientRect()
-    const x = (e.clientX - r.left) / r.width
-    const y = (e.clientY - r.top) / r.height
-    shot.current.style.setProperty('--ry', `${(x - 0.5) * 7}deg`)
-    shot.current.style.setProperty('--rx', `${(0.5 - y) * 5}deg`)
+    const clientX = e.clientX ?? e.touches?.[0]?.clientX
+    const clientY = e.clientY ?? e.touches?.[0]?.clientY
+    if (clientX === undefined) return
+    const x = (clientX - r.left) / r.width
+    const y = (clientY - r.top) / r.height
+    shot.current.style.setProperty('--ry', `${(x - 0.5) * 8}deg`)
+    shot.current.style.setProperty('--rx', `${(0.5 - y) * 6}deg`)
     shot.current.style.setProperty('--gx', `${x * 100}%`)
     shot.current.style.setProperty('--gy', `${y * 100}%`)
   }
   const rest = () => {
+    if (!shot.current) return
     shot.current.style.setProperty('--ry', '0deg')
     shot.current.style.setProperty('--rx', '0deg')
   }
@@ -50,7 +54,14 @@ export default function Project() {
         </header>
       </div>
 
-      <figure className="proj-stage" style={{ '--tint': p.tint }} onPointerMove={tilt} onPointerLeave={rest}>
+      <figure
+        className={`proj-stage ${p.phone ? 'has-phone' : ''}`}
+        style={{ '--tint': p.tint }}
+        onPointerMove={tilt}
+        onPointerLeave={rest}
+        onTouchMove={tilt}
+        onTouchEnd={rest}
+      >
         <div ref={shot} className="proj-window" data-reveal>
           <div className="proj-bar">
             <span className="proj-dots" aria-hidden="true"><i /><i /><i /></span>
@@ -58,6 +69,11 @@ export default function Project() {
           </div>
           <img src={p.src} srcSet={`${p.small} 800w, ${p.src} 1600w`} sizes="(max-width: 900px) 92vw, 1100px" alt={`The home page of ${p.name}`} width="1600" height="1000" />
         </div>
+        {p.phone && (
+          <div className="proj-phone" data-reveal>
+            <img src={p.phone} alt={`${p.name} on a phone`} width="540" height="1169" loading="lazy" />
+          </div>
+        )}
       </figure>
 
       <div className="proj-facts wrap">

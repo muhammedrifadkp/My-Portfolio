@@ -8,6 +8,18 @@
 .teaser-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 1.4s var(--ease-out); }
 .teaser-photo:hover img { transform: scale(1.04); }
 .teaser-copy { display: grid; gap: 28px; max-width: 640px; }
-@media (max-width: 640px) {
-  .teaser { grid-template-columns: 1fr; }
+
+@media (max-width: 820px) {
+  .teaser {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .teaser-photo {
+    max-width: 300px;
+    margin-inline: auto;
+    border-radius: 20px;
+  }
+  .teaser-copy {
+    gap: 18px;
+  }
 }

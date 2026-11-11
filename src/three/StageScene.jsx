@@ -42,7 +42,7 @@ function Workstation({ images, state, compact, onReady }) {
   textures.forEach((t) => {
     t.flipY = true
     t.colorSpace = THREE.SRGBColorSpace
-    t.anisotropy = 8
+    t.anisotropy = compact ? 4 : 8
   })
 
   const material = useMemo(
@@ -106,35 +106,40 @@ function Workstation({ images, state, compact, onReady }) {
     const want = Math.min(st.step, textures.length - 1)
     const c = cur.current
     if (want !== c.next && c.t >= 1) { c.next = want; c.t = 0 }
-    if (c.t < 1) c.t = Math.min(1, c.t + dt * 2.2)
+    if (c.t < 1) c.t = Math.min(1, c.t + dt * 2.5)
     if (c.t >= 1) c.idx = c.next
     material.uniforms.tA.value = textures[c.idx]
     material.uniforms.tB.value = c.t >= 1 ? textures[c.idx] : textures[c.next]
     material.uniforms.mixAmt.value = c.t >= 1 ? 0 : c.t
     material.uniforms.glow.value = 0.92 + p * 0.08
 
-    /* the visitor's drag turns the desk; it settles back when let go */
-    st.yaw = damp(st.yaw || 0, st.dragging ? st.drag : 0, st.dragging ? 12 : 2.5, dt)
+    /* the visitor's drag turns the desk; it smoothly settles when let go */
+    st.yaw = damp(st.yaw || 0, st.drag || 0, st.dragging ? 14 : 3.5, dt)
+    if (!st.dragging && st.drag) {
+      st.drag = damp(st.drag, 0, 2, dt)
+    }
     if (spin.current) spin.current.rotation.y = -0.42 * (1 - p) + st.yaw + (STILL ? 0 : Math.sin(performance.now() / 2600) * 0.03 * (1 - p))
 
     /* camera: whole desk -> monitor close-up */
     const sp = screenPose.current
     if (!sp) return
     const aspect = size.width / size.height
+    // Framed so desk aligns 1:1 with mobile poster still at rest
     const wide = new THREE.Vector3(0, compact ? -0.25 : -0.3, 0)
-    const deskDist = compact ? (aspect < 0.7 ? 18.5 : 12.5) : aspect < 1.2 ? 11 : 9.4
-    const posA = new THREE.Vector3(0, deskDist * 0.3, deskDist)
+    const deskDist = compact ? (aspect < 0.7 ? 15.5 : 12.5) : aspect < 1.2 ? 11 : 9.4
+    const posA = new THREE.Vector3(0, deskDist * (compact ? 0.28 : 0.3), deskDist)
     if (!STILL) {
       /* the camera leans a little toward the pointer, and the RGB lights breathe */
-      posA.x += s.pointer.x * 0.55 * (1 - p)
-      posA.y += s.pointer.y * 0.3 * (1 - p)
+      posA.x += s.pointer.x * (compact ? 0.2 : 0.55) * (1 - p)
+      posA.y += s.pointer.y * (compact ? 0.15 : 0.3) * (1 - p)
       info.glow.forEach((m, i) => { m.emissiveIntensity = 1 + Math.sin(s.clock.elapsedTime * 1.4 + i * 0.9) * 0.3 })
     }
     const fitW = sp.width / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * aspect)
-    const closeDist = fitW * (compact ? 1.25 : 2.7)
+    const closeDist = fitW * (compact ? 1.05 : 2.7)
     const shift = compact ? 0 : sp.width * 0.42
-    const tgtB = sp.center.clone().add(new THREE.Vector3(shift, compact ? -sp.height * 0.32 : 0, 0))
-    const posB = new THREE.Vector3(tgtB.x, tgtB.y + 0.02, sp.center.z + closeDist)
+    // On mobile, frame monitor in upper half so it remains 100% visible above docked card
+    const tgtB = sp.center.clone().add(new THREE.Vector3(shift, compact ? -sp.height * 0.66 : 0, 0))
+    const posB = new THREE.Vector3(tgtB.x, tgtB.y + (compact ? 0.04 : 0.02), sp.center.z + closeDist)
     const pos = posA.lerp(posB, p)
     const tgt = wide.lerp(tgtB, p)
     camera.position.set(damp(camera.position.x, pos.x, 6, dt), damp(camera.position.y, pos.y, 6, dt), damp(camera.position.z, pos.z, 6, dt))
@@ -158,13 +163,13 @@ export default function StageScene({ state, images, compact, active, onReady }) 
   return (
     <Canvas
       frameloop={active ? 'always' : 'never'}
-      dpr={STILL ? 2 : [1, compact ? 1.5 : 1.75]}
+      dpr={STILL ? 2 : [1, compact ? 1.25 : 1.75]}
       camera={{ fov: 30, position: [0, 2.8, 9.4], near: 0.05, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     >
       <ambientLight intensity={0.55} />
       <directionalLight position={[3, 6, 5]} intensity={1.6} />
-      <Environment resolution={256}>
+      <Environment resolution={compact ? 128 : 256}>
         <Lightformer intensity={2.2} position={[0, 6, -6]} scale={[14, 6, 1]} />
         <Lightformer intensity={1.4} position={[-7, 2, 2]} rotation-y={Math.PI / 2} scale={[10, 3, 1]} />
         <Lightformer intensity={1} position={[7, 2, 2]} rotation-y={-Math.PI / 2} scale={[10, 3, 1]} />
@@ -172,7 +177,7 @@ export default function StageScene({ state, images, compact, active, onReady }) 
       </Environment>
       <Suspense fallback={null}>
         <Workstation images={images} state={state} compact={compact} onReady={onReady} />
-        <ContactShadows position={[0, -1.02, 0]} opacity={0.3} scale={10} blur={2.6} far={3} resolution={512} color="#0c1512" />
+        <ContactShadows position={[0, -1.02, 0]} opacity={0.3} scale={10} blur={2.6} far={3} resolution={compact ? 256 : 512} color="#0c1512" />
       </Suspense>
     </Canvas>
   )

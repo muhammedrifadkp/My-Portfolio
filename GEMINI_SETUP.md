@@ -1,140 +1,33 @@
-# 🤖 Gemini AI Integration Setup Guide
+# AI assistant setup
 
-This guide will help you integrate Google's Gemini AI to make Rifad's AI assistant answer **ANY question** with ChatGPT-level intelligence.
+The "Ask AI" page sends questions to `/api/chat`, a small server function (`api/chat.js`). It calls Google Gemini with the site's own facts as context. The API key lives only on the server, never in the browser.
 
-## 🚀 Quick Setup (5 minutes)
+## One-time setup
 
-### Step 1: Get Your Free Gemini API Key
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Sign in with your Google account
-3. Click "Create API Key"
-4. Copy your API key (starts with `AIza...`)
+1. Create a key at https://aistudio.google.com/apikey
+2. In Vercel: Project → Settings → Environment Variables, add
 
-### Step 2: Configure the API Key
-1. Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
+   ```
+   GEMINI_API_KEY = <your key>
    ```
 
-2. Open `.env` file and replace the placeholder:
-   ```env
-   REACT_APP_GEMINI_API_KEY=AIzaSyC-your-actual-api-key-here
-   ```
+   for Production (and Preview if you want it there).
+3. Redeploy.
 
-3. Save the file
+An older `VITE_GEMINI_API_KEY` is still read as a fallback, but a key with the `VITE_` prefix was once shipped to browsers. Treat such a key as public: delete it in Google AI Studio and use a new one under `GEMINI_API_KEY`.
 
-### Step 3: Restart Development Server
+## Checking it
+
 ```bash
-npm run dev
+curl -X POST https://www.rifad.site/api/chat -H "Content-Type: application/json" -d "{\"question\":\"What has Rifad built?\"}"
 ```
 
-## ✅ That's it! Your AI assistant now has Gemini power!
+- `200 {"answer": ...}`: working.
+- `503`: no key is set.
+- `502 {"tried": ["model: status", ...]}`: Gemini refused. `400` or `403` means the key is wrong, expired or restricted; `429` means the quota is used up; `404` means that model name no longer exists (edit `MODELS` in `api/chat.js`).
 
-## 🌟 What You Get
+When the endpoint cannot answer, the page falls back to short answers built from `src/data/site.js`, so visitors never see an error.
 
-### **Before (Limited Knowledge):**
-- Only answered questions about specific technologies in the knowledge base
-- Generic responses for unknown topics
-- Limited to pre-programmed responses
+## Locally
 
-### **After (Universal Intelligence):**
-- **Answers ANY technical question** like ChatGPT/Gemini
-- **Comprehensive explanations** for any programming language, framework, or technology
-- **Professional responses** with proper formatting and examples
-- **Contextual connections** to Rifad's expertise
-- **Real-time AI processing** with advanced language understanding
-
-## 🎯 Test Examples
-
-Try asking these questions to see the difference:
-
-### **Programming Languages:**
-- "What is Python and how is it used?"
-- "Explain Rust programming language"
-- "What are the benefits of TypeScript?"
-
-### **Advanced Technologies:**
-- "What is machine learning?"
-- "Explain blockchain technology"
-- "What is quantum computing?"
-
-### **Development Concepts:**
-- "What are design patterns?"
-- "Explain microservices architecture"
-- "What is DevOps?"
-
-### **Emerging Technologies:**
-- "What is Web3?"
-- "Explain edge computing"
-- "What is serverless architecture?"
-
-## 🔧 Technical Details
-
-### **API Integration:**
-- Uses Google's Gemini Pro model
-- Fallback to built-in knowledge if API unavailable
-- Secure API key handling through environment variables
-- Error handling and graceful degradation
-
-### **Response Enhancement:**
-- Professional prompt engineering for portfolio context
-- Markdown formatting for better readability
-- Connection to Rifad's relevant expertise
-- Contextual follow-up suggestions
-
-### **Security:**
-- API key stored in environment variables
-- .env file excluded from git repository
-- Safe content filtering enabled
-- No sensitive data exposure
-
-## 🌍 Free Tier Limits
-
-Google Gemini API free tier includes:
-- **60 requests per minute**
-- **1,500 requests per day**
-- **1 million tokens per month**
-
-This is more than enough for a portfolio website!
-
-## 🚀 Benefits for Your Portfolio
-
-### **For Visitors:**
-- **Educational experience** - Learn about any technology
-- **Professional impression** - Advanced AI capabilities
-- **Engaging interaction** - Natural conversation flow
-- **Comprehensive answers** - ChatGPT-level responses
-
-### **For You (Rifad):**
-- **Showcases technical expertise** - Understanding of AI integration
-- **Demonstrates innovation** - Cutting-edge portfolio features
-- **Professional positioning** - Tech-forward developer
-- **Competitive advantage** - Unique portfolio feature
-
-## 🔍 Troubleshooting
-
-### **API Key Issues:**
-- Ensure API key starts with `AIza`
-- Check for extra spaces or quotes
-- Verify the key is active in Google AI Studio
-
-### **Environment Variables:**
-- Restart development server after adding .env
-- Check file is named exactly `.env` (not `.env.txt`)
-- Ensure .env is in project root directory
-
-### **API Limits:**
-- Free tier: 60 requests/minute, 1,500/day
-- Responses fall back to built-in knowledge if limit exceeded
-- Consider upgrading for high-traffic sites
-
-## 🎉 Success!
-
-Once configured, your AI assistant will:
-- ✅ Answer ANY technical question with Gemini intelligence
-- ✅ Provide comprehensive, professional responses
-- ✅ Connect general knowledge to Rifad's expertise
-- ✅ Maintain conversation context and flow
-- ✅ Handle errors gracefully with fallbacks
-
-Your portfolio now features **world-class AI capabilities** that rival ChatGPT and other advanced AI assistants! 🌟
+`npm run dev` does not run server functions, so the page uses the built-in answers. To test the real thing locally, use `vercel dev` with `GEMINI_API_KEY` in `.env.local`.

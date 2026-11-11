@@ -6,7 +6,7 @@
  */
 import { experience, faqs, process as steps, profile, projects, services, site, skills } from '../src/data/site.js'
 
-const MODELS = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.0-flash']
+const MODELS = ['gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-3-flash-preview', 'gemini-2.5-flash']
 const ALLOWED = [/^https:\/\/(www\.)?rifad\.site$/, /^https:\/\/[a-z0-9-]+\.vercel\.app$/, /^http:\/\/localhost(:\d+)?$/]
 
 const system = `You are the assistant on the portfolio website of ${profile.name} ("Rifad"), ${site.url}.
@@ -56,17 +56,20 @@ export default async function handler(req, res) {
     { role: 'user', parts: [{ text: question }] },
   ]
 
+  const tried = []
   for (const model of MODELS) {
     try {
       const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+        signal: AbortSignal.timeout(9000),
         body: JSON.stringify({
           system_instruction: { parts: [{ text: system }] },
           contents,
           generationConfig: { temperature: 0.5, maxOutputTokens: 900 },
         }),
       })
+      tried.push(`${model}: ${r.status}`)
       if (!r.ok) continue
       const data = await r.json()
       const answer = (data.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('').trim()
@@ -74,11 +77,12 @@ export default async function handler(req, res) {
         res.setHeader('Cache-Control', 'no-store')
         return res.status(200).json({ answer })
       }
-    } catch {
-      /* try the next model */
+    } catch (e) {
+      tried.push(`${model}: ${e.name || 'error'}`)
     }
   }
-  return res.status(502).json({ error: 'The assistant could not answer just now.' })
+  /* status codes only (400/403 = key problem, 429 = quota, 404 = model name): safe to show, useful to fix */
+  return res.status(502).json({ error: 'The assistant could not answer just now.', tried })
 }
 
 function safeParse(text) {

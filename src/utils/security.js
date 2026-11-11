@@ -55,7 +55,7 @@ export const validateEmail = (email) => {
 // Security: Phone validation (optional or flexible)
 export const validatePhone = (phone) => {
   if (!phone || phone.trim().length === 0) return true; // Optional field
-  const phoneRegex = /^[\+]?[0-9\s\-\(\)\.]{5,25}$/;
+  const phoneRegex = /^[+]?[0-9\s\-().]{5,25}$/;
   return phoneRegex.test(phone.trim());
 };
 

@@ -44,8 +44,8 @@ const write = (file, content) => {
 }
 
 const heroPoster = [
-  '<link rel="preload" as="image" href="/poster-desk.webp" media="(min-aspect-ratio: 88/100)" fetchpriority="high" />',
-  '<link rel="preload" as="image" href="/poster-desk-tall.webp" media="(max-aspect-ratio: 88/100)" fetchpriority="high" />',
+  '<link rel="preload" as="image" href="/poster-desk.webp" media="(min-aspect-ratio: 7/10)" fetchpriority="high" />',
+  '<link rel="preload" as="image" href="/poster-desk-tall.webp" media="(max-aspect-ratio: 7/10)" fetchpriority="high" />',
 ]
 
 for (const url of staticPaths) {

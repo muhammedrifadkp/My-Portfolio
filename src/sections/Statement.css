@@ -1,17 +1,35 @@
+.statement {
+  position: relative;
+}
 .statement-text {
   --p: 1;
   max-width: 19em;
   font-family: var(--font-display);
-  font-size: clamp(30px, 4.7vw, 76px);
-  font-weight: 620;
+  font-size: clamp(32px, 5.2vw, 76px);
+  font-weight: 650;
   letter-spacing: -0.035em;
-  line-height: 1.04;
+  line-height: 1.08;
 }
 .js .statement-text { --p: 0; }
 .statement-w {
+  display: inline-block;
   /* a soft edge three words wide travels through the paragraph */
   opacity: calc(0.14 + clamp(0, (var(--p) * (var(--n) + 3) - var(--i)) / 3, 1) * 0.86);
+  transition: opacity 0.2s ease, transform 0.3s var(--ease-out);
+  will-change: opacity;
 }
+
+@media (max-width: 820px) {
+  .statement-text {
+    font-size: clamp(32px, 8.6vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+  .statement-w {
+    margin-right: 0.15em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .js .statement-text { --p: 1 !important; }
   .statement-w { opacity: 1; }

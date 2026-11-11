@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import TLink from '../components/TLink'
 import { categories, projects } from '../data/site'
+import { triggerHaptic } from '../utils/haptics'
 import './WorkIndex.css'
 
 /* Every project as one line; hovering a line floats its screenshot by the cursor. */
@@ -37,6 +38,7 @@ export default function WorkIndex({ id = 'work', title = 'All the work.', exclud
   }
 
   const pick = (cat) => {
+    triggerHaptic('light')
     const next = new URLSearchParams(params)
     if (cat === 'all') next.delete('type')
     else next.set('type', cat)
@@ -59,11 +61,18 @@ export default function WorkIndex({ id = 'work', title = 'All the work.', exclud
       <ul className="index-list" onPointerLeave={() => setHover(null)}>
         {list.map((p) => (
           <li key={p.slug} data-reveal>
-            <TLink to={`/projects/${p.slug}`} className="index-row" onPointerEnter={() => setHover(p.slug)}>
+            <TLink
+              to={`/projects/${p.slug}`}
+              className="index-row"
+              onPointerEnter={() => setHover(p.slug)}
+              onClick={() => triggerHaptic('light')}
+            >
               <img className="index-thumb" src={p.small} alt="" width="800" height="500" loading="lazy" />
-              <span className="index-name">{p.name}</span>
-              <span className="index-kind">{p.kind}</span>
-              <span className="index-stack muted">{p.stack.slice(0, 3).join(', ')}</span>
+              <div className="index-info">
+                <span className="index-name">{p.name}</span>
+                <span className="index-kind">{p.kind}</span>
+                <span className="index-stack muted">{p.stack.slice(0, 3).join(', ')}</span>
+              </div>
               <ArrowRight className="index-arrow" aria-hidden="true" />
             </TLink>
           </li>

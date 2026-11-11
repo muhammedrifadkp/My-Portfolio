@@ -17,7 +17,7 @@ export default function NotFound() {
         </div>
       </div>
       <div className="nf-stage" aria-hidden="true">
-        <ClientOnly>
+        <ClientOnly lite>
           <Suspense fallback={null}>
             <FoxScene />
           </Suspense>

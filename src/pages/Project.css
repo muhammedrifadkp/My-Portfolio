@@ -19,6 +19,19 @@
   place-items: center;
   perspective: 1600px;
 }
+.proj-stage.has-phone {
+  grid-template-columns: minmax(0, 1100px) clamp(150px, 17vw, 250px);
+  justify-content: center;
+  align-items: end;
+  gap: clamp(16px, 3vw, 56px);
+}
+.proj-phone {
+  padding: 3.2%;
+  border-radius: 15% / 7%;
+  background: var(--ink);
+  box-shadow: /* taste-skill-ignore: product shadow under a device */ 0 40px 70px -34px rgb(6 40 33 / 0.6);
+}
+.proj-phone img { width: 100%; border-radius: 12% / 5.6%; }
 .proj-window {
   --rx: 0deg;
   --ry: 0deg;
@@ -95,9 +108,17 @@
   .proj-facts { grid-template-columns: 1fr; }
   .proj-actions .btn { flex: 1 1 100%; }
   .proj-bar { height: 36px; }
+  .proj-stage.has-phone { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .proj-phone { width: 46%; margin-top: -12%; position: relative; }
   .proj-window { border-radius: 14px; }
   .proj-next { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .js .proj-window[data-in] { transform: none; }
+}
+
+@media (max-width: 900px) {
+  .proj-links .link { min-height: 44px; }
+  .proj-url { min-height: 36px; }
+  .proj-bar { height: 48px; }
 }

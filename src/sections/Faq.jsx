@@ -1,5 +1,6 @@
 import { Plus } from 'lucide-react'
 import { faqs } from '../data/site'
+import { triggerHaptic } from '../utils/haptics'
 import './Faq.css'
 
 export default function Faq({ as = 'h2', title = 'Questions people ask.' }) {
@@ -10,7 +11,7 @@ export default function Faq({ as = 'h2', title = 'Questions people ask.' }) {
       <div className="faq-list" data-stagger="50">
         {faqs.map((f) => (
           <details key={f.q} className="faq-item" data-reveal>
-            <summary>
+            <summary onClick={() => triggerHaptic('light')}>
               <span>{f.q}</span>
               <Plus aria-hidden="true" />
             </summary>

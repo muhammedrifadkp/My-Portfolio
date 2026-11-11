@@ -73,7 +73,7 @@ export default function Contact() {
             <a className="btn btn-primary" href={waLink('Hi Rifad, I would like to talk about a website.')} target="_blank" rel="noreferrer">
               <WhatsAppIcon /> WhatsApp {profile.phone}
             </a>
-            <a className="btn" href={`mailto:${profile.email}`}><Mail aria-hidden="true" /> {profile.email}</a>
+            <a className="btn contact-mail" href={`mailto:${profile.email}`}><Mail aria-hidden="true" /> {profile.email}</a>
             <a className="btn" href={profile.phoneHref}><Phone aria-hidden="true" /> Call</a>
           </div>
         </div>

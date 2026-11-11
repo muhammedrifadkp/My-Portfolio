@@ -11,8 +11,9 @@ export default function Services() {
         </p>
       </div>
       <ul className="services-list" data-stagger="90">
-        {services.map((s) => (
-          <li key={s.name} data-reveal>
+        {services.map((s, i) => (
+          <li key={s.name} data-reveal className="services-card">
+            <span className="services-num tabular">0{i + 1}</span>
             <h3 className="services-name">{s.name}</h3>
             <p>{s.text}</p>
           </li>

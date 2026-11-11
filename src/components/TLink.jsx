@@ -8,6 +8,7 @@ import { preloadPath } from '../routes'
  * it, a plain navigation where it does not). The page's code is fetched first,
  * so the new page is complete in the first frame of the transition.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useGo() {
   const navigate = useNavigate()
   return useCallback(

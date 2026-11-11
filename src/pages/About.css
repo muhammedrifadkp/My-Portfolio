@@ -30,7 +30,6 @@
 .xp-shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
 .xp-shots img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 12px; background: var(--surface); }
 
-.about-skills { }
 .about-skills .wrap { background: var(--surface); border-radius: var(--radius); padding-block: clamp(48px, 6vw, 96px); }
 .about-skills > .wrap { max-width: calc(var(--max) - 2 * var(--margin)); width: calc(100% - 2 * var(--margin)); padding-inline: clamp(24px, 4vw, 64px); }
 .skills-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin-top: clamp(40px, 5vw, 72px); }
@@ -50,11 +49,14 @@
 .edu-what { font-weight: 600; letter-spacing: -0.02em; }
 
 @media (max-width: 900px) {
-  .about-hero { grid-template-columns: 1fr; min-height: 0; }
-  .about-xp { grid-template-columns: 1fr; }
+  .about-hero { grid-template-columns: 1fr; min-height: 0; gap: 32px; padding-top: 24px; }
+  .about-hero-copy { order: 2; gap: 24px; }
+  .about-photo { order: 1; max-width: 320px; margin-inline: auto; border-radius: 20px; }
+  .about-xp { grid-template-columns: 1fr; gap: 24px; }
   .about-sticky { position: static; }
-  .xp-item { grid-template-columns: 1fr; gap: 6px; }
-  .xp-when { padding-top: 0; }
-  .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .edu-list li { grid-template-columns: 1fr; gap: 2px; font-size: 17px; }
+  .xp-item { grid-template-columns: 1fr; gap: 8px; padding-bottom: 24px; border-bottom: 1px solid rgba(12, 21, 18, 0.08); }
+  .xp-when { padding-top: 0; font-weight: 600; color: var(--accent); }
+  .xp-shots { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .edu-list li { grid-template-columns: 1fr; gap: 4px; font-size: 16px; padding-block: 12px; }
 }

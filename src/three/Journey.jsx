@@ -43,9 +43,9 @@ function Sky() {
   )
 }
 
-function Plane({ state }) {
+function Plane({ state, compact }) {
   const { scene, animations } = useGLTF('/models/plane.glb', '/draco/')
-  const fit = useFitted(scene, 3.4)
+  const fit = useFitted(scene, compact ? 3.0 : 3.4)
   const ref = useRef()
   const inner = useRef()
   const { actions } = useAnimations(animations, inner)
@@ -58,13 +58,13 @@ function Plane({ state }) {
   const curve = useMemo(
     () =>
       new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-6.5, -0.6, -1),
-        new THREE.Vector3(-3.2, -0.4, 1),
-        new THREE.Vector3(0, 0.2, 1.2),
-        new THREE.Vector3(4, 1.4, 0),
-        new THREE.Vector3(10, 3.2, -4),
+        new THREE.Vector3(compact ? -4.5 : -6.5, -0.4, -1),
+        new THREE.Vector3(-2.2, -0.1, 1),
+        new THREE.Vector3(0, 0.3, 1.2),
+        new THREE.Vector3(3.2, 1.4, 0),
+        new THREE.Vector3(compact ? 7.5 : 10, 3.2, -4),
       ]),
-    []
+    [compact]
   )
   const p = useRef(0)
   useFrame((_, dt) => {
@@ -114,17 +114,18 @@ function Bird({ position, phase = 0, scale = 1.1, speed = 1 }) {
   )
 }
 
-function Island({ state }) {
+function Island({ state, compact }) {
   const { scene } = useGLTF('/models/island.glb', '/draco/')
-  const fit = useFitted(scene, 5.2)
+  const fit = useFitted(scene, compact ? 4.4 : 5.2)
   const ref = useRef()
   useFrame(() => {
     if (!ref.current) return
-    ref.current.position.y = -3.4 + Math.sin(performance.now() / 1800) * 0.08 + state.current.progress * 0.6
+    const baseY = compact ? -1.4 : -3.4
+    ref.current.position.y = baseY + Math.sin(performance.now() / 1800) * 0.08 + state.current.progress * 0.6
     ref.current.rotation.y = -0.6 + state.current.progress * 0.5
   })
   return (
-    <group ref={ref} position={[3.4, -3.1, -1]}>
+    <group ref={ref} position={[compact ? 1.0 : 3.4, compact ? -1.4 : -3.1, -1]}>
       <group scale={fit.k} position={fit.offset}>
         <primitive object={scene} />
       </group>
@@ -139,7 +140,8 @@ function Fox() {
   const inner = useRef()
   const { actions } = useAnimations(animations, inner)
   useEffect(() => {
-    ;(actions.idle || Object.values(actions)[0])?.reset().play()
+    const act = actions.idle || Object.values(actions)[0]
+    act?.reset().play()
   }, [actions])
   return (
     <group position={[0.4, 0.95, 0.6]} rotation={[0, 0.9, 0]}>
@@ -150,26 +152,35 @@ function Fox() {
   )
 }
 
-function Rig({ state }) {
+function Rig({ state, compact }) {
   const { camera, size } = useThree()
   useFrame((s, dt) => {
     const narrow = size.width / size.height < 1
     const p = state.current.progress
-    camera.position.x = damp(camera.position.x, (narrow ? 0.4 : 0) + p * 1.2 + s.pointer.x * 0.6, 3, dt)
-    camera.position.y = damp(camera.position.y, (narrow ? 0.2 : 0) + p * 0.8 + s.pointer.y * 0.35, 3, dt)
-    camera.position.z = narrow ? 15 : 11
-    camera.lookAt(p * 1.6, p * 0.6, 0)
+    const touchX = state.current.touchX || 0
+    const touchY = state.current.touchY || 0
+    
+    // Smoothly decay touch tilt
+    if (!state.current.touching && (state.current.touchX || state.current.touchY)) {
+      state.current.touchX = damp(state.current.touchX, 0, 3, dt)
+      state.current.touchY = damp(state.current.touchY, 0, 3, dt)
+    }
+
+    camera.position.x = damp(camera.position.x, (narrow ? 0.3 : 0) + p * (narrow ? 1.0 : 1.2) + s.pointer.x * (compact ? 0.3 : 0.6) + touchX, 3, dt)
+    camera.position.y = damp(camera.position.y, (narrow ? 0.25 : 0) + p * 0.8 + s.pointer.y * (compact ? 0.2 : 0.35) + touchY, 3, dt)
+    camera.position.z = narrow ? 12.5 : 11
+    camera.lookAt(p * (narrow ? 1.2 : 1.6), p * 0.6 + (narrow ? 0.15 : 0), 0)
   })
   return null
 }
 
-function Scene({ state }) {
+function Scene({ state, compact }) {
   return (
     <>
-      <Rig state={state} />
+      <Rig state={state} compact={compact} />
       <Sky />
-      <Island state={state} />
-      <Plane state={state} />
+      <Island state={state} compact={compact} />
+      <Plane state={state} compact={compact} />
       <Bird position={[3.2, 2.2, -3]} phase={0} />
       <Bird position={[5.4, 3.1, -6]} phase={1.7} scale={0.8} speed={0.85} />
     </>
@@ -177,13 +188,18 @@ function Scene({ state }) {
 }
 
 /* The sky, the island and everything that flies: loaded only when the section is near. */
-export default function FlightScene({ state, active }) {
+export default function FlightScene({ state, active, compact }) {
   return (
-    <Canvas frameloop={active ? 'always' : 'never'} dpr={[1, 1.6]} camera={{ fov: 40, position: [0, 0, 11], near: 0.1, far: 300 }}>
+    <Canvas
+      frameloop={active ? 'always' : 'never'}
+      dpr={[1, compact ? 1.25 : 1.6]}
+      camera={{ fov: compact ? 44 : 40, position: [0, 0, 11], near: 0.1, far: 300 }}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+    >
       <hemisphereLight args={['#ffffff', '#b8cde0', 1.4]} />
       <directionalLight position={[5, 8, 6]} intensity={2.2} />
       <Suspense fallback={null}>
-        <Scene state={state} />
+        <Scene state={state} compact={compact} />
       </Suspense>
     </Canvas>
   )

@@ -15,3 +15,10 @@
   .footer-links { justify-content: flex-start; }
   .footer-end { text-align: left; }
 }
+
+@media (max-width: 820px) {
+  .footer-links { gap: 0 4px; }
+  .footer-links a { min-height: 44px; padding-inline: 8px; }
+  .footer-links a:first-child { margin-left: -8px; }
+  .footer-end a { display: inline-block; padding-block: 12px; margin-block: -12px; }
+}

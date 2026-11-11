@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
+    "indexnow": "node scripts/indexnow.mjs",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "models": "python scripts/models/merge-desk.py .cache-desk.glb && node scripts/models/draco-glb.cjs .cache-desk.glb public/models/desk.glb"
   },

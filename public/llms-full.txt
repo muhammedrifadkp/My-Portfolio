@@ -1,0 +1,227 @@
+# Muhammed Rifad KP (Rifad)
+
+> Muhammed Rifad KP is a full-stack web developer based in Calicut, Kerala, India. He builds websites, online stores and web apps for businesses in the United Arab Emirates and India, using Next.js, React, TypeScript, Node.js and MongoDB. This is his portfolio: https://www.rifad.site
+
+## Key facts
+
+- Name: Muhammed Rifad KP (also known as Rifad)
+- Role: Freelance full-stack web developer and IT teacher
+- Location: Calicut (Kozhikode), Kerala, India. Works remotely with clients in the UAE (Dubai, Abu Dhabi) and across India
+- Education: Bachelor of Computer Applications, Yenepoya University, Mangaluru (2021 to 2024)
+- Contact: WhatsApp or phone +91 73568 52496, email muhammedrifadkp3@gmail.com
+- Profiles: GitHub https://github.com/muhammedrifadkp, LinkedIn https://linkedin.com/in/muhammed-rifad-64a7172b9, Instagram https://www.instagram.com/mohd_rifad_/
+- Projects shown: 16
+
+## Services
+
+- Business websites: Fast, search-ready sites for clinics, agencies, real estate and service companies, with enquiries going to WhatsApp or email.
+- Online stores: Catalogues, filters, carts and checkout, from a small shop to a store with a custom product finder.
+- Web apps: Logins, roles, dashboards and APIs on React, Node.js and MongoDB, like the attendance system running at an institute today.
+- 3D on the web: Interactive models and scroll scenes in Three.js, like the workstation and the flight on this page.
+
+## How a project goes
+
+1. You tell me what you need. Send a message on WhatsApp or by email. We have a short call, and I come back with a plan and a price before any work starts.
+2. I design it around your customers. Pages, wording and layout are planned for the people who will use the site, and for a phone screen first.
+3. I build it where you can see it. You get a preview link while I build, so you watch the site take shape and can ask for changes while they are still easy.
+4. It goes live, and I stay. I connect your domain, set the site up for Google and hand it over. Updates, fixes and new pages are covered after launch.
+
+## Pages
+
+- [Home](https://www.rifad.site/): overview, selected work, services and contact
+- [Work](https://www.rifad.site/projects): all 16 projects
+- [About](https://www.rifad.site/about): experience, skills and education
+- [Contact](https://www.rifad.site/contact): WhatsApp, email, phone and common questions
+- [Ask AI](https://www.rifad.site/ai): an assistant that answers questions about his work
+
+## Projects
+
+- [Pixel Conversions](https://www.rifad.site/projects/pixel-conversions): Web and growth agency. An agency site that sells custom Next.js builds, Shopify stores and paid growth, and turns visitors into booked calls. Built with Next.js, TypeScript, Tailwind CSS, Shopify. Live at https://www.pixelconversions.com/
+- [ZHM Real Estate](https://www.rifad.site/projects/zhm-real-estate): Property portal, Dubai and Abu Dhabi. Luxury listings for two emirates, with property search and enquiry forms that land straight in the sales team’s inbox. Built with Next.js, TypeScript, Tailwind CSS, SEO. Live at https://zhmrealestatellc.ae
+- [AG Star Automobiles](https://www.rifad.site/projects/ag-star): Motorcycle accessories store. An accessories shop with a Bike Finder: pick your motorcycle and see only the parts that fit it. Built with Next.js, TypeScript, Tailwind CSS, Vercel. Live at https://agstarautomobiles.vercel.app
+- [Ad Firms](https://www.rifad.site/projects/ad-firms): Business setup, Dubai. Mainland and free-zone company packages priced on the page, with a WhatsApp line to a consultant one tap away. Built with Next.js, React, Tailwind CSS, WhatsApp. Live at https://businesssetup.ad-firms.com
+- [Fixerland](https://www.rifad.site/projects/fixerland): Phone repair shop, Kasaragod. A repair shop that takes bookings online: choose the device, see the fix, book it on WhatsApp. Built with JavaScript, HTML, CSS, WhatsApp. Live at https://www.fixerland.com/
+- [Ztoiq](https://www.rifad.site/projects/ztoiq): E-commerce store. A full online store: catalogue, category filters, cart and checkout. Built with Next.js, TypeScript, Node.js, Tailwind CSS. Live at https://ztoiq.com/
+- [CDC Attendance](https://www.rifad.site/projects/cdc-attendance): Attendance system for an institute. Admins, faculty and students each get their own view of lab attendance, behind JWT login. Built with React, Node.js, Express, MongoDB. Live at https://cdc-attendance-com.vercel.app
+- [Daily Horeca](https://www.rifad.site/projects/daily-horeca): Supplies for hotels and cafés. Hotels, restaurants and caterers order their daily supplies and bulk ingredients in one place. Built with JavaScript, HTML, CSS, REST. Live at https://www.dailyhoreca.com
+- [One Pack Online](https://www.rifad.site/projects/one-pack): Bio-disposable packaging supplier. Bio-disposable packaging for restaurants, hotels, cafés and bakeries, with a product catalogue and ordering on WhatsApp. Built with Next.js, TypeScript, Tailwind CSS. Live at https://www.onepackonline.com/
+- [Rasdent](https://www.rifad.site/projects/rasdent): Dental clinic. A dental clinic with treatments, prices and online appointment booking. Built with Next.js, TypeScript, Tailwind CSS. Live at https://rasdent.in
+- [B4 Baking](https://www.rifad.site/projects/b4-baking): Bakery ingredient supplier. Bulk baking ingredients for bakeries and commercial kitchens, with enquiry forms. Built with HTML, CSS, JavaScript. Live at https://www.b4baking.com
+- [Chillera](https://www.rifad.site/projects/chillera): Frozen food delivery. Frozen and ready-to-cook foods, stored cold and delivered to the door. Built with HTML, CSS, JavaScript, Bootstrap. Live at https://www.chillera.co.in
+- [Zuditt AI](https://www.rifad.site/projects/zuditt): AI services company. The company site for an AI and digital services firm, where I also worked as a full-stack developer. Built with Next.js, React, TypeScript, Node.js. Live at https://www.zuditt.com/
+- [FreshMarket](https://www.rifad.site/projects/freshmarket): Grocery store with admin panel. A MERN shop with accounts, an admin panel and orders sent straight to WhatsApp. Built with Next.js, Node.js, Express, MongoDB. Live at https://my-ecommerce-black.vercel.app/
+- [Nasiha Sara](https://www.rifad.site/projects/nasiha): Portfolio for an architectural designer. A portfolio for an architectural designer and 3D visualiser, with her projects and a CV to download. Built with React, Tailwind CSS, Vercel. Live at https://nasiha-arc.vercel.app
+- [Rainforest](https://www.rifad.site/projects/rainforest): 2D platformer game. A browser platformer on HTML5 canvas with its own game loop and collision physics. Built with Canvas, JavaScript. Live at https://rain-forest.vercel.app
+
+## Questions and answers
+
+### What do you build?
+Business websites, online stores and web apps, front end to database. If you need 3D or motion on the page, that too.
+
+### How long does a project take?
+Most websites take two to four weeks. Larger apps take one to three months, depending on what they have to do.
+
+### Do you look after the site after launch?
+Yes. I offer ongoing maintenance and support, so updates, fixes and new pages are covered.
+
+### What does a website cost?
+Every project is priced on what it has to do. Tell me the pages and features you need, and I send a plan with a price before any work starts.
+
+### Which technologies do you use?
+Next.js and React on the front end, Node.js, Express and MongoDB on the back end, Tailwind CSS for styling and Vercel for hosting. For stores I also work with Shopify.
+
+### Where are you based, and who do you work with?
+I work from Calicut (Kozhikode) in Kerala, India, with businesses in the UAE and across India. Everything happens online, over WhatsApp, email and calls.
+
+### How do we start?
+Send a message on WhatsApp or by email with what you have in mind. We set up a short call and I come back with a plan and a price.
+
+## Experience
+
+- Freelance full-stack developer, Clients in the UAE and India (2023 – now): Sites and stores for businesses in Dubai, Abu Dhabi and India: AG Star’s Bike Finder, ZHM’s property portal, Ad Firms’ setup packages, and the CDC attendance system.
+- Full-stack developer, Zuditt AI (6 months): Built React and Next.js dashboards and wired AI services into the product through secure REST APIs.
+- Full-stack instructor, CADD Centre, Kasaragod (1 year): Taught HTML, CSS, JavaScript, React, Node.js and MongoDB, and saw students through their capstone builds.
+- IT lab teacher, Sirajul Huda (Now): I write and teach the IT syllabus from Plus One to PG, and publish it as its own site.
+
+## Education
+
+- Bachelor of Computer Applications, Yenepoya University, Mangaluru (2021 – 2024)
+- Higher Secondary, Computer Science, Emjay VHSS, Calicut (2019 – 2021)
+- SSLC, SS HSS Moorkanad, Calicut (2018 – 2019)
+
+## Skills
+
+- Front end: React, Next.js, JavaScript, TypeScript, Tailwind CSS, HTML and CSS
+- Back end: Node.js, Express, MongoDB, REST APIs, JWT auth
+- Motion and 3D: Three.js, React Three Fiber, GSAP
+- Shipping: Git and GitHub, Vercel, SEO, Shopify
+
+## Project details
+
+### Pixel Conversions
+- Type: Web and growth agency
+- What it is: An agency site that sells custom Next.js builds, Shopify stores and paid growth, and turns visitors into booked calls.
+- Highlights: Service pages built to convert; Shopify and Next.js case studies; SEO set up from day one
+- Built with: Next.js, TypeScript, Tailwind CSS, Shopify
+- Live site: https://www.pixelconversions.com/
+- Case page: https://www.rifad.site/projects/pixel-conversions
+
+### ZHM Real Estate
+- Type: Property portal, Dubai and Abu Dhabi
+- What it is: Luxury listings for two emirates, with property search and enquiry forms that land straight in the sales team’s inbox.
+- Highlights: Listings across Dubai and Abu Dhabi; Lead capture on every property; Built mobile first
+- Built with: Next.js, TypeScript, Tailwind CSS, SEO
+- Live site: https://zhmrealestatellc.ae
+- Case page: https://www.rifad.site/projects/zhm-real-estate
+
+### AG Star Automobiles
+- Type: Motorcycle accessories store
+- What it is: An accessories shop with a Bike Finder: pick your motorcycle and see only the parts that fit it.
+- Highlights: Bike Finder compatibility search; Cart and checkout flow; Server-rendered for search
+- Built with: Next.js, TypeScript, Tailwind CSS, Vercel
+- Live site: https://agstarautomobiles.vercel.app
+- Case page: https://www.rifad.site/projects/ag-star
+
+### Ad Firms
+- Type: Business setup, Dubai
+- What it is: Mainland and free-zone company packages priced on the page, with a WhatsApp line to a consultant one tap away.
+- Highlights: Mainland and free-zone package pricing; WhatsApp consultation; Lead funnel
+- Built with: Next.js, React, Tailwind CSS, WhatsApp
+- Live site: https://businesssetup.ad-firms.com
+- Case page: https://www.rifad.site/projects/ad-firms
+
+### Fixerland
+- Type: Phone repair shop, Kasaragod
+- What it is: A repair shop that takes bookings online: choose the device, see the fix, book it on WhatsApp.
+- Highlights: Repair booking flow; WhatsApp booking; Device and price pages
+- Built with: JavaScript, HTML, CSS, WhatsApp
+- Live site: https://www.fixerland.com/
+- Case page: https://www.rifad.site/projects/fixerland
+
+### Ztoiq
+- Type: E-commerce store
+- What it is: A full online store: catalogue, category filters, cart and checkout.
+- Highlights: Catalogue with filters; Persistent cart; Checkout flow
+- Built with: Next.js, TypeScript, Node.js, Tailwind CSS
+- Live site: https://ztoiq.com/
+- Case page: https://www.rifad.site/projects/ztoiq
+
+### CDC Attendance
+- Type: Attendance system for an institute
+- What it is: Admins, faculty and students each get their own view of lab attendance, behind JWT login.
+- Highlights: Three roles with their own access; Lab attendance reports; JWT and bcrypt security
+- Built with: React, Node.js, Express, MongoDB
+- Live site: https://cdc-attendance-com.vercel.app
+- Case page: https://www.rifad.site/projects/cdc-attendance
+
+### Daily Horeca
+- Type: Supplies for hotels and cafés
+- What it is: Hotels, restaurants and caterers order their daily supplies and bulk ingredients in one place.
+- Highlights: B2B order requests; Product catalogue; Fast, light pages
+- Built with: JavaScript, HTML, CSS, REST
+- Live site: https://www.dailyhoreca.com
+- Case page: https://www.rifad.site/projects/daily-horeca
+
+### One Pack Online
+- Type: Bio-disposable packaging supplier
+- What it is: Bio-disposable packaging for restaurants, hotels, cafés and bakeries, with a product catalogue and ordering on WhatsApp.
+- Highlights: Product catalogue; Ordering on WhatsApp; Lean bundle
+- Built with: Next.js, TypeScript, Tailwind CSS
+- Live site: https://www.onepackonline.com/
+- Case page: https://www.rifad.site/projects/one-pack
+
+### Rasdent
+- Type: Dental clinic
+- What it is: A dental clinic with treatments, prices and online appointment booking.
+- Highlights: Appointment booking; Treatment catalogue; Mobile first
+- Built with: Next.js, TypeScript, Tailwind CSS
+- Live site: https://rasdent.in
+- Case page: https://www.rifad.site/projects/rasdent
+
+### B4 Baking
+- Type: Bakery ingredient supplier
+- What it is: Bulk baking ingredients for bakeries and commercial kitchens, with enquiry forms.
+- Highlights: Product showcase; Supply enquiries
+- Built with: HTML, CSS, JavaScript
+- Live site: https://www.b4baking.com
+- Case page: https://www.rifad.site/projects/b4-baking
+
+### Chillera
+- Type: Frozen food delivery
+- What it is: Frozen and ready-to-cook foods, stored cold and delivered to the door.
+- Highlights: Frozen, fresh and fast ranges; Ordering on WhatsApp
+- Built with: HTML, CSS, JavaScript, Bootstrap
+- Live site: https://www.chillera.co.in
+- Case page: https://www.rifad.site/projects/chillera
+
+### Zuditt AI
+- Type: AI services company
+- What it is: The company site for an AI and digital services firm, where I also worked as a full-stack developer.
+- Highlights: AI service integrations; Server-side rendering
+- Built with: Next.js, React, TypeScript, Node.js
+- Live site: https://www.zuditt.com/
+- Case page: https://www.rifad.site/projects/zuditt
+
+### FreshMarket
+- Type: Grocery store with admin panel
+- What it is: A MERN shop with accounts, an admin panel and orders sent straight to WhatsApp.
+- Highlights: Cart saved in the database; WhatsApp order dispatch; Admin portal
+- Built with: Next.js, Node.js, Express, MongoDB
+- Live site: https://my-ecommerce-black.vercel.app/
+- Case page: https://www.rifad.site/projects/freshmarket
+
+### Nasiha Sara
+- Type: Portfolio for an architectural designer
+- What it is: A portfolio for an architectural designer and 3D visualiser, with her projects and a CV to download.
+- Highlights: Project gallery; CV download; Responsive layout
+- Built with: React, Tailwind CSS, Vercel
+- Live site: https://nasiha-arc.vercel.app
+- Case page: https://www.rifad.site/projects/nasiha
+
+### Rainforest
+- Type: 2D platformer game
+- What it is: A browser platformer on HTML5 canvas with its own game loop and collision physics.
+- Highlights: Game loop; Collision detection; Keyboard controls
+- Built with: Canvas, JavaScript
+- Live site: https://rain-forest.vercel.app
+- Case page: https://www.rifad.site/projects/rainforest

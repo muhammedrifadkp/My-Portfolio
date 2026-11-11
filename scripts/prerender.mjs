@@ -58,9 +58,7 @@ write(path.join(dist, '404.html'), build('/404'))
 const today = new Date().toISOString().slice(0, 10)
 const priority = (u) => (u === '/' ? '1.0' : u === '/projects' ? '0.9' : u.startsWith('/projects/') ? '0.7' : '0.8')
 const loc = (u) => site.url + (u === '/' ? '/' : u)
-write(
-  path.join(dist, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>
+const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${staticPaths
   .map((u) => {
@@ -71,7 +69,8 @@ ${staticPaths
   .join('\n')}
 </urlset>
 `
-)
+write(path.join(dist, 'sitemap.xml'), sitemapContent)
+write(path.join(root, 'public/sitemap.xml'), sitemapContent)
 
 /* ---- llms.txt: the site in plain Markdown for AI assistants ---- */
 const projectLine = (p) => `- [${p.name}](${site.url}/projects/${p.slug}): ${p.kind}. ${p.pitch} Built with ${p.stack.join(', ')}. Live at ${p.url}`
@@ -114,6 +113,7 @@ ${projects.map(projectLine).join('\n')}
 ${faqs.map((f) => `### ${f.q}\n${f.a}`).join('\n\n')}
 `
 write(path.join(dist, 'llms.txt'), llms)
+write(path.join(root, 'public/llms.txt'), llms)
 
 const full = `${llms}
 ## Experience
@@ -133,5 +133,13 @@ ${skills.map((g) => `- ${g.group}: ${g.items.join(', ')}`).join('\n')}
 ${projects.map((p) => `### ${p.name}\n- Type: ${p.kind}\n- What it is: ${p.pitch}\n- Highlights: ${p.points.join('; ')}\n- Built with: ${p.stack.join(', ')}\n- Live site: ${p.url}\n- Case page: ${site.url}/projects/${p.slug}`).join('\n\n')}
 `
 write(path.join(dist, 'llms-full.txt'), full)
+write(path.join(root, 'public/llms-full.txt'), full)
 
 console.log(`prerendered ${staticPaths.length} pages + 404, sitemap.xml, llms.txt, llms-full.txt`)
+
+try {
+  const { pingIndexNow } = await import('./indexnow.mjs')
+  await pingIndexNow()
+} catch (e) {
+  // offline or pre-deploy
+}

@@ -15,16 +15,31 @@ const person = () => ({
   '@type': 'Person',
   '@id': PERSON,
   name: profile.name,
-  alternateName: ['Rifad', 'Muhammed Rifad', 'Rifad KP'],
+  alternateName: ['Rifad', 'Muhammed Rifad', 'Rifad KP', 'muhammedrifadkp'],
   url: abs('/'),
   image: `${site.url}/portrait.webp`,
-  jobTitle: 'Full-stack web developer',
-  description: 'Full-stack developer in Calicut, Kerala, building websites, online stores and web apps for businesses in the UAE and India.',
+  jobTitle: 'Full-Stack Web Developer & Software Engineer',
+  description: 'Full-stack developer in Calicut, Kerala, building websites, online stores and web apps for businesses in the UAE and India. Specialised in Next.js, React, Node.js, and Three.js.',
   email: `mailto:${profile.email}`,
   telephone: '+917356852496',
   address: { '@type': 'PostalAddress', addressLocality: profile.locality, addressRegion: profile.region, addressCountry: profile.country },
   alumniOf: { '@type': 'CollegeOrUniversity', name: 'Yenepoya University' },
-  knowsAbout: ['Web development', 'Next.js', 'React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Three.js', 'E-commerce websites', 'Search engine optimisation'],
+  hasOccupation: {
+    '@type': 'Occupation',
+    name: 'Full-Stack Web Developer',
+    skills: 'Next.js, React, Node.js, TypeScript, Three.js, MongoDB, Express, Shopify, Tailwind CSS, REST APIs, Web Performance, SEO',
+    occupationLocation: [
+      { '@type': 'City', name: 'Kozhikode' },
+      { '@type': 'AdministrativeArea', name: 'Kerala' },
+      { '@type': 'Country', name: 'India' },
+      { '@type': 'Country', name: 'United Arab Emirates' },
+    ],
+  },
+  knowsAbout: [
+    'Web development', 'Next.js', 'React', 'TypeScript', 'Node.js', 'Express',
+    'MongoDB', 'Tailwind CSS', 'Three.js', 'E-commerce websites', 'Shopify development',
+    'Search engine optimisation', 'Generative Engine Optimisation (GEO)', 'Full-Stack Engineering'
+  ],
   knowsLanguage: ['en', 'ml'],
   sameAs: profile.socials.map((s) => s.href),
 })
@@ -34,10 +49,18 @@ const website = () => ({
   '@id': WEBSITE,
   url: abs('/'),
   name: site.name,
-  alternateName: [profile.name, 'Rifad KP'],
-  description: 'Portfolio of Muhammed Rifad KP, full-stack web developer.',
+  alternateName: [profile.name, 'Rifad KP', 'Muhammed Rifad Portfolio'],
+  description: 'Portfolio of Muhammed Rifad KP, full-stack web developer in Kerala & UAE.',
   inLanguage: 'en',
   publisher: { '@id': PERSON },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${site.url}/projects?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 })
 
 const service = () => ({
@@ -48,6 +71,10 @@ const service = () => ({
   image: OG_IMAGE,
   telephone: '+917356852496',
   email: profile.email,
+  priceRange: '$$',
+  currenciesAccepted: 'INR, AED, USD',
+  paymentAccepted: 'Bank Transfer, UPI, Cash',
+  openingHours: 'Mo-Sa 09:00-20:00',
   founder: { '@id': PERSON },
   address: { '@type': 'PostalAddress', addressLocality: profile.locality, addressRegion: profile.region, addressCountry: profile.country },
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },

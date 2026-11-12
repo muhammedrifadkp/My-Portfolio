@@ -27,10 +27,11 @@ export const profile = {
 export const waLink = (text) => `${profile.whatsapp}?text=${encodeURIComponent(text)}`
 
 const noPhone = ['cdc-attendance', 'my-ecommerce', 'rain-forest']
+const ASSET_VER = 'v=1.5'
 const img = (n) => ({
-  src: `/work/${n}-1600.webp`,
-  small: `/work/${n}-800.webp`,
-  phone: noPhone.includes(n) ? null : `/work/${n}-phone.webp`,
+  src: `/work/${n}-1600.webp?${ASSET_VER}`,
+  small: `/work/${n}-800.webp?${ASSET_VER}`,
+  phone: noPhone.includes(n) ? null : `/work/${n}-phone.webp?${ASSET_VER}`,
 })
 
 export const hostOf = (url) => new URL(url).hostname.replace(/^www\./, '')

@@ -135,7 +135,7 @@ export default function WorkStage() {
           </h1>
           <div className="hero-foot">
             <p className="hero-lede">
-              Full-stack developer in {profile.city}. Websites, online stores and web apps for businesses in the UAE and India.
+              Freelance full-stack web developer in {profile.city}. Fast websites, online stores and web apps for businesses in Kerala and the UAE.
             </p>
             <div className="hero-actions">
               <a href="#work" className="btn btn-primary" tabIndex={heroTab} onClick={() => triggerHaptic('light')}>

@@ -7,8 +7,8 @@ export const site = {
 export const profile = {
   name: 'Muhammed Rifad KP',
   short: 'Rifad',
-  role: 'Full-stack developer',
-  city: 'Calicut, Kerala',
+  role: 'Freelance full-stack web developer',
+  city: 'Kozhikode (Calicut), Kerala',
   locality: 'Kozhikode',
   region: 'Kerala',
   country: 'IN',
@@ -346,10 +346,11 @@ export const stack = ['Next.js', 'React', 'TypeScript', 'Node.js', 'MongoDB', 'T
 
 export const faqs = [
   { q: 'What do you build?', a: 'Business websites, online stores and web apps, front end to database. If you need 3D or motion on the page, that too.' },
+  { q: 'Do you work with local businesses in Kozhikode (Calicut)?', a: 'Yes. As a freelance web developer in Kozhikode (Calicut), I build websites, e-commerce stores and booking apps for clinics, shops, institutes and service businesses across Kerala, and we can meet locally or over WhatsApp and calls.' },
   { q: 'How long does a project take?', a: 'Most websites take two to four weeks. Larger apps take one to three months, depending on what they have to do.' },
   { q: 'Do you look after the site after launch?', a: 'Yes. I offer ongoing maintenance and support, so updates, fixes and new pages are covered.' },
   { q: 'What does a website cost?', a: 'Every project is priced on what it has to do. Tell me the pages and features you need, and I send a plan with a price before any work starts.' },
   { q: 'Which technologies do you use?', a: 'Next.js and React on the front end, Node.js, Express and MongoDB on the back end, Tailwind CSS for styling and Vercel for hosting. For stores I also work with Shopify.' },
-  { q: 'Where are you based, and who do you work with?', a: 'I work from Calicut (Kozhikode) in Kerala, India, with businesses in the UAE and across India. Everything happens online, over WhatsApp, email and calls.' },
+  { q: 'Where are you based, and who do you work with?', a: 'I am based in Kozhikode (Calicut), Kerala, India, and work with businesses in Kozhikode, across Kerala, India and the UAE (Dubai and Abu Dhabi). Everything happens smoothly over WhatsApp, email, calls or local meetings.' },
   { q: 'How do we start?', a: 'Send a message on WhatsApp or by email with what you have in mind. We set up a short call and I come back with a plan and a price.' },
 ]

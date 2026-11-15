@@ -9,6 +9,7 @@ const HOST = 'www.rifad.site'
 
 const urls = [
   `${site.url}/`,
+  `${site.url}/freelance-web-developer-kozhikode`,
   `${site.url}/projects`,
   `${site.url}/about`,
   `${site.url}/contact`,

@@ -4,6 +4,7 @@ import { matchPath } from 'react-router-dom'
 /* One table for the client and the prerenderer. */
 export const routeTable = [
   { key: 'home', path: '/', load: () => import('./pages/Home') },
+  { key: 'kozhikode', path: '/freelance-web-developer-kozhikode', load: () => import('./pages/Kozhikode') },
   { key: 'projects', path: '/projects', load: () => import('./pages/Projects') },
   { key: 'project', path: '/projects/:slug', load: () => import('./pages/Project') },
   { key: 'about', path: '/about', load: () => import('./pages/About') },

@@ -16,7 +16,7 @@ const manifest = JSON.parse(fs.readFileSync(path.join(dist, '.vite/manifest.json
 const { site, profile, projects, services, faqs, process: steps, experience, education, skills } = data
 
 /* the JS a page needs, so the browser can fetch it alongside the entry */
-const pageFile = { home: 'Home', projects: 'Projects', project: 'Project', about: 'About', contact: 'Contact', ai: 'AI', notfound: 'NotFound' }
+const pageFile = { home: 'Home', kozhikode: 'Kozhikode', projects: 'Projects', project: 'Project', about: 'About', contact: 'Contact', ai: 'AI', notfound: 'NotFound' }
 function preloads(route) {
   const seen = new Set()
   const walk = (key) => {
@@ -32,10 +32,11 @@ function preloads(route) {
 
 function build(url, extraHead = []) {
   const { html, head, route } = render(url)
+  const pre = [...extraHead, ...preloads(route)].join('\n  ')
   return template
-    .replace(/<!--seo-->[\s\S]*?<!--\/seo-->/, head)
-    .replace('<!--preload-->', [...extraHead, ...preloads(route)].join('\n  '))
-    .replace('<!--app-html-->', html)
+    .replace(/<!--seo-->[\s\S]*?<!--\/seo-->/, () => head)
+    .replace('<!--preload-->', () => pre)
+    .replace('<!--app-html-->', () => html)
 }
 
 const write = (file, content) => {
@@ -56,7 +57,7 @@ write(path.join(dist, '404.html'), build('/404'))
 
 /* ---- sitemap.xml ---- */
 const today = new Date().toISOString().slice(0, 10)
-const priority = (u) => (u === '/' ? '1.0' : u === '/projects' ? '0.9' : u.startsWith('/projects/') ? '0.7' : '0.8')
+const priority = (u) => (u === '/' ? '1.0' : u === '/projects' || u === '/freelance-web-developer-kozhikode' ? '0.9' : u.startsWith('/projects/') ? '0.7' : '0.8')
 const loc = (u) => site.url + (u === '/' ? '/' : u)
 const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
@@ -99,6 +100,7 @@ ${steps.map((s, i) => `${i + 1}. ${s.title} ${s.text}`).join('\n')}
 ## Pages
 
 - [Home](${site.url}/): overview, selected work, services and contact
+- [Freelance Web Developer in Kozhikode](${site.url}/freelance-web-developer-kozhikode): local web development services, timelines, stack and client proof in Kozhikode (Calicut), Kerala
 - [Work](${site.url}/projects): all ${projects.length} projects
 - [About](${site.url}/about): experience, skills and education
 - [Contact](${site.url}/contact): WhatsApp, email, phone and common questions

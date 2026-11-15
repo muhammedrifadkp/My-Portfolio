@@ -78,7 +78,7 @@ export default function Flight() {
             <span className="flight-tag t-small">Flight Route</span>
             <h2 id="flight-title" className="t-h2">Kerala to the Gulf.</h2>
             <p className="flight-lede">
-              I build from Calicut for businesses on both sides of the Arabian Sea: property in Abu Dhabi, company setup in Dubai, clinics and shops across Kerala.
+              Working as a freelance web developer in Kozhikode (Calicut), I build for businesses on both sides of the Arabian Sea: property in Abu Dhabi, company setup in Dubai, clinics and shops across Kerala.
             </p>
           </div>
           <ul className="flight-facts glass" data-reveal>

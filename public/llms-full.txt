@@ -1,6 +1,6 @@
 # Muhammed Rifad KP (Rifad)
 
-> Muhammed Rifad KP is a full-stack web developer based in Calicut, Kerala, India. He builds websites, online stores and web apps for businesses in the United Arab Emirates and India, using Next.js, React, TypeScript, Node.js and MongoDB. This is his portfolio: https://www.rifad.site
+> Muhammed Rifad KP is a full-stack web developer based in Kozhikode (Calicut), Kerala, India. He builds websites, online stores and web apps for businesses in the United Arab Emirates and India, using Next.js, React, TypeScript, Node.js and MongoDB. This is his portfolio: https://www.rifad.site
 
 ## Key facts
 
@@ -29,6 +29,7 @@
 ## Pages
 
 - [Home](https://www.rifad.site/): overview, selected work, services and contact
+- [Freelance Web Developer in Kozhikode](https://www.rifad.site/freelance-web-developer-kozhikode): local web development services, timelines, stack and client proof in Kozhikode (Calicut), Kerala
 - [Work](https://www.rifad.site/projects): all 16 projects
 - [About](https://www.rifad.site/about): experience, skills and education
 - [Contact](https://www.rifad.site/contact): WhatsApp, email, phone and common questions
@@ -58,6 +59,9 @@
 ### What do you build?
 Business websites, online stores and web apps, front end to database. If you need 3D or motion on the page, that too.
 
+### Do you work with local businesses in Kozhikode (Calicut)?
+Yes. As a freelance web developer in Kozhikode (Calicut), I build websites, e-commerce stores and booking apps for clinics, shops, institutes and service businesses across Kerala, and we can meet locally or over WhatsApp and calls.
+
 ### How long does a project take?
 Most websites take two to four weeks. Larger apps take one to three months, depending on what they have to do.
 
@@ -71,7 +75,7 @@ Every project is priced on what it has to do. Tell me the pages and features you
 Next.js and React on the front end, Node.js, Express and MongoDB on the back end, Tailwind CSS for styling and Vercel for hosting. For stores I also work with Shopify.
 
 ### Where are you based, and who do you work with?
-I work from Calicut (Kozhikode) in Kerala, India, with businesses in the UAE and across India. Everything happens online, over WhatsApp, email and calls.
+I am based in Kozhikode (Calicut), Kerala, India, and work with businesses in Kozhikode, across Kerala, India and the UAE (Dubai and Abu Dhabi). Everything happens smoothly over WhatsApp, email, calls or local meetings.
 
 ### How do we start?
 Send a message on WhatsApp or by email with what you have in mind. We set up a short call and I come back with a plan and a price.

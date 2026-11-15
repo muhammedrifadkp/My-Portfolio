@@ -18,8 +18,8 @@ const person = () => ({
   alternateName: ['Rifad', 'Muhammed Rifad', 'Rifad KP', 'muhammedrifadkp'],
   url: abs('/'),
   image: `${site.url}/portrait.webp`,
-  jobTitle: 'Full-Stack Web Developer & Software Engineer',
-  description: 'Full-stack developer in Calicut, Kerala, building websites, online stores and web apps for businesses in the UAE and India. Specialised in Next.js, React, Node.js, and Three.js.',
+  jobTitle: 'Freelance Full-Stack Web Developer & Web Designer',
+  description: 'Freelance full-stack web developer in Kozhikode (Calicut), Kerala, building websites, online stores and web apps for businesses in Kerala, India and the UAE. Specialised in Next.js, React, Node.js, and Three.js.',
   email: `mailto:${profile.email}`,
   telephone: '+917356852496',
   address: { '@type': 'PostalAddress', addressLocality: profile.locality, addressRegion: profile.region, addressCountry: profile.country },
@@ -66,7 +66,9 @@ const website = () => ({
 const service = () => ({
   '@type': 'ProfessionalService',
   '@id': SERVICE,
-  name: `${profile.name} — Web development`,
+  name: `${profile.name} — Freelance Web Developer in Kozhikode`,
+  description: 'Freelance web developer and web designer in Kozhikode (Calicut), Kerala building fast business websites, Shopify and Next.js online stores, and full-stack web applications.',
+  serviceType: ['Freelance Web Development', 'Web Design', 'E-commerce Website Development', 'Full-Stack Web Applications'],
   url: abs('/'),
   image: OG_IMAGE,
   telephone: '+917356852496',
@@ -79,8 +81,11 @@ const service = () => ({
   address: { '@type': 'PostalAddress', addressLocality: profile.locality, addressRegion: profile.region, addressCountry: profile.country },
   geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
   areaServed: [
-    { '@type': 'Country', name: 'United Arab Emirates' },
+    { '@type': 'City', name: 'Kozhikode' },
+    { '@type': 'City', name: 'Calicut' },
+    { '@type': 'AdministrativeArea', name: 'Kerala' },
     { '@type': 'Country', name: 'India' },
+    { '@type': 'Country', name: 'United Arab Emirates' },
   ],
   knowsLanguage: ['en', 'ml'],
   hasOfferCatalog: {
@@ -133,9 +138,17 @@ export function metaFor(pathname) {
   const base = { path, canonical: abs(path), image: OG_IMAGE, type: 'website', index: true }
 
   if (path === '/') {
-    const title = 'Muhammed Rifad KP | Full-Stack Web Developer in Kerala'
-    const description = 'Muhammed Rifad KP builds fast websites, online stores and web apps for businesses in the UAE and India. Next.js, React and Node.js, from Calicut, Kerala.'
+    const title = 'Freelance Web Developer in Kozhikode | Muhammed Rifad KP'
+    const description = 'Freelance web developer in Kozhikode (Calicut), Kerala. Fast business websites, online stores and web apps built with Next.js and React for Kerala and UAE.'
     return { ...base, title, description, jsonLd: graph(website(), person(), service(), page('WebPage', '/', title, description, { about: { '@id': PERSON } }), faqNode()) }
+  }
+  if (path === '/freelance-web-developer-kozhikode') {
+    const title = 'Freelance Web Developer in Kozhikode (Calicut) | Rifad'
+    const description = 'Hire a freelance web developer in Kozhikode (Calicut), Kerala. Custom business websites, Shopify and Next.js stores, and web apps with SEO and WhatsApp booking.'
+    return {
+      ...base, title, description,
+      jsonLd: graph(website(), person(), service(), page('WebPage', path, title, description, { about: { '@id': SERVICE }, mainEntity: { '@id': SERVICE } }), faqNode(), crumbs([['Home', '/'], ['Freelance Web Developer Kozhikode', path]])),
+    }
   }
   if (path === '/projects') {
     const title = `Work: ${projects.length} Websites and Web Apps | Muhammed Rifad KP`
@@ -177,7 +190,7 @@ export function metaFor(pathname) {
 }
 
 /** Every URL that gets its own HTML file and a sitemap entry. */
-export const staticPaths = ['/', '/projects', ...projects.map((p) => `/projects/${p.slug}`), '/about', '/contact', '/ai']
+export const staticPaths = ['/', '/freelance-web-developer-kozhikode', '/projects', ...projects.map((p) => `/projects/${p.slug}`), '/about', '/contact', '/ai']
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 

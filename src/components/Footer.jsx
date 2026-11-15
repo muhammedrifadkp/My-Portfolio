@@ -8,6 +8,7 @@ export default function Footer() {
       <p className="t-small">{profile.name}, {profile.role.toLowerCase()} in {profile.city}</p>
       <nav aria-label="Footer" className="footer-links t-small">
         <TLink to="/projects">Work</TLink>
+        <TLink to="/freelance-web-developer-kozhikode">Kozhikode</TLink>
         <TLink to="/about">About</TLink>
         <TLink to="/contact">Contact</TLink>
         {profile.socials.map((s) => (

@@ -12,6 +12,7 @@ function buildItems(go, say) {
   return [
     page('Home', '/', HomeIcon),
     page('Work', '/projects', WorkIcon, 'projects portfolio sites'),
+    page('Kozhikode Web Dev', '/freelance-web-developer-kozhikode', WorkIcon, 'freelance web developer calicut kerala local services'),
     page('About', '/about', PersonIcon, 'experience education skills cv'),
     page('Ask AI', '/ai', SparkIcon, 'assistant chat question'),
     page('Contact', '/contact', ChatIcon, 'hire message form'),

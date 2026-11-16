@@ -50,7 +50,7 @@ const reasons = [
   },
   {
     title: 'Proven across Kerala and the Gulf',
-    text: 'Sixteen live sites and web apps shipped for clinics, automotive stores, bakeries, repair shops and Dubai real estate firms.',
+    text: 'Explore work for Rasdent, a dental clinic in Kuttiady, Fixerland in Kasaragod, and ZHM Real Estate in the UAE.',
   },
   {
     title: 'Clear scope before work starts',
@@ -163,7 +163,7 @@ export default function Kozhikode() {
 
       <section className="kzk-proof wrap section" aria-labelledby="kzk-proof-title">
         <div className="kzk-proof-head" data-stagger="70">
-          <h2 id="kzk-proof-title" className="t-h2" data-reveal>Recent client work.</h2>
+          <h2 id="kzk-proof-title" className="t-h2" data-reveal>Websites built for clients in Kerala and the UAE.</h2>
           <TLink to="/projects" className="link" data-reveal>
             Explore all {projects.length} projects <ArrowRight aria-hidden="true" />
           </TLink>

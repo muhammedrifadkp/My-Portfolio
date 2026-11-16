@@ -76,6 +76,14 @@ export default function Project() {
         )}
       </figure>
 
+      {p.caseStudy && (
+        <section className="proj-case wrap" aria-labelledby="proj-case" data-reveal>
+          <h2 id="proj-case" className="t-h3">{p.caseStudy.title}</h2>
+          <p>{p.caseStudy.context}</p>
+          <p>{p.caseStudy.approach}</p>
+        </section>
+      )}
+
       <div className="proj-facts wrap">
         <section aria-labelledby="proj-what" data-reveal>
           <h2 id="proj-what" className="t-h3">What it does</h2>

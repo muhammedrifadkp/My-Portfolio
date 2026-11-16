@@ -53,36 +53,22 @@ const website = () => ({
   description: 'Portfolio of Muhammed Rifad KP, full-stack web developer in Kerala & UAE.',
   inLanguage: 'en',
   publisher: { '@id': PERSON },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${site.url}/projects?q={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
-  },
 })
 
 const service = () => ({
   '@type': 'ProfessionalService',
   '@id': SERVICE,
-  name: `${profile.name} — Freelance Web Developer in Kozhikode`,
+  name: profile.name,
   description: 'Freelance web developer and web designer in Kozhikode (Calicut), Kerala building fast business websites, Shopify and Next.js online stores, and full-stack web applications.',
   serviceType: ['Freelance Web Development', 'Web Design', 'E-commerce Website Development', 'Full-Stack Web Applications'],
   url: abs('/'),
   image: OG_IMAGE,
   telephone: '+917356852496',
   email: profile.email,
-  priceRange: '$$',
-  currenciesAccepted: 'INR, AED, USD',
-  paymentAccepted: 'Bank Transfer, UPI, Cash',
-  openingHours: 'Mo-Sa 09:00-20:00',
   founder: { '@id': PERSON },
   address: { '@type': 'PostalAddress', addressLocality: profile.locality, addressRegion: profile.region, addressCountry: profile.country },
-  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
   areaServed: [
-    { '@type': 'City', name: 'Kozhikode' },
-    { '@type': 'City', name: 'Calicut' },
+    { '@type': 'City', name: 'Kozhikode', alternateName: 'Calicut' },
     { '@type': 'AdministrativeArea', name: 'Kerala' },
     { '@type': 'Country', name: 'India' },
     { '@type': 'Country', name: 'United Arab Emirates' },
@@ -120,7 +106,7 @@ const work = (p) => ({
   '@type': 'CreativeWork',
   '@id': `${abs(`/projects/${p.slug}`)}#work`,
   name: p.name,
-  headline: `${p.name}: ${p.kind}`,
+  headline: `${p.name}: ${p.caseStudy?.title ?? p.kind}`,
   description: p.pitch,
   url: abs(`/projects/${p.slug}`),
   sameAs: p.url,
@@ -138,13 +124,13 @@ export function metaFor(pathname) {
   const base = { path, canonical: abs(path), image: OG_IMAGE, type: 'website', index: true }
 
   if (path === '/') {
-    const title = 'Freelance Web Developer in Kozhikode | Muhammed Rifad KP'
-    const description = 'Freelance web developer in Kozhikode (Calicut), Kerala. Fast business websites, online stores and web apps built with Next.js and React for Kerala and UAE.'
+    const title = 'Muhammed Rifad KP | Freelance Full-Stack Web Developer'
+    const description = 'Portfolio of Muhammed Rifad KP, a freelance developer based in Kozhikode, Kerala. Explore business websites, online stores and web apps built for clients in India and the UAE.'
     return { ...base, title, description, jsonLd: graph(website(), person(), service(), page('WebPage', '/', title, description, { about: { '@id': PERSON } }), faqNode()) }
   }
   if (path === '/freelance-web-developer-kozhikode') {
     const title = 'Freelance Web Developer in Kozhikode (Calicut) | Rifad'
-    const description = 'Hire a freelance web developer in Kozhikode (Calicut), Kerala. Custom business websites, Shopify and Next.js stores, and web apps with SEO and WhatsApp booking.'
+    const description = 'Hire a freelance web developer in Kozhikode (Calicut) for a business or clinic website, online store or web app. See the Rasdent clinic project in Kuttiady.'
     return {
       ...base, title, description,
       jsonLd: graph(website(), person(), service(), page('WebPage', path, title, description, { about: { '@id': SERVICE }, mainEntity: { '@id': SERVICE } }), faqNode(), crumbs([['Home', '/'], ['Freelance Web Developer Kozhikode', path]])),
@@ -163,8 +149,10 @@ export function metaFor(pathname) {
   if (path.startsWith('/projects/')) {
     const p = bySlug[path.slice('/projects/'.length)]
     if (p) {
-      const title = `${p.name}: ${p.kind} | Rifad`
-      const description = `${p.pitch} Built by Muhammed Rifad KP with ${p.stack.slice(0, 3).join(', ')}. Live at ${hostOf(p.url)}.`
+      const title = `${p.name}: ${p.caseStudy?.title ?? p.kind} | Rifad`
+      const description = p.caseStudy
+        ? `${p.pitch} Built by Muhammed Rifad KP.`
+        : `${p.pitch} Built by Muhammed Rifad KP with ${p.stack.slice(0, 3).join(', ')}. Live at ${hostOf(p.url)}.`
       return { ...base, title, description, image: site.url + p.src, type: 'article', jsonLd: graph(website(), person(), page('WebPage', path, title, description, { mainEntity: { '@id': `${abs(path)}#work` } }), work(p), crumbs([['Home', '/'], ['Work', '/projects'], [p.name, path]])) }
     }
   }

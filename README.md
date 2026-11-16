@@ -63,3 +63,9 @@ See [GEMINI_SETUP.md](GEMINI_SETUP.md). In short: set `GEMINI_API_KEY` in the Ve
 ## Deploy
 
 Push to `main`; Vercel runs `npm run build` and serves `dist/`.
+
+Once the changes are live, send the paths you added, updated or removed to IndexNow. For example:
+
+```bash
+npm run indexnow -- /projects/rasdent
+```

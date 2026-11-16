@@ -12,6 +12,9 @@ const root = process.cwd()
 const dist = path.join(root, 'dist')
 const { render, staticPaths, data } = await import(pathToFileURL(path.join(root, 'dist-ssr/entry-server.js')).href)
 const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
+if (!template.includes('<!--seo-->') || !template.includes('<!--app-html-->')) {
+  throw new Error('Prerendering requires a fresh Vite build. Run npm run build.')
+}
 const manifest = JSON.parse(fs.readFileSync(path.join(dist, '.vite/manifest.json'), 'utf8'))
 const { site, profile, projects, services, faqs, process: steps, experience, education, skills } = data
 
@@ -56,8 +59,6 @@ for (const url of staticPaths) {
 write(path.join(dist, '404.html'), build('/404'))
 
 /* ---- sitemap.xml ---- */
-const today = new Date().toISOString().slice(0, 10)
-const priority = (u) => (u === '/' ? '1.0' : u === '/projects' || u === '/freelance-web-developer-kozhikode' ? '0.9' : u.startsWith('/projects/') ? '0.7' : '0.8')
 const loc = (u) => site.url + (u === '/' ? '/' : u)
 const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
@@ -65,7 +66,7 @@ ${staticPaths
   .map((u) => {
     const p = u.startsWith('/projects/') ? projects.find((x) => u.endsWith(x.slug)) : null
     const image = p ? `\n    <image:image><image:loc>${site.url}${p.src}</image:loc></image:image>` : ''
-    return `  <url>\n    <loc>${loc(u)}</loc>\n    <lastmod>${today}</lastmod>\n    <priority>${priority(u)}</priority>${image}\n  </url>`
+    return `  <url>\n    <loc>${loc(u)}</loc>${image}\n  </url>`
   })
   .join('\n')}
 </urlset>
@@ -75,6 +76,7 @@ write(path.join(root, 'public/sitemap.xml'), sitemapContent)
 
 /* ---- llms.txt: the site in plain Markdown for AI assistants ---- */
 const projectLine = (p) => `- [${p.name}](${site.url}/projects/${p.slug}): ${p.kind}. ${p.pitch} Built with ${p.stack.join(', ')}. Live at ${p.url}`
+const caseDetails = (p) => p.caseStudy ? `\n- Context: ${p.caseStudy.context}\n- What Rifad built: ${p.caseStudy.approach}` : ''
 const llms = `# ${profile.name} (${site.name})
 
 > ${profile.name} is a full-stack web developer based in ${profile.city}, India. He builds websites, online stores and web apps for businesses in the United Arab Emirates and India, using Next.js, React, TypeScript, Node.js and MongoDB. This is his portfolio: ${site.url}
@@ -132,16 +134,9 @@ ${skills.map((g) => `- ${g.group}: ${g.items.join(', ')}`).join('\n')}
 
 ## Project details
 
-${projects.map((p) => `### ${p.name}\n- Type: ${p.kind}\n- What it is: ${p.pitch}\n- Highlights: ${p.points.join('; ')}\n- Built with: ${p.stack.join(', ')}\n- Live site: ${p.url}\n- Case page: ${site.url}/projects/${p.slug}`).join('\n\n')}
+${projects.map((p) => `### ${p.name}\n- Type: ${p.kind}\n- What it is: ${p.pitch}${caseDetails(p)}\n- Highlights: ${p.points.join('; ')}\n- Built with: ${p.stack.join(', ')}\n- Live site: ${p.url}\n- Case page: ${site.url}/projects/${p.slug}`).join('\n\n')}
 `
 write(path.join(dist, 'llms-full.txt'), full)
 write(path.join(root, 'public/llms-full.txt'), full)
 
 console.log(`prerendered ${staticPaths.length} pages + 404, sitemap.xml, llms.txt, llms-full.txt`)
-
-try {
-  const { pingIndexNow } = await import('./indexnow.mjs')
-  await pingIndexNow()
-} catch (e) {
-  // offline or pre-deploy
-}

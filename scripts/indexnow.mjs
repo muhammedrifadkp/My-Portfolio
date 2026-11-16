@@ -15,10 +15,10 @@ try {
     return url.href
   })
   const urlList = [...new Set(urls)]
-  const response = await fetch('https://api.indexnow.org/indexnow', {
+  const response = await fetch('https://yandex.com/indexnow', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify({ host, key: KEY, keyLocation: `${origin}/${KEY}.txt`, urlList }),
+    body: JSON.stringify({ host, key: KEY, urlList }),
     signal: AbortSignal.timeout(15_000),
   })
 

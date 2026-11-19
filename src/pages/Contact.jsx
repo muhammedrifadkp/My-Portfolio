@@ -98,7 +98,7 @@ export default function Contact() {
             <label htmlFor="f-name">Your name</label>
             <input
               id="f-name" ref={nameRef} name="name" autoComplete="name"
-              value={form.name} onChange={set('name')} placeholder="Aisha Rahman…"
+              value={form.name} onChange={set('name')} placeholder="Arjun Menon…"
               aria-invalid={!!errors.name} aria-describedby={errors.name ? 'e-name' : undefined}
             />
             {errors.name && <p id="e-name" className="field-error">{errors.name}</p>}

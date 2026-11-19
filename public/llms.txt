@@ -10,7 +10,7 @@
 - Education: Bachelor of Computer Applications, Yenepoya University, Mangaluru (2021 to 2024)
 - Contact: WhatsApp or phone +91 73568 52496, email muhammedrifadkp3@gmail.com
 - Profiles: GitHub https://github.com/muhammedrifadkp, LinkedIn https://linkedin.com/in/muhammed-rifad-64a7172b9, Instagram https://www.instagram.com/mohd_rifad_/
-- Projects shown: 29
+- Projects shown: 30
 
 ## Services
 
@@ -30,7 +30,7 @@
 
 - [Home](https://www.rifad.site/): overview, selected work, services and contact
 - [Freelance Web Developer in Kozhikode](https://www.rifad.site/freelance-web-developer-kozhikode): local web development services, timelines, stack and client proof in Kozhikode (Calicut), Kerala
-- [Work](https://www.rifad.site/projects): all 29 projects
+- [Work](https://www.rifad.site/projects): all 30 projects
 - [About](https://www.rifad.site/about): experience, skills and education
 - [Contact](https://www.rifad.site/contact): WhatsApp, email, phone and common questions
 - [Ask AI](https://www.rifad.site/ai): an assistant that answers questions about his work
@@ -48,6 +48,7 @@
 - [Munawar Interior Design](https://www.rifad.site/projects/munawar): Interior designer portfolio. A portfolio for an interior designer, with interior and exterior projects, services and a gallery. Built with Next.js, React, Tailwind CSS. Live at https://munawar-portfolio.vercel.app/
 - [Athira O K](https://www.rifad.site/projects/athira): Fashion designer portfolio. A bold portfolio for a fashion designer working in CLO3D design, digital fashion and styling, with her collections and lookbook. Built with React, Vite, Tailwind CSS. Live at https://athira-profile.vercel.app/
 - [Ramseena & Mansoor](https://www.rifad.site/projects/ramseena-weds): Wedding invitation website. A wedding invitation that opens like an envelope, with the Nikah details, venue map and RSVP, shared as one link on WhatsApp. Built with Next.js, TypeScript, Google Sheets. Live at https://ramseena-wedding.vercel.app/
+- [Fajr Turns Four](https://www.rifad.site/projects/fajr-birthday): Birthday invitation website. A birthday invitation that opens behind a velvet curtain, tells the child’s story from birth to four in photos, and ends with the party details and RSVP. Built with HTML, CSS, JavaScript, GSAP. Live at https://fajr-birthday.vercel.app/
 - [MSF Theekkuni](https://www.rifad.site/projects/msf-theekkuni): Event registration and delegate pass. Registration for a student conference in Malayalam: delegates sign up and download a pass with their own ID and QR code. Built with Vite, JavaScript, Firebase, QR codes. Live at https://msftheekkuni.vercel.app/
 - [Ad Firms](https://www.rifad.site/projects/ad-firms): Business setup, Dubai. Mainland and free-zone company packages priced on the page, with a WhatsApp line to a consultant one tap away. Built with Next.js, React, Tailwind CSS, WhatsApp. Live at https://businesssetup.ad-firms.com
 - [Fixerland](https://www.rifad.site/projects/fixerland): Phone repair shop, Kasaragod. A repair shop that takes bookings online: choose the device, see the fix, book it on WhatsApp. Built with JavaScript, HTML, CSS, WhatsApp. Live at https://www.fixerland.com/

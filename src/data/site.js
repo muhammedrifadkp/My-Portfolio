@@ -194,6 +194,18 @@ export const projects = [
     ...img('ramseena'),
   },
   {
+    slug: 'fajr-birthday',
+    name: 'Fajr Turns Four',
+    kind: 'Birthday invitation website',
+    category: 'client',
+    pitch: 'A birthday invitation that opens behind a velvet curtain, tells the child’s story from birth to four in photos, and ends with the party details and RSVP.',
+    stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
+    points: ['Curtain and seal opening with music', 'Photo story from birth to four', 'Countdown, map and RSVP', 'WhatsApp preview card'],
+    url: 'https://fajr-birthday.vercel.app/',
+    tint: '#f2e6e8',
+    ...img('fajr'),
+  },
+  {
     slug: 'msf-theekkuni',
     name: 'MSF Theekkuni',
     kind: 'Event registration and delegate pass',
